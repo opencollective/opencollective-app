@@ -1,0 +1,5 @@
+{
+  "preset": "airbnb",
+  "esnext": true,
+  "excludeFiles": ["public/*.js"]
+}
