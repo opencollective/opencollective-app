@@ -1,25 +1,7 @@
-import { combineReducers } from 'redux';
-import { RECEIVE_GROUP } from '../actions';
+import groups from './groups';
+import transactions from './transactions';
 
-function groups(state = [], action) {
-  switch (action.type) {
-  case RECEIVE_GROUP:
-    return [action.group];
-  default:
-    return state;
-  }
-}
-
-function transactions(state = [], action) {
-  switch (action.type) {
-  default:
-    return state;
-  }
-}
-
-const reducers = combineReducers({
+export {
   groups,
   transactions
-});
-
-export default reducers;
+};

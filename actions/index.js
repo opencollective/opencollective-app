@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import { get } from '../lib/api';
 
 /**
  * Constants
@@ -11,11 +11,8 @@ export const SUBMIT_EXPENSE = 'SUBMIT_EXPENSE';
 export const FETCH_GROUP = 'FETCH_GROUP';
 export const RECEIVE_GROUP = 'RECEIVE_GROUP';
 
-/**
- * API Url until full integration
- */
-
-const API_ROOT = 'https://private-04792-opencollective.apiary-mock.com/';
+export const FETCH_TRANSACTIONS = 'FETCH_TRANSACTIONS';
+export const RECEIVE_TRANSACTIONS = 'RECEIVE_TRANSACTIONS';
 
 /**
  * Actions
@@ -23,7 +20,7 @@ const API_ROOT = 'https://private-04792-opencollective.apiary-mock.com/';
 
 export function fetchGroup(id) {
   return dispatch => {
-    return callAPI(`groups/${id}`)
+    return get(`groups/${id}`)
       .then(json => dispatch(receiveGroup(id, json)));
   };
 }
@@ -37,10 +34,18 @@ function receiveGroup(id, json) {
   };
 }
 
-function callAPI(endpoint) {
-  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
-
-  return fetch(fullUrl)
-    .then(response => response.json());
+export function fetchTransactions(groupid) {
+    return dispatch => {
+    return get(`groups/${groupid}/transactions`)
+      .then(json => dispatch(receiveTransactions(groupid, json)));
+  };
 }
 
+function receiveTransactions(groupid, json) {
+    return {
+    type: RECEIVE_TRANSACTIONS,
+    groupid,
+    transactions: json,
+    receivedAt: Date.now()
+  };
+}

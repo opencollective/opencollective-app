@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchGroup } from '../actions';
+import Transaction from '../components/Transaction';
 
 class GroupTransactions extends Component {
   render() {
-    const { group } = this.props;
+    const { group, transactions } = this.props;
+    const name = group ? group.name : '';
+    const transactionsNode = transactions.map((transaction) => {
+      return <li key={transaction.id}><Transaction {...transaction} /></li>
+    });
     return (
       <div>
         GroupTransactions <br/>
-        {group ? group.name : ''}
+        {name}
+        <ul>
+          {transactionsNode}
+        </ul>
       </div>
     );
   }
