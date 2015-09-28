@@ -35,7 +35,7 @@ function receiveGroup(id, json) {
 }
 
 export function fetchTransactions(groupid) {
-    return dispatch => {
+  return dispatch => {
     return get(`groups/${groupid}/transactions`)
       .then(json => dispatch(receiveTransactions(groupid, json)));
   };
