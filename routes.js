@@ -1,4 +1,5 @@
 import App from './containers/App';
+import groupsApp from './reducers';
 import GroupsList from './containers/GroupsList';
 import GroupTransactions from './containers/GroupTransactions';
 import TransactionNew from './containers/TransactionNew';

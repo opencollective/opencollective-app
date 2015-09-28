@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class TransactionDetail extends Component {
-  render () {
+  render() {
     return <div>TransactionDetail</div>;
   }
 }

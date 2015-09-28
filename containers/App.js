@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import Header from '../components/Header';
+import GroupTransactions from './GroupTransactions';
+import { fetchGroup } from '../actions';
 
 class App extends Component {
-  render () {
+  render() {
+    const { dispatch, groups } = this.props;
+    const group = groups[0];
+
     return (
       <div>
-        App
-        <ul>
-          <li>Links</li>
-          <li><Link to="/groups">Groups</Link></li>
-          <li><Link to="/groups/1/transactions">Group 1 transactions</Link></li>
-          <li><Link to="/groups/1/transactions/1">Group 1 transaction 1</Link></li>
-          <li><Link to="/groups/1/transactions/new">Group 1 new transaction</Link></li>
-        </ul>
-        {this.props.children}
+        <Header title='Application' />
+        <GroupTransactions group={group} onLoad={ id =>
+          dispatch(fetchGroup(id))
+        }/>
       </div>
-    )
+    );
   }
 }
 
-export default App;
+export default connect(function(store) {
+  return {
+    groups: store.groups
+  }
+})(App);
