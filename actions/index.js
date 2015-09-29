@@ -1,4 +1,4 @@
-import { get } from '../lib/api';
+import { get, Schemas } from '../lib/api';
 
 /**
  * Constants
@@ -20,32 +20,34 @@ export const RECEIVE_TRANSACTIONS = 'RECEIVE_TRANSACTIONS';
 
 export function fetchGroup(id) {
   return dispatch => {
-    return get(`groups/${id}`)
+    return get(`groups/${id}`, Schemas.GROUP)
       .then(json => dispatch(receiveGroup(id, json)));
   };
 }
 
 function receiveGroup(id, json) {
+  console.log('receiveGroup', json);
   return {
     type: RECEIVE_GROUP,
     id,
-    group: json,
+    response: json,
     receivedAt: Date.now()
   };
 }
 
 export function fetchTransactions(groupid) {
   return dispatch => {
-    return get(`groups/${groupid}/transactions`)
+    return get(`groups/${groupid}/transactions`, Schemas.TRANSACTION_ARRAY)
       .then(json => dispatch(receiveTransactions(groupid, json)));
   };
 }
 
 function receiveTransactions(groupid, json) {
-    return {
+  console.log('receiveTransactions', groupid, json);
+  return {
     type: RECEIVE_TRANSACTIONS,
     groupid,
-    transactions: json,
+    response: json,
     receivedAt: Date.now()
   };
 }
