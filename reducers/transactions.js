@@ -1,5 +1,5 @@
 import extend from 'lodash/object/extend';
-import { RECEIVE_TRANSACTIONS } from '../actions';
+import { RECEIVE_TRANSACTIONS } from '../actions/transactions';
 
 const initialState = {};
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GroupTransactions from './GroupTransactions';
-import { fetchGroup, fetchTransactions } from '../actions';
+import { fetchTransactions } from '../actions/transactions';
+import { fetchGroup } from '../actions/groups';
 
 class GroupTransactionsConnector extends Component {
   render() {

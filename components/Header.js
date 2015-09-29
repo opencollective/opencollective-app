@@ -4,8 +4,8 @@ class Header extends Component {
   render() {
     const title = this.props.title || 'Header';
     return (
-      <div>
-        <h3>{title}</h3>
+      <div className="border-bottom center py2">
+        <span>{title}</span>
       </div>
     );
   }
