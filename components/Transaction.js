@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Currency from './Currency';
 
 class Transaction extends Component {
   render() {
@@ -9,7 +10,10 @@ class Transaction extends Component {
       <li>
         <Link to={url}>
         <div className='border-bottom py2 px2'>
-          {description} <span className='right'>{amount}</span>
+          {description}
+          <span className='right'>
+          <Currency value={amount} />
+          </span>
         </div>
         </Link>
       </li>

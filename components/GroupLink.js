@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import BackButton from './BackButton';
+import Currency from './Currency';
 
 class GroupTitle extends Component {
   render() {
@@ -9,7 +9,10 @@ class GroupTitle extends Component {
     return (
       <div className='border-bottom px2 py2 bold bg-silver'>
         <Link to={url}>
-          {name} <span className='right'> Balance($): {budget} &#8250;</span>
+          {name}
+          <span className='right'>
+            Balance: <Currency value={budget} /> &#8250;
+          </span>
         </Link>
       </div>
     );

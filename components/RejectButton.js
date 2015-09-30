@@ -3,7 +3,7 @@ import { rejectTransaction } from '../actions/transactions';
 
 class RejectButton extends Component {
   render() {
-    const className = 'btn btn-primary mb1 bg-red';
+    const className = 'btn btn-primary mb1 px4 py3 bg-red';
 
     return (
       <div className={className} onClick={this.handleClick.bind(this)}>

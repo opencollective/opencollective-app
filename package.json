@@ -20,6 +20,7 @@
     "lodash": "^3.10.1",
     "normalizr": "^1.0.0",
     "react": "~0.13.3",
+    "react-intl": "^1.2.0",
     "react-redux": "^3.0.1",
     "react-router": "^1.0.0-rc1",
     "redux": "^3.0.2",
