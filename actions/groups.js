@@ -10,9 +10,8 @@ export const RECEIVE_GROUP = 'RECEIVE_GROUP';
 export const FETCH_GROUPS = 'FETCH_GROUPS';
 export const RECEIVE_GROUPS = 'RECEIVE_GROUPS';
 
-
 /**
- * Actions
+ * Fetch one group
  */
 
 export function fetchGroup(id) {
@@ -27,9 +26,13 @@ function receiveGroup(id, json) {
     type: RECEIVE_GROUP,
     id,
     response: json,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
   };
 }
+
+/**
+ * Fetch all the groups from a user
+ */
 
 export function fetchGroupsFromUser(userid) {
   return dispatch => {
@@ -43,7 +46,7 @@ function receiveGroupsFromUser(userid, json) {
     type: RECEIVE_GROUPS,
     userid,
     response: json,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
   };
 }
 

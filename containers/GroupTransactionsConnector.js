@@ -9,9 +9,10 @@ class GroupTransactionsConnector extends Component {
     const {dispatch, routeParams} = this.props;
     const groupid = routeParams.groupid;
     const loadGroupTransactionsData = () => {
-      dispatch(fetchGroup(groupid))
-      dispatch(fetchTransactions(groupid))
+      dispatch(fetchGroup(groupid));
+      dispatch(fetchTransactions(groupid));
     };
+
     return (
       <GroupTransactions {...this.props} groupid={groupid} onLoad={loadGroupTransactionsData}/>
     );
@@ -22,5 +23,5 @@ export default connect(function(store) {
   return {
     groups: store.groups,
     transactions: store.transactions,
-  }
+  };
 })(GroupTransactionsConnector);

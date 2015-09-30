@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Group from '../components/Group';
 
-
 class GroupsList extends Component {
 
   render() {

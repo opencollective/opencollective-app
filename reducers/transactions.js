@@ -1,13 +1,14 @@
 import extend from 'lodash/object/extend';
-import { RECEIVE_TRANSACTIONS } from '../actions/transactions';
+import { TRANSACTIONS_SUCCESS, TRANSACTION_SUCCESS } from '../actions/transactions';
 
 const initialState = {};
 
 export default function transactions(state = initialState, action) {
 
-  switch(action.type) {
+  switch (action.type) {
 
-    case RECEIVE_TRANSACTIONS:
+    case TRANSACTIONS_SUCCESS:
+    case TRANSACTION_SUCCESS:
       const data = action.response.transactions;
       return extend({}, state.transactions, data);
 

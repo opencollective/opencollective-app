@@ -17,5 +17,5 @@ export default connect(function(store) {
   return {
     groups: store.groups,
     transactions: store.transactions,
-  }
+  };
 })(GroupsListConnector);

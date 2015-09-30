@@ -4,7 +4,7 @@ import { RECEIVE_GROUP, RECEIVE_GROUPS } from '../actions/groups';
 const initialState = {};
 
 export default function groups(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
 
     case RECEIVE_GROUP:
     case RECEIVE_GROUPS:
