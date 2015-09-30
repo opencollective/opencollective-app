@@ -6,8 +6,8 @@ class GroupTitle extends Component {
     const {group} = this.props;
 
     return (
-      <div className='border-bottom px2 py2 bold'>
-        {group.name} <span className='right'> {group.budgetLeft} / {group.budget}</span>
+      <div className='border-bottom px2 py3 bold bg-silver'>
+        Available budget <span className='right'> {group.budgetLeft}</span>
       </div>
     );
   }

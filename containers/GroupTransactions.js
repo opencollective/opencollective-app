@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import values from 'lodash/object/values';
-import Transaction from '../components/Transaction';
+import { fetchTransactions } from '../actions/transactions';
+import { fetchGroup } from '../actions/groups';
 import TransactionList from '../components/TransactionsList';
 import Header from '../components/Header';
 import GroupTitle from '../components/GroupTitle';
-import { fetchTransactions } from '../actions/transactions';
-import { fetchGroup } from '../actions/groups';
 
 class GroupTransactions extends Component {
   render() {
@@ -16,10 +15,10 @@ class GroupTransactions extends Component {
       url: `groups/${groupid}/transactions/new`,
       text: 'New'
     };
-
+    console.log('group', group);
     return (
       <div>
-        <Header title='Transactions' hasBackButton={false} rightButton={rightButton}/>
+        <Header title={group.name} hasBackButton={false} rightButton={rightButton}/>
         <GroupTitle group={group} />
         <TransactionList transactions={transactions} groupid={groupid} />
       </div>
@@ -27,7 +26,7 @@ class GroupTransactions extends Component {
   }
 
   componentDidMount() {
-    const { fetchGroup, fetchTransactions } = this.props;
+    const { fetchGroup, fetchTransactions, groupid } = this.props;
     fetchGroup(groupid);
     fetchTransactions(groupid);
   }

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import GroupLink from './GroupLink';
+import TransactionsList from './TransactionsList';
 
 class Group extends Component {
   render() {
-    const name = this.props.name;
+    const { name, transactions, id } = this.props;
     return (
       <div>
-        <h4>{name}</h4>
+        <GroupLink {...this.props} />
+        <TransactionsList groupid={id} {...this.props} />
       </div>
     );
   }

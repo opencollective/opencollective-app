@@ -14,7 +14,7 @@ class Header extends Component {
     const rightButtonNode = rightButton ? <HeaderRightButton {...rightButton} /> : undefined;
 
     return (
-      <div className='clearfix mb2 black bg-white border-bottom'>
+      <div className='clearfix black bg-white border-bottom'>
         <div className='left'>
           <div className='btn py2 m0'>
             {backButton}

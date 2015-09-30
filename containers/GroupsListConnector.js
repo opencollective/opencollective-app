@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import GroupsList from './GroupsList';
-import { fetchGroupsFromUser } from '../actions/groups';
+import { fetchUserGroupsAndTransactions } from '../actions/users';
+import { fetchTransactions } from '../actions/transactions';
 
 class GroupsListConnector extends Component {
   render() {
@@ -13,10 +14,11 @@ class GroupsListConnector extends Component {
 }
 
 export default connect((store) => {
+  var userid = '1';
   return {
-    groups: store.groups,
-    transactions: store.transactions,
+    groups: store.users[userid] ? store.users[userid].groups : {},
+    transactions: store.users[userid] ? store.users[userid].transactions : {},
   };
 }, (dispatch) => {
-  return bindActionCreators({fetchGroupsFromUser}, dispatch);
+  return bindActionCreators({fetchUserGroupsAndTransactions}, dispatch);
 })(GroupsListConnector);

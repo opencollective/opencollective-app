@@ -1,15 +1,15 @@
-import extend from 'lodash/object/extend';
-import { RECEIVE_GROUP, RECEIVE_GROUPS } from '../actions/groups';
+import merge from 'lodash/object/merge';
+import { GROUP_SUCCESS, GROUPS_SUCCESS } from '../actions/groups';
 
 const initialState = {};
 
 export default function groups(state = initialState, action) {
   switch (action.type) {
 
-    case RECEIVE_GROUP:
-    case RECEIVE_GROUPS:
+    case GROUP_SUCCESS:
+    case GROUPS_SUCCESS:
       const data = action.response.groups;
-      return extend({}, state.groups, data);
+      return merge({}, state, data);
 
     default:
       return state;
