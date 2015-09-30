@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import GroupTransactions from './GroupTransactions';
 import { fetchTransactions } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 
 class GroupTransactionsConnector extends Component {
   render() {
-    const {dispatch, routeParams} = this.props;
+    const { routeParams } = this.props;
     const groupid = routeParams.groupid;
-    const loadGroupTransactionsData = () => {
-      dispatch(fetchGroup(groupid));
-      dispatch(fetchTransactions(groupid));
-    };
 
     return (
-      <GroupTransactions {...this.props} groupid={groupid} onLoad={loadGroupTransactionsData}/>
+      <GroupTransactions {...this.props} groupid={groupid} />
     );
   }
 }
 
-export default connect(function(store) {
+export default connect((store) => {
   return {
     groups: store.groups,
     transactions: store.transactions,
   };
+}, (dispatch) => {
+  return bindActionCreators({
+    fetchTransactions,
+    fetchGroup,
+  }, dispatch);
 })(GroupTransactionsConnector);

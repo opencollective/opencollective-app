@@ -5,17 +5,16 @@ import RejectButton from '../components/RejectButton';
 
 class TransactionDetail extends Component {
   render() {
-    const {transactions, transactionid, groupid, actions} = this.props;
+    const { transactions, transactionid } = this.props;
     const transaction = transactions[transactionid] || {};
-
     return (
       <div>
         <Header title={transaction.description} hasBackButton={true} />
         <div className='px2'>
           {transaction.description} : {transaction.amount}
           <div>
-            <ApproveButton groupid={groupid} transactionid={transactionid} sendApproveTransaction={actions.sendApproveTransaction}/>
-            <RejectButton groupid={groupid} transactionid={transactionid} sendRejectTransaction={actions.sendRejectTransaction}/>
+            <ApproveButton {...this.props}/>
+            <RejectButton {...this.props}/>
           </div>
         </div>
       </div>
@@ -23,8 +22,8 @@ class TransactionDetail extends Component {
   }
 
   componentDidMount() {
-    const { actions } = this.props;
-    actions.loadTransaction();
+    const { groupid, transactionid, fetchTransaction } = this.props;
+    fetchTransaction(groupid, transactionid);
   }
 }
 

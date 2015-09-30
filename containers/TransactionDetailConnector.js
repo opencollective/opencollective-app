@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import TransactionDetail from './TransactionDetail';
 import { fetchTransaction, approveTransaction, rejectTransaction } from '../actions/transactions';
 
@@ -8,20 +9,21 @@ class TransactionDetailConnector extends Component {
     const {dispatch, routeParams} = this.props;
     const {groupid, transactionid} = routeParams;
 
-    const loadTransaction = () => dispatch(fetchTransaction(groupid, transactionid));
-    const sendApproveTransaction = () => dispatch(approveTransaction(groupid, transactionid));
-    const sendRejectTransaction = () => dispatch(rejectTransaction(groupid, transactionid));
-    const actions = {loadTransaction, sendApproveTransaction, sendRejectTransaction};
-
     return (
-      <TransactionDetail {...this.props} groupid={groupid} transactionid={transactionid} actions={actions}/>
+      <TransactionDetail {...this.props} groupid={groupid} transactionid={transactionid}/>
     );
   }
 }
 
-export default connect(function(store) {
+export default connect((store) => {
   return {
     groups: store.groups,
     transactions: store.transactions,
   };
+}, (dispatch) => {
+  return bindActionCreators({
+    fetchTransaction,
+    approveTransaction,
+    rejectTransaction
+  }, dispatch);
 })(TransactionDetailConnector);

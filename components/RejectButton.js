@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
+import { rejectTransaction } from '../actions/transactions';
 
 class RejectButton extends Component {
   render() {
     const className = 'btn btn-primary mb1 bg-red';
-    const {sendRejectTransaction} = this.props;
-    const onClick = () => sendRejectTransaction();
 
     return (
-      <div className={className} onClick={onClick}>
+      <div className={className} onClick={this.handleClick.bind(this)}>
         Reject
       </div>
     );
   }
 
   handleClick() {
-    console.log('Reject');
+    const { rejectTransaction, groupid, transactionid } = this.props;
+    rejectTransaction(groupid, transactionid);
   }
 }
 

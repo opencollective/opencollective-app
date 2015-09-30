@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
+import values from 'lodash/object/values';
+import Header from '../components/Header';
 import Group from '../components/Group';
 
 class GroupsList extends Component {
 
   render() {
-    // const groups = initialState.map((group) => {
-    //   return <Group {...group} key={group.id} />;
-    // });
-    const {groups} = this.props;
-    console.log('props', this.props);
+    const { groups } = this.props;
+    const groupsNode = values(groups).map((group) => {
+      return <Group {...group} key={group.id} />;
+    });
+
     return (
       <div>
-        <h4>Groups</h4>
+        <Header title="My Groups" />
+        {groupsNode}
       </div>
     );
   }
 
   componentDidMount() {
-    this.setState({groups: initialState});
-  }
-
-  componentDidMount() {
-    const { onLoad } = this.props;
-    onLoad();
+    const { fetchGroupsFromUser } = this.props;
+    fetchGroupsFromUser('1');
   }
 }
 

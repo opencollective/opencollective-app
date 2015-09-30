@@ -1,7 +1,7 @@
 import App from './containers/App';
 import GroupsListConnector from './containers/GroupsListConnector';
 import GroupTransactionsConnector from './containers/GroupTransactionsConnector';
-import TransactionNew from './containers/TransactionNew';
+import TransactionNewConnector from './containers/TransactionNewConnector';
 import TransactionDetailConnector from './containers/TransactionDetailConnector';
 
 const routes = {
@@ -10,7 +10,7 @@ const routes = {
   childRoutes: [
     { path: 'groups', component: GroupsListConnector },
     { path: 'groups/:groupid/transactions', component: GroupTransactionsConnector},
-    { path: 'groups/:groupid/transactions/new', component: TransactionNew },
+    { path: 'groups/:groupid/transactions/new', component: TransactionNewConnector },
     { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetailConnector }
   ]
 };
