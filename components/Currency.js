@@ -11,16 +11,28 @@ const FormattedNumber = ReactIntl.FormattedNumber;
  */
 
 const Currency = React.createClass({
-    mixins: [IntlMixin],
+  mixins: [IntlMixin],
 
-    render: function () {
-      const currency = this.props.currency || 'USD';
-      return (
-        <span>
-          <FormattedNumber value={this.props.value} style="currency" currency={currency} />
-        </span>
-      );
-    }
+  propTypes: {
+    currency: React.PropTypes.string,
+    value: React.PropTypes.number.isRequired
+  },
+
+  getDefaultProps() {
+    return {
+      currency: 'USD',
+      value: 0
+    };
+  },
+
+  render() {
+    const {currency, value} = this.props;
+    return (
+      <span>
+        <FormattedNumber value={value} style='currency' currency={currency} />
+      </span>
+    );
+  },
 });
 
 export default Currency;

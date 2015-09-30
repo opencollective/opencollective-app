@@ -8,8 +8,7 @@ export default function groups(state = initialState, action) {
 
     case GROUP_SUCCESS:
     case GROUPS_SUCCESS:
-      const data = action.response.groups;
-      return merge({}, state, data);
+      return merge({}, state, action.response.groups);
 
     default:
       return state;

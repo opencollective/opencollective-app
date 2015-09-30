@@ -1,4 +1,5 @@
-import { get, postJSON, Schemas } from '../lib/api';
+import { get, postJSON } from '../lib/api';
+import Schemas from '../lib/schemas';
 
 /**
  * Constants

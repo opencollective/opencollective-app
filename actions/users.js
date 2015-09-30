@@ -1,8 +1,8 @@
 import keys from 'lodash/object/keys';
-import pluck from 'lodash/collection/pluck';
 import merge from 'lodash/object/merge';
 import { fetchTransactions } from './transactions';
-import { get, Schemas } from '../lib/api';
+import { get } from '../lib/api';
+import Schemas from '../lib/schemas';
 
 /**
  * Constants
@@ -43,9 +43,9 @@ export function fetchUserGroupsAndTransactions(userid) {
   return dispatch => {
     return dispatch(fetchUserGroups(userid))
     .then((json) => {
-        const groupids = keys(json.response.groups);
-        const promises = groupids.map((groupid) => dispatch(fetchTransactions(groupid)));
-        return Promise.all(promises);
+      const groupids = keys(json.response.groups);
+      const promises = groupids.map((groupid) => dispatch(fetchTransactions(groupid)));
+      return Promise.all(promises);
     })
     .then((json) => {
       const merged = merge.apply(null, json) || {};

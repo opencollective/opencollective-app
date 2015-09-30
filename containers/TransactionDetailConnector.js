@@ -24,6 +24,6 @@ export default connect((store) => {
   return bindActionCreators({
     fetchTransaction,
     approveTransaction,
-    rejectTransaction
+    rejectTransaction,
   }, dispatch);
 })(TransactionDetailConnector);

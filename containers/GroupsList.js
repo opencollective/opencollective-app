@@ -15,7 +15,7 @@ class GroupsList extends Component {
 
     return (
       <div>
-        <Header title="My Groups" />
+        <Header title='My Groups' />
         {groupsNode}
       </div>
     );

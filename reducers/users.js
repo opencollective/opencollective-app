@@ -9,15 +9,17 @@ export default function users(state = initialState, action) {
     case USER_GROUPS_SUCCESS:
       const groups = action.response.groups;
       const userGroups = {
-        [action.userid]: {groups}
+        [action.userid]: {groups},
       };
+
       return merge({}, state, userGroups);
 
     case USER_TRANSACTIONS_SUCCESS:
       const transactions = action.response.transactions;
       const userTransactions = {
-        [action.userid]: {transactions}
+        [action.userid]: {transactions},
       };
+
       return merge({}, state, userTransactions);
 
     default:

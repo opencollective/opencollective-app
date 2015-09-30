@@ -13,8 +13,7 @@ export default function transactions(state = initialState, action) {
 
     case TRANSACTIONS_SUCCESS:
     case TRANSACTION_SUCCESS:
-      const data = action.response.transactions;
-      return merge({}, state, data);
+      return merge({}, state, action.response.transactions);
 
     case CREATE_TRANSACTION_SUCCESS:
       console.log('CREATE_TRANSACTION_SUCCESS', state);
