@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TransactionNew from './TransactionNew';
 import { createTransaction } from '../actions/transactions';
+import { uploadImage } from '../actions/images';
 
 class TransactionNewConnector extends Component {
   render() {
@@ -21,5 +22,5 @@ export default connect((store) => {
     transactions: store.transactions,
   };
 }, (dispatch) => {
-  return bindActionCreators({createTransaction}, dispatch);
+  return bindActionCreators({createTransaction, uploadImage}, dispatch);
 })(TransactionNewConnector);

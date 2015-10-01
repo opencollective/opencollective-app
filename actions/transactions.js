@@ -1,4 +1,4 @@
-import { get, postJSON } from '../lib/api';
+import { get, postJSON, post } from '../lib/api';
 import Schemas from '../lib/schemas';
 
 /**
@@ -156,9 +156,9 @@ function rejectTransactionFailure(message) {
 
 export function createTransaction(groupid, transaction) {
   const url = `groups/${groupid}/transactions/`;
-
+  console.log('transaction', transaction.toString());
   return dispatch => {
-    return postJSON(url, {transaction, group: {id: groupid}})
+    return post(url, {transaction})
       .then(json => dispatch(receiveCreateTransaction(groupid, json)))
       .catch(err => dispatch(failureCreateTransaction(err.message)));
   };
