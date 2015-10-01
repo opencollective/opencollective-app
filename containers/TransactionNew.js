@@ -5,9 +5,10 @@ import ImageUpload from '../components/ImageUpload';
 class TransactionNew extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      image: { url: '' }
+    const data = {
+      link: ''
     };
+    this.state = data;
   }
 
   render() {
@@ -15,14 +16,21 @@ class TransactionNew extends Component {
     return (
       <div>
         <Header title='Submit Expense' hasBackButton={false} />
-          <ImageUpload {...this.props} onFinished={this.handleUpload.bind(this)}/>
-          <img src={this.state.image.url} />
-          <form name='transaction' onSubmit={this.handleSubmit.bind(this)} className='px2 mt2'>
+        <div className='px2 mt2'>
+          <ImageUpload {...this.props} onFinished={this.handleUpload.bind(this)} />
+          <img src={this.state.link} />
+
+          <form name='transaction' onSubmit={this.handleSubmit.bind(this)}>
+            <label>Amount</label>
             <input ref='amount' name='amount' type='text' className='field block mb2' />
+
+            <label>Description</label>
             <input ref='description' name='description' type='text' className='field block mb2' />
+
             <hr/>
             <button type='submit' className='btn btn-primary block mt2'>Submit</button>
           </form>
+        </div>
       </div>
     );
   }
@@ -32,17 +40,17 @@ class TransactionNew extends Component {
 
     const amount = React.findDOMNode(this.refs.amount).value.trim();
     const description = React.findDOMNode(this.refs.description).value.trim();
+    const {link} = this.state;
 
-    const data = new FormData();
-    data.append('amount', amount);
-    data.append('description', description);
-    data.append('link', link);
-
-    this.createTransaction(data);
+    this.createTransaction({
+      amount,
+      description,
+      link
+    });
   }
 
   handleUpload(image) {
-    this.setState({image});
+    this.setState({link: image.url});
   }
 
   createTransaction(transaction) {

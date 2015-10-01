@@ -156,9 +156,9 @@ function rejectTransactionFailure(message) {
 
 export function createTransaction(groupid, transaction) {
   const url = `groups/${groupid}/transactions/`;
-  console.log('transaction', transaction.toString());
+
   return dispatch => {
-    return post(url, {transaction})
+    return postJSON(url, {transaction})
       .then(json => dispatch(receiveCreateTransaction(groupid, json)))
       .catch(err => dispatch(failureCreateTransaction(err.message)));
   };
