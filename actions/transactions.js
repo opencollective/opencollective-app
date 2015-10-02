@@ -41,7 +41,7 @@ function transactionsSuccess(groupid, json) {
   return {
     type: TRANSACTIONS_SUCCESS,
     groupid,
-    response: json,
+    transactions: json.transactions,
     receivedAt: Date.now(),
   };
 }
@@ -71,7 +71,7 @@ function transactionSuccess(groupid, transactionid, json) {
     type: TRANSACTION_SUCCESS,
     groupid,
     transactionid,
-    response: json,
+    transactions: json.transactions,
     receivedAt: Date.now(),
   };
 }
@@ -164,11 +164,14 @@ export function createTransaction(groupid, transaction) {
   };
 }
 
-function receiveCreateTransaction(groupid, json) {
+function receiveCreateTransaction(groupid, transaction) {
+  const transactions = {
+    [transaction.id]: transaction
+  };
   return {
     type: CREATE_TRANSACTION_SUCCESS,
     groupid,
-    response: json,
+    transactions,
     receivedAt: Date.now(),
   };
 }

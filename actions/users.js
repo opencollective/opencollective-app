@@ -34,10 +34,11 @@ export function fetchUserGroups(userid) {
 }
 
 function receiveUserGroups(userid, json) {
+  console.log('json', json);
   return {
     type: USER_GROUPS_SUCCESS,
     userid,
-    response: json,
+    groups: json.groups,
     receivedAt: Date.now(),
   };
 }
@@ -51,7 +52,7 @@ export function fetchUserGroupsAndTransactions(userid) {
   return dispatch => {
     return dispatch(fetchUserGroups(userid))
     .then((json) => {
-      const groupids = keys(json.response.groups);
+      const groupids = keys(json.groups);
       const promises = groupids.map((groupid) => dispatch(fetchTransactions(groupid)));
       return Promise.all(promises);
     })
@@ -66,7 +67,7 @@ function receiveUserTransactions(userid, json) {
   return {
     type: USER_TRANSACTIONS_SUCCESS,
     userid,
-    response: json.response,
+    transactions: json.transactions,
     receivedAt: Date.now(),
   };
 }
@@ -128,6 +129,6 @@ function userInfoFailure() {
 function userInfoSuccess(json) {
   return {
     type: USER_INFO_SUCCESS,
-    json,
+    info: json,
   };
 }

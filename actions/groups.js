@@ -23,7 +23,7 @@ function receiveGroup(id, json) {
   return {
     type: GROUP_SUCCESS,
     id,
-    response: json,
+    groups: json.groups,
     receivedAt: Date.now(),
   };
 }

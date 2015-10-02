@@ -11,15 +11,15 @@ export default function users(state = initialState, action) {
   switch (action.type) {
 
     case USER_GROUPS_SUCCESS:
-      const groups = action.response.groups;
+      const groups = action.groups;
       return merge({}, state, {groups});
 
     case USER_TRANSACTIONS_SUCCESS:
-      const transactions = action.response.transactions;
+      const transactions = action.transactions;
       return merge({}, state, {transactions});
 
     case USER_INFO_SUCCESS:
-      const info = action.json;
+      const info = action.info;
       return merge({}, state, {info});
 
     default:

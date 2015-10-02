@@ -13,11 +13,9 @@ export default function transactions(state = initialState, action) {
 
     case TRANSACTIONS_SUCCESS:
     case TRANSACTION_SUCCESS:
-      return merge({}, state, action.response.transactions);
-
     case CREATE_TRANSACTION_SUCCESS:
-      console.log('CREATE_TRANSACTION_SUCCESS', state);
-      return state;
+      return merge({}, state, action.transactions);
+
     default:
       return state;
   }
