@@ -16,7 +16,8 @@ export const USER_GROUPS_SUCCESS = 'USER_GROUPS_SUCCESS';
 export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
 
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
 
 export const USER_INFO_SUCCESS = 'USER_INFO_SUCCESS';
 export const USER_INFO_FAILURE = 'USER_INFO_FAILURE';
@@ -78,7 +79,8 @@ export function login(email, password) {
   return dispatch => {
     const api_key = env.API_KEY;
     return postJSON('authenticate', {email, password, api_key})
-      .then(json => dispatch(loginSuccess(json)));
+      .then(json => dispatch(loginSuccess(json)))
+      .catch(err => dispatch(loginFailure(err.message)));
   };
 }
 
@@ -87,8 +89,16 @@ function loginSuccess(json) {
   localStorage.setItem('refreshToken', json.refresh_token);
 
   return {
-    type: LOGIN_SUCCESS,
+    type: USER_LOGIN_SUCCESS,
     json,
+    receivedAt: Date.now(),
+  };
+}
+
+function loginFailure(error) {
+  return {
+    type: USER_LOGIN_FAILURE,
+    error,
     receivedAt: Date.now(),
   };
 }

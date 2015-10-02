@@ -46,10 +46,10 @@ function transactionsSuccess(groupid, json) {
   };
 }
 
-function transactionsFailure(message) {
+function transactionsFailure(error) {
   return {
     type: TRANSACTIONS_FAILURE,
-    message,
+    error,
     receivedAt: Date.now(),
   };
 }
@@ -76,10 +76,10 @@ function transactionSuccess(groupid, transactionid, json) {
   };
 }
 
-function transactionFailure(message) {
+function transactionFailure(error) {
   return {
     type: TRANSACTION_FAILURE,
-    message,
+    error,
     receivedAt: Date.now(),
   };
 }
@@ -109,10 +109,10 @@ function approveTransactionSuccess(groupid, transactionid, json) {
   };
 }
 
-function approveTransactionFailure(message) {
+function approveTransactionFailure(error) {
   return {
     type: APPROVE_TRANSACTION_FAILURE,
-    message,
+    error,
     receivedAt: Date.now(),
   };
 }
@@ -142,10 +142,10 @@ function rejectTransactionSuccess(groupid, transactionid, json) {
   };
 }
 
-function rejectTransactionFailure(message) {
+function rejectTransactionFailure(error) {
   return {
     type: REJECT_TRANSACTION_FAILURE,
-    message,
+    error,
     receivedAt: Date.now(),
   };
 }
@@ -173,10 +173,10 @@ function receiveCreateTransaction(groupid, json) {
   };
 }
 
-function failureCreateTransaction(message) {
+function failureCreateTransaction(error) {
   return {
     type: CREATE_TRANSACTION_FAILURE,
-    message,
+    error,
     receivedAt: Date.now(),
   };
 }
