@@ -17,7 +17,7 @@ export default connect((store) => {
   return {
     groups: store.users.groups,
     transactions: store.users.transactions,
-    user: store.users.info
+    user: store.users.info,
   };
 }, (dispatch) => {
   return bindActionCreators({fetchUserGroupsAndTransactions}, dispatch);

@@ -6,7 +6,7 @@ class TransactionNew extends Component {
   constructor(props) {
     super(props);
     const data = {
-      link: ''
+      link: '',
     };
     this.state = data;
   }
@@ -45,7 +45,7 @@ class TransactionNew extends Component {
     this.createTransaction({
       amount,
       description,
-      link
+      link,
     });
   }
 

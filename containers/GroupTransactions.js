@@ -18,7 +18,6 @@ class GroupTransactions extends Component {
       text: 'New',
     };
 
-
     return (
       <div>
         <Header title={group.name} hasBackButton={false} rightButton={rightButton}/>

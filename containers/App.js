@@ -5,7 +5,7 @@ import { loadUserInfo } from '../actions/users';
 class App extends Component {
   componentWillMount() {
     const {dispatch} = this.props;
-    dispatch(loadUserInfo());
+    dispatch(loadUserInfo())
   }
 
   render() {

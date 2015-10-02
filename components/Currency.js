@@ -15,13 +15,13 @@ const Currency = React.createClass({
 
   propTypes: {
     currency: React.PropTypes.string,
-    value: React.PropTypes.number.isRequired
+    value: React.PropTypes.number.isRequired,
   },
 
   getDefaultProps() {
     return {
       currency: 'USD',
-      value: 0
+      value: 0,
     };
   },
 

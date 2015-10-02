@@ -70,17 +70,16 @@ function receiveUserTransactions(userid, json) {
   };
 }
 
-
 /**
  * Authenticate user
  */
 
 export function login(email, password) {
-    return dispatch => {
-      const api_key = env.api_key;
-      return postJSON('authenticate', {email, password, api_key})
-        .then(json => dispatch(loginSuccess(json)));
-    };
+  return dispatch => {
+    const api_key = env.API_KEY;
+    return postJSON('authenticate', {email, password, api_key})
+      .then(json => dispatch(loginSuccess(json)));
+  };
 }
 
 function loginSuccess(json) {
@@ -94,24 +93,31 @@ function loginSuccess(json) {
   };
 }
 
-
 /**
  * Load info from JWT if it exists
  */
 
 export function loadUserInfo() {
   const accessToken = localStorage.getItem('accessToken');
-  const json = jwtDecode(accessToken);
 
-  if (json.id) {
-    return {
-      type: USER_INFO_SUCCESS,
-      json
-    };
-  } else {
-    return {
-      type: USER_INFO_FAILURE
-    };
+  if (!accessToken) {
+    return userInfoFailure();
   }
+
+  const json = jwtDecode(accessToken);
+  return json.id ? userInfoSuccess(json) : userInfoFailure();
 }
 
+function userInfoFailure() {
+  window.location = '#/login';
+  return {
+    type: USER_INFO_FAILURE,
+  };
+}
+
+function userInfoSuccess(json) {
+  return {
+    type: USER_INFO_SUCCESS,
+    json,
+  };
+}
