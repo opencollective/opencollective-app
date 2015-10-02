@@ -22,8 +22,8 @@ class GroupsList extends Component {
   }
 
   componentDidMount() {
-    const { fetchUserGroupsAndTransactions } = this.props;
-    fetchUserGroupsAndTransactions('1');
+    const { fetchUserGroupsAndTransactions, user } = this.props;
+    fetchUserGroupsAndTransactions(user.id);
   }
 }
 

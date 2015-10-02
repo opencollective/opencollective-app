@@ -1,7 +1,9 @@
 import keys from 'lodash/object/keys';
 import merge from 'lodash/object/merge';
+import jwtDecode from 'jwt-decode';
 import { fetchTransactions } from './transactions';
-import { get } from '../lib/api';
+import { get, postJSON } from '../lib/api';
+import env from '../lib/env';
 import Schemas from '../lib/schemas';
 
 /**
@@ -13,6 +15,11 @@ export const USER_GROUPS_SUCCESS = 'USER_GROUPS_SUCCESS';
 
 export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
+
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
+export const USER_INFO_SUCCESS = 'USER_INFO_SUCCESS';
+export const USER_INFO_FAILURE = 'USER_INFO_FAILURE';
 
 /**
  * Fetch all the groups from a user
@@ -62,3 +69,49 @@ function receiveUserTransactions(userid, json) {
     receivedAt: Date.now(),
   };
 }
+
+
+/**
+ * Authenticate user
+ */
+
+export function login(email, password) {
+    return dispatch => {
+      const api_key = env.api_key;
+      return postJSON('authenticate', {email, password, api_key})
+        .then(json => dispatch(loginSuccess(json)));
+    };
+}
+
+function loginSuccess(json) {
+  localStorage.setItem('accessToken', json.access_token);
+  localStorage.setItem('refreshToken', json.refresh_token);
+
+  return {
+    type: LOGIN_SUCCESS,
+    json,
+    receivedAt: Date.now(),
+  };
+}
+
+
+/**
+ * Load info from JWT if it exists
+ */
+
+export function loadUserInfo() {
+  const accessToken = localStorage.getItem('accessToken');
+  const json = jwtDecode(accessToken);
+
+  if (json.id) {
+    return {
+      type: USER_INFO_SUCCESS,
+      json
+    };
+  } else {
+    return {
+      type: USER_INFO_FAILURE
+    };
+  }
+}
+

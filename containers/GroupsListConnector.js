@@ -14,10 +14,10 @@ class GroupsListConnector extends Component {
 }
 
 export default connect((store) => {
-  var userid = '1';
   return {
-    groups: store.users[userid] ? store.users[userid].groups : {},
-    transactions: store.users[userid] ? store.users[userid].transactions : {},
+    groups: store.users.groups,
+    transactions: store.users.transactions,
+    user: store.users.info
   };
 }, (dispatch) => {
   return bindActionCreators({fetchUserGroupsAndTransactions}, dispatch);
