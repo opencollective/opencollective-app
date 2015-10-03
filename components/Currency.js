@@ -1,10 +1,5 @@
 import React from 'react';
-// Fixes https://github.com/yahoo/react-intl/issues/100 for Safari
-import Intl from 'intl';
-import ReactIntl from 'react-intl';
-
-const IntlMixin = ReactIntl.IntlMixin;
-const FormattedNumber = ReactIntl.FormattedNumber;
+import Numeral from 'numeral';
 
 /**
  * No Mixins
@@ -13,25 +8,24 @@ const FormattedNumber = ReactIntl.FormattedNumber;
  */
 
 const Currency = React.createClass({
-  mixins: [IntlMixin],
 
   propTypes: {
-    currency: React.PropTypes.string,
-    value: React.PropTypes.number.isRequired,
+    value: React.PropTypes.number.isRequired
   },
 
   getDefaultProps() {
     return {
-      currency: 'USD',
       value: 0,
     };
   },
 
   render() {
-    const {currency, value} = this.props;
+    const {value} = this.props;
+    const number = Numeral(value);
+    const formatted = number.format('$0,0.00');
     return (
       <span>
-        <FormattedNumber value={value} style='currency' currency={currency} />
+        {formatted}
       </span>
     );
   },

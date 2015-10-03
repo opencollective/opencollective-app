@@ -12,6 +12,7 @@ import Schemas from '../lib/schemas';
 
 export const USER_GROUPS_REQUEST = 'USER_GROUPS_REQUEST';
 export const USER_GROUPS_SUCCESS = 'USER_GROUPS_SUCCESS';
+export const USER_GROUPS_FAILURE = 'USER_GROUPS_FAILURE';
 
 export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
@@ -29,16 +30,24 @@ export const USER_INFO_FAILURE = 'USER_INFO_FAILURE';
 export function fetchUserGroups(userid) {
   return dispatch => {
     return get(`users/${userid}/groups`, Schemas.GROUP_ARRAY)
-      .then(json => dispatch(receiveUserGroups(userid, json)));
+      .then(json => dispatch(userGroupsSuccess(userid, json)))
+      .catch(err => dispatch(userGroupsFailure(err)));
   };
 }
 
-function receiveUserGroups(userid, json) {
-  console.log('json', json);
+function userGroupsSuccess(userid, json) {
   return {
     type: USER_GROUPS_SUCCESS,
     userid,
     groups: json.groups,
+    receivedAt: Date.now(),
+  };
+}
+
+function userGroupsFailure(error) {
+  return {
+    type: USER_GROUPS_FAILURE,
+    error,
     receivedAt: Date.now(),
   };
 }
