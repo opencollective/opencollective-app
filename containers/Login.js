@@ -41,6 +41,7 @@ class Login extends Component {
     .then(response => {
       if (!response.error) {
         window.location = '#/';
+        window.location.reload();
       } else {
         this.setState({
           notification: {
