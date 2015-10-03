@@ -1,4 +1,6 @@
 import React from 'react';
+// Fixes https://github.com/yahoo/react-intl/issues/100 for Safari
+import Intl from 'intl';
 import ReactIntl from 'react-intl';
 
 const IntlMixin = ReactIntl.IntlMixin;
