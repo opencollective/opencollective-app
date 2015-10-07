@@ -1,0 +1,11 @@
+body {
+  color: var(--dark-gray);
+}
+
+a {
+  color: var(--light-blue);
+}
+
+.Content {
+  padding-top: var(--header-height);
+}

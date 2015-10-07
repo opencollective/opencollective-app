@@ -8,9 +8,8 @@ class ApproveButton extends Component {
   }
 
   render() {
-    const className = 'btn btn-primary mb1 px4 py3 bg-green';
     return (
-      <div ref='button' className={className} onClick={this.handleClick.bind(this)}>
+      <div className='btn ApproveButton' onClick={this.handleClick.bind(this)}>
         Approve
       </div>
     );

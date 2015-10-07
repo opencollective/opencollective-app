@@ -1,0 +1,16 @@
+.Well {
+  background-color: var(--light-gray);
+  padding: var(--spacing);
+  border-bottom: 1px solid var(--gray);
+}
+
+.Well-left {
+  text-transform: uppercase;
+  color: var(--light-blue);
+  font-weight: bold;
+}
+
+.Well-right {
+  color: var(--dark-gray);
+  float: right;
+}

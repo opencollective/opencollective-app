@@ -3,21 +3,26 @@
   "browserify": {
     "transform": [
       "babelify",
-      "envify"
+      "envify",
+      "cssnextify"
     ]
   },
   "scripts": {
-    "build": "NODE_ENV=production browserify main.js | uglifyjs -cm > public/bundle.js",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "NODE_ENV=production browserify main.js | uglifyjs -cm > public/bundle.js",
+    "build:css": "cssnext public/css/main.css public/build.css",
     "start": "ecstatic -p 8000 public",
-    "watch": "NODE_ENV=development watchify main.js -o public/bundle.js -dv",
     "hint": "./node_modules/.bin/jscs **/*.js --config=.jscsrc",
     "postinstall": "npm run build",
-    "test": "mocha --compilers js:babel/register --recursive"
+    "test": "mocha --compilers js:babel/register --recursive",
+    "watch:css": "cssnext --watch public/css/main.css public/build.css",
+    "watch:js": "NODE_ENV=development watchify main.js -o public/bundle.js -dv"
   },
   "dependencies": {
     "babelify": "^6.1.3",
     "basscss": "^7.0.4",
     "browserify": "^10.2.6",
+    "cssnextify": "^1.0.3",
     "ecstatic": "~0.8.0",
     "envify": "^3.4.0",
     "express": "^4.13.3",
@@ -34,7 +39,8 @@
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^1.0.0",
     "uglify-js": "^2.4.24",
-    "watchify": "^3.2.3"
+    "watchify": "^3.2.3",
+    "cssnext": "^1.8.4"
   },
   "devDependencies": {
     "babel": "^5.8.23",

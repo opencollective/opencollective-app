@@ -1,0 +1,21 @@
+.Transaction {
+  color: green;
+  padding: var(--spacing);
+  border-bottom: 1px solid var(--gray);
+  cursor: pointer;
+}
+
+.Transaction a {
+  display: inline-block;
+  width: 100%;
+}
+
+.Transaction-description {
+  text-transform: uppercase;
+  color: var(--dark-gray);
+  text-weight: bold;
+}
+
+.Transaction-amount {
+  float: right;
+}

@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import BackButton from './BackButton';
 import Currency from './Currency';
+import Well from './Well';
 
 class GroupTitle extends Component {
   render() {
-    const {group} = this.props;
+    const { group } = this.props;
+    const rightText = <Currency value={group.budgetLeft} />;
 
     return (
-      <div className='border-bottom px2 py3 bold bg-silver'>
-        Available budget
-        <span className='right'>
-          <Currency value={group.budgetLeft} />
-        </span>
+      <div>
+        <Well leftText='Available budget' rightText={rightText} />
       </div>
     );
   }

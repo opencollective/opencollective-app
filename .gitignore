@@ -28,3 +28,4 @@ node_modules
 
 # Build
 public/bundle.js
+public/build.css

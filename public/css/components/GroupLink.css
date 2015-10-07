@@ -1,0 +1,8 @@
+.GroupLink-name {
+  text-transform: uppercase;
+  color: var(--light-blue);
+}
+
+.GroupLink-balance {
+  float: right;
+}

@@ -9,11 +9,11 @@ class TransactionList extends Component {
     const transactionsArray = values(transactions);
 
     return (
-      <ul className='list-reset'>
+      <div>
         {transactionsArray.map(transaction => {
           return <Transaction {...transaction} groupid={groupid} key={transaction.id} />;
         })}
-      </ul>
+      </div>
     );
   }
 }

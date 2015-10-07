@@ -1,0 +1,18 @@
+.TransactionDetail {
+  padding: var(--spacing);
+}
+
+.TransactionDetail-image {
+  max-width: 100px;
+  float: left;
+}
+
+.TransactionDetail-price {
+  float: left;
+  padding-left: var(--spacing);
+  font-size: calc(var(--spacing) * 1.6);
+}
+
+.TransactionDetail-controls {
+  clear: both;
+}

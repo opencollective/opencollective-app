@@ -4,15 +4,17 @@ import Currency from './Currency';
 
 class GroupTitle extends Component {
   render() {
-    const {id, name, budget} = this.props;
+    const {id, name, budgetLeft} = this.props;
     const url = `/groups/${id}/transactions/`;
 
     return (
-      <div className='border-bottom px2 py2 bold bg-silver'>
+      <div className='Well GroupLink'>
         <Link to={url}>
-          {name}
-          <span className='right'>
-            Balance: <Currency value={budget} /> &#8250;
+          <span className='GroupLink-name'>
+            {name}
+          </span>
+          <span className='GroupLink-balance'>
+            <Currency value={budgetLeft} /> &#8250;
           </span>
         </Link>
       </div>

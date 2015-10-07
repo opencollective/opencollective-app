@@ -11,25 +11,13 @@ class Header extends Component {
   render() {
     const {title, hasBackButton, rightButton} = this.props;
     const backButton = hasBackButton ? <BackButton /> : undefined;
-    const rightButtonNode = rightButton ? <HeaderRightButton {...rightButton} /> : undefined;
 
     return (
-      <div className='clearfix black bg-white border-bottom'>
-        <div className='left'>
-          <div className='btn py2 m0'>
-            {backButton}
-          </div>
-        </div>
-        <div className='right'>
-          <div className='btn py2 m0'>
-            {rightButtonNode}
-          </div>
-        </div>
-        <div className='center'>
-          <div className='btn py2 m0'>
-            {title}
-          </div>
-        </div>
+      <div className='Header'>
+        <span className='Header-backButton'>
+          {backButton}
+        </span>
+        <div className='Header-title'>{title}</div>
       </div>
     );
   }

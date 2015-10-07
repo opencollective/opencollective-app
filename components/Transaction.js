@@ -6,17 +6,20 @@ class Transaction extends Component {
   render() {
     const {amount, description, id, groupid} = this.props;
     const url = `/groups/${groupid}/transactions/${id}`;
+
     return (
-      <li>
+      <div className='Transaction'>
         <Link to={url}>
-        <div className='border-bottom py2 px2'>
-          {description}
-          <span className='right'>
-          <Currency value={amount} />
+          <span className='Transaction-image'>
           </span>
-        </div>
+          <span className='Transaction-description'>
+            {description}
+          </span>
+          <span className='Transaction-amount'>
+            <Currency value={amount} />
+          </span>
         </Link>
-      </li>
+      </div>
     );
   }
 }

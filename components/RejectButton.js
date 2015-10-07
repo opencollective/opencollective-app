@@ -9,10 +9,8 @@ class RejectButton extends Component {
   }
 
   render() {
-    const className = 'btn btn-primary mb1 px4 py3 bg-red';
-
     return (
-      <div className={className} onClick={this.handleClick.bind(this)}>
+      <div className='btn RejectButton' onClick={this.handleClick.bind(this)}>
         Reject
       </div>
     );
