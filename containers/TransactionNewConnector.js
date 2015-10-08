@@ -4,15 +4,15 @@ import { createTransaction } from '../actions/transactions';
 import { uploadImage } from '../actions/images';
 import Header from '../components/Header';
 import ImageUpload from '../components/ImageUpload';
+import TextInput from '../components/TextInput';
+import MoneyInput from '../components/MoneyInput';
+import DatePicker from '../components/DatePicker';
 import Content from './Content';
 
 class TransactionNewConnector extends Component {
   constructor(props) {
     super(props);
-    const data = {
-      link: '',
-    };
-    this.state = data;
+    this.state =  { link: '' };
   }
 
   render() {
@@ -21,22 +21,21 @@ class TransactionNewConnector extends Component {
 
     return (
       <div>
-        <Header title='Submit Expense' hasBackButton={false} />
-
+        <Header title='Submit Expense' hasBackButton={true} />
         <Content>
-          <ImageUpload onFinished={this.handleUpload.bind(this)} />
-          <img src={this.state.link} />
+          <div className='padded'>
+            <ImageUpload {...this.props} onFinished={this.handleUpload.bind(this)} />
+            <img src={this.state.link} />
 
-          <form name='transaction' onSubmit={this.handleSubmit.bind(this)}>
-            <label>Amount</label>
-            <input ref='amount' name='amount' type='text' className='field block mb2' />
+            <form name='transaction' className='TransactionForm' onSubmit={this.handleSubmit.bind(this)}>
+              <TextInput labelText='Title' handleChange={this.handleDescription.bind(this)} />
+              <MoneyInput labelText='Amount' handleChange={this.handleAmount.bind(this)} />
+              <DatePicker labelText='Date' handleChange={this.handleDate.bind(this)} />
+              <TextInput labelText='Type' handleChange={this.handleType.bind(this)} />
 
-            <label>Description</label>
-            <input ref='description' name='description' type='text' className='field block mb2' />
-
-            <hr/>
-            <button type='submit' className='btn btn-primary block mt2'>Submit</button>
-          </form>
+              <button type='submit' className='Button Button--submit'>Submit</button>
+            </form>
+          </div>
         </Content>
       </div>
     );
@@ -45,9 +44,7 @@ class TransactionNewConnector extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const amount = React.findDOMNode(this.refs.amount).value.trim();
-    const description = React.findDOMNode(this.refs.description).value.trim();
-    const {link} = this.state;
+    const { link, amount, description } = this.state;
 
     this.createTransaction({
       amount,
@@ -56,9 +53,6 @@ class TransactionNewConnector extends Component {
     });
   }
 
-  handleUpload(image) {
-    this.setState({link: image.url});
-  }
 
   createTransaction(transaction) {
     const { createTransaction, routeParams} = this.props;
@@ -66,6 +60,16 @@ class TransactionNewConnector extends Component {
 
     createTransaction(groupid, transaction);
   }
+
+  handleDescription(description) { this.setState({description}); }
+
+  handleAmount(amount) { this.setState({amount}); }
+
+  handleDate(createdAt) { this.setState({createdAt}); }
+
+  handleUpload(image) { this.setState({link: image.url});}
+
+  handleType(tag) { this.setState({tags: [tag]}); }
 }
 
 export default connect(mapStateToProps, {

@@ -1,23 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Numeral from 'numeral';
 
-/**
- * No Mixins
- * Unfortunately ES6 launched without any mixin support.
- * Therefore, there is no support for mixins when you use React with ES6 classes.
- */
-
-const Currency = React.createClass({
+class Currency extends Component {
 
   propTypes: {
     value: React.PropTypes.number.isRequired
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      value: 0,
-    };
-  },
+  defaultProps: {
+    value: 0
+  }
 
   render() {
     const {value} = this.props;
@@ -28,7 +20,7 @@ const Currency = React.createClass({
         {formatted}
       </span>
     );
-  },
-});
+  }
+};
 
 export default Currency;

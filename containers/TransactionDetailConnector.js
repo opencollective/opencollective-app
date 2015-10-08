@@ -25,7 +25,7 @@ class TransactionDetailConnector extends Component {
           <Well leftText={transaction.description} rightText='3 days ago' />
           <div className='TransactionDetail'>
             <div className='TransactionDetail-image'>
-              <img src='http://s3-media2.fl.yelpcdn.com/bphoto/r69O_zl4aFe0vSFl8o0kbw/348s.jpg' />
+              <img src={transaction.link} />
             </div>
 
             <div className='TransactionDetail-price'>

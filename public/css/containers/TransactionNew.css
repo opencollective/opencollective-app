@@ -1,0 +1,19 @@
+.TransactionForm {
+  text-align: center;
+}
+
+.TransactionForm .Field {
+  width: 60%;
+}
+
+.TransactionForm .Label {
+  padding-right: var(--spacing);
+}
+
+.TransactionForm div {
+  text-align: right;
+}
+
+.TransactionForm .Button--submit {
+  margin-top: calc(var(--spacing)/2);
+}

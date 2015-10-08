@@ -4,6 +4,7 @@ body {
 
 a {
   color: var(--light-blue);
+  text-decoration: none;
 }
 
 .Content {

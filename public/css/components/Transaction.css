@@ -1,5 +1,4 @@
 .Transaction {
-  color: green;
   padding: var(--spacing);
   border-bottom: 1px solid var(--gray);
   cursor: pointer;
@@ -8,14 +7,39 @@
 .Transaction a {
   display: inline-block;
   width: 100%;
+  color: var(--dark-gray);
 }
 
 .Transaction-description {
   text-transform: uppercase;
   color: var(--dark-gray);
-  text-weight: bold;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.Transaction .Avatar {
+  float: left;
+}
+
+.Transaction-info {
+  float: left;
+  padding-left: var(--spacing);
+  padding-top: calc(var(--spacing)/2);
 }
 
 .Transaction-amount {
+  padding-top: calc(var(--spacing)/2);
+}
+
+.Transaction-status {
   float: right;
+  padding-top: calc(var(--spacing)/2);
+}
+
+.Transaction-created {
+  font-size: 12px;
+}
+
+.Transaction-approved {
+  padding-top: calc(var(--spacing)/2);
 }

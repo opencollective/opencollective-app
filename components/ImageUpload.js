@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 class ImageUpload extends Component {
   render() {
     return (
-      <div>
+      <div className='ImageUpload'>
+        Upload photo
         <input type='file' name='file' ref='file' onChange={this.handleChange.bind(this)} />
       </div>
     );

@@ -1,0 +1,21 @@
+.Button {
+  color: white;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  vertical-align: middle;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: calc(var(--spacing)/2) var(--spacing);
+}
+
+.Button--submit {
+  background-color: var(--orange);
+}
+
+.Button--approve {
+  background-color: var(--green);
+}
+
+.Button--reject {
+  background-color: var(--red);
+}

@@ -9,7 +9,7 @@ class ApproveButton extends Component {
 
   render() {
     return (
-      <div className='btn ApproveButton' onClick={this.handleClick.bind(this)}>
+      <div className='Button Button--approve' onClick={this.handleClick.bind(this)}>
         Approve
       </div>
     );
