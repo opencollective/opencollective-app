@@ -13,7 +13,9 @@ class GroupsListConnector extends Component {
   render() {
     const { groups, transactions } = this.props;
     const groupsNode = values(groups).map((group) => {
-      const groupTransactions = filter(transactions, {GroupId: group.id});
+      const groupTransactions = filter(transactions, {GroupId: group.id})
+        .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+
       return <Group {...group} transactions ={groupTransactions} key={group.id} />;
     });
 

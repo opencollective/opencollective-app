@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import moment from 'moment';
 import Currency from './Currency';
 import Avatar from './Avatar';
 
@@ -7,6 +8,7 @@ class Transaction extends Component {
   render() {
     const {amount, description, id, groupid, createdAt, approvedAt} = this.props;
     const url = `/groups/${groupid}/transactions/${id}`;
+    const date = createdAt ? moment(createdAt).fromNow() : '';
 
     return (
       <div className='Transaction'>
@@ -22,7 +24,7 @@ class Transaction extends Component {
           </div>
           <div className='Transaction-status'>
             <div className='Transaction-created'>
-              10:15 PM
+              {date}
             </div>
             <div className='Transaction-approved'>
               Approved

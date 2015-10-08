@@ -7,15 +7,16 @@ import { fetchGroup } from '../actions/groups';
 import TransactionList from '../components/TransactionsList';
 import Header from '../components/Header';
 import GroupTitle from '../components/GroupTitle';
-import GroupTransactions from './GroupTransactions';
 import Content from './Content';
 
 class GroupTransactionsConnector extends Component {
   render() {
     const { routeParams, groups, transactions } = this.props;
     const groupid = routeParams.groupid;
+    const GroupId = Number(groupid);
 
-    const groupTransactions = filter(transactions, {GroupId: Number(groupid)});
+    const groupTransactions = filter(transactions, {GroupId})
+      .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
     const group = groups[groupid] || {};
 
     return (
