@@ -31,9 +31,17 @@ export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE';
 
 export function fetchTransactions(groupid) {
   return dispatch => {
+    dispatch(transactionsRequest(groupid));
     return get(`groups/${groupid}/transactions`, Schemas.TRANSACTION_ARRAY)
       .then(json => dispatch(transactionsSuccess(groupid, json)))
-      .catch(err => dispatch(transactionsFailure(err.message)));
+      .catch(error => dispatch(transactionsFailure(error)));
+  };
+}
+
+function transactionsRequest(groupid) {
+  return {
+    type: TRANSACTIONS_REQUEST,
+    groupid
   };
 }
 
@@ -60,9 +68,18 @@ function transactionsFailure(error) {
 
 export function fetchTransaction(groupid, transactionid) {
   return dispatch => {
+    dispatch(transactionRequest(groupid, transactionid));
     return get(`groups/${groupid}/transactions/${transactionid}`, Schemas.TRANSACTION)
       .then(json => dispatch(transactionSuccess(groupid, transactionid, json)))
-      .catch(err => dispatch(transactionFailure(err.message)));
+      .catch(error => dispatch(transactionFailure(error)));
+  };
+}
+
+function transactionRequest(groupid, transactionid) {
+  return {
+    type: TRANSACTION_REQUEST,
+    groupid,
+    transactionid
   };
 }
 
@@ -90,12 +107,20 @@ function transactionFailure(error) {
 
 export function approveTransaction(groupid, transactionid) {
   const url = `groups/${groupid}/transactions/${transactionid}/approve`;
-  const body = {approved: true};
 
   return dispatch => {
-    return postJSON(url, body)
+    dispatch(approveTransactionRequest(groupid, transactionid));
+    return postJSON(url, {approved: true})
       .then(json => dispatch(approveTransactionSuccess(groupid, transactionid, json)))
-      .catch(err => dispatch(approveTransactionFailure(err.message)));
+      .catch(error => dispatch(approveTransactionFailure(error)));
+  };
+}
+
+function approveTransactionRequest(groupid, transactionid) {
+  return {
+    type: APPROVE_TRANSACTION_REQUEST,
+    groupid,
+    transactionid
   };
 }
 
@@ -123,12 +148,20 @@ function approveTransactionFailure(error) {
 
 export function rejectTransaction(groupid, transactionid) {
   const url = `groups/${groupid}/transactions/${transactionid}/approve`;
-  const body = {approved: false};
 
   return dispatch => {
-    return postJSON(url, body)
+    dispatch(rejectTransactionRequest(groupid, transactionid));
+    return postJSON(url, {approved: false})
       .then(json => dispatch(rejectTransactionSuccess(groupid, transactionid, json)))
-      .catch(err => dispatch(rejectTransactionFailure(err.message)));
+      .catch(error => dispatch(rejectTransactionFailure(error)));
+  };
+}
+
+function rejectTransactionRequest(groupid, transactionid) {
+  return {
+    type: REJECT_TRANSACTION_REQUEST,
+    groupid,
+    transactionid
   };
 }
 
@@ -158,13 +191,22 @@ export function createTransaction(groupid, transaction) {
   const url = `groups/${groupid}/transactions/`;
 
   return dispatch => {
+    dispatch(createTransactionRequest(groupid, transaction));
     return postJSON(url, {transaction})
-      .then(json => dispatch(receiveCreateTransaction(groupid, json)))
-      .catch(err => dispatch(failureCreateTransaction(err.message)));
+      .then(json => dispatch(createTransactionSuccess(groupid, json)))
+      .catch(error => dispatch(createTransactionFailure(error)));
   };
 }
 
-function receiveCreateTransaction(groupid, transaction) {
+function createTransactionRequest(groupid, transaction) {
+  return {
+    type: CREATE_TRANSACTION_REQUEST,
+    groupid,
+    transaction
+  };
+}
+
+function createTransactionSuccess(groupid, transaction) {
   const transactions = {
     [transaction.id]: transaction
   };
@@ -176,7 +218,7 @@ function receiveCreateTransaction(groupid, transaction) {
   };
 }
 
-function failureCreateTransaction(error) {
+function createTransactionFailure(error) {
   return {
     type: CREATE_TRANSACTION_FAILURE,
     error,

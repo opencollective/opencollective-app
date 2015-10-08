@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import GroupLink from './GroupLink';
 import TransactionsList from './TransactionsList';
 
 class Group extends Component {
+  propTypes: {
+    id: PropTypes.string.isRequired
+  }
+
   render() {
     const { id } = this.props;
 

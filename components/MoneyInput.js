@@ -3,6 +3,7 @@ import React, { Component, findDOMNode } from 'react';
 class MoneyInput extends Component {
   propTypes: {
     labelText: React.PropTypes.string.isRequired,
+    handleChange: React.PropTypes.func.isRequired
   }
 
   render() {
@@ -10,9 +11,7 @@ class MoneyInput extends Component {
 
     return (
       <div className='MoneyInput'>
-        <label className='Label'>
-          {labelText} ($):
-        </label>
+        <label className='Label'>{labelText} ($):</label>
         <input className='Field Field--MoneyInput' type='text' ref='input' onChange={this.handleChange.bind(this)} />
       </div>
     );

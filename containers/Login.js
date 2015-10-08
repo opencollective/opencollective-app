@@ -52,13 +52,13 @@ class Login extends Component {
 
   handleEmail(email) { this.setState({email}); }
 
-  handlePassword(password) { this.setState({password}) }
+  handlePassword(password) { this.setState({password}); }
 }
 
 export default connect(mapStateToProps, {
   login
 })(Login);
 
-function mapStateToProps () {
+function mapStateToProps() {
   return {};
 }

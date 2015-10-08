@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class ApproveButton extends Component {
   propTypes: {
-    groupid: React.PropTypes.string.isRequired,
-    transactionid: React.PropTypes.string.isRequired,
-    approveTransaction: React.PropTypes.func.isRequired,
+    groupid: PropTypes.string.isRequired,
+    transactionid: PropTypes.string.isRequired,
+    approveTransaction: PropTypes.func.isRequired,
   }
 
   render() {

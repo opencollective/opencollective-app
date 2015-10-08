@@ -11,11 +11,6 @@ class PaypalReminder extends Component {
       </div>
     );
   }
-
-  handleClick() {
-    const { rejectTransaction, groupid, transactionid } = this.props;
-    rejectTransaction(groupid, transactionid);
-  }
 }
 
 export default PaypalReminder;

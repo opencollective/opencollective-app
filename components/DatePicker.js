@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDatepicker from 'react-datepicker';
 
-
 class DatePicker extends Component {
   render() {
     const { labelText } = this.props;

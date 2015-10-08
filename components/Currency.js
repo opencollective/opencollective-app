@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Numeral from 'numeral';
 
 class Currency extends Component {
-
   propTypes: {
-    value: React.PropTypes.number.isRequired
+    value: PropTypes.number.isRequired
   }
 
   defaultProps: {

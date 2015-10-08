@@ -53,7 +53,6 @@ class TransactionNew extends Component {
     });
   }
 
-
   createTransaction(transaction) {
     const { createTransaction, routeParams} = this.props;
     const { groupid } = routeParams;

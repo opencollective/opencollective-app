@@ -1,6 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class TransactionStatus extends Component {
+  propTypes: {
+    approvedAt: PropTypes.string.isRequired,
+    approved: PropTypes.bool.isRequired
+  }
+
   render() {
     const { approvedAt, approved } = this.props;
 

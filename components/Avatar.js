@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 class Avatar extends Component {
+  propTypes: {
+    url: PropTypes.string.isRequired
+  }
+
   render() {
     const url = 'http://api.randomuser.me/portraits/women/39.jpg';
     return (

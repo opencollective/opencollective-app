@@ -1,8 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import Currency from './Currency';
 
 class GroupTitle extends Component {
+  propTypes: {
+    id: PropTypes.string.isRequired,
+    budget: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }
+
   render() {
     const { id, name, budget } = this.props;
     const url = `/groups/${id}/transactions/`;

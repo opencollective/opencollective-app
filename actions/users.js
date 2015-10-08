@@ -16,7 +16,9 @@ export const USER_GROUPS_FAILURE = 'USER_GROUPS_FAILURE';
 
 export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
+export const USER_TRANSACTIONS_FAILURE = 'USER_TRANSACTIONS_FAILURE';
 
+export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
 
@@ -29,9 +31,17 @@ export const USER_INFO_FAILURE = 'USER_INFO_FAILURE';
 
 export function fetchUserGroups(userid) {
   return dispatch => {
+    dispatch(userGroupsRequest(userid));
     return get(`users/${userid}/groups`, Schemas.GROUP_ARRAY)
       .then(json => dispatch(userGroupsSuccess(userid, json)))
       .catch(err => dispatch(userGroupsFailure(err)));
+  };
+}
+
+function userGroupsRequest(userid) {
+  return {
+    type: USER_GROUPS_REQUEST,
+    userid
   };
 }
 
@@ -59,6 +69,7 @@ function userGroupsFailure(error) {
 
 export function fetchUserGroupsAndTransactions(userid) {
   return dispatch => {
+    dispatch(userTransactionsRequest(userid));
     return dispatch(fetchUserGroups(userid))
     .then((json) => {
       const groupids = keys(json.groups);
@@ -67,19 +78,36 @@ export function fetchUserGroupsAndTransactions(userid) {
     })
     .then((json) => {
       const merged = merge.apply(null, json) || {};
-      dispatch(receiveUserTransactions(userid, merged));
-    });
+      dispatch(userTransactionsSuccess(userid, merged));
+    })
+    .catch(error => dispatch(userTransactionsFailure(error)));
   };
 }
 
-function receiveUserTransactions(userid, json) {
+function userTransactionsRequest(userid) {
+  return {
+    type: USER_TRANSACTIONS_REQUEST,
+    userid
+  };
+}
+
+function userTransactionsSuccess(userid, {transactions}) {
   return {
     type: USER_TRANSACTIONS_SUCCESS,
     userid,
-    transactions: json.transactions,
+    transactions,
     receivedAt: Date.now(),
   };
 }
+
+function userTransactionsFailure(error) {
+  return {
+    type: USER_TRANSACTIONS_FAILURE,
+    error,
+    receivedAt: Date.now(),
+  };
+}
+
 
 /**
  * Authenticate user
@@ -88,12 +116,19 @@ function receiveUserTransactions(userid, json) {
 export function login(email, password) {
   return dispatch => {
     const api_key = env.API_KEY;
+    dispatch(loginRequest(email));
     return postJSON('authenticate', {email, password, api_key})
       .then(json => dispatch(loginSuccess(json)))
       .catch(err => dispatch(loginFailure(err.message)));
   };
 }
 
+function loginRequest(email) {
+  return {
+    type: USER_LOGIN_REQUEST,
+    email
+  };
+}
 function loginSuccess(json) {
   localStorage.setItem('accessToken', json.access_token);
   localStorage.setItem('refreshToken', json.refresh_token);
@@ -118,6 +153,7 @@ function loginFailure(error) {
  */
 
 export function loadUserInfo() {
+
   const accessToken = localStorage.getItem('accessToken');
 
   if (!accessToken) {

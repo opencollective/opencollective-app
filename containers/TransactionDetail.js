@@ -67,7 +67,7 @@ export default connect(mapStateToProps, {
   fetchGroup,
 })(TransactionDetail);
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     groups: state.groups,
     transactions: state.transactions,

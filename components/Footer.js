@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 class Footer extends Component {
+  propTypes: {
+    groupid: PropTypes.string.isRequired
+  }
 
   render() {
     const { groupid } = this.props;
