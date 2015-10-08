@@ -9,7 +9,7 @@ import Header from '../components/Header';
 import Group from '../components/Group';
 import Footer from '../components/Footer';
 
-class GroupsListConnector extends Component {
+class GroupsList extends Component {
   render() {
     const { groups, transactions } = this.props;
     const groupsNode = values(groups).map((group) => {
@@ -37,7 +37,7 @@ class GroupsListConnector extends Component {
 
 export default connect(mapStateToProps, {
   fetchUserGroupsAndTransactions
-})(GroupsListConnector);
+})(GroupsList);
 
 function mapStateToProps(state) {
   return {

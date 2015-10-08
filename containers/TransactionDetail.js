@@ -9,7 +9,7 @@ import RejectButton from '../components/RejectButton';
 import Well from '../components/Well';
 import Content from './Content';
 
-class TransactionDetailConnector extends Component {
+class TransactionDetail extends Component {
   render() {
     const { groups, transactions, routeParams } = this.props;
     const { groupid, transactionid } = routeParams;
@@ -65,7 +65,7 @@ export default connect(mapStateToProps, {
   approveTransaction,
   rejectTransaction,
   fetchGroup,
-})(TransactionDetailConnector);
+})(TransactionDetail);
 
 function mapStateToProps (state) {
   return {

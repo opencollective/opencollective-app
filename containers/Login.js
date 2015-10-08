@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { login } from '../actions/users';
 import Header from '../components/Header';
 import Notification from '../components/Notification';
+import Input from '../components/Input';
 import Content from './Content';
 
-class LoginConnector extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {notification: {}};
@@ -17,18 +18,11 @@ class LoginConnector extends Component {
         <Header title='Login' />
         <Content>
           <Notification {...this.state.notification} />
-          <div className='px2 mt2'>
-            <form name='login' onSubmit={this.handleSubmit.bind(this)}>
-              <label>Email</label>
-              <input ref='email' name='email' type='email' placeholder='example@gmail.com' className='Field' />
-
-              <label>Password</label>
-              <input ref='password' name='password' type='password' placeholder='*******' className='Field' />
-
-              <hr/>
-              <button type='submit' className='Button'>Login</button>
-            </form>
-          </div>
+          <form name='login' onSubmit={this.handleSubmit.bind(this)} className='padded'>
+            <Input labelText='Email' type='email' handleChange={this.handleEmail.bind(this)} />
+            <Input labelText='Password' type='password' handleChange={this.handlePassword.bind(this)} />
+            <button type='submit' className='Button'>Login</button>
+          </form>
         </Content>
       </div>
     );
@@ -37,8 +31,7 @@ class LoginConnector extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const email = React.findDOMNode(this.refs.email).value.trim();
-    const password = React.findDOMNode(this.refs.password).value.trim();
+    const { email, password } = this.state;
     const { login } = this.props;
 
     login(email, password)
@@ -56,11 +49,15 @@ class LoginConnector extends Component {
       }
     });
   }
+
+  handleEmail(email) { this.setState({email}); }
+
+  handlePassword(password) { this.setState({password}) }
 }
 
 export default connect(mapStateToProps, {
   login
-})(LoginConnector);
+})(Login);
 
 function mapStateToProps () {
   return {};

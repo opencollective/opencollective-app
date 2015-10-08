@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 import GroupTitle from '../components/GroupTitle';
 import Content from './Content';
 
-class GroupTransactionsConnector extends Component {
+class GroupTransactions extends Component {
   render() {
     const { routeParams, groups, transactions } = this.props;
     const groupid = routeParams.groupid;
@@ -45,7 +45,7 @@ class GroupTransactionsConnector extends Component {
 export default connect(mapStateToProps, {
   fetchTransactions,
   fetchGroup,
-})(GroupTransactionsConnector);
+})(GroupTransactions);
 
 function mapStateToProps(state) {
   return {

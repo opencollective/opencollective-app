@@ -1,9 +1,10 @@
 import React, { Component, findDOMNode } from 'react';
 
-class TextInput extends Component {
+class Input extends Component {
   propTypes: {
     labelText: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string
+    handleChange: React.PropTypes.func.isRequired,
+    type: React.PropTypes.string,
   }
 
   defaultProps: {
@@ -11,14 +12,14 @@ class TextInput extends Component {
   }
 
   render() {
-    const { labelText } = this.props;
+    const { labelText, type } = this.props;
 
     return (
-      <div className='TextInput'>
+      <div className='Input'>
         <label className='Label'>
           {labelText}:
         </label>
-        <input className='Field' type='text' ref='input' onChange={this.handleChange.bind(this)} />
+        <input className='Field' type={type} ref='input' onChange={this.handleChange.bind(this)} />
       </div>
     );
   }
@@ -30,4 +31,4 @@ class TextInput extends Component {
   }
 }
 
-export default TextInput;
+export default Input;

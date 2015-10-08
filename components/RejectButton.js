@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { rejectTransaction } from '../actions/transactions';
 
 class RejectButton extends Component {
   propTypes: {

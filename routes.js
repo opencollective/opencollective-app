@@ -1,18 +1,18 @@
 import App from './containers/App';
-import GroupsListConnector from './containers/GroupsListConnector';
-import GroupTransactionsConnector from './containers/GroupTransactionsConnector';
-import TransactionNewConnector from './containers/TransactionNewConnector';
-import TransactionDetailConnector from './containers/TransactionDetailConnector';
-import LoginConnector from './containers/LoginConnector';
+import GroupsList from './containers/GroupsList';
+import GroupTransactions from './containers/GroupTransactions';
+import TransactionNew from './containers/TransactionNew';
+import TransactionDetail from './containers/TransactionDetail';
+import Login from './containers/Login';
 
 const routes = {
   component: App,
   childRoutes: [
-    { path: '/', component: GroupsListConnector },
-    { path: 'login', component: LoginConnector },
-    { path: 'groups/:groupid/transactions', component: GroupTransactionsConnector},
-    { path: 'groups/:groupid/transactions/new', component: TransactionNewConnector },
-    { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetailConnector }
+    { path: '/', component: GroupsList },
+    { path: 'login', component: Login },
+    { path: 'groups/:groupid/transactions', component: GroupTransactions},
+    { path: 'groups/:groupid/transactions/new', component: TransactionNew },
+    { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail }
   ]
 };
 
