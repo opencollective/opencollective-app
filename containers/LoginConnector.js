@@ -20,13 +20,13 @@ class LoginConnector extends Component {
           <div className='px2 mt2'>
             <form name='login' onSubmit={this.handleSubmit.bind(this)}>
               <label>Email</label>
-              <input ref='email' name='email' type='email' placeholder='example@gmail.com' className='field block mb2' />
+              <input ref='email' name='email' type='email' placeholder='example@gmail.com' className='Field' />
 
               <label>Password</label>
-              <input ref='password' name='password' type='password' placeholder='*******' className='field block mb2' />
+              <input ref='password' name='password' type='password' placeholder='*******' className='Field' />
 
               <hr/>
-              <button type='submit' className='btn btn-primary block mt2'>Login</button>
+              <button type='submit' className='Button'>Login</button>
             </form>
           </div>
         </Content>

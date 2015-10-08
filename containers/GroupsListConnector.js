@@ -23,7 +23,6 @@ class GroupsListConnector extends Component {
       <div>
         <Header title='Accounting' hasBackButton={false} />
         <Content> {groupsNode} </Content>
-        <Footer />
       </div>
     );
   }

@@ -6,6 +6,7 @@ import { fetchTransactions } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 import TransactionList from '../components/TransactionsList';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import GroupTitle from '../components/GroupTitle';
 import Content from './Content';
 
@@ -29,6 +30,7 @@ class GroupTransactionsConnector extends Component {
             <TransactionList transactions={groupTransactions} groupid={groupid} />
           </div>
         </Content>
+        <Footer groupid={groupid} />
       </div>
     );
   }

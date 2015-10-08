@@ -3,6 +3,11 @@ import React, { Component, findDOMNode } from 'react';
 class TextInput extends Component {
   propTypes: {
     labelText: React.PropTypes.string.isRequired,
+    type: React.PropTypes.string
+  }
+
+  defaultProps: {
+    type: 'text'
   }
 
   render() {

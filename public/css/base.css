@@ -9,4 +9,5 @@ a {
 
 .Content {
   padding-top: var(--header-height);
+  padding-bottom: var(--footer-height);
 }
