@@ -3,16 +3,29 @@
 }
 
 .TransactionDetail-image {
-  max-width: 100px;
   float: left;
 }
 
-.TransactionDetail-price {
+.TransactionDetail-image img {
+  max-width: 100px;
+}
+
+.TransactionDetail-info {
   float: left;
   padding-left: var(--spacing);
+}
+
+.TransactionDetail-price {
   font-size: calc(var(--spacing) * 1.6);
 }
 
 .TransactionDetail-controls {
   clear: both;
+  padding-top: var(--spacing);
+}
+
+.TransactionDetail-category {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  padding-top: var(--spacing);
 }

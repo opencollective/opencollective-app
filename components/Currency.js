@@ -14,7 +14,7 @@ class Currency extends Component {
   render() {
     const {value} = this.props;
     const number = Numeral(value);
-    const formatted = number.format('$0,0.00');
+    const formatted = number.format('$ 0,0.00');
     return (
       <span>
         {formatted}

@@ -5,6 +5,7 @@ import TransactionsList from './TransactionsList';
 class Group extends Component {
   render() {
     const { id } = this.props;
+
     return (
       <div>
         <GroupLink {...this.props} />

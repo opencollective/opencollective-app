@@ -24,13 +24,22 @@ class TransactionDetailConnector extends Component {
         <Content>
           <Well leftText={transaction.description} rightText='3 days ago' />
           <div className='TransactionDetail'>
+
             <div className='TransactionDetail-image'>
               <img src={transaction.link} />
             </div>
 
-            <div className='TransactionDetail-price'>
-              <Currency value={transaction.amount} />
+            <div className='TransactionDetail-info'>
+              <div className='TransactionDetail-price'>
+                <Currency value={transaction.amount} />
+              </div>
+
+              <div className='TransactionDetail-category'>
+                Category
+                (TO IMPLEMENT)
+              </div>
             </div>
+
 
             <div className='TransactionDetail-controls'>
               <ApproveButton groupid={groupid} transactionid={transactionid} {...this.props}/>

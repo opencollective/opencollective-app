@@ -4,7 +4,7 @@ import Currency from './Currency';
 
 class GroupTitle extends Component {
   render() {
-    const {id, name, budgetLeft} = this.props;
+    const { id, name, budget } = this.props;
     const url = `/groups/${id}/transactions/`;
 
     return (
@@ -14,7 +14,7 @@ class GroupTitle extends Component {
             {name}
           </span>
           <span className='GroupLink-balance'>
-            <Currency value={budgetLeft} /> &#8250;
+            <Currency value={budget} /> &#8250;
           </span>
         </Link>
       </div>

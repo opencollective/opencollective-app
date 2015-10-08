@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import Currency from './Currency';
+import TransactionStatus from './TransactionStatus';
 import Avatar from './Avatar';
 
 class Transaction extends Component {
@@ -27,7 +28,7 @@ class Transaction extends Component {
               {date}
             </div>
             <div className='Transaction-approved'>
-              Approved
+              <TransactionStatus {...this.props} />
             </div>
           </div>
         </Link>

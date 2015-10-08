@@ -6,7 +6,7 @@ import Well from './Well';
 class GroupTitle extends Component {
   render() {
     const { group } = this.props;
-    const rightText = <Currency value={group.budgetLeft} />;
+    const rightText = <Currency value={group.budget} />;
 
     return (
       <div>

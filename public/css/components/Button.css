@@ -6,6 +6,7 @@
   text-transform: uppercase;
   font-weight: bold;
   padding: calc(var(--spacing)/2) var(--spacing);
+  text-align: center;
 }
 
 .Button--submit {
@@ -14,8 +15,17 @@
 
 .Button--approve {
   background-color: var(--green);
+  margin-right: calc(var(--spacing)/2);
 }
 
 .Button--reject {
   background-color: var(--red);
+  margin-left: calc(var(--spacing)/2);
+}
+
+.Button--approve,
+.Button--reject {
+  box-sizing: border-box;
+  width: calc(50% - calc(var(--spacing)/2));
+  float: left;
 }

@@ -1,6 +1,6 @@
 .Well {
   background-color: var(--light-gray);
-  padding: var(--spacing);
+  padding: calc(var(--spacing) * 1.5) var(--spacing);
   border-bottom: 1px solid var(--gray);
 }
 

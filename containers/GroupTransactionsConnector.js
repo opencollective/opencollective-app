@@ -21,7 +21,7 @@ class GroupTransactionsConnector extends Component {
 
     return (
       <div className='GroupTransactions'>
-        <Header title={group.name} hasBackButton={false} />
+        <Header title={group.name} hasBackButton={true} />
         <Content>
           <GroupTitle group={group} />
           <div className='GroupTransactions-list'>
