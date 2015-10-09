@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
 class ImageUpload extends Component {
   propTypes: {
@@ -17,7 +18,7 @@ class ImageUpload extends Component {
 
   handleChange(e) {
     const { onFinished, uploadImage } = this.props;
-    const file = React.findDOMNode(this.refs.file).files[0];
+    const file = ReactDOM.findDOMNode(this.refs.file).files[0];
 
     const formData = new FormData();
     formData.append('file', file);

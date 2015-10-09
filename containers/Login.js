@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
 import { login } from '../actions/users';
 import Header from '../components/Header';
 import Notification from '../components/Notification';
@@ -56,7 +57,8 @@ class Login extends Component {
 }
 
 export default connect(mapStateToProps, {
-  login
+  login,
+  pushState
 })(Login);
 
 function mapStateToProps() {

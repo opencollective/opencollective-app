@@ -36,7 +36,6 @@ class TransactionDetail extends Component {
               </div>
             </div>
 
-
             <div className='TransactionDetail-controls'>
               <ApproveButton groupid={group.id} transactionid={transaction.id} {...this.props}/>
               <RejectButton groupid={group.id} transactionid={transaction.id} {...this.props}/>
