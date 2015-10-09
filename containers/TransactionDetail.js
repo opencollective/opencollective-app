@@ -11,11 +11,7 @@ import Content from './Content';
 
 class TransactionDetail extends Component {
   render() {
-    const { groups, transactions, routeParams } = this.props;
-    const { groupid, transactionid } = routeParams;
-
-    const transaction = transactions[transactionid] || {};
-    const group = groups[groupid] || {};
+    const { group, transaction } = this.props;
 
     return (
       <div>
@@ -42,8 +38,8 @@ class TransactionDetail extends Component {
 
 
             <div className='TransactionDetail-controls'>
-              <ApproveButton groupid={groupid} transactionid={transactionid} {...this.props}/>
-              <RejectButton groupid={groupid} transactionid={transactionid} {...this.props}/>
+              <ApproveButton groupid={group.id} transactionid={transaction.id} {...this.props}/>
+              <RejectButton groupid={group.id} transactionid={transaction.id} {...this.props}/>
             </div>
           </div>
         </Content>
@@ -68,8 +64,12 @@ export default connect(mapStateToProps, {
 })(TransactionDetail);
 
 function mapStateToProps(state) {
+  const { transactionid, groupid } = state.router.params;
+
   return {
-    groups: state.groups,
-    transactions: state.transactions,
+    groupid,
+    transactionid,
+    group: state.groups[groupid] || {},
+    transaction: state.transactions[transactionid] || {},
   };
 }

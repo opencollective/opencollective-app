@@ -15,7 +15,7 @@ class GroupTitle extends Component {
 
     return (
       <div className='Well GroupLink'>
-        <Link to={url}>
+        <Link to={url} params={{groupid: id}}>
           <span className='GroupLink-name'>
             {name}
           </span>

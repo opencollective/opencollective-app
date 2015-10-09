@@ -13,8 +13,7 @@ import Content from './Content';
 
 class GroupTransactions extends Component {
   render() {
-    let { group, groupid, transactions, routeParams } = this.props;
-    groupid = groupid || routeParams.groupid; // when transitioning, router.params is empty
+    let { group, groupid, transactions } = this.props;
     return (
       <div className='GroupTransactions'>
         <Header title={group.name} hasBackButton={true} />
@@ -31,9 +30,9 @@ class GroupTransactions extends Component {
   }
 
   componentDidMount() {
-    const { fetchGroup, fetchTransactions, routeParams } = this.props;
-    fetchGroup(routeParams.groupid);
-    fetchTransactions(routeParams.groupid);
+    const { fetchGroup, fetchTransactions, groupid } = this.props;
+    fetchGroup(groupid);
+    fetchTransactions(groupid);
   }
 }
 
@@ -47,7 +46,6 @@ function mapStateToProps(state) {
   return {
     groupid,
     group: state.groups[groupid] || {},
-    transactions: filter(state.transactions, {GroupId: groupid}).sort(sortByDate),
-    transactions: state.transactions,
+    transactions: filter(state.transactions, {GroupId: Number(groupid)}).sort(sortByDate)
   };
 }
