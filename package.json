@@ -1,5 +1,5 @@
 {
-  "name": "react-starter-es6-babel",
+  "name": "OpenCollective Mobile app",
   "browserify": {
     "transform": [
       "babelify",

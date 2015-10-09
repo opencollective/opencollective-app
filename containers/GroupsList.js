@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import values from 'lodash/object/values';
+import extend from 'lodash/object/extend';
 import filter from 'lodash/collection/filter';
 import { fetchUserGroupsAndTransactions } from '../actions/users';
 import { fetchTransactions } from '../actions/transactions';
@@ -8,21 +9,18 @@ import Content from './Content';
 import Header from '../components/Header';
 import Group from '../components/Group';
 import Footer from '../components/Footer';
+import sortByDate from '../lib/sort_by_date';
 
 class GroupsList extends Component {
   render() {
-    const { groups, transactions } = this.props;
-    const groupsNode = values(groups).map((group) => {
-      const groupTransactions = filter(transactions, {GroupId: group.id})
-        .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-      return <Group {...group} transactions ={groupTransactions} key={group.id} />;
-    });
-
     return (
       <div>
         <Header title='Accounting' hasBackButton={false} />
-        <Content> {groupsNode} </Content>
+        <Content>
+        {this.props.groups.map(group => {
+          return <Group {...group} transactions ={group.transactions} key={group.id} />
+        })}
+        </Content>
       </div>
     );
   }
@@ -40,9 +38,14 @@ export default connect(mapStateToProps, {
 })(GroupsList);
 
 function mapStateToProps(state) {
+  const groups = values(state.users.groups).map((group) => {
+    const GroupId = group.id;
+    const transactions = filter(state.users.transactions, { GroupId }).sort(sortByDate);
+    return extend(group, { transactions });
+  });
+
   return {
-    groups: state.users.groups,
-    transactions: state.users.transactions,
+    groups,
     user: state.users.info,
   };
 }
