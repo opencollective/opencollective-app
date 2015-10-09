@@ -14,8 +14,8 @@ class Transaction extends Component {
   }
 
   render() {
-    const {amount, description, id, groupid, createdAt, approvedAt} = this.props;
-    const url = `/groups/${groupid}/transactions/${id}`;
+    const {amount, description, id, GroupId, createdAt} = this.props;
+    const url = `/groups/${GroupId}/transactions/${id}`;
     const date = createdAt ? moment(createdAt).fromNow() : '';
 
     return (

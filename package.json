@@ -1,5 +1,5 @@
 {
-  "name": "OpenCollective Mobile app",
+  "name": "open-collective-mobile-app",
   "browserify": {
     "transform": [
       "babelify",
@@ -8,8 +8,8 @@
     ]
   },
   "scripts": {
-    "start": "ecstatic -p 8000 public",
-    "dev": "foreman start -f Procfile_dev",
+    "start": "node server",
+    "dev": "PORT=3000 foreman start -f Procfile_dev",
     "test": "mocha --compilers js:babel/register --recursive",
     "hint": "./node_modules/.bin/jscs **/*.js --config=.jscsrc",
     "build": "npm run build:js && npm run build:css",
@@ -37,7 +37,7 @@
     "react": "~0.13.3",
     "react-datepicker": "^0.13.0",
     "react-redux": "^3.0.1",
-    "react-router": "^1.0.0-rc1",
+    "react-router": "^1.0.0-rc3",
     "redux": "^3.0.2",
     "redux-logger": "^2.0.0",
     "redux-router": "^1.0.0-beta3",

@@ -1,14 +1,20 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { reduxReactRouter } from 'redux-router';
+import createHistory from 'history/lib/createBrowserHistory';
 import createLogger from 'redux-logger';
-import thunkMiddleware from 'redux-thunk';
+import thunk from 'redux-thunk';
 import * as reducers from '../reducers/index';
+import routes from '../routes';
 
 const combinedReducers = combineReducers(reducers);
-const loggerMiddleware = createLogger();
+const logger = createLogger();
 
-const createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware, // lets us dispatch() functions
-  loggerMiddleware // neat middleware that logs actions
-)(createStore);
+const store = compose(
+  applyMiddleware(thunk, logger),
+  reduxReactRouter({
+    routes,
+    createHistory
+  })
+)(createStore)(combinedReducers);
 
-export default () => createStoreWithMiddleware(combinedReducers);
+export default () => store;

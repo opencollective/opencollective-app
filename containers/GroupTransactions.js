@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import filter from 'lodash/collection/filter';
+import sortByDate from '../lib/sort_by_date';
 import { fetchTransactions } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 import TransactionList from '../components/TransactionsList';
@@ -12,22 +13,16 @@ import Content from './Content';
 
 class GroupTransactions extends Component {
   render() {
-    const { routeParams, groups, transactions } = this.props;
-    const groupid = routeParams.groupid;
-    const GroupId = Number(groupid);
-
-    const groupTransactions = filter(transactions, {GroupId})
-      .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-    const group = groups[groupid] || {};
-
+    let { group, groupid, transactions, routeParams } = this.props;
+    groupid = groupid || routeParams.groupid; // when transitioning, router.params is empty
     return (
       <div className='GroupTransactions'>
         <Header title={group.name} hasBackButton={true} />
         <Content>
           <GroupTitle group={group} />
-          <div className='GroupTransactions-list'>
+          <div className='padded'>
             <div className='GroupTransactions-title'>Activity Detail</div>
-            <TransactionList transactions={groupTransactions} groupid={groupid} />
+            <TransactionList transactions={transactions} />
           </div>
         </Content>
         <Footer groupid={groupid} />
@@ -48,8 +43,11 @@ export default connect(mapStateToProps, {
 })(GroupTransactions);
 
 function mapStateToProps(state) {
+  const groupid = state.router.params.groupid;
   return {
-    groups: state.groups,
+    groupid,
+    group: state.groups[groupid] || {},
+    transactions: filter(state.transactions, {GroupId: groupid}).sort(sortByDate),
     transactions: state.transactions,
   };
 }
