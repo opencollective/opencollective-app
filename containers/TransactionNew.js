@@ -11,10 +11,6 @@ import SelectTag from '../components/SelectTag';
 import Content from './Content';
 
 class TransactionNew extends Component {
-  componentDidMount() {
-    this.props.resetTransactionForm();
-  }
-
   render() {
     const { transaction } = this.props;
     const attributes = transaction.attributes;
@@ -29,15 +25,29 @@ class TransactionNew extends Component {
               <img src={attributes.link} />
             </div>
 
-            <form name='transaction' className='TransactionForm' onSubmit={this.handleSubmit.bind(this)}>
-              <Input labelText='Title' handleChange={this.handleField.bind(this, 'description')} />
-              <MoneyInput labelText='Amount' handleChange={this.handleField.bind(this, 'amount')} />
-              <Input labelText='Date' type='date' handleChange={this.handleField.bind(this, 'createdAt')} />
+            <form
+              name='transaction'
+              className='TransactionForm'
+              onSubmit={this.handleSubmit.bind(this)} >
+              <Input
+                labelText='Title'
+                handleChange={this.handleField.bind(this, 'description')} />
+              <MoneyInput
+                labelText='Amount'
+                handleChange={this.handleField.bind(this, 'amount')} />
+              <Input
+                labelText='Date'
+                type='date'
+                handleChange={this.handleField.bind(this, 'createdAt')} />
               <div className='Input'>
                 <label className='Label'>Type:</label>
                 <SelectTag {...transaction} handleChange={this.handleTag.bind(this)} />
               </div>
-              <button type='submit' className='Button Button--submit'>Submit</button>
+              <button
+                type='submit'
+                className='Button Button--submit'>
+                Submit
+              </button>
             </form>
           </div>
         </Content>
@@ -66,6 +76,10 @@ class TransactionNew extends Component {
 
   handleUpload({url}) {
     this.props.appendTransactionForm({ link: url });
+  }
+
+  componentDidMount() {
+    this.props.resetTransactionForm();
   }
 
 }

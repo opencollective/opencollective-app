@@ -8,7 +8,7 @@ class SelectTag extends Component {
       <select
         className='SelectTag'
         ref='select'
-        value={attributes.tags[0]}
+        value={attributes.tags ? attributes.tags[0] : defaultTags[0]}
         onChange={this.handleChange.bind(this)}
       >
         {defaultTags.map(tag => {

@@ -2,28 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import { login } from '../actions/users';
+import { resetLoginForm, appendLoginForm } from '../actions/form';
 import Header from '../components/Header';
 import Notification from '../components/Notification';
 import Input from '../components/Input';
+import LoginHeader from '../components/LoginHeader';
 import Content from './Content';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {notification: {}};
-  }
-
   render() {
     return (
       <div>
-        <Header title='Login' />
+        <Header title='Sign in' />
         <Content>
-          <Notification {...this.state.notification} />
-          <form name='login' onSubmit={this.handleSubmit.bind(this)} className='padded'>
-            <Input labelText='Email' type='email' handleChange={this.handleEmail.bind(this)} />
-            <Input labelText='Password' type='password' handleChange={this.handlePassword.bind(this)} />
-            <button type='submit' className='Button'>Login</button>
+          {LoginHeader()}
+          <form
+            name='login'
+            onSubmit={this.handleSubmit.bind(this)}
+            className='padded'>
+            <input
+              className='Field'
+              type='email'
+              placeholder='email@example.com'
+              onChange={this.handleField.bind(this, 'email')} />
+            <input
+              className='Field'
+              type='password'
+              placeholder='******'
+              onChange={this.handleField.bind(this, 'password')} />
+            <button
+              type='submit'
+              className='Button Button--login'>
+              Login
+            </button>
           </form>
+
         </Content>
       </div>
     );
@@ -51,14 +64,18 @@ class Login extends Component {
     });
   }
 
-  handleEmail(email) { this.setState({email}); }
-
-  handlePassword(password) { this.setState({password}); }
+  handleField(key, event) {
+    this.props.appendLoginForm({
+      [key]: event.target.value
+    });
+  }
 }
 
 export default connect(mapStateToProps, {
   login,
-  pushState
+  pushState,
+  resetLoginForm,
+  appendLoginForm
 })(Login);
 
 function mapStateToProps() {

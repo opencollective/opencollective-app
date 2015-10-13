@@ -12,6 +12,7 @@
  * Containers
  */
 
+@import './containers/Login.css';
 @import './containers/TransactionDetail.css';
 @import './containers/TransactionNew.css';
 

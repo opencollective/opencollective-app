@@ -1,0 +1,9 @@
+.Login-logo {
+  text-align: center;
+  margin-top: calc(var(--spacing) * 2);
+}
+
+.Login-quote {
+  text-align: center;
+  padding: var(--spacing) 0;
+}

@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { fetchTransaction, approveTransaction, rejectTransaction } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
+import { appendTransactionForm } from '../actions/form';
 import Header from '../components/Header';
 import Currency from '../components/Currency';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
+import SelectTag from '../components/SelectTag';
 import Content from './Content';
 
 class TransactionDetail extends Component {
   render() {
-    const { group, transaction } = this.props;
+    const { group, transaction, defaultTags } = this.props;
     const date = transaction ? moment(transaction.createdAt).fromNow() : '';
 
     return (
@@ -40,7 +42,11 @@ class TransactionDetail extends Component {
 
               <div className='TransactionDetail-category'>
                 Category
-                (TO IMPLEMENT)
+                <SelectTag
+                  defaultTags={defaultTags}
+                  attributes={transaction}
+                  handleChange={this.handleTag.bind(this)}
+                />
               </div>
             </div>
 
@@ -61,6 +67,12 @@ class TransactionDetail extends Component {
     fetchTransaction(groupid, transactionid);
     fetchGroup(groupid);
   }
+
+  handleTag(value) {
+    this.props.appendTransactionForm({
+      tags: [value]
+    });
+  }
 }
 
 export default connect(mapStateToProps, {
@@ -68,6 +80,7 @@ export default connect(mapStateToProps, {
   approveTransaction,
   rejectTransaction,
   fetchGroup,
+  appendTransactionForm
 })(TransactionDetail);
 
 function mapStateToProps(state) {
@@ -78,5 +91,6 @@ function mapStateToProps(state) {
     transactionid,
     group: state.groups[groupid] || {},
     transaction: state.transactions[transactionid] || {},
+    defaultTags: state.form.transaction.defaultTags
   };
 }
