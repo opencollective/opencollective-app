@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import Currency from './Currency';
+import Icon from './Icon';
 
 class GroupTitle extends Component {
   propTypes: {
@@ -14,14 +15,16 @@ class GroupTitle extends Component {
     const url = `/groups/${id}/transactions/`;
 
     return (
-      <div className='Well GroupLink'>
-        <Link to={url} params={{groupid: id}}>
-          <span className='GroupLink-name'>
-            {name}
-          </span>
-          <span className='GroupLink-balance'>
-            <Currency value={budget} /> &#8250;
-          </span>
+      <div className='GroupLink'>
+        <Link to={url}>
+          <div className='Well'>
+            <span className='Well-primary'>
+              {name}
+            </span>
+            <span className='Well-right'>
+              <Currency value={budget} /> <Icon type='right' />
+            </span>
+          </div>
         </Link>
       </div>
     );

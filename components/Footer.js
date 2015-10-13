@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import Icon from './Icon';
 
 class Footer extends Component {
   propTypes: {
@@ -14,7 +15,7 @@ class Footer extends Component {
       <div className='Footer'>
         <div className='Footer-addButton'>
           <Link to={url}>
-            <span className='Footer-plusSign'>+</span>
+            <Icon type='add' />
           </Link>
         </div>
       </div>

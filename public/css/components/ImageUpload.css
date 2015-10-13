@@ -1,11 +1,20 @@
 .ImageUpload {
   padding: var(--spacing);
+  padding-top: calc(var(--spacing) * 2);
   margin-bottom: var(--spacing);
   background-color: var(--light-gray);
   text-transform: uppercase;
   text-align: center;
+  color: #CDD0D4;
 }
 
 .ImageUpload input {
   opacity: 0;
+  height: 0;
+}
+
+.ImageUpload img {
+  width: 90px;
+  height: auto;
+  padding-bottom: var(--spacing);
 }

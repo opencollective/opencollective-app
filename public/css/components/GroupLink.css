@@ -1,8 +1,11 @@
-.GroupLink-name {
-  text-transform: uppercase;
-  color: var(--light-blue);
+.GroupLink span {
+  vertical-align: top;
 }
 
-.GroupLink-balance {
-  float: right;
+.GroupLink .Currency {
+  padding-right: var(--spacing);
+}
+
+.GroupLink .Icon {
+  color: var(--light-blue);
 }

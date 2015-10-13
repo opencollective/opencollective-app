@@ -15,7 +15,7 @@ class Currency extends Component {
     const number = Numeral(value);
     const formatted = number.format('$ 0,0.00');
     return (
-      <span>
+      <span className='Currency'>
         {formatted}
       </span>
     );

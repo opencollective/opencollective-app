@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Icon from './Icon';
 
 class ApproveButton extends Component {
   propTypes: {
@@ -10,7 +11,7 @@ class ApproveButton extends Component {
   render() {
     return (
       <div className='Button Button--approve' onClick={this.handleClick.bind(this)}>
-        Approve
+        <Icon type='approved' />Approve
       </div>
     );
   }

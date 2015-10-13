@@ -9,9 +9,12 @@ class ImageUpload extends Component {
 
   render() {
     return (
-      <div className='ImageUpload'>
-        Upload photo
-        <input type='file' name='file' ref='file' onChange={this.handleChange.bind(this)} />
+      <div className='ImageUpload' onClick={this.clickInput.bind(this)}>
+        <img src='/images/camera.png' />
+        <div>Upload photo</div>
+        <div>
+          <input type='file' name='file' ref='file' onChange={this.handleChange.bind(this)} />
+        </div>
       </div>
     );
   }
@@ -25,6 +28,10 @@ class ImageUpload extends Component {
 
     uploadImage(formData)
     .then(res => onFinished(res.response));
+  }
+
+  clickInput() {
+    ReactDOM.findDOMNode(this.refs.file).click();
   }
 }
 

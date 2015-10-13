@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import BackButton from './BackButton';
 import Currency from './Currency';
-import Well from './Well';
 
 class GroupTitle extends Component {
   propTypes: {
@@ -13,8 +12,13 @@ class GroupTitle extends Component {
     const rightText = <Currency value={group.budget} />;
 
     return (
-      <div>
-        <Well leftText='Available budget' rightText={rightText} />
+      <div className='Well'>
+        <span className='Well-primary'>
+          Available budget
+        </span>
+        <span className='Well-right'>
+          <Currency value={group.budget} />
+        </span>
       </div>
     );
   }

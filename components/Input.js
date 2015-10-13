@@ -19,7 +19,13 @@ class Input extends Component {
         <label className='Label'>
           {labelText}:
         </label>
-        <input className='Field' type={type} ref='input' onChange={this.handleChange.bind(this)} />
+        <input
+          className='Field'
+          type={type}
+          ref='input'
+          placeholder={labelText}
+          onChange={this.handleChange.bind(this)}
+        />
       </div>
     );
   }

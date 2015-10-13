@@ -4,7 +4,7 @@
   border-bottom: 1px solid var(--gray);
 }
 
-.Well-left {
+.Well-primary {
   text-transform: uppercase;
   color: var(--light-blue);
   font-weight: bold;
@@ -13,4 +13,9 @@
 .Well-right {
   color: var(--dark-gray);
   float: right;
+  font-weight: normal;
+}
+
+.Well-secondary {
+  padding-bottom: calc(var(--spacing) / 4);
 }

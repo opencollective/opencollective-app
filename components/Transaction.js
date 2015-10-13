@@ -23,12 +23,12 @@ class Transaction extends Component {
         <Link to={url}>
           <Avatar />
           <div className='Transaction-info'>
-            <div className='Transaction-description'>{description}</div>
-            <div className='Transaction-amount'><Currency value={amount} /></div>
-          </div>
-          <div className='Transaction-status'>
             <div className='Transaction-created'>{date}</div>
-            <div className='Transaction-approved'><TransactionStatus {...this.props} /></div>
+            <div className='Transaction-description'>{description}</div>
+            <div className='Transaction-status'>
+              <div className='Transaction-amount'><Currency value={amount} /></div>
+              <div className='Transaction-approved'><TransactionStatus {...this.props} /></div>
+            </div>
           </div>
         </Link>
       </div>

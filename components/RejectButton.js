@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Icon from './Icon';
 
 class RejectButton extends Component {
   propTypes: {
@@ -10,7 +11,7 @@ class RejectButton extends Component {
   render() {
     return (
       <div className='Button Button--reject' onClick={this.handleClick.bind(this)}>
-        Reject
+        <Icon type='rejected' />Reject
       </div>
     );
   }

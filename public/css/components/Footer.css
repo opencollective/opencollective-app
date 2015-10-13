@@ -24,9 +24,9 @@
   background-color: var(--light-blue);
 }
 
-.Footer-plusSign {
+.Footer .Icon {
   position: relative;
-  top: 20px;
+  top: 24px;
   font-size: 2rem;
   color: white;
 }

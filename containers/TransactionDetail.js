@@ -1,24 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { fetchTransaction, approveTransaction, rejectTransaction } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 import Header from '../components/Header';
 import Currency from '../components/Currency';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
-import Well from '../components/Well';
 import Content from './Content';
 
 class TransactionDetail extends Component {
   render() {
     const { group, transaction } = this.props;
+    const date = transaction ? moment(transaction.createdAt).fromNow() : '';
 
     return (
       <div>
         <Header title={group.description} hasBackButton={true} />
 
         <Content>
-          <Well leftText={transaction.description} rightText='3 days ago' />
+          <div className='Well'>
+            <div className='Well-secondary'>
+              {date}
+            </div>
+            <div className='Well-primary'>
+              {transaction.description}
+            </div>
+          </div>
           <div className='TransactionDetail'>
 
             <div className='TransactionDetail-image'>

@@ -11,8 +11,14 @@ class MoneyInput extends Component {
 
     return (
       <div className='MoneyInput'>
-        <label className='Label'>{labelText} ($):</label>
-        <input className='Field Field--MoneyInput' type='text' ref='input' onChange={this.handleChange.bind(this)} />
+        <label className='Label'>{labelText}:</label>
+        <input
+          className='Field Field--MoneyInput'
+          placeholder='$ 10.00'
+          type='text'
+          ref='input'
+          onChange={this.handleChange.bind(this)}
+        />
       </div>
     );
   }

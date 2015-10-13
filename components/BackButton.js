@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Icon from './Icon';
 
 class BackButton extends Component {
   render() {
     return (
-      <span onClick={this.handleClick}>
-        Back
+      <span className='BackButton' onClick={this.handleClick}>
+        <Icon type='left' />
       </span>
     );
   }

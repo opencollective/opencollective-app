@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createTransaction } from '../actions/transactions';
+import { resetTransactionForm, appendTransactionForm } from '../actions/form';
 import { uploadImage } from '../actions/images';
 import Header from '../components/Header';
 import ImageUpload from '../components/ImageUpload';
 import Input from '../components/Input';
 import MoneyInput from '../components/MoneyInput';
-import DatePicker from '../components/DatePicker';
+import SelectTag from '../components/SelectTag';
 import Content from './Content';
 
 class TransactionNew extends Component {
-  constructor(props) {
-    super(props);
-    this.state =  { link: '' };
+  componentDidMount() {
+    this.props.resetTransactionForm();
   }
 
   render() {
-    const { createTransaction, routeParams } = this.props;
-    const { groupid } = routeParams;
+    const { transaction } = this.props;
+    const attributes = transaction.attributes;
 
     return (
       <div>
@@ -25,14 +25,18 @@ class TransactionNew extends Component {
         <Content>
           <div className='padded'>
             <ImageUpload {...this.props} onFinished={this.handleUpload.bind(this)} />
-            <img src={this.state.link} />
+            <div className='TransactionNew-imagePreview'>
+              <img src={attributes.link} />
+            </div>
 
             <form name='transaction' className='TransactionForm' onSubmit={this.handleSubmit.bind(this)}>
-              <Input labelText='Title' handleChange={this.handleDescription.bind(this)} />
-              <MoneyInput labelText='Amount' handleChange={this.handleAmount.bind(this)} />
-              <DatePicker labelText='Date' handleChange={this.handleDate.bind(this)} />
-              <Input labelText='Type' handleChange={this.handleType.bind(this)} />
-
+              <Input labelText='Title' handleChange={this.handleField.bind(this, 'description')} />
+              <MoneyInput labelText='Amount' handleChange={this.handleField.bind(this, 'amount')} />
+              <Input labelText='Date' type='date' handleChange={this.handleField.bind(this, 'createdAt')} />
+              <div className='Input'>
+                <label className='Label'>Type:</label>
+                <SelectTag {...transaction} handleChange={this.handleTag.bind(this)} />
+              </div>
               <button type='submit' className='Button Button--submit'>Submit</button>
             </form>
           </div>
@@ -41,44 +45,41 @@ class TransactionNew extends Component {
     );
   }
 
+
   handleSubmit(e) {
     e.preventDefault();
+    const { groupid, transaction } = this.props;
+    this.props.createTransaction(groupid, transaction.attributes);
+  }
 
-    const { link, amount, description } = this.state;
-
-    this.createTransaction({
-      amount,
-      description,
-      link,
+  handleField(key, value) {
+    this.props.appendTransactionForm({
+      [key]: value
     });
   }
 
-  createTransaction(transaction) {
-    const { createTransaction, routeParams} = this.props;
-    const { groupid } = routeParams;
-
-    createTransaction(groupid, transaction);
+  handleTag(value) {
+    this.props.appendTransactionForm({
+      tags: [value]
+    });
   }
 
-  handleDescription(description) { this.setState({description}); }
+  handleUpload({url}) {
+    this.props.appendTransactionForm({ link: url });
+  }
 
-  handleAmount(amount) { this.setState({amount}); }
-
-  handleDate(createdAt) { this.setState({createdAt}); }
-
-  handleUpload(image) { this.setState({link: image.url});}
-
-  handleType(tag) { this.setState({tags: [tag]}); }
 }
 
 export default connect(mapStateToProps, {
   createTransaction,
-  uploadImage
+  uploadImage,
+  resetTransactionForm,
+  appendTransactionForm
 })(TransactionNew);
 
 function mapStateToProps(state) {
   return {
-    groups: state.groups,
-    transactions: state.transactions,
+    groupid: state.router.params.groupid,
+    transaction: state.form.transaction
   };
 }
