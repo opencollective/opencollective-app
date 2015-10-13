@@ -13,7 +13,7 @@ import Content from './Content';
 
 class TransactionDetail extends Component {
   render() {
-    const { group, transaction, defaultTags } = this.props;
+    const { group, transaction, tags } = this.props;
     const date = transaction ? moment(transaction.createdAt).fromNow() : '';
 
     return (
@@ -43,7 +43,7 @@ class TransactionDetail extends Component {
               <div className='TransactionDetail-category'>
                 Category
                 <SelectTag
-                  defaultTags={defaultTags}
+                  tags={tags}
                   attributes={transaction}
                   handleChange={this.handleTag.bind(this)}
                 />
@@ -91,6 +91,6 @@ function mapStateToProps(state) {
     transactionid,
     group: state.groups[groupid] || {},
     transaction: state.transactions[transactionid] || {},
-    defaultTags: state.form.transaction.defaultTags
+    tags: state.form.transaction.defaults.tags
   };
 }

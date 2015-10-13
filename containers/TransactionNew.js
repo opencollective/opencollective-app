@@ -12,7 +12,7 @@ import Content from './Content';
 
 class TransactionNew extends Component {
   render() {
-    const { transaction } = this.props;
+    const { transaction, tags } = this.props;
     const attributes = transaction.attributes;
 
     return (
@@ -41,7 +41,11 @@ class TransactionNew extends Component {
                 handleChange={this.handleField.bind(this, 'createdAt')} />
               <div className='Input'>
                 <label className='Label'>Type:</label>
-                <SelectTag {...transaction} handleChange={this.handleTag.bind(this)} />
+                <SelectTag
+                  attributes={attributes}
+                  tags={tags}
+                  handleChange={this.handleTag.bind(this)}
+                />
               </div>
               <button
                 type='submit'
@@ -94,6 +98,7 @@ export default connect(mapStateToProps, {
 function mapStateToProps(state) {
   return {
     groupid: state.router.params.groupid,
-    transaction: state.form.transaction
+    transaction: state.form.transaction,
+    tags: state.form.transaction.defaults.tags
   };
 }
