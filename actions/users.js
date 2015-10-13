@@ -2,7 +2,7 @@ import keys from 'lodash/object/keys';
 import merge from 'lodash/object/merge';
 import jwtDecode from 'jwt-decode';
 import { fetchTransactions } from './transactions';
-import { get, postJSON } from '../lib/api';
+import { get, auth } from '../lib/api';
 import env from '../lib/env';
 import Schemas from '../lib/schemas';
 
@@ -113,11 +113,11 @@ function userTransactionsFailure(error) {
  * Authenticate user
  */
 
-export function login(email, password) {
+export function login({email, password}) {
   return dispatch => {
     const api_key = env.API_KEY;
     dispatch(loginRequest(email));
-    return postJSON('authenticate', {email, password, api_key})
+    return auth({email, password, api_key})
       .then(json => dispatch(loginSuccess(json)))
       .catch(err => dispatch(loginFailure(err.message)));
   };

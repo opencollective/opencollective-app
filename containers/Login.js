@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
+
 import { login } from '../actions/users';
+import { notify } from '../actions/notification';
 import { resetLoginForm, appendLoginForm } from '../actions/form';
+
 import Header from '../components/Header';
 import Notification from '../components/Notification';
 import Input from '../components/Input';
@@ -15,6 +18,7 @@ class Login extends Component {
       <div>
         <Header title='Sign in' />
         <Content>
+          <Notification {...this.props.notification} />
           {LoginHeader()}
           <form
             name='login'
@@ -43,23 +47,16 @@ class Login extends Component {
   }
 
   handleSubmit(e) {
+    const { credentials, login, pushState, notify } = this.props;
+
     e.preventDefault();
 
-    const { email, password } = this.state;
-    const { login } = this.props;
-
-    login(email, password)
+    login(credentials)
     .then(response => {
       if (!response.error) {
-        window.location = '#/';
-        window.location.reload();
+        pushState(null, '/');
       } else {
-        this.setState({
-          notification: {
-            message: response.error,
-            type: 'error'
-          }
-        });
+        notify('error', response.error);
       }
     });
   }
@@ -75,9 +72,13 @@ export default connect(mapStateToProps, {
   login,
   pushState,
   resetLoginForm,
-  appendLoginForm
+  appendLoginForm,
+  notify
 })(Login);
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps(state) {
+  return {
+    credentials: state.form.login.attributes,
+    notification: state.notification
+  };
 }

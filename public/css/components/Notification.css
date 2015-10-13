@@ -1,0 +1,21 @@
+.Notification {
+  padding: 1rem;
+  margin: 1rem;
+  color: white;
+}
+
+.Notification--error {
+  background-color: var(--red);
+}
+
+.Notification--success {
+  background-color: var(--green);
+}
+
+.Notification--warning {
+  background-color: var(--orange);
+}
+
+.Notification--info {
+  background-color: var(--light-blue);
+}

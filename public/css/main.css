@@ -31,6 +31,7 @@
 @import './components/Icon.css';
 @import './components/ImageUpload.css';
 @import './components/Label.css';
+@import './components/Notification.css';
 @import './components/SelectTag.css';
 @import './components/Transaction.css';
 @import './components/TransactionStatus.css';

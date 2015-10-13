@@ -5,9 +5,7 @@ import {
   USER_INFO_SUCCESS
 } from '../actions/users';
 
-const initialState = {};
-
-export default function users(state = initialState, action) {
+export default function users(state={}, action={}) {
   switch (action.type) {
 
     case USER_GROUPS_SUCCESS:

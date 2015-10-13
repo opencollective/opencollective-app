@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 class SelectTag extends Component {
   render() {
-    const { defaultTags, attributes } = this.props;
+    const { defaults, attributes } = this.props;
     return (
       <select
         className='SelectTag'
@@ -11,7 +11,7 @@ class SelectTag extends Component {
         value={attributes.tags ? attributes.tags[0] : defaultTags[0]}
         onChange={this.handleChange.bind(this)}
       >
-        {defaultTags.map(tag => {
+        {defaults.tags.map(tag => {
           return <option value={tag} key={tag}>{tag}</option>
         })}
       </select>
