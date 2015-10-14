@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
+
 import { loadUserInfo } from '../actions/users';
 
 class App extends Component {
   componentWillMount() {
-    const {dispatch} = this.props;
-    dispatch(loadUserInfo());
+    const { loadUserInfo, pushState } = this.props;
+    var infos = loadUserInfo();
+    if (infos.redirectTo) {
+      pushState(null, infos.redirectTo);
+    }
   }
 
   render() {
@@ -23,4 +28,7 @@ export default connect(function(store) {
     transactions: store.transactions,
     router: store.router
   };
+}, {
+  loadUserInfo,
+  pushState
 })(App);

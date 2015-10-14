@@ -165,9 +165,9 @@ export function loadUserInfo() {
 }
 
 function userInfoFailure() {
-  window.location = '#/login';
   return {
     type: USER_INFO_FAILURE,
+    redirectTo: '/login'
   };
 }
 

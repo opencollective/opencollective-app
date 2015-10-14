@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
+import { replaceState } from 'redux-router';
 
 import { login } from '../actions/users';
 import { notify } from '../actions/notification';
@@ -47,14 +47,14 @@ class Login extends Component {
   }
 
   handleSubmit(e) {
-    const { credentials, login, pushState, notify } = this.props;
+    const { credentials, login, replaceState, notify } = this.props;
 
     e.preventDefault();
 
     login(credentials)
     .then(response => {
       if (!response.error) {
-        pushState(null, '/');
+        replaceState(null, '/');
       } else {
         notify('error', response.error);
       }
@@ -70,7 +70,7 @@ class Login extends Component {
 
 export default connect(mapStateToProps, {
   login,
-  pushState,
+  replaceState,
   resetLoginForm,
   appendLoginForm,
   notify
