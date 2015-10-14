@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
-import { loadUserInfo } from '../actions/users';
+import { decodeJWT } from '../actions/session';
 
 class App extends Component {
   componentWillMount() {
-    const { loadUserInfo, pushState } = this.props;
-    var infos = loadUserInfo();
+    const { decodeJWT, pushState } = this.props;
+    var infos = decodeJWT();
     if (infos.redirectTo) {
       pushState(null, infos.redirectTo);
     }
@@ -29,6 +29,6 @@ export default connect(function(store) {
     router: store.router
   };
 }, {
-  loadUserInfo,
+  decodeJWT,
   pushState
 })(App);

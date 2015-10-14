@@ -2,23 +2,26 @@ import merge from 'lodash/object/merge';
 import {
   USER_GROUPS_SUCCESS,
   USER_TRANSACTIONS_SUCCESS,
-  USER_INFO_SUCCESS
+  FETCH_USER_SUCCESS
 } from '../actions/users';
 
 export default function users(state={}, action={}) {
+  const { groups, transactions, userid } = action;
+
   switch (action.type) {
 
     case USER_GROUPS_SUCCESS:
-      const groups = action.groups;
-      return merge({}, state, {groups});
+      return merge({}, state, {
+        [userid]: { groups }
+      });
 
     case USER_TRANSACTIONS_SUCCESS:
-      const transactions = action.transactions;
-      return merge({}, state, {transactions});
+      return merge({}, state, {
+        [userid]: { transactions }
+      });
 
-    case USER_INFO_SUCCESS:
-      const info = action.info;
-      return merge({}, state, {info});
+    case FETCH_USER_SUCCESS:
+      return merge({}, state, action.users);
 
     default:
       return state;

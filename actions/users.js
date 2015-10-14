@@ -2,6 +2,7 @@ import keys from 'lodash/object/keys';
 import merge from 'lodash/object/merge';
 import jwtDecode from 'jwt-decode';
 import { fetchTransactions } from './transactions';
+import { groupSuccess } from './groups';
 import { get, auth } from '../lib/api';
 import env from '../lib/env';
 import Schemas from '../lib/schemas';
@@ -9,6 +10,10 @@ import Schemas from '../lib/schemas';
 /**
  * Constants
  */
+
+export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
 
 export const USER_GROUPS_REQUEST = 'USER_GROUPS_REQUEST';
 export const USER_GROUPS_SUCCESS = 'USER_GROUPS_SUCCESS';
@@ -18,12 +23,51 @@ export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
 export const USER_TRANSACTIONS_FAILURE = 'USER_TRANSACTIONS_FAILURE';
 
-export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
-export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
-export const USER_LOGIN_FAILURE = 'USER_LOGIN_FAILURE';
+/**
+ * Fetch a user
+ */
 
-export const USER_INFO_SUCCESS = 'USER_INFO_SUCCESS';
-export const USER_INFO_FAILURE = 'USER_INFO_FAILURE';
+export function fetchUserIfNeeded(id) {
+  return (dispatch, getState) => {
+    const user = getState().users[id];
+    if (!user || !user.id) {
+      return dispatch(fetchUser(id));
+    }
+  };
+}
+
+export function fetchUser(id) {
+  return dispatch => {
+    dispatch(fetchUserRequest(id));
+    return get(`users/${id}`, Schemas.USER)
+      .then(json => dispatch(fetchUserSuccess(id, json)))
+      .catch(err => dispatch(fetchUserFailure(err)));
+  };
+}
+
+function fetchUserRequest(id) {
+  return {
+    type: FETCH_USER_REQUEST,
+    id
+  };
+}
+
+function fetchUserSuccess(id, json) {
+  return {
+    type: FETCH_USER_SUCCESS,
+    id,
+    users: json.users,
+    receivedAt: Date.now(),
+  };
+}
+
+function fetchUserFailure(error) {
+  return {
+    type: FETCH_USER_FAILURE,
+    error,
+    receivedAt: Date.now(),
+  };
+}
 
 /**
  * Fetch all the groups from a user
@@ -78,7 +122,7 @@ export function fetchUserGroupsAndTransactions(userid) {
     })
     .then((json) => {
       const merged = merge.apply(null, json) || {};
-      dispatch(userTransactionsSuccess(userid, merged));
+      return dispatch(userTransactionsSuccess(userid, merged));
     })
     .catch(error => dispatch(userTransactionsFailure(error)));
   };
@@ -109,71 +153,3 @@ function userTransactionsFailure(error) {
 }
 
 
-/**
- * Authenticate user
- */
-
-export function login({email, password}) {
-  return dispatch => {
-    const api_key = env.API_KEY;
-    dispatch(loginRequest(email));
-    return auth({email, password, api_key})
-      .then(json => dispatch(loginSuccess(json)))
-      .catch(err => dispatch(loginFailure(err.message)));
-  };
-}
-
-function loginRequest(email) {
-  return {
-    type: USER_LOGIN_REQUEST,
-    email
-  };
-}
-function loginSuccess(json) {
-  localStorage.setItem('accessToken', json.access_token);
-  localStorage.setItem('refreshToken', json.refresh_token);
-
-  return {
-    type: USER_LOGIN_SUCCESS,
-    json,
-    receivedAt: Date.now(),
-  };
-}
-
-function loginFailure(error) {
-  return {
-    type: USER_LOGIN_FAILURE,
-    error,
-    receivedAt: Date.now(),
-  };
-}
-
-/**
- * Load info from JWT if it exists
- */
-
-export function loadUserInfo() {
-
-  const accessToken = localStorage.getItem('accessToken');
-
-  if (!accessToken) {
-    return userInfoFailure();
-  }
-
-  const json = jwtDecode(accessToken);
-  return json.id ? userInfoSuccess(json) : userInfoFailure();
-}
-
-function userInfoFailure() {
-  return {
-    type: USER_INFO_FAILURE,
-    redirectTo: '/login'
-  };
-}
-
-function userInfoSuccess(json) {
-  return {
-    type: USER_INFO_SUCCESS,
-    info: json,
-  };
-}

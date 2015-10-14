@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import uniq from 'lodash/array/uniq';
+import pluck from 'lodash/collection/pluck';
+import values from 'lodash/object/values';
 import filter from 'lodash/collection/filter';
 import sortByDate from '../lib/sort_by_date';
+
+import { fetchUser, fetchUserIfNeeded } from '../actions/users';
 import { fetchTransactions } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 import TransactionList from '../components/TransactionsList';
+
+import Content from './Content';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GroupTitle from '../components/GroupTitle';
-import Content from './Content';
 
 class GroupTransactions extends Component {
   render() {
-    let { group, groupid, transactions } = this.props;
+    let { group, groupid, transactions, users } = this.props;
     return (
       <div className='GroupTransactions'>
         <Header title={group.name} hasBackButton={true} />
@@ -21,7 +27,7 @@ class GroupTransactions extends Component {
           <GroupTitle group={group} />
           <div className='padded'>
             <div className='GroupTransactions-title'>Activity Detail</div>
-            <TransactionList transactions={transactions} />
+            <TransactionList transactions={transactions} users={users} />
           </div>
         </Content>
         <Footer groupid={groupid} />
@@ -30,15 +36,27 @@ class GroupTransactions extends Component {
   }
 
   componentDidMount() {
-    const { fetchGroup, fetchTransactions, groupid } = this.props;
+    const {
+      fetchGroup,
+      fetchTransactions,
+      groupid,
+      fetchUserIfNeeded
+    } = this.props;
+
     fetchGroup(groupid);
-    fetchTransactions(groupid);
+    fetchTransactions(groupid)
+    .then(({transactions}) => {
+      const userids = uniq(pluck(values(transactions), 'UserId'));
+      return userids.map(id => fetchUserIfNeeded(id));
+    });
   }
 }
 
 export default connect(mapStateToProps, {
   fetchTransactions,
   fetchGroup,
+  fetchUser,
+  fetchUserIfNeeded
 })(GroupTransactions);
 
 function mapStateToProps(state) {
@@ -46,6 +64,7 @@ function mapStateToProps(state) {
   return {
     groupid,
     group: state.groups[groupid] || {},
-    transactions: filter(state.transactions, {GroupId: Number(groupid)}).sort(sortByDate)
+    transactions: filter(state.transactions, {GroupId: Number(groupid)}).sort(sortByDate),
+    users: state.users || {}
   };
 }

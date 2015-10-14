@@ -8,12 +8,12 @@ class Group extends Component {
   }
 
   render() {
-    const { id } = this.props;
-
     return (
       <div>
         <GroupLink {...this.props} />
-        <TransactionsList groupid={id} {...this.props} />
+        <TransactionsList
+          {...this.props}
+          groupid={this.props.id} />
       </div>
     );
   }

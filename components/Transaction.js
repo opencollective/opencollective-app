@@ -14,16 +14,23 @@ class Transaction extends Component {
   }
 
   render() {
-    const {amount, description, id, GroupId, createdAt} = this.props;
-    const url = `/groups/${GroupId}/transactions/${id}`;
-    const date = createdAt ? moment(createdAt).fromNow() : '';
+    const {
+      amount,
+      description,
+      id,
+      GroupId,
+      createdAt,
+      user
+    } = this.props;
 
     return (
       <div className='Transaction'>
-        <Link to={url}>
-          <Avatar />
+        <Link to={`/groups/${GroupId}/transactions/${id}`}>
+          <Avatar url={user.avatar} />
           <div className='Transaction-info'>
-            <div className='Transaction-created'>{date}</div>
+            <div className='Transaction-created'>
+              {createdAt ? moment(createdAt).fromNow() : ''}
+            </div>
             <div className='Transaction-description'>{description}</div>
             <div className='Transaction-status'>
               <div className='Transaction-amount'><Currency value={amount} /></div>

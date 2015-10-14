@@ -1,0 +1,39 @@
+.TransactionComment {
+  clear: both;
+  border-top: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
+  padding: var(--spacing);
+}
+
+.TransactionComment-header {
+  float: left;
+  width: calc(100% - 55px);
+  box-sizing: border-box;
+}
+
+.TransactionComment-fullName,
+.TransactionComment-date {
+  padding-left: calc(55px + var(--spacing));
+}
+
+.TransactionComment-fullName {
+  color: var(--light-blue);
+  font-weight: bold;
+}
+
+.TransactionComment-date {
+  font-size: 12px;
+  padding-bottom: calc(var(--spacing) / 4);
+}
+
+.TransactionComment .Avatar {
+  float: left;
+}
+
+.TransactionComment-comment {
+  clear: both;
+  font-style: italic;
+  padding-top: calc(var(--spacing) / 2);
+}
+
+

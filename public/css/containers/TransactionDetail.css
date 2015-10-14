@@ -8,24 +8,30 @@
 
 .TransactionDetail-image img {
   max-width: 100px;
+  max-height: 125px;
 }
 
 .TransactionDetail-info {
   float: left;
   padding-left: var(--spacing);
+  padding-bottom: calc(var(--spacing) * 2);
 }
 
 .TransactionDetail-price {
-  font-size: calc(var(--spacing) * 1.6);
+  font-size: calc(var(--spacing) * 2);
 }
 
 .TransactionDetail-controls {
   clear: both;
-  padding-top: var(--spacing);
+  padding-top: calc(var(--spacing) * 2);
 }
 
 .TransactionDetail-category {
   text-transform: uppercase;
   font-size: 0.8rem;
   padding-top: var(--spacing);
+}
+
+.TransactionDetail-category .SelectTag {
+  margin-top: calc(var(--spacing) / 2);
 }

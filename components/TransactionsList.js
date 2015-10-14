@@ -9,12 +9,15 @@ class TransactionList extends Component {
   }
 
   render() {
-    const {transactions, groupid} = this.props;
-
+    const { transactions, users } = this.props;
     return (
       <div>
         {values(transactions).map(transaction => {
-          return <Transaction {...transaction} groupid={groupid} key={transaction.id} />;
+          return <Transaction
+            key={transaction.id}
+            {...transaction}
+            user={users[transaction.UserId] || {}}
+            />;
         })}
       </div>
     );

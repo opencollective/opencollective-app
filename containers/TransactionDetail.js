@@ -6,6 +6,7 @@ import moment from 'moment';
 import { fetchTransaction, approveTransaction, rejectTransaction } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 import { appendTransactionForm } from '../actions/form';
+import { fetchUserIfNeeded } from '../actions/users';
 
 import Content from './Content';
 import Header from '../components/Header';
@@ -13,25 +14,19 @@ import Currency from '../components/Currency';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
 import SelectTag from '../components/SelectTag';
+import TransactionDetailTitle from '../components/TransactionDetailTitle';
+import TransactionComment from '../components/TransactionComment';
 
 class TransactionDetail extends Component {
   render() {
-    const { group, transaction, tags } = this.props;
-    const date = transaction ? moment(transaction.createdAt).fromNow() : '';
-
+    const { group, transaction, tags, user } = this.props;
     return (
       <div>
         <Header title={group.name} hasBackButton={true} />
-
         <Content>
-          <div className='Well'>
-            <div className='Well-secondary'>
-              {date}
-            </div>
-            <div className='Well-primary'>
-              {transaction.description}
-            </div>
-          </div>
+          <TransactionDetailTitle
+            createdAt={transaction.createdAt}
+            description={transaction.description} />
           <div className='TransactionDetail'>
 
             <div className='TransactionDetail-image'>
@@ -52,6 +47,10 @@ class TransactionDetail extends Component {
                 />
               </div>
             </div>
+            <TransactionComment
+              transaction={transaction}
+              user={user}
+            />
 
             <div className='TransactionDetail-controls'>
               <ApproveButton
@@ -66,11 +65,19 @@ class TransactionDetail extends Component {
   }
 
   componentDidMount() {
-    const { fetchTransaction, fetchGroup, routeParams } = this.props;
-    const { groupid, transactionid } = routeParams;
+    const {
+      fetchTransaction,
+      fetchGroup,
+      fetchUserIfNeeded,
+      groupid,
+      transactionid
+    } = this.props;
 
-    fetchTransaction(groupid, transactionid);
     fetchGroup(groupid);
+    fetchTransaction(groupid, transactionid)
+    .then(() => {
+      fetchUserIfNeeded(this.props.transaction.UserId);
+    });
   }
 
   handleTag(value) {
@@ -100,17 +107,19 @@ export default connect(mapStateToProps, {
   rejectTransaction,
   fetchGroup,
   appendTransactionForm,
-  pushState
+  pushState,
+  fetchUserIfNeeded
 })(TransactionDetail);
 
 function mapStateToProps(state) {
   const { transactionid, groupid } = state.router.params;
-
+  const transaction = state.transactions[transactionid] || {};
   return {
     groupid,
     transactionid,
     group: state.groups[groupid] || {},
-    transaction: state.transactions[transactionid] || {},
-    tags: state.form.transaction.defaults.tags
+    transaction,
+    tags: state.form.transaction.defaults.tags,
+    user: state.users[transaction.UserId] || {}
   };
 }

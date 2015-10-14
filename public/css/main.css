@@ -35,6 +35,7 @@
 @import './components/SelectTag.css';
 @import './components/Transaction.css';
 @import './components/TransactionStatus.css';
+@import './components/TransactionComment.css';
 @import './components/Well.css';
 
 /**

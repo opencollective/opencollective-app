@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
 
-import { login } from '../actions/users';
+import { login } from '../actions/session';
 import { notify } from '../actions/notification';
 import { resetLoginForm, appendLoginForm } from '../actions/form';
 
@@ -47,11 +47,11 @@ class Login extends Component {
   }
 
   handleSubmit(e) {
-    const { credentials, login, replaceState, notify } = this.props;
+    const { form, login, replaceState, notify } = this.props;
 
     e.preventDefault();
 
-    login(credentials)
+    login(form)
     .then(response => {
       if (!response.error) {
         replaceState(null, '/');
@@ -78,7 +78,7 @@ export default connect(mapStateToProps, {
 
 function mapStateToProps(state) {
   return {
-    credentials: state.form.login.attributes,
+    form: state.form.login.attributes,
     notification: state.notification
   };
 }
