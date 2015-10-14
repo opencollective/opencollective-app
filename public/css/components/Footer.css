@@ -24,6 +24,11 @@
   background-color: var(--light-blue);
 }
 
+.Footer-addButton a {
+  display: block;
+  height: 100%;
+}
+
 .Footer .Icon {
   position: relative;
   top: 24px;

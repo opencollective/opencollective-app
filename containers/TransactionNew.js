@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
+
 import { createTransaction } from '../actions/transactions';
 import { resetTransactionForm, appendTransactionForm } from '../actions/form';
 import { uploadImage } from '../actions/images';
+
+import Content from './Content';
 import Header from '../components/Header';
 import ImageUpload from '../components/ImageUpload';
 import Input from '../components/Input';
 import MoneyInput from '../components/MoneyInput';
 import SelectTag from '../components/SelectTag';
-import Content from './Content';
+import Icon from '../components/Icon';
 
 class TransactionNew extends Component {
   render() {
@@ -50,6 +54,7 @@ class TransactionNew extends Component {
               <button
                 type='submit'
                 className='Button Button--submit'>
+                <Icon type='upload' />
                 Submit
               </button>
             </form>
@@ -59,11 +64,12 @@ class TransactionNew extends Component {
     );
   }
 
-
   handleSubmit(e) {
     e.preventDefault();
-    const { groupid, transaction } = this.props;
-    this.props.createTransaction(groupid, transaction.attributes);
+    const { groupid, transaction, createTransaction, pushState } = this.props;
+
+    createTransaction(groupid, transaction.attributes)
+    .then(() => pushState(null, `/groups/${groupid}/transactions`) );
   }
 
   handleField(key, value) {
@@ -92,7 +98,8 @@ export default connect(mapStateToProps, {
   createTransaction,
   uploadImage,
   resetTransactionForm,
-  appendTransactionForm
+  appendTransactionForm,
+  pushState
 })(TransactionNew);
 
 function mapStateToProps(state) {

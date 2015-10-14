@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
 import moment from 'moment';
+
 import { fetchTransaction, approveTransaction, rejectTransaction } from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 import { appendTransactionForm } from '../actions/form';
+
+import Content from './Content';
 import Header from '../components/Header';
 import Currency from '../components/Currency';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
 import SelectTag from '../components/SelectTag';
-import Content from './Content';
 
 class TransactionDetail extends Component {
   render() {
@@ -18,7 +21,7 @@ class TransactionDetail extends Component {
 
     return (
       <div>
-        <Header title={group.description} hasBackButton={true} />
+        <Header title={group.name} hasBackButton={true} />
 
         <Content>
           <div className='Well'>
@@ -51,8 +54,10 @@ class TransactionDetail extends Component {
             </div>
 
             <div className='TransactionDetail-controls'>
-              <ApproveButton groupid={group.id} transactionid={transaction.id} {...this.props}/>
-              <RejectButton groupid={group.id} transactionid={transaction.id} {...this.props}/>
+              <ApproveButton
+                approveTransaction={this.approveTransaction.bind(this)} />
+              <RejectButton
+                rejectTransaction={this.rejectTransaction.bind(this)} />
             </div>
           </div>
         </Content>
@@ -73,6 +78,20 @@ class TransactionDetail extends Component {
       tags: [value]
     });
   }
+
+  approveTransaction() {
+    const { group, transaction, approveTransaction, pushState } = this.props;
+
+    approveTransaction(group.id, transaction.id)
+    .then(() => pushState(null, `/groups/${group.id}/transactions`))
+  }
+
+  rejectTransaction() {
+    const { group, transaction, rejectTransaction, pushState } = this.props;
+
+    rejectTransaction(group.id, transaction.id)
+    .then(() => pushState(null, `/groups/${group.id}/transactions`))
+  }
 }
 
 export default connect(mapStateToProps, {
@@ -80,7 +99,8 @@ export default connect(mapStateToProps, {
   approveTransaction,
   rejectTransaction,
   fetchGroup,
-  appendTransactionForm
+  appendTransactionForm,
+  pushState
 })(TransactionDetail);
 
 function mapStateToProps(state) {

@@ -6,11 +6,11 @@ import { login } from '../actions/users';
 import { notify } from '../actions/notification';
 import { resetLoginForm, appendLoginForm } from '../actions/form';
 
+import Content from './Content';
 import Header from '../components/Header';
 import Notification from '../components/Notification';
 import Input from '../components/Input';
 import LoginHeader from '../components/LoginHeader';
-import Content from './Content';
 
 class Login extends Component {
   render() {
