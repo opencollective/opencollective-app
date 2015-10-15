@@ -11,7 +11,7 @@ const middlewares = [thunk];
  * to the actual ones that get dispatched
  */
 
-export default (getState, expectedActions, onLastAction) => {
+export default (getState, expectedActions, onLastAction, debug=false) => {
   if (!Array.isArray(expectedActions)) {
     throw new Error('expectedActions should be an array of expected actions.');
   }
@@ -32,6 +32,11 @@ export default (getState, expectedActions, onLastAction) => {
 
         // Easier than stubbing Date.now
         delete action.receivedAt;
+
+        if (debug) {
+          console.log('action', action);
+          console.log('expectedAction', expectedAction);
+        }
 
         expect(action).toEqual(expectedAction);
         if (onLastAction && !expectedActions.length) {

@@ -1,4 +1,5 @@
-const jsdom = require('jsdom');
+import jsdom from 'jsdom';
+import mockLocalStorage from './helpers/mockLocalStorage';
 
 /**
  * A super simple DOM ready for React to render into
@@ -11,9 +12,4 @@ global.window = document.parentWindow;
  * Mock implementation of localstorage
  */
 
-global.localStorage = {
-  store: {},
-  getItem(key) { return this.store[key]; },
-  setItem(key, value) { this.store[key] = value; },
-  clear() { this.store = {}; }
-};
+global.localStorage = mockLocalStorage;

@@ -50,7 +50,6 @@ function loginSuccess(json) {
 }
 
 function loginFailure(error) {
-  console.log('stac', error.stack);
   return {
     type: LOGIN_FAILURE,
     error,
