@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import BackButton from './BackButton';
 
 class Header extends Component {
@@ -9,16 +10,17 @@ class Header extends Component {
 
   defaultProps: {
     hasBackButton: false,
-    title: 'OpenCollective'
+    title: ''
   }
 
   render() {
     const { hasBackButton, title } = this.props;
-    const backButton = hasBackButton ? <BackButton /> : undefined;
 
     return (
       <div className='Header'>
-        <span className='Header-backButton'>{backButton}</span>
+        <span className='Header-backButton'>
+          {hasBackButton ? <BackButton /> : undefined}
+        </span>
         <div className='Header-title'>{title}</div>
       </div>
     );

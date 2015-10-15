@@ -3,9 +3,9 @@
   width: 100%;
 }
 
-.GroupLink a:focus,
-.GroupLink a:hover,
-.Grouplink a:active {
+.GroupLink a:focus .Well,
+.GroupLink a:hover .Well,
+.GroupLink a:active .Well {
    background-color: var(--darkest-gray);
 }
 
