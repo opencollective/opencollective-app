@@ -38,6 +38,7 @@ describe('groups actions', () => {
       .get('/groups/1')
       .replyWithError('Something went wrong!');
 
+    // Improve test with error message
     const expected = [
       { type: GROUP_REQUEST, id: 1 },
       { type: GROUP_FAILURE, id: 1, error: {}}

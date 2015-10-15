@@ -27,7 +27,7 @@ export function login({email, password}) {
     })
     .then(json => dispatch(loginSuccess(json)))
     .then(json => dispatch(decodeJWT(json)))
-    .catch(err => dispatch(loginFailure(err.message)));
+    .catch(err => dispatch(loginFailure(err)));
   };
 }
 
@@ -50,6 +50,7 @@ function loginSuccess(json) {
 }
 
 function loginFailure(error) {
+  console.log('stac', error.stack);
   return {
     type: LOGIN_FAILURE,
     error,
@@ -69,7 +70,14 @@ export function decodeJWT() {
     return decodeJWTFailure();
   }
 
-  const json = jwtDecode(accessToken);
+  let json = {};
+  try {
+    // This library doesn't have validation
+    json = jwtDecode(accessToken);
+  } catch (e) {
+    decodeJWTFailure();
+  }
+
   return json.id ? decodeJWTSuccess(json) : decodeJWTFailure();
 }
 

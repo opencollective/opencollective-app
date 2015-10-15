@@ -6,6 +6,14 @@ const jsdom = require('jsdom');
 
 global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = document.parentWindow;
+
+/**
+ * Mock implementation of localstorage
+ */
+
 global.localStorage = {
-  getItem() { return ''; }
+  store: {},
+  getItem(key) { return this.store[key]; },
+  setItem(key, value) { this.store[key] = value; },
+  clear() { this.store = {}; }
 };

@@ -7,6 +7,8 @@ const middlewares = [thunk];
 /**
  * Creates a mock of Redux store with middleware.
  * From: https://rackt.github.io/redux/docs/recipes/WritingTests.html
+ * Basically you pass the actions you expect and it will compared them
+ * to the actual ones that get dispatched
  */
 
 export default (getState, expectedActions, onLastAction) => {
@@ -27,6 +29,7 @@ export default (getState, expectedActions, onLastAction) => {
 
       dispatch(action) {
         const expectedAction = expectedActions.shift();
+
         // Easier than stubbing Date.now
         delete action.receivedAt;
 
