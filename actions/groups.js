@@ -18,7 +18,7 @@ export function fetchGroup(id) {
     dispatch(groupRequest(id));
     return get(`groups/${id}`, Schemas.GROUP)
       .then(json => dispatch(groupSuccess(id, json)))
-      .catch(error => dispatch(groupFailure(error)));
+      .catch(error => dispatch(groupFailure(id, error)));
   };
 }
 
@@ -38,9 +38,10 @@ function groupSuccess(id, json) {
   };
 }
 
-function groupFailure(error) {
+function groupFailure(id, error) {
   return {
     type: GROUP_FAILURE,
+    id,
     error,
     receivedAt: Date.now(),
   };

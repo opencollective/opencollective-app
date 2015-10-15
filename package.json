@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node server",
     "dev": "PORT=3000 foreman start -f Procfile_dev",
-    "test": "mocha --compilers js:babel/register --recursive",
+    "test": "mocha --compilers js:babel/register --recursive --timeout 5000",
     "hint": "./node_modules/.bin/jscs **/*.js --config=.jscsrc",
     "build": "npm run build:js && npm run build:css",
     "build:js": "NODE_ENV=production browserify main.js | uglifyjs -cm > public/bundle.js",
@@ -33,6 +33,7 @@
     "jwt-decode": "^1.4.0",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
+    "nock": "^2.15.0",
     "normalizr": "^1.0.0",
     "numeral": "^1.5.3",
     "react": "~0.14.0",
