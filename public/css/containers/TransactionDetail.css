@@ -15,7 +15,7 @@
   float: left;
   padding-left: var(--spacing);
   padding-bottom: calc(var(--spacing) * 2);
-  width: calc(100% - 55px - 1rem);
+  width: calc(100% - 55px - 3rem);
   box-sizing: border-box;
 }
 
