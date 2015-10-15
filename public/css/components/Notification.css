@@ -19,3 +19,7 @@
 .Notification--info {
   background-color: var(--light-blue);
 }
+
+.Notification--hide {
+  display: none;
+}

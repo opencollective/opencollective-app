@@ -31,9 +31,19 @@
   margin-right: calc(var(--spacing)/2);
 }
 
+.Button--approve:hover,
+.Button--approve:active {
+  background-color: var(--dark-green);
+}
+
 .Button--reject {
   background-color: var(--red);
   margin-left: calc(var(--spacing)/2);
+}
+
+.Button--reject:hover,
+.Button--reject:active {
+  background-color: var(--dark-red);
 }
 
 .Button--approve,

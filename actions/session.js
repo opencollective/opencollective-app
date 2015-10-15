@@ -26,7 +26,7 @@ export function login({email, password}) {
       api_key: env.API_KEY
     })
     .then(json => dispatch(loginSuccess(json)))
-    .then(json => dispatch(decodeJWTSuccess(json)))
+    .then(json => dispatch(decodeJWT(json)))
     .catch(err => dispatch(loginFailure(err.message)));
   };
 }

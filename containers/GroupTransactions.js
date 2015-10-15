@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import uniq from 'lodash/array/uniq';
-import pluck from 'lodash/collection/pluck';
 import values from 'lodash/object/values';
 import filter from 'lodash/collection/filter';
 import sortByDate from '../lib/sort_by_date';
+import getUniqueValues from '../lib/get_unique_values';
 
 import { fetchUser, fetchUserIfNeeded } from '../actions/users';
 import { fetchTransactions } from '../actions/transactions';
@@ -22,12 +21,16 @@ class GroupTransactions extends Component {
     let { group, groupid, transactions, users } = this.props;
     return (
       <div className='GroupTransactions'>
-        <Header title={group.name} hasBackButton={true} />
+        <Header
+          title={group.name}
+          hasBackButton={true} />
         <Content>
           <GroupTitle group={group} />
           <div className='padded'>
             <div className='GroupTransactions-title'>Activity Detail</div>
-            <TransactionList transactions={transactions} users={users} />
+            <TransactionList
+              transactions={transactions}
+              users={users} />
           </div>
         </Content>
         <Footer groupid={groupid} />
@@ -44,10 +47,10 @@ class GroupTransactions extends Component {
     } = this.props;
 
     fetchGroup(groupid);
+
     fetchTransactions(groupid)
     .then(({transactions}) => {
-      const userids = uniq(pluck(values(transactions), 'UserId'));
-      return userids.map(id => fetchUserIfNeeded(id));
+      return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
     });
   }
 }

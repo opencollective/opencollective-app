@@ -7,8 +7,10 @@ class Notification extends Component {
   }
 
   render() {
+    const status = this.props.status || 'hide';
+
     return (
-      <div className={`Notification Notification--${this.props.status}`}>
+      <div className={`Notification Notification--${status}`}>
         {this.props.message}
       </div>
     );

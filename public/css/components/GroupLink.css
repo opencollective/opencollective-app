@@ -1,3 +1,14 @@
+.GroupLink a {
+  display: inline-block;
+  width: 100%;
+}
+
+.GroupLink a:focus,
+.GroupLink a:hover,
+.Grouplink a:active {
+   background-color: var(--darkest-gray);
+}
+
 .GroupLink span {
   vertical-align: top;
 }
@@ -9,3 +20,4 @@
 .GroupLink .Icon {
   color: var(--light-blue);
 }
+

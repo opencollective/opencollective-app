@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import uniq from 'lodash/array/uniq';
-import pluck from 'lodash/collection/pluck';
+import _ from 'lodash';
 import values from 'lodash/object/values';
 import extend from 'lodash/object/extend';
 import filter from 'lodash/collection/filter';
@@ -12,10 +11,10 @@ import Header from '../components/Header';
 import Group from '../components/Group';
 import Footer from '../components/Footer';
 import sortByDate from '../lib/sort_by_date';
+import getUniqueValues from '../lib/get_unique_values';
 
 class GroupsList extends Component {
   render() {
-
     return (
       <div>
         <Header title='Accounting' hasBackButton={false} />
@@ -25,8 +24,7 @@ class GroupsList extends Component {
             {...group}
             users={this.props.users}
             transactions={group.transactions}
-            key={group.id}
-          />
+            key={group.id} />
         })}
         </Content>
       </div>
@@ -43,8 +41,7 @@ class GroupsList extends Component {
     if (userid) {
       fetchUserGroupsAndTransactions(userid)
       .then(({transactions}) => {
-        const userids = uniq(pluck(values(transactions), 'UserId'));
-        return userids.map(id => fetchUserIfNeeded(id));
+        return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
       });
     }
   }
@@ -56,11 +53,12 @@ export default connect(mapStateToProps, {
 })(GroupsList);
 
 function mapStateToProps(state) {
+  // Logged in user
   const userid = state.session.user.id;
-  const user = state.users[userid] || {};
-  const transactions = values(user.transactions);
+  const currentUser = state.users[userid] || {};
+  const transactions = values(currentUser.transactions);
 
-  const groups = values(user.groups).map((group) => {
+  const groups = values(currentUser.groups).map((group) => {
     return extend(group, {
       transactions: filter(transactions, { GroupId: group.id }).sort(sortByDate)
     });

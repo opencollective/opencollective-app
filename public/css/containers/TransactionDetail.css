@@ -15,6 +15,8 @@
   float: left;
   padding-left: var(--spacing);
   padding-bottom: calc(var(--spacing) * 2);
+  width: calc(100% - 55px - 1rem);
+  box-sizing: border-box;
 }
 
 .TransactionDetail-price {
@@ -34,4 +36,6 @@
 
 .TransactionDetail-category .SelectTag {
   margin-top: calc(var(--spacing) / 2);
+  display: block;
+  width: 100%;
 }
