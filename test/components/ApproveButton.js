@@ -1,4 +1,5 @@
-import React from 'react/addons';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 import ApproveButton from '../../components/ApproveButton';
@@ -8,7 +9,7 @@ const {
   findRenderedDOMComponentWithTag,
   Simulate,
   renderIntoDocument
-} = React.addons.TestUtils;
+} = TestUtils;
 
 chai.use(spies);
 
