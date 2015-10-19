@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import merge from 'lodash/object/merge';
+import message from '../lib/error_message';
+import tags from '../ui/tags';
 import {
   RESET_TRANSACTION_FORM,
   APPEND_TRANSACTION_FORM,
@@ -9,7 +11,10 @@ import {
   VALIDATE_LOGIN_FAILURE
 } from '../actions/form';
 
-const tags = ['Food', 'Computer', 'Transport'];
+/**
+ * New transaction form reducer
+ */
+
 const transactionInitialState = {
   defaults: { tags },
   attributes: {
@@ -28,16 +33,19 @@ function transaction(state=transactionInitialState, action={}) {
       return merge({}, state, { attributes: action.attributes });
 
     case VALIDATE_TRANSACTION_FAILURE:
-      if (action.error && action.error.name === 'ValidationError') {
-        const message = action.error.details[0].message;
-        const error = { message };
-        return merge({}, state, { error });
-      }
-     return state;
+      return merge({}, state, {
+        error: {
+          message: message(action)
+        }
+      });
     default:
       return state;
   }
 }
+
+/**
+ * Login form reducer
+ */
 
 const loginInitialState = {
   attributes: {}
@@ -52,12 +60,11 @@ function login(state=loginInitialState, action={}) {
       return merge({}, state, { attributes: action.attributes });
 
     case VALIDATE_LOGIN_FAILURE:
-      if (action.error && action.error.name === 'ValidationError') {
-        const message = action.error.details[0].message;
-        const error = { message };
-        return merge({}, state, { error });
-      }
-     return state;
+      return merge({}, state, {
+        error: {
+          message: message(action)
+        }
+      });
 
     default:
       return state;
