@@ -53,3 +53,7 @@
   float: left;
 }
 
+.Button--inProgress {
+  background-color: var(--gray);
+}
+
