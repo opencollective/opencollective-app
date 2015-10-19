@@ -5,7 +5,8 @@ import {
   APPEND_TRANSACTION_FORM,
   RESET_LOGIN_FORM,
   APPEND_LOGIN_FORM,
-  VALIDATE_TRANSACTION_FAILURE
+  VALIDATE_TRANSACTION_FAILURE,
+  VALIDATE_LOGIN_FAILURE
 } from '../actions/form';
 
 const tags = ['Food', 'Computer', 'Transport'];
@@ -49,6 +50,14 @@ function login(state=loginInitialState, action={}) {
 
     case APPEND_LOGIN_FORM:
       return merge({}, state, { attributes: action.attributes });
+
+    case VALIDATE_LOGIN_FAILURE:
+      if (action.error && action.error.name === 'ValidationError') {
+        const message = action.error.details[0].message;
+        const error = { message };
+        return merge({}, state, { error });
+      }
+     return state;
 
     default:
       return state;

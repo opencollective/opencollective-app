@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
-
 import { login } from '../actions/session';
 import { notify } from '../actions/notification';
-import { resetLoginForm, appendLoginForm } from '../actions/form';
-
+import {
+  resetLoginForm,
+  appendLoginForm,
+  validateLogin
+} from '../actions/form';
 import Content from './Content';
 import Header from '../components/Header';
 import Notification from '../components/Notification';
-import Input from '../components/Input';
 import LoginHeader from '../components/LoginHeader';
+import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
   render() {
@@ -19,45 +21,45 @@ class Login extends Component {
         <Header title='Sign in' />
         <Content>
           <Notification {...this.props.notification} />
-          {LoginHeader()}
-          <form
-            name='login'
-            onSubmit={this.handleSubmit.bind(this)}
-            className='padded'>
-            <input
-              className='Field'
-              type='email'
-              placeholder='email@example.com'
-              onChange={this.handleField.bind(this, 'email')} />
-            <input
-              className='Field'
-              type='password'
-              placeholder='******'
-              onChange={this.handleField.bind(this, 'password')} />
-            <button
-              type='submit'
-              className='Button Button--login'>
-              Login
-            </button>
-          </form>
-
+          <LoginHeader />
+          <LoginForm
+            {...this.props}
+            handleField={this.handleField.bind(this)}
+            handleSubmit={this.handleSubmit.bind(this)} />
         </Content>
       </div>
     );
   }
 
-  handleSubmit(e) {
-    const { form, login, replaceState, notify } = this.props;
+  handleSubmit(event) {
+    const {
+      attributes,
+      replaceState,
+      notify
+    } = this.props;
 
-    e.preventDefault();
+    event.preventDefault();
 
-    login(form)
-    .then(response => {
-      if (!response.error) {
-        replaceState(null, '/');
-      } else {
-        notify('error', response.error);
-      }
+    this.validate(attributes)
+    .then(() => this.login(attributes))
+    .then(() => replaceState(null, '/'))
+    .catch(error => notify('error', error.message));
+  }
+
+  validate(attributes) {
+    return this.props.validateLogin(attributes)
+    .then(({error}) => {
+      return error ?
+        Promise.reject(this.props.errorMessage) :
+        Promise.resolve(attributes);
+    });
+  }
+
+  login(attributes) {
+    return this.props.login(attributes)
+    .then((response) => {
+      const error = response.error;
+      return error ? Promise.reject(error) : Promise.resolve(attributes);
     });
   }
 
@@ -73,12 +75,14 @@ export default connect(mapStateToProps, {
   replaceState,
   resetLoginForm,
   appendLoginForm,
-  notify
+  notify,
+  validateLogin
 })(Login);
 
 function mapStateToProps(state) {
   return {
-    form: state.form.login.attributes,
-    notification: state.notification
+    attributes: state.form.login.attributes,
+    notification: state.notification,
+    errorMessage: state.form.login.error
   };
 }
