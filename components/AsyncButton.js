@@ -1,13 +1,17 @@
 import React from 'react';
+import classNames from 'classnames';
 
 export default ({inProgress, onClick, customClass, children}) => {
-  const progressClass = inProgress ? 'Button--inProgress' : '';
-  const className = `Button ${customClass} ${progressClass}`;
   const noop = () => {};
+  const btnClass = classNames({
+    'Button': true,
+    [customClass]: true,
+    'Button--inProgress': inProgress
+  });
 
   return (
     <div
-      className={className}
+      className={btnClass}
       onClick={inProgress ? noop : onClick} >
       {children}
     </div>
