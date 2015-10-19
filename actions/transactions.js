@@ -1,4 +1,5 @@
-import { get, postJSON, post } from '../lib/api';
+import { get, postJSON } from '../lib/api';
+import validate from '../validators/transaction';
 import Schemas from '../lib/schemas';
 
 /**
@@ -210,6 +211,7 @@ function createTransactionSuccess(groupid, transaction) {
   const transactions = {
     [transaction.id]: transaction
   };
+
   return {
     type: CREATE_TRANSACTION_SUCCESS,
     groupid,
