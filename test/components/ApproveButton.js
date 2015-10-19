@@ -6,31 +6,44 @@ import ApproveButton from '../../components/ApproveButton';
 
 const {expect} = chai;
 const {
-  findRenderedDOMComponentWithTag,
+  findRenderedDOMComponentWithClass,
   Simulate,
   renderIntoDocument
 } = TestUtils;
 
+const createElement = (props) => {
+  const rendered = renderIntoDocument(<ApproveButton {...props} />);
+  return findRenderedDOMComponentWithClass(rendered, 'Button');
+};
+
 chai.use(spies);
 
 describe('ApproveButton component', () => {
-
-  let element;
-  let handler = chai.spy(() => {});
-
-  before(() => {
-    const props = {
+  it('should call the action when clicked', () => {
+    const handler = chai.spy(() => {});
+    const element = createElement({
       transactionid: '1',
       groupid: '1',
-      approveTransaction: handler
-    };
+      approveTransaction: handler,
+      inProgress: false
+    });
 
-    const rendered = renderIntoDocument(<ApproveButton {...props} />);
-    element = findRenderedDOMComponentWithTag(rendered, 'div');
-  });
-
-  it('should call the action when clicked', () => {
     Simulate.click(element);
+    expect(element.className).not.to.contain('Button--inProgress');
     expect(handler).to.have.been.called();
   });
+
+  it('should not do anything if the action is in progress', () => {
+    const handler = chai.spy(() => {});
+    const element = createElement({
+      transactionid: '1',
+      groupid: '1',
+      approveTransaction: handler,
+      inProgress: true
+    });
+
+    Simulate.click(element);
+    expect(handler).to.not.have.been.called();
+    expect(element.className).to.contain('Button--inProgress');
+  })
 });

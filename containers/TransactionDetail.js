@@ -15,7 +15,14 @@ import TransactionDetailInfo from '../components/TransactionDetailInfo';
 
 class TransactionDetail extends Component {
   render() {
-    const { group, transaction, tags, user } = this.props;
+    const {
+      group,
+      transaction,
+      tags,
+      user,
+      inProgress
+    } = this.props;
+
     return (
       <div>
         <Header title={group.name} hasBackButton={true} />
@@ -39,9 +46,11 @@ class TransactionDetail extends Component {
 
             <div className='TransactionDetail-controls'>
               <ApproveButton
-                approveTransaction={this.approveTransaction.bind(this)} />
+                approveTransaction={this.approveTransaction.bind(this)}
+                inProgress={inProgress} />
               <RejectButton
-                rejectTransaction={this.rejectTransaction.bind(this)} />
+                rejectTransaction={this.rejectTransaction.bind(this)}
+                inProgress={inProgress} />
             </div>
           </div>
         </Content>
@@ -109,6 +118,7 @@ function mapStateToProps(state) {
     group: state.groups[groupid] || {},
     transaction,
     tags: state.form.transaction.defaults.tags,
-    user: state.users[transaction.UserId] || {}
+    user: state.users[transaction.UserId] || {},
+    inProgress: state.transactions.inProgress
   };
 }
