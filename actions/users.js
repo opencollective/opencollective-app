@@ -1,10 +1,7 @@
 import keys from 'lodash/object/keys';
 import merge from 'lodash/object/merge';
-import jwtDecode from 'jwt-decode';
 import { fetchTransactions } from './transactions';
-import { groupSuccess } from './groups';
-import { get, auth } from '../lib/api';
-import env from '../lib/env';
+import { get, post } from '../lib/api';
 import Schemas from '../lib/schemas';
 
 /**
@@ -26,6 +23,10 @@ export const USER_TRANSACTIONS_FAILURE = 'USER_TRANSACTIONS_FAILURE';
 export const GET_APPROVAL_KEY_REQUEST = 'GET_APPROVAL_KEY_REQUEST';
 export const GET_APPROVAL_KEY_SUCCESS = 'GET_APPROVAL_KEY_SUCCESS';
 export const GET_APPROVAL_KEY_FAILURE = 'GET_APPROVAL_KEY_FAILURE';
+
+export const CONFIRM_APPROVAL_KEY_REQUEST = 'CONFIRM_APPROVAL_KEY_REQUEST';
+export const CONFIRM_APPROVAL_KEY_SUCCESS = 'CONFIRM_APPROVAL_KEY_SUCCESS';
+export const CONFIRM_APPROVAL_KEY_FAILURE = 'CONFIRM_APPROVAL_KEY_FAILURE';
 
 /**
  * Fetch a user
@@ -157,7 +158,7 @@ function userTransactionsFailure(error) {
 export function getApprovalKey(userid, options={}) {
   const callback = 'http://localhost:3000/?approvalStatus=';
   const params = {
-    returnUrl: callback + 'success',
+    returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
     cancelUrl: callback + 'cancel',
     endingDate: new Date('2020-01-01').toISOString(),
     maxTotalAmountOfAllPayments: options.maxTotalAmountOfAllPayments || 2000
@@ -195,4 +196,46 @@ function getApprovalKeyFailure(error) {
   };
 }
 
+
+/**
+ * Confirm approval key
+ */
+
+export function confirmApprovalKey(userid, preapprovalKey) {
+  const url = `users/${userid}/paypal/preapproval/${preapprovalKey}`;
+  const request = confirmApprovalKeyRequest;
+  const success = confirmApprovalKeySuccess;
+  const failure = confirmApprovalKeyFailure;
+
+  return dispatch => {
+    dispatch(request(userid, preapprovalKey));
+    return post(url)
+      .then(json => dispatch(success(userid, preapprovalKey, json)))
+      .catch(err => dispatch(failure(err)));
+  };
+}
+
+function confirmApprovalKeyRequest(userid, preapprovalKey) {
+  return {
+    type: CONFIRM_APPROVAL_KEY_REQUEST,
+    preapprovalKey,
+    userid
+  };
+}
+
+function confirmApprovalKeySuccess(userid, preapprovalKey, json) {
+  return {
+    type: CONFIRM_APPROVAL_KEY_SUCCESS,
+    userid,
+    preapprovalKey,
+    json
+  };
+}
+
+function confirmApprovalKeyFailure(error) {
+  return {
+    type: CONFIRM_APPROVAL_KEY_FAILURE,
+    error
+  };
+}
 

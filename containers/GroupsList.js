@@ -6,7 +6,8 @@ import filter from 'lodash/collection/filter';
 import {
   fetchUserGroupsAndTransactions,
   fetchUserIfNeeded,
-  getApprovalKey
+  getApprovalKey,
+  confirmApprovalKey
 } from '../actions/users';
 import { fetchTransactions } from '../actions/transactions';
 import Content from './Content';
@@ -45,7 +46,9 @@ class GroupsList extends Component {
     const {
       fetchUserGroupsAndTransactions,
       userid,
-      fetchUserIfNeeded
+      fetchUserIfNeeded,
+      confirmApprovalKey,
+      query
     } = this.props;
 
     if (userid) {
@@ -54,13 +57,18 @@ class GroupsList extends Component {
         return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
       });
     }
+
+    if (query.preapprovalKey && query.approvalStatus === 'success') {
+      confirmApprovalKey(userid, query.preapprovalKey);
+    }
   }
 }
 
 export default connect(mapStateToProps, {
   fetchUserGroupsAndTransactions,
   fetchUserIfNeeded,
-  getApprovalKey
+  getApprovalKey,
+  confirmApprovalKey
 })(GroupsList);
 
 function mapStateToProps(state) {
