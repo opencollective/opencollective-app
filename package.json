@@ -43,6 +43,7 @@
     "nock": "^2.15.0",
     "normalizr": "^1.0.0",
     "numeral": "^1.5.3",
+    "query-string": "^3.0.0",
     "react": "~0.14.0",
     "react-dom": "^0.14.0",
     "react-redux": "^3.1.0",

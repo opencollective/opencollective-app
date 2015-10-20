@@ -53,7 +53,14 @@
   float: left;
 }
 
-.Button--inProgress {
-  background-color: var(--gray);
+.Button--paypal {
+  background-color: #298ED8;
 }
 
+/**
+ * Keep at the very bottom
+ */
+
+.Button--inProgress {
+  background-color: var(--dark-gray);
+}

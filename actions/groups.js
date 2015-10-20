@@ -16,9 +16,11 @@ export const GROUP_FAILURE = 'GROUP_FAILURE';
 export function fetchGroup(id) {
   return dispatch => {
     dispatch(groupRequest(id));
-    return get(`groups/${id}`, Schemas.GROUP)
-      .then(json => dispatch(groupSuccess(id, json)))
-      .catch(error => dispatch(groupFailure(id, error)));
+    return get(`groups/${id}`, {
+      schema: Schemas.GROUP
+    })
+    .then(json => dispatch(groupSuccess(id, json)))
+    .catch(error => dispatch(groupFailure(id, error)));
   };
 }
 

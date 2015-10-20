@@ -23,6 +23,10 @@ export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
 export const USER_TRANSACTIONS_FAILURE = 'USER_TRANSACTIONS_FAILURE';
 
+export const GET_APPROVAL_KEY_REQUEST = 'GET_APPROVAL_KEY_REQUEST';
+export const GET_APPROVAL_KEY_SUCCESS = 'GET_APPROVAL_KEY_SUCCESS';
+export const GET_APPROVAL_KEY_FAILURE = 'GET_APPROVAL_KEY_FAILURE';
+
 /**
  * Fetch a user
  */
@@ -39,7 +43,7 @@ export function fetchUserIfNeeded(id) {
 export function fetchUser(id) {
   return dispatch => {
     dispatch(fetchUserRequest(id));
-    return get(`users/${id}`, Schemas.USER)
+    return get(`users/${id}`, { schema: Schemas.USER })
       .then(json => dispatch(fetchUserSuccess(id, json)))
       .catch(err => dispatch(fetchUserFailure(err)));
   };
@@ -76,7 +80,7 @@ function fetchUserFailure(error) {
 export function fetchUserGroups(userid) {
   return dispatch => {
     dispatch(userGroupsRequest(userid));
-    return get(`users/${userid}/groups`, Schemas.GROUP_ARRAY)
+    return get(`users/${userid}/groups`, { schema: Schemas.GROUP_ARRAY })
       .then(json => dispatch(userGroupsSuccess(userid, json)))
       .catch(err => dispatch(userGroupsFailure(err)));
   };
@@ -149,6 +153,51 @@ function userTransactionsFailure(error) {
     type: USER_TRANSACTIONS_FAILURE,
     error,
     receivedAt: Date.now(),
+  };
+}
+
+/**
+ * Get approval key for paypal
+ */
+
+export function getApprovalKey(userid, options={}) {
+  const callback = 'http://localhost:3000/?approvaStatus=';
+  const params = {
+    returnUrl: callback + 'success',
+    cancelUrl: callback + 'cancel',
+    endingDate: new Date('2020-01-01').toISOString(),
+    maxTotalAmountOfAllPayments: options.maxTotalAmountOfAllPayments || 2000
+  };
+
+  return dispatch => {
+    dispatch(getApprovalKeyRequest(userid));
+    return get(`users/${userid}/paypal/preapproval`, { params })
+      .then(json => dispatch(getApprovalKeySuccess(userid, json)))
+      .catch(err => dispatch(getApprovalKeyFailure(err)));
+  };
+}
+
+function getApprovalKeyRequest(userid) {
+  return {
+    type: GET_APPROVAL_KEY_REQUEST,
+    userid
+  };
+}
+
+function getApprovalKeySuccess(userid, json) {
+  window.location = json.preapprovalUrl;
+
+  return {
+    type: GET_APPROVAL_KEY_SUCCESS,
+    userid,
+    json
+  };
+}
+
+function getApprovalKeyFailure(error) {
+  return {
+    type: GET_APPROVAL_KEY_FAILURE,
+    error
   };
 }
 

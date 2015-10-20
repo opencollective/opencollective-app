@@ -33,9 +33,11 @@ export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE';
 export function fetchTransactions(groupid) {
   return dispatch => {
     dispatch(transactionsRequest(groupid));
-    return get(`groups/${groupid}/transactions`, Schemas.TRANSACTION_ARRAY)
-      .then(json => dispatch(transactionsSuccess(groupid, json)))
-      .catch(error => dispatch(transactionsFailure(error)));
+    return get(`groups/${groupid}/transactions`, {
+      schema: Schemas.TRANSACTION_ARRAY
+    })
+    .then(json => dispatch(transactionsSuccess(groupid, json)))
+    .catch(error => dispatch(transactionsFailure(error)));
   };
 }
 
@@ -70,9 +72,11 @@ function transactionsFailure(error) {
 export function fetchTransaction(groupid, transactionid) {
   return dispatch => {
     dispatch(transactionRequest(groupid, transactionid));
-    return get(`groups/${groupid}/transactions/${transactionid}`, Schemas.TRANSACTION)
-      .then(json => dispatch(transactionSuccess(groupid, transactionid, json)))
-      .catch(error => dispatch(transactionFailure(error)));
+    return get(`groups/${groupid}/transactions/${transactionid}`, {
+      schema: Schemas.TRANSACTION
+    })
+    .then(json => dispatch(transactionSuccess(groupid, transactionid, json)))
+    .catch(error => dispatch(transactionFailure(error)));
   };
 }
 
