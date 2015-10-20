@@ -1,5 +1,4 @@
 import { get, postJSON } from '../lib/api';
-import validate from '../validators/transaction';
 import Schemas from '../lib/schemas';
 
 /**
@@ -25,6 +24,10 @@ export const REJECT_TRANSACTION_FAILURE = 'REJECT_TRANSACTION_FAILURE';
 export const CREATE_TRANSACTION_REQUEST = 'CREATE_TRANSACTION_REQUEST';
 export const CREATE_TRANSACTION_SUCCESS = 'CREATE_TRANSACTION_SUCCESS';
 export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE';
+
+export const PAY_TRANSACTION_REQUEST = 'PAY_TRANSACTION_REQUEST';
+export const PAY_TRANSACTION_SUCCESS = 'PAY_TRANSACTION_SUCCESS';
+export const PAY_TRANSACTION_FAILURE = 'PAY_TRANSACTION_FAILURE';
 
 /**
  * Fetch multiple transactions in a group
@@ -218,6 +221,48 @@ function createTransactionSuccess(groupid, transaction) {
 function createTransactionFailure(error) {
   return {
     type: CREATE_TRANSACTION_FAILURE,
+    error,
+  };
+}
+
+/**
+ * Pay a transaction
+ */
+
+export function payTransaction(groupid, transactionid) {
+  const url = `groups/${groupid}/transactions/${transactionid}/pay`;
+  const request = payTransactionRequest;
+  const success = payTransactionSuccess;
+  const failure = payTransactionFailure;
+
+  return dispatch => {
+    dispatch(request(groupid, transactionid));
+    return postJSON(url, { service: 'paypal' })
+      .then(json => dispatch(success(groupid, transactionid, json)))
+      .catch(error => dispatch(failure(error)));
+  };
+}
+
+function payTransactionRequest(groupid, transactionid) {
+  return {
+    type: PAY_TRANSACTION_REQUEST,
+    groupid,
+    transactionid
+  };
+}
+
+function payTransactionSuccess(groupid, transactionid, json) {
+  return {
+    type: PAY_TRANSACTION_SUCCESS,
+    groupid,
+    transactionid,
+    json
+  };
+}
+
+function payTransactionFailure(error) {
+  return {
+    type: PAY_TRANSACTION_FAILURE,
     error,
   };
 }

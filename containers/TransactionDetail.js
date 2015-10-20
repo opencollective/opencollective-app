@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import { fetchTransaction, approveTransaction, rejectTransaction } from '../actions/transactions';
+import {
+  fetchTransaction,
+  approveTransaction,
+  rejectTransaction,
+  payTransaction
+} from '../actions/transactions';
 import { fetchGroup } from '../actions/groups';
 import { appendTransactionForm } from '../actions/form';
 import { fetchUserIfNeeded } from '../actions/users';
@@ -79,9 +84,15 @@ class TransactionDetail extends Component {
   }
 
   approveTransaction() {
-    const { group, transaction, approveTransaction } = this.props;
+    const {
+      group,
+      transaction,
+      approveTransaction,
+      payTransaction
+    } = this.props;
 
     approveTransaction(group.id, transaction.id)
+    .then(() => payTransaction(group.id, transaction.id))
     .then(() => this.nextPage());
   }
 
@@ -106,7 +117,8 @@ export default connect(mapStateToProps, {
   fetchGroup,
   appendTransactionForm,
   pushState,
-  fetchUserIfNeeded
+  fetchUserIfNeeded,
+  payTransaction
 })(TransactionDetail);
 
 function mapStateToProps(state) {
