@@ -35,8 +35,7 @@ function groupSuccess(id, json) {
   return {
     type: GROUP_SUCCESS,
     id,
-    groups: json.groups,
-    receivedAt: Date.now(),
+    groups: json.groups
   };
 }
 
@@ -44,7 +43,6 @@ function groupFailure(id, error) {
   return {
     type: GROUP_FAILURE,
     id,
-    error,
-    receivedAt: Date.now(),
+    error
   };
 }

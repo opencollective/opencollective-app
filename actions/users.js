@@ -61,7 +61,6 @@ function fetchUserSuccess(id, json) {
     type: FETCH_USER_SUCCESS,
     id,
     users: json.users,
-    receivedAt: Date.now(),
   };
 }
 
@@ -69,7 +68,6 @@ function fetchUserFailure(error) {
   return {
     type: FETCH_USER_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -98,7 +96,6 @@ function userGroupsSuccess(userid, json) {
     type: USER_GROUPS_SUCCESS,
     userid,
     groups: json.groups,
-    receivedAt: Date.now(),
   };
 }
 
@@ -106,7 +103,6 @@ function userGroupsFailure(error) {
   return {
     type: USER_GROUPS_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -144,7 +140,6 @@ function userTransactionsSuccess(userid, {transactions}) {
     type: USER_TRANSACTIONS_SUCCESS,
     userid,
     transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -152,7 +147,6 @@ function userTransactionsFailure(error) {
   return {
     type: USER_TRANSACTIONS_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -161,7 +155,7 @@ function userTransactionsFailure(error) {
  */
 
 export function getApprovalKey(userid, options={}) {
-  const callback = 'http://localhost:3000/?approvaStatus=';
+  const callback = 'http://localhost:3000/?approvalStatus=';
   const params = {
     returnUrl: callback + 'success',
     cancelUrl: callback + 'cancel',

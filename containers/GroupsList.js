@@ -19,7 +19,7 @@ import getUniqueValues from '../lib/get_unique_values';
 
 class GroupsList extends Component {
   render() {
-    const { getApprovalKey, userid } = this.props;
+    const { getApprovalKey, userid, query } = this.props;
 
     return (
       <div>
@@ -27,7 +27,8 @@ class GroupsList extends Component {
         <Content>
         <PaypalReminder
           getApprovalKey={getApprovalKey.bind(null, userid)}
-          inProgress={this.props.inProgress} />
+          inProgress={this.props.inProgress}
+          approvalStatus={query.approvalStatus} />
         {this.props.groups.map(group => {
           return <Group
             {...group}
@@ -79,6 +80,7 @@ function mapStateToProps(state) {
     userid,
     users: state.users,
     transactions,
-    inProgress: state.users.inProgress
+    inProgress: state.users.inProgress,
+    query: state.router.location.query
   };
 }

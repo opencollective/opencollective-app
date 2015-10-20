@@ -32,16 +32,14 @@ function uploadImageRequest(data) {
 function uploadImageSuccess(json) {
   return {
     type: UPLOAD_IMAGE_SUCCESS,
-    response: json,
-    receivedAt: Date.now()
+    response: json
   };
 }
 
 function uploadImageFailure(error) {
   return {
     type: UPLOAD_IMAGE_FAILURE,
-    error: error,
-    receivedAt: Date.now()
+    error: error
   };
 }
 

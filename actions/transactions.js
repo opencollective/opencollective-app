@@ -53,7 +53,6 @@ function transactionsSuccess(groupid, json) {
     type: TRANSACTIONS_SUCCESS,
     groupid,
     transactions: json.transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -61,7 +60,6 @@ function transactionsFailure(error) {
   return {
     type: TRANSACTIONS_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -94,7 +92,6 @@ function transactionSuccess(groupid, transactionid, json) {
     groupid,
     transactionid,
     transactions: json.transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -102,7 +99,6 @@ function transactionFailure(error) {
   return {
     type: TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -135,7 +131,6 @@ function approveTransactionSuccess(groupid, transactionid, json) {
     groupid,
     transactionid,
     response: json,
-    receivedAt: Date.now(),
   };
 }
 
@@ -143,7 +138,6 @@ function approveTransactionFailure(error) {
   return {
     type: APPROVE_TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -176,7 +170,6 @@ function rejectTransactionSuccess(groupid, transactionid, json) {
     groupid,
     transactionid,
     response: json,
-    receivedAt: Date.now(),
   };
 }
 
@@ -184,7 +177,6 @@ function rejectTransactionFailure(error) {
   return {
     type: REJECT_TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -220,7 +212,6 @@ function createTransactionSuccess(groupid, transaction) {
     type: CREATE_TRANSACTION_SUCCESS,
     groupid,
     transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -228,6 +219,5 @@ function createTransactionFailure(error) {
   return {
     type: CREATE_TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
