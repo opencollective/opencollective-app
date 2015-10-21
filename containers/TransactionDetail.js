@@ -17,15 +17,13 @@ import RejectButton from '../components/RejectButton';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
+import TransactionDetailApproval from '../components/TransactionDetailApproval';
 
 class TransactionDetail extends Component {
   render() {
     const {
       group,
-      transaction,
-      tags,
-      user,
-      inProgress
+      transaction
     } = this.props;
 
     return (
@@ -39,24 +37,14 @@ class TransactionDetail extends Component {
             <div className='TransactionDetail-image'>
               <img src={transaction.link} />
             </div>
-
             <TransactionDetailInfo
-              transaction={transaction}
-              tags={tags}
+              {...this.props}
               handleChange={this.handleTag.bind(this)} />
-
-            <TransactionDetailComment
-              transaction={transaction}
-              user={user} />
-
-            <div className='TransactionDetail-controls'>
-              <ApproveButton
-                approveTransaction={this.approveTransaction.bind(this)}
-                inProgress={inProgress} />
-              <RejectButton
-                rejectTransaction={this.rejectTransaction.bind(this)}
-                inProgress={inProgress} />
-            </div>
+            <TransactionDetailComment {...this.props} />
+            <TransactionDetailApproval
+              {...this.props}
+              approveTransaction={this.approveTransaction.bind(this)}
+              rejectTransaction={this.rejectTransaction.bind(this)} />
           </div>
         </Content>
       </div>
@@ -67,14 +55,22 @@ class TransactionDetail extends Component {
     const {
       fetchTransaction,
       fetchGroup,
-      fetchUserIfNeeded,
       groupid,
       transactionid
     } = this.props;
 
     fetchGroup(groupid);
+
     fetchTransaction(groupid, transactionid)
-    .then(() => fetchUserIfNeeded(this.props.transaction.UserId));
+    .then(() => this.fetchUser.bind(this));
+  }
+
+  fetchUser() {
+    const { fetchUserIfNeeded, transaction } = this.props;
+
+    if (transaction.UserId) {
+      fetchUserIfNeeded(transaction.UserId);
+    }
   }
 
   handleTag(value) {
@@ -123,7 +119,13 @@ export default connect(mapStateToProps, {
 
 function mapStateToProps(state) {
   const { transactionid, groupid } = state.router.params;
+  const {
+    approveInProgress,
+    rejectInProgress,
+    payInProgress
+  } = state.transactions;
   const transaction = state.transactions[transactionid] || {};
+
   return {
     groupid,
     transactionid,
@@ -131,6 +133,7 @@ function mapStateToProps(state) {
     transaction,
     tags: state.form.transaction.defaults.tags,
     user: state.users[transaction.UserId] || {},
-    inProgress: state.transactions.inProgress
+    approveInProgress: approveInProgress || payInProgress,
+    rejectInProgress: state.transactions.rejectInProgress
   };
 }
