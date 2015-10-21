@@ -18,6 +18,7 @@ import {
 const defaults = {
   approveInProgress: false,
   rejectInProgress: false,
+  payInProgress: false,
   error: {}
 };
 
