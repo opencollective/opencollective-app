@@ -20,13 +20,14 @@ class TransactionDetail extends Component {
       transaction,
       tags,
       user,
-      inProgress
+      inProgress,
+      isLoading
     } = this.props;
 
     return (
       <div>
         <Header title={group.name} hasBackButton={true} />
-        <Content>
+        <Content isLoading={isLoading}>
           <TransactionDetailTitle
             description={transaction.description} />
 
@@ -112,6 +113,7 @@ export default connect(mapStateToProps, {
 function mapStateToProps(state) {
   const { transactionid, groupid } = state.router.params;
   const transaction = state.transactions[transactionid] || {};
+
   return {
     groupid,
     transactionid,
@@ -119,6 +121,7 @@ function mapStateToProps(state) {
     transaction,
     tags: state.form.transaction.defaults.tags,
     user: state.users[transaction.UserId] || {},
-    inProgress: state.transactions.inProgress
+    inProgress: state.transactions.inProgress,
+    isLoading: !transaction.id
   };
 }
