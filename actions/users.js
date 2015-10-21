@@ -3,6 +3,7 @@ import merge from 'lodash/object/merge';
 import { fetchTransactions } from './transactions';
 import { get, post } from '../lib/api';
 import Schemas from '../lib/schemas';
+import env from '../lib/env';
 
 /**
  * Constants
@@ -11,6 +12,7 @@ import Schemas from '../lib/schemas';
 export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+export const FETCH_USER_FROM_STATE = 'FETCH_USER_FROM_STATE';
 
 export const USER_GROUPS_REQUEST = 'USER_GROUPS_REQUEST';
 export const USER_GROUPS_SUCCESS = 'USER_GROUPS_SUCCESS';
@@ -20,9 +22,9 @@ export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
 export const USER_TRANSACTIONS_FAILURE = 'USER_TRANSACTIONS_FAILURE';
 
-export const GET_APPROVAL_KEY_REQUEST = 'GET_APPROVAL_KEY_REQUEST';
-export const GET_APPROVAL_KEY_SUCCESS = 'GET_APPROVAL_KEY_SUCCESS';
-export const GET_APPROVAL_KEY_FAILURE = 'GET_APPROVAL_KEY_FAILURE';
+export const GET_APPROVAL_KEY_FOR_USER_REQUEST= 'GET_APPROVAL_KEY_FOR_USER_REQUEST';
+export const GET_APPROVAL_KEY_FOR_USER_SUCCESS = 'GET_APPROVAL_KEY_FOR_USER_SUCCESS';
+export const GET_APPROVAL_KEY_FOR_USER_FAILURE = 'GET_APPROVAL_KEY_FOR_USER_FAILURE';
 
 export const CONFIRM_APPROVAL_KEY_REQUEST = 'CONFIRM_APPROVAL_KEY_REQUEST';
 export const CONFIRM_APPROVAL_KEY_SUCCESS = 'CONFIRM_APPROVAL_KEY_SUCCESS';
@@ -37,6 +39,8 @@ export function fetchUserIfNeeded(id) {
     const user = getState().users[id];
     if (!user || !user.id) {
       return dispatch(fetchUser(id));
+    } else {
+      return dispatch(fetchUserFromState(user));
     }
   };
 }
@@ -47,6 +51,13 @@ export function fetchUser(id) {
     return get(`users/${id}`, { schema: Schemas.USER })
       .then(json => dispatch(fetchUserSuccess(id, json)))
       .catch(err => dispatch(fetchUserFailure(err)));
+  };
+}
+
+function fetchUserFromState(user) {
+  return {
+    type: FETCH_USER_FROM_STATE,
+    user
   };
 }
 
@@ -155,8 +166,12 @@ function userTransactionsFailure(error) {
  * Get approval key for paypal
  */
 
-export function getApprovalKey(userid, options={}) {
-  const callback = 'http://localhost:3000/?approvalStatus=';
+export function getApprovalKeyForUser(userid, options={}) {
+  const request = getApprovalKeyForUserRequest;
+  const success = getApprovalKeyForUserSuccess;
+  const failure = getApprovalKeyForUserFailure;
+
+  const callback = `${env.CLIENT_ROOT}?approvalStatus=`;
   const params = {
     returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
     cancelUrl: callback + 'cancel',
@@ -165,33 +180,33 @@ export function getApprovalKey(userid, options={}) {
   };
 
   return dispatch => {
-    dispatch(getApprovalKeyRequest(userid));
+    dispatch(request(userid));
     return get(`users/${userid}/paypal/preapproval`, { params })
-      .then(json => dispatch(getApprovalKeySuccess(userid, json)))
-      .catch(err => dispatch(getApprovalKeyFailure(err)));
+      .then(json => dispatch(success(userid, json)))
+      .catch(err => dispatch(failure(err)));
   };
 }
 
-function getApprovalKeyRequest(userid) {
+function getApprovalKeyForUserRequest(userid) {
   return {
-    type: GET_APPROVAL_KEY_REQUEST,
+    type: GET_APPROVAL_KEY_FOR_USER_REQUEST,
     userid
   };
 }
 
-function getApprovalKeySuccess(userid, json) {
+function getApprovalKeyForUserSuccess(userid, json) {
   window.location = json.preapprovalUrl;
 
   return {
-    type: GET_APPROVAL_KEY_SUCCESS,
+    type: GET_APPROVAL_KEY_FOR_USER_SUCCESS,
     userid,
     json
   };
 }
 
-function getApprovalKeyFailure(error) {
+function getApprovalKeyForUserFailure(error) {
   return {
-    type: GET_APPROVAL_KEY_FAILURE,
+    type: GET_APPROVAL_KEY_FOR_USER_FAILURE,
     error
   };
 }

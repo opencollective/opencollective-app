@@ -29,7 +29,6 @@ export default (getState, expectedActions, onLastAction, debug=false) => {
 
       dispatch(action) {
         const expectedAction = expectedActions.shift();
-
         if (debug) {
           console.log('action', action);
           console.log('expectedAction', expectedAction);
