@@ -53,7 +53,13 @@
   float: left;
 }
 
-.Button--inProgress {
+.Button--inProgress,
+.Button--inProgress:hover {
   background-color: var(--gray);
+  -webkit-transition: all 350ms ease-out;
+  -moz-transition: all 350ms ease-out;
+  -ms-transition: all 350ms ease-out;
+  -o-transition: all 350ms ease-out;
+  transition: all 350ms ease-out;
 }
 
