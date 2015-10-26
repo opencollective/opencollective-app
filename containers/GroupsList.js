@@ -76,7 +76,7 @@ function mapStateToProps(state) {
   const userid = state.session.user.id;
   const currentUser = state.users[userid] || {};
   const transactions = values(currentUser.transactions);
-  const isLoading = transactions.length === 0;
+  const isLoading = !currentUser.groups;
 
   const groups = values(currentUser.groups).map((group) => {
     return extend(group, {
