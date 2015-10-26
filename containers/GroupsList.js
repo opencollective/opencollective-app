@@ -25,7 +25,7 @@ class GroupsList extends Component {
     return (
       <div>
         <Header title='Accounting' hasBackButton={false} />
-        <Content>
+        <Content isLoading={this.props.isLoading}>
         <PaypalReminder
           getApprovalKey={getApprovalKey.bind(null, userid)}
           inProgress={this.props.inProgress}
@@ -76,6 +76,7 @@ function mapStateToProps(state) {
   const userid = state.session.user.id;
   const currentUser = state.users[userid] || {};
   const transactions = values(currentUser.transactions);
+  const isLoading = transactions.length === 0;
 
   const groups = values(currentUser.groups).map((group) => {
     return extend(group, {
@@ -83,12 +84,14 @@ function mapStateToProps(state) {
     });
   });
 
+
   return {
     groups,
     userid,
     users: state.users,
     transactions,
     inProgress: state.users.inProgress,
-    query: state.router.location.query
+    query: state.router.location.query,
+    isLoading
   };
 }

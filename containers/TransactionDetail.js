@@ -23,13 +23,16 @@ class TransactionDetail extends Component {
   render() {
     const {
       group,
-      transaction
+      transaction,
+      tags,
+      user,
+      isLoading
     } = this.props;
 
     return (
       <div>
         <Header title={group.name} hasBackButton={true} />
-        <Content>
+        <Content isLoading={isLoading}>
           <TransactionDetailTitle
             description={transaction.description} />
 
@@ -134,6 +137,7 @@ function mapStateToProps(state) {
     tags: state.form.transaction.defaults.tags,
     user: state.users[transaction.UserId] || {},
     approveInProgress: approveInProgress || payInProgress,
-    rejectInProgress: state.transactions.rejectInProgress
+    rejectInProgress: state.transactions.rejectInProgress,
+    isLoading: !transaction.id
   };
 }

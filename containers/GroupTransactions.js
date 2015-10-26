@@ -18,13 +18,13 @@ import GroupTitle from '../components/GroupTitle';
 
 class GroupTransactions extends Component {
   render() {
-    let { group, groupid, transactions, users } = this.props;
+    const { group, groupid, transactions, users, isLoading } = this.props;
     return (
       <div className='GroupTransactions'>
         <Header
           title={group.name}
           hasBackButton={true} />
-        <Content>
+        <Content isLoading={isLoading}>
           <GroupTitle group={group} />
           <div className='padded'>
             <div className='GroupTransactions-title'>Activity Detail</div>
@@ -64,10 +64,12 @@ export default connect(mapStateToProps, {
 
 function mapStateToProps(state) {
   const groupid = state.router.params.groupid;
+  const transactions = filter(state.transactions, {GroupId: Number(groupid)}).sort(sortByDate);
   return {
     groupid,
     group: state.groups[groupid] || {},
-    transactions: filter(state.transactions, {GroupId: Number(groupid)}).sort(sortByDate),
-    users: state.users || {}
+    transactions,
+    users: state.users || {},
+    isLoading: transactions.length === 0
   };
 }
