@@ -9,7 +9,7 @@ class PaypalReminder extends Component {
     return (
       <div className='PaypalReminder'>
         {this.message(status)}
-        {hideButton ? null : this.button()}
+        {hideButton ? null : this.button(this.props)}
       </div>
     );
   }
@@ -24,12 +24,12 @@ class PaypalReminder extends Component {
     }
   }
 
-  button(status) {
+  button({inProgress, getApprovalKey}) {
     return (
       <AsyncButton
         customClass='Button--paypal'
-        inProgress={this.props.inProgress}
-        onClick={this.props.getApprovalKey.bind(this)}>
+        inProgress={inProgress}
+        onClick={getApprovalKey}>
         Login with Paypal
       </AsyncButton>
     );

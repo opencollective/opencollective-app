@@ -6,7 +6,7 @@ import filter from 'lodash/collection/filter';
 import {
   fetchUserGroupsAndTransactions,
   fetchUserIfNeeded,
-  getApprovalKey,
+  getApprovalKeyForUser,
   confirmApprovalKey
 } from '../actions/users';
 import { fetchTransactions } from '../actions/transactions';
@@ -20,14 +20,14 @@ import getUniqueValues from '../lib/get_unique_values';
 
 class GroupsList extends Component {
   render() {
-    const { getApprovalKey, userid, query } = this.props;
+    const { getApprovalKeyForUser, userid, query } = this.props;
 
     return (
       <div>
         <Header title='Accounting' hasBackButton={false} />
         <Content isLoading={this.props.isLoading}>
         <PaypalReminder
-          getApprovalKey={getApprovalKey.bind(null, userid)}
+          getApprovalKey={getApprovalKeyForUser.bind(this, userid)}
           inProgress={this.props.inProgress}
           approvalStatus={query.approvalStatus} />
         {this.props.groups.map(group => {
@@ -67,7 +67,7 @@ class GroupsList extends Component {
 export default connect(mapStateToProps, {
   fetchUserGroupsAndTransactions,
   fetchUserIfNeeded,
-  getApprovalKey,
+  getApprovalKeyForUser,
   confirmApprovalKey
 })(GroupsList);
 
