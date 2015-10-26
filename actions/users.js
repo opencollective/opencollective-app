@@ -3,7 +3,6 @@ import merge from 'lodash/object/merge';
 import { fetchTransactions } from './transactions';
 import { get, post } from '../lib/api';
 import Schemas from '../lib/schemas';
-import env from '../lib/env';
 
 /**
  * Constants
@@ -170,8 +169,9 @@ export function getApprovalKeyForUser(userid, options={}) {
   const request = getApprovalKeyForUserRequest;
   const success = getApprovalKeyForUserSuccess;
   const failure = getApprovalKeyForUserFailure;
+  const root = window.location.href;
+  const callback = `${root}?approvalStatus=`;
 
-  const callback = `${env.CLIENT_ROOT}?approvalStatus=`;
   const params = {
     returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
     cancelUrl: callback + 'cancel',

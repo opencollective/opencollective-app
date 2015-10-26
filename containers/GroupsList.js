@@ -84,7 +84,6 @@ function mapStateToProps(state) {
     });
   });
 
-
   return {
     groups,
     userid,

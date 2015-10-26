@@ -1,6 +1,5 @@
 import jwtDecode from 'jwt-decode';
 import { auth } from '../lib/api';
-import env from '../lib/env';
 
 /**
  * Constants
@@ -22,8 +21,7 @@ export function login({email, password}) {
     dispatch(loginRequest(email));
     return auth({
       email,
-      password,
-      api_key: env.API_KEY
+      password
     })
     .then(json => dispatch(loginSuccess(json)))
     .then(json => dispatch(decodeJWT(json)))
