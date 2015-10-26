@@ -64,12 +64,13 @@ export default connect(mapStateToProps, {
 
 function mapStateToProps(state) {
   const groupid = state.router.params.groupid;
+  const group = state.groups[groupid] || {};
   const transactions = filter(state.transactions, {GroupId: Number(groupid)}).sort(sortByDate);
   return {
     groupid,
-    group: state.groups[groupid] || {},
+    group,
     transactions,
     users: state.users || {},
-    isLoading: transactions.length === 0
+    isLoading: !group.id
   };
 }
