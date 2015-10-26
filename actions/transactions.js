@@ -1,5 +1,4 @@
 import { get, postJSON } from '../lib/api';
-import validate from '../validators/transaction';
 import Schemas from '../lib/schemas';
 
 /**
@@ -26,6 +25,10 @@ export const CREATE_TRANSACTION_REQUEST = 'CREATE_TRANSACTION_REQUEST';
 export const CREATE_TRANSACTION_SUCCESS = 'CREATE_TRANSACTION_SUCCESS';
 export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE';
 
+export const PAY_TRANSACTION_REQUEST = 'PAY_TRANSACTION_REQUEST';
+export const PAY_TRANSACTION_SUCCESS = 'PAY_TRANSACTION_SUCCESS';
+export const PAY_TRANSACTION_FAILURE = 'PAY_TRANSACTION_FAILURE';
+
 /**
  * Fetch multiple transactions in a group
  */
@@ -33,9 +36,11 @@ export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE';
 export function fetchTransactions(groupid) {
   return dispatch => {
     dispatch(transactionsRequest(groupid));
-    return get(`groups/${groupid}/transactions`, Schemas.TRANSACTION_ARRAY)
-      .then(json => dispatch(transactionsSuccess(groupid, json)))
-      .catch(error => dispatch(transactionsFailure(error)));
+    return get(`groups/${groupid}/transactions`, {
+      schema: Schemas.TRANSACTION_ARRAY
+    })
+    .then(json => dispatch(transactionsSuccess(groupid, json)))
+    .catch(error => dispatch(transactionsFailure(error)));
   };
 }
 
@@ -51,7 +56,6 @@ function transactionsSuccess(groupid, json) {
     type: TRANSACTIONS_SUCCESS,
     groupid,
     transactions: json.transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -59,7 +63,6 @@ function transactionsFailure(error) {
   return {
     type: TRANSACTIONS_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -70,9 +73,11 @@ function transactionsFailure(error) {
 export function fetchTransaction(groupid, transactionid) {
   return dispatch => {
     dispatch(transactionRequest(groupid, transactionid));
-    return get(`groups/${groupid}/transactions/${transactionid}`, Schemas.TRANSACTION)
-      .then(json => dispatch(transactionSuccess(groupid, transactionid, json)))
-      .catch(error => dispatch(transactionFailure(error)));
+    return get(`groups/${groupid}/transactions/${transactionid}`, {
+      schema: Schemas.TRANSACTION
+    })
+    .then(json => dispatch(transactionSuccess(groupid, transactionid, json)))
+    .catch(error => dispatch(transactionFailure(error)));
   };
 }
 
@@ -90,7 +95,6 @@ function transactionSuccess(groupid, transactionid, json) {
     groupid,
     transactionid,
     transactions: json.transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -98,7 +102,6 @@ function transactionFailure(error) {
   return {
     type: TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -131,7 +134,6 @@ function approveTransactionSuccess(groupid, transactionid, json) {
     groupid,
     transactionid,
     response: json,
-    receivedAt: Date.now(),
   };
 }
 
@@ -139,7 +141,6 @@ function approveTransactionFailure(error) {
   return {
     type: APPROVE_TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -172,7 +173,6 @@ function rejectTransactionSuccess(groupid, transactionid, json) {
     groupid,
     transactionid,
     response: json,
-    receivedAt: Date.now(),
   };
 }
 
@@ -180,7 +180,6 @@ function rejectTransactionFailure(error) {
   return {
     type: REJECT_TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -216,7 +215,6 @@ function createTransactionSuccess(groupid, transaction) {
     type: CREATE_TRANSACTION_SUCCESS,
     groupid,
     transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -224,6 +222,47 @@ function createTransactionFailure(error) {
   return {
     type: CREATE_TRANSACTION_FAILURE,
     error,
-    receivedAt: Date.now(),
+  };
+}
+
+/**
+ * Pay a transaction
+ */
+
+export function payTransaction(groupid, transactionid) {
+  const url = `groups/${groupid}/transactions/${transactionid}/pay`;
+  const request = payTransactionRequest;
+  const success = payTransactionSuccess;
+  const failure = payTransactionFailure;
+
+  return dispatch => {
+    dispatch(request(groupid, transactionid));
+    return postJSON(url, { service: 'paypal' })
+      .then(json => dispatch(success(groupid, transactionid, json)))
+      .catch(error => dispatch(failure(error)));
+  };
+}
+
+function payTransactionRequest(groupid, transactionid) {
+  return {
+    type: PAY_TRANSACTION_REQUEST,
+    groupid,
+    transactionid
+  };
+}
+
+function payTransactionSuccess(groupid, transactionid, json) {
+  return {
+    type: PAY_TRANSACTION_SUCCESS,
+    groupid,
+    transactionid,
+    json
+  };
+}
+
+function payTransactionFailure(error) {
+  return {
+    type: PAY_TRANSACTION_FAILURE,
+    error,
   };
 }

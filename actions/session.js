@@ -45,7 +45,6 @@ function loginSuccess(json) {
   return {
     type: LOGIN_SUCCESS,
     json,
-    receivedAt: Date.now(),
   };
 }
 
@@ -53,7 +52,6 @@ function loginFailure(error) {
   return {
     type: LOGIN_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 

@@ -6,11 +6,19 @@ import {
   CREATE_TRANSACTION_FAILURE,
   APPROVE_TRANSACTION_REQUEST,
   APPROVE_TRANSACTION_SUCCESS,
-  APPROVE_TRANSACTION_FAILURE
+  APPROVE_TRANSACTION_FAILURE,
+  REJECT_TRANSACTION_REQUEST,
+  REJECT_TRANSACTION_SUCCESS,
+  REJECT_TRANSACTION_FAILURE,
+  PAY_TRANSACTION_REQUEST,
+  PAY_TRANSACTION_SUCCESS,
+  PAY_TRANSACTION_FAILURE,
 } from '../actions/transactions';
 
 const defaults = {
-  inProgress: false,
+  approveInProgress: false,
+  rejectInProgress: false,
+  payInProgress: false,
   error: {}
 };
 
@@ -29,11 +37,25 @@ export default function transactions(state=defaults, action={}) {
       return merge({}, state, { error });
 
     case APPROVE_TRANSACTION_REQUEST:
-      return merge({}, state, { inProgress: true });
+      return merge({}, state, { approveInProgress: true });
 
     case APPROVE_TRANSACTION_SUCCESS:
     case APPROVE_TRANSACTION_FAILURE:
-      return merge({}, state, { inProgress: false });
+      return merge({}, state, { approveInProgress: false });
+
+    case REJECT_TRANSACTION_REQUEST:
+      return merge({}, state, { rejectInProgress: true });
+
+    case REJECT_TRANSACTION_SUCCESS:
+    case REJECT_TRANSACTION_FAILURE:
+      return merge({}, state, { rejectInProgress: false });
+
+    case PAY_TRANSACTION_REQUEST:
+      return merge({}, state, { payInProgress: true });
+
+    case PAY_TRANSACTION_SUCCESS:
+    case PAY_TRANSACTION_FAILURE:
+      return merge({}, state, { payInProgress: false });
 
     default:
       return state;

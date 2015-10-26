@@ -13,7 +13,7 @@ export default ({inProgress, onClick, customClass, children}) => {
     <div
       className={btnClass}
       onClick={inProgress ? noop : onClick} >
-      {children}
+      {inProgress ? 'Loading' : children}
     </div>
   );
 };

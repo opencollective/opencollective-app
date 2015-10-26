@@ -1,24 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import values from 'lodash/object/values';
 import extend from 'lodash/object/extend';
 import filter from 'lodash/collection/filter';
-import { fetchUserGroupsAndTransactions, fetchUserIfNeeded } from '../actions/users';
+import {
+  fetchUserGroupsAndTransactions,
+  fetchUserIfNeeded,
+  getApprovalKey,
+  confirmApprovalKey
+} from '../actions/users';
 import { fetchTransactions } from '../actions/transactions';
 import Content from './Content';
 import Header from '../components/Header';
 import Group from '../components/Group';
 import Footer from '../components/Footer';
+import PaypalReminder from '../components/PaypalReminder';
 import sortByDate from '../lib/sort_by_date';
 import getUniqueValues from '../lib/get_unique_values';
 
 class GroupsList extends Component {
   render() {
+    const { getApprovalKey, userid, query } = this.props;
+
     return (
       <div>
         <Header title='Accounting' hasBackButton={false} />
         <Content isLoading={this.props.isLoading}>
+        <PaypalReminder
+          getApprovalKey={getApprovalKey.bind(null, userid)}
+          inProgress={this.props.inProgress}
+          approvalStatus={query.approvalStatus} />
         {this.props.groups.map(group => {
           return <Group
             {...group}
@@ -35,7 +46,9 @@ class GroupsList extends Component {
     const {
       fetchUserGroupsAndTransactions,
       userid,
-      fetchUserIfNeeded
+      fetchUserIfNeeded,
+      confirmApprovalKey,
+      query
     } = this.props;
 
     if (userid) {
@@ -44,12 +57,18 @@ class GroupsList extends Component {
         return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
       });
     }
+
+    if (query.preapprovalKey && query.approvalStatus === 'success') {
+      confirmApprovalKey(userid, query.preapprovalKey);
+    }
   }
 }
 
 export default connect(mapStateToProps, {
   fetchUserGroupsAndTransactions,
-  fetchUserIfNeeded
+  fetchUserIfNeeded,
+  getApprovalKey,
+  confirmApprovalKey
 })(GroupsList);
 
 function mapStateToProps(state) {
@@ -71,6 +90,8 @@ function mapStateToProps(state) {
     userid,
     users: state.users,
     transactions,
+    inProgress: state.users.inProgress,
+    query: state.router.location.query,
     isLoading
   };
 }

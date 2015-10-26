@@ -53,6 +53,10 @@
   float: left;
 }
 
+.Button--paypal {
+  background-color: #298ED8;
+}
+
 .Button--inProgress,
 .Button--inProgress:hover {
   background-color: var(--gray);
@@ -63,3 +67,10 @@
   transition: all 350ms ease-out;
 }
 
+/**
+ * Keep at the very bottom
+ */
+
+.Button--inProgress {
+  background-color: var(--dark-gray);
+}

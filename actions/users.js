@@ -1,11 +1,9 @@
 import keys from 'lodash/object/keys';
 import merge from 'lodash/object/merge';
-import jwtDecode from 'jwt-decode';
 import { fetchTransactions } from './transactions';
-import { groupSuccess } from './groups';
-import { get, auth } from '../lib/api';
-import env from '../lib/env';
+import { get, post } from '../lib/api';
 import Schemas from '../lib/schemas';
+import env from '../lib/env';
 
 /**
  * Constants
@@ -14,6 +12,7 @@ import Schemas from '../lib/schemas';
 export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+export const FETCH_USER_FROM_STATE = 'FETCH_USER_FROM_STATE';
 
 export const USER_GROUPS_REQUEST = 'USER_GROUPS_REQUEST';
 export const USER_GROUPS_SUCCESS = 'USER_GROUPS_SUCCESS';
@@ -22,6 +21,14 @@ export const USER_GROUPS_FAILURE = 'USER_GROUPS_FAILURE';
 export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
 export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
 export const USER_TRANSACTIONS_FAILURE = 'USER_TRANSACTIONS_FAILURE';
+
+export const GET_APPROVAL_KEY_FOR_USER_REQUEST= 'GET_APPROVAL_KEY_FOR_USER_REQUEST';
+export const GET_APPROVAL_KEY_FOR_USER_SUCCESS = 'GET_APPROVAL_KEY_FOR_USER_SUCCESS';
+export const GET_APPROVAL_KEY_FOR_USER_FAILURE = 'GET_APPROVAL_KEY_FOR_USER_FAILURE';
+
+export const CONFIRM_APPROVAL_KEY_REQUEST = 'CONFIRM_APPROVAL_KEY_REQUEST';
+export const CONFIRM_APPROVAL_KEY_SUCCESS = 'CONFIRM_APPROVAL_KEY_SUCCESS';
+export const CONFIRM_APPROVAL_KEY_FAILURE = 'CONFIRM_APPROVAL_KEY_FAILURE';
 
 /**
  * Fetch a user
@@ -32,6 +39,8 @@ export function fetchUserIfNeeded(id) {
     const user = getState().users[id];
     if (!user || !user.id) {
       return dispatch(fetchUser(id));
+    } else {
+      return dispatch(fetchUserFromState(user));
     }
   };
 }
@@ -39,9 +48,16 @@ export function fetchUserIfNeeded(id) {
 export function fetchUser(id) {
   return dispatch => {
     dispatch(fetchUserRequest(id));
-    return get(`users/${id}`, Schemas.USER)
+    return get(`users/${id}`, { schema: Schemas.USER })
       .then(json => dispatch(fetchUserSuccess(id, json)))
       .catch(err => dispatch(fetchUserFailure(err)));
+  };
+}
+
+function fetchUserFromState(user) {
+  return {
+    type: FETCH_USER_FROM_STATE,
+    user
   };
 }
 
@@ -57,7 +73,6 @@ function fetchUserSuccess(id, json) {
     type: FETCH_USER_SUCCESS,
     id,
     users: json.users,
-    receivedAt: Date.now(),
   };
 }
 
@@ -65,7 +80,6 @@ function fetchUserFailure(error) {
   return {
     type: FETCH_USER_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -76,7 +90,7 @@ function fetchUserFailure(error) {
 export function fetchUserGroups(userid) {
   return dispatch => {
     dispatch(userGroupsRequest(userid));
-    return get(`users/${userid}/groups`, Schemas.GROUP_ARRAY)
+    return get(`users/${userid}/groups`, { schema: Schemas.GROUP_ARRAY })
       .then(json => dispatch(userGroupsSuccess(userid, json)))
       .catch(err => dispatch(userGroupsFailure(err)));
   };
@@ -94,7 +108,6 @@ function userGroupsSuccess(userid, json) {
     type: USER_GROUPS_SUCCESS,
     userid,
     groups: json.groups,
-    receivedAt: Date.now(),
   };
 }
 
@@ -102,7 +115,6 @@ function userGroupsFailure(error) {
   return {
     type: USER_GROUPS_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
@@ -140,7 +152,6 @@ function userTransactionsSuccess(userid, {transactions}) {
     type: USER_TRANSACTIONS_SUCCESS,
     userid,
     transactions,
-    receivedAt: Date.now(),
   };
 }
 
@@ -148,8 +159,98 @@ function userTransactionsFailure(error) {
   return {
     type: USER_TRANSACTIONS_FAILURE,
     error,
-    receivedAt: Date.now(),
   };
 }
 
+/**
+ * Get approval key for paypal
+ */
+
+export function getApprovalKeyForUser(userid, options={}) {
+  const request = getApprovalKeyForUserRequest;
+  const success = getApprovalKeyForUserSuccess;
+  const failure = getApprovalKeyForUserFailure;
+
+  const callback = `${env.CLIENT_ROOT}?approvalStatus=`;
+  const params = {
+    returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
+    cancelUrl: callback + 'cancel',
+    endingDate: new Date('2020-01-01').toISOString(),
+    maxTotalAmountOfAllPayments: options.maxTotalAmountOfAllPayments || 2000
+  };
+
+  return dispatch => {
+    dispatch(request(userid));
+    return get(`users/${userid}/paypal/preapproval`, { params })
+      .then(json => dispatch(success(userid, json)))
+      .catch(err => dispatch(failure(err)));
+  };
+}
+
+function getApprovalKeyForUserRequest(userid) {
+  return {
+    type: GET_APPROVAL_KEY_FOR_USER_REQUEST,
+    userid
+  };
+}
+
+function getApprovalKeyForUserSuccess(userid, json) {
+  window.location = json.preapprovalUrl;
+
+  return {
+    type: GET_APPROVAL_KEY_FOR_USER_SUCCESS,
+    userid,
+    json
+  };
+}
+
+function getApprovalKeyForUserFailure(error) {
+  return {
+    type: GET_APPROVAL_KEY_FOR_USER_FAILURE,
+    error
+  };
+}
+
+
+/**
+ * Confirm approval key
+ */
+
+export function confirmApprovalKey(userid, preapprovalKey) {
+  const url = `users/${userid}/paypal/preapproval/${preapprovalKey}`;
+  const request = confirmApprovalKeyRequest;
+  const success = confirmApprovalKeySuccess;
+  const failure = confirmApprovalKeyFailure;
+
+  return dispatch => {
+    dispatch(request(userid, preapprovalKey));
+    return post(url)
+      .then(json => dispatch(success(userid, preapprovalKey, json)))
+      .catch(err => dispatch(failure(err)));
+  };
+}
+
+function confirmApprovalKeyRequest(userid, preapprovalKey) {
+  return {
+    type: CONFIRM_APPROVAL_KEY_REQUEST,
+    preapprovalKey,
+    userid
+  };
+}
+
+function confirmApprovalKeySuccess(userid, preapprovalKey, json) {
+  return {
+    type: CONFIRM_APPROVAL_KEY_SUCCESS,
+    userid,
+    preapprovalKey,
+    json
+  };
+}
+
+function confirmApprovalKeyFailure(error) {
+  return {
+    type: CONFIRM_APPROVAL_KEY_FAILURE,
+    error
+  };
+}
 
