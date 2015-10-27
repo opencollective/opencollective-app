@@ -23,6 +23,10 @@
   text-align: right;
 }
 
+.TransactionForm input[type="date"] {
+  height: var(--spacing);
+}
+
 .TransactionForm .Button--submit {
   margin-top: calc(var(--spacing)/2);
 }
