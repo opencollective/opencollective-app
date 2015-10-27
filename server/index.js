@@ -16,6 +16,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.set('views', __dirname + '/views');
 app.set('view cache', config.viewCache);
+app.set('view engine', 'ejs');
 
 /**
  * Pipe the api to hide the env variables
