@@ -1,4 +1,6 @@
 import merge from 'lodash/object/merge';
+import omit from 'lodash/object/omit';
+
 import {
   TRANSACTIONS_SUCCESS,
   TRANSACTION_SUCCESS,
@@ -13,19 +15,20 @@ import {
   PAY_TRANSACTION_REQUEST,
   PAY_TRANSACTION_SUCCESS,
   PAY_TRANSACTION_FAILURE,
+  CREATE_TRANSACTION_REQUEST
 } from '../actions/transactions';
 
 const defaults = {
   approveInProgress: false,
   rejectInProgress: false,
-  payInProgress: false,
-  error: {}
+  payInProgress: false
 };
 
 export default function transactions(state=defaults, action={}) {
-  const { type } = action;
+  switch (action.type) {
 
-  switch (type) {
+    case CREATE_TRANSACTION_REQUEST:
+      return merge({}, omit(state, 'error'));
 
     case TRANSACTIONS_SUCCESS:
     case TRANSACTION_SUCCESS:

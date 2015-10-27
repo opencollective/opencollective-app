@@ -46,3 +46,11 @@
   content: "p";
 }
 
+.Icon--loading:before {
+  content: "f";
+}
+
+.Icon--oc:before {
+  content: "g";
+}
+

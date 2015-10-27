@@ -7,7 +7,6 @@ import {
   APPEND_LOGIN_FORM
 } from '../../actions/form';
 
-
 describe('form reducer', () => {
 
   describe('transaction', () => {

@@ -11,7 +11,8 @@ const schema = Joi.object().keys({
     .label('Photo'),
   description: Joi.string().required()
     .label('Title'),
-  amount: Joi.number().precision(2).required(),
+  amount: Joi.number().precision(2).greater(0).required()
+    .label('Amount'),
   createdAt: Joi.date().required()
     .label('Date'),
   tags: Joi.array().items(Joi.string()).required()

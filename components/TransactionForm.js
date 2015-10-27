@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+
 import ImageUpload from '../components/ImageUpload';
 import Input from '../components/Input';
 import MoneyInput from '../components/MoneyInput';
 import SelectTag from '../components/SelectTag';
 import Icon from '../components/Icon';
 import Notification from '../components/Notification';
+import SubmitButton from '../components/SubmitButton';
 
 class TransactionForm extends Component {
 
@@ -17,11 +19,8 @@ class TransactionForm extends Component {
         <Notification {...this.props.notification} />
         <ImageUpload
           {...this.props}
+          url={attributes.link}
           onFinished={this.handleUpload.bind(this)} />
-        <div className='TransactionNew-imagePreview'>
-          <img src={attributes.link} />
-        </div>
-
         <form
           name='transaction'
           className='TransactionForm'
@@ -44,12 +43,7 @@ class TransactionForm extends Component {
               handleChange={this.handleTag.bind(this)}
             />
           </div>
-          <button
-            type='submit'
-            className='Button Button--submit'>
-            <Icon type='upload' />
-            Submit
-          </button>
+          <SubmitButton />
         </form>
       </div>
     );
