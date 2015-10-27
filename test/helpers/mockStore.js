@@ -11,12 +11,12 @@ const middlewares = [thunk];
  * to the actual ones that get dispatched
  */
 
-export default (getState, expectedActions, onLastAction, debug=false) => {
+export default (getState, expectedActions, done) => {
   if (!Array.isArray(expectedActions)) {
     throw new Error('expectedActions should be an array of expected actions.');
   }
-  if (typeof onLastAction !== 'undefined' && typeof onLastAction !== 'function') {
-    throw new Error('onLastAction should either be undefined or function.');
+  if (typeof done !== 'undefined' && typeof done !== 'function') {
+    throw new Error('done should either be undefined or function.');
   }
 
   function mockStoreWithoutMiddleware() {
@@ -29,16 +29,16 @@ export default (getState, expectedActions, onLastAction, debug=false) => {
 
       dispatch(action) {
         const expectedAction = expectedActions.shift();
-        if (debug) {
-          console.log('action', action);
-          console.log('expectedAction', expectedAction);
-        }
 
-        expect(action).toEqual(expectedAction);
-        if (onLastAction && !expectedActions.length) {
-          onLastAction();
+        try {
+          expect(action).toEqual(expectedAction);
+          if (done && !expectedActions.length) {
+            done();
+          }
+          return action;
+        } catch (e) {
+          done(e);
         }
-        return action;
       }
     };
   }
