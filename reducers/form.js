@@ -11,7 +11,7 @@ import {
   APPEND_LOGIN_FORM,
   VALIDATE_TRANSACTION_FAILURE,
   VALIDATE_LOGIN_FAILURE,
-  RESET_TRANSACTION_FORM_ERROR
+  VALIDATE_TRANSACTION_REQUEST
 } from '../actions/form';
 
 /**
@@ -42,7 +42,7 @@ function transaction(state=transactionInitialState, action={}) {
         }
       });
 
-    case RESET_TRANSACTION_FORM_ERROR:
+    case VALIDATE_TRANSACTION_REQUEST:
       return merge({}, omit(state, 'error'));
 
     default:

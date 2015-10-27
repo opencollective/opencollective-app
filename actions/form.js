@@ -8,7 +8,7 @@ import loginIsValid from '../validators/login';
 export const RESET_TRANSACTION_FORM = 'RESET_TRANSACTION_FORM';
 export const APPEND_TRANSACTION_FORM = 'APPEND_TRANSACTION_FORM';
 
-export const VALIDATE_TRANSACTION = 'VALIDATE_TRANSACTION';
+export const VALIDATE_TRANSACTION_REQUEST = 'VALIDATE_TRANSACTION_REQUEST';
 export const VALIDATE_TRANSACTION_SUCCESS = 'VALIDATE_TRANSACTION_SUCCESS';
 export const VALIDATE_TRANSACTION_FAILURE = 'VALIDATE_TRANSACTION_FAILURE';
 
@@ -17,8 +17,6 @@ export const APPEND_LOGIN_FORM = 'APPEND_LOGIN_FORM';
 
 export const VALIDATE_LOGIN_SUCCESS = 'VALIDATE_LOGIN_SUCCESS';
 export const VALIDATE_LOGIN_FAILURE = 'VALIDATE_LOGIN_FAILURE';
-
-export const RESET_TRANSACTION_FORM_ERROR = 'RESET_TRANSACTION_FORM_ERROR';
 
 /**
  * Reset transaction form
@@ -47,13 +45,22 @@ export function appendTransactionForm(attributes) {
  */
 
 export function validateTransaction(newTransaction) {
+  const request = validateTransactionRequest;
   const success = validateTransactionSuccess;
   const failure = validateTransactionFailure;
 
   return dispatch => {
+    dispatch(request(newTransaction));
     return transactionIsValid(newTransaction)
     .then(transaction => dispatch(success(transaction)))
     .catch(error => dispatch(failure(error)));
+  };
+}
+
+function validateTransactionRequest(transaction) {
+  return {
+    type: VALIDATE_TRANSACTION_REQUEST,
+    transaction
   };
 }
 
@@ -68,12 +75,6 @@ function validateTransactionFailure(error) {
   return {
     type: VALIDATE_TRANSACTION_FAILURE,
     error
-  };
-}
-
-export function resetTransactionFormError() {
-  return {
-    type: RESET_TRANSACTION_FORM_ERROR
   };
 }
 

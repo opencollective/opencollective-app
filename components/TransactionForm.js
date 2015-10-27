@@ -67,14 +67,7 @@ class TransactionForm extends Component {
   }
 
   validate(attributes) {
-    const {
-      validateTransaction,
-      resetTransactionFormError
-    } = this.props;
-
-    resetTransactionFormError()
-
-    return validateTransaction(attributes)
+    return this.props.validateTransaction(attributes)
     .then(() => {
       const error = this.props.validationError;
       return error ? Promise.reject(error) : Promise.resolve(attributes);

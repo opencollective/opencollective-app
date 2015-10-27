@@ -7,8 +7,6 @@ class ImageUpload extends Component {
     onFinished: PropTypes.func.isRequired,
     uploadImage: PropTypes.func.isRequired,
     isUploading: PropTypes.bool.isRequired,
-    isUploaded: PropTypes.bool,
-    isUploaded: PropTypes.bool,
     url: PropTypes.string
   }
 
