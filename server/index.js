@@ -23,36 +23,11 @@ app.use(function(req, res, next) {
 });
 
 /**
- * Pipe the requests before the middlewares, the piping will only work with raw
- * data
- * More infos: https://github.com/request/request/issues/1664#issuecomment-117721025
- */
-
-app.all('/api/*', function(req, res) {
-  req.pipe(request(req.apiUrl)).pipe(res);
-});
-
-/**
- * Static folder and parse body for the authenticate request
- */
-
-app.use(express.static('public'));
-app.use(bodyParser.json());
-
-/**
- * Ejs template engine
- */
-
-app.set('views', __dirname + '/views');
-app.set('view cache', config.viewCache);
-app.set('view engine', 'ejs');
-
-/**
  * Authenticate is a separate route because it's the only one that needs the
  * api key. I haven't found a way to append data to body in a stream way.
  */
 
-app.post('/api/authenticate', function(req, res) {
+app.post('/api/authenticate', bodyParser.json(), function(req, res) {
   var body = _.extend({}, req.body, { api_key: config.apiKey });
 
   request({
@@ -63,6 +38,29 @@ app.post('/api/authenticate', function(req, res) {
   }).pipe(res);
 });
 
+/**
+ * Pipe the requests before the middlewares, the piping will only work with raw
+ * data
+ * More infos: https://github.com/request/request/issues/1664#issuecomment-117721025
+ */
+
+app.all('/api/*', function(req, res) {
+  req.pipe(request(req.apiUrl)).pipe(res);
+});
+
+/**
+ * Static folder
+ */
+
+app.use(express.static('public'));
+
+/**
+ * Ejs template engine
+ */
+
+app.set('views', __dirname + '/views');
+app.set('view cache', config.viewCache);
+app.set('view engine', 'ejs');
 
 /**
  * Serve the SPA
