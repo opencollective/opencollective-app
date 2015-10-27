@@ -1,7 +1,10 @@
 .Notification {
   padding: 1rem;
-  margin: 1rem;
   color: white;
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
 }
 
 .Notification--error {

@@ -6,22 +6,50 @@ var config = require('config');
 
 var url = require('./helpers/url');
 
-var app = express();
-
 /**
  * Express app
  */
 
+var app = express();
+
+/**
+ * Create real api url
+ */
+
+app.use(function(req, res, next) {
+  var suffix = req.url.replace('/api/', '');
+  req.apiUrl = url(suffix);
+  next();
+});
+
+/**
+ * Pipe the requests before the middlewares, the piping will only work with raw
+ * data
+ * More infos: https://github.com/request/request/issues/1664#issuecomment-117721025
+ */
+
+app.all('/api/*', function(req, res) {
+  req.pipe(request(req.apiUrl)).pipe(res);
+});
+
+/**
+ * Static folder and parse body for the authenticate request
+ */
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
+
+/**
+ * Ejs template engine
+ */
+
 app.set('views', __dirname + '/views');
 app.set('view cache', config.viewCache);
 app.set('view engine', 'ejs');
 
 /**
- * Pipe the api to hide the env variables
  * Authenticate is a separate route because it's the only one that needs the
- * api key
+ * api key. I haven't found a way to append data to body in a stream way.
  */
 
 app.post('/api/authenticate', function(req, res) {
@@ -29,30 +57,24 @@ app.post('/api/authenticate', function(req, res) {
 
   request({
     method: 'POST',
-    url: url('authenticate'),
+    url: req.apiUrl,
     json: true,
     body: body
   }).pipe(res);
 });
 
-app.all('/api/*', function(req, res) {
-  var suffix = req.url.replace('/api/', '');
-
-  req.pipe(request(url(suffix))).pipe(res);
-});
 
 /**
  * Serve the SPA
  */
 
 app.all('*', function(req, res) {
-  var locals = {
-    apiUrl: config.clientUrl + 'api/', // Proxy api route
-    clientUrl: config.clientUrl
-  };
-
-  res.render('index', locals);
+  res.render('index', {});
 });
+
+/**
+ * Port config
+ */
 
 app.set('port', process.env.PORT || 3000);
 

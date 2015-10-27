@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import merge from 'lodash/object/merge';
+import omit from 'lodash/object/omit';
+
 import message from '../lib/error_message';
 import tags from '../ui/tags';
 import {
@@ -8,7 +10,8 @@ import {
   RESET_LOGIN_FORM,
   APPEND_LOGIN_FORM,
   VALIDATE_TRANSACTION_FAILURE,
-  VALIDATE_LOGIN_FAILURE
+  VALIDATE_LOGIN_FAILURE,
+  RESET_TRANSACTION_FORM_ERROR
 } from '../actions/form';
 
 /**
@@ -38,6 +41,10 @@ function transaction(state=transactionInitialState, action={}) {
           message: message(action)
         }
       });
+
+    case RESET_TRANSACTION_FORM_ERROR:
+      return merge({}, omit(state, 'error'));
+
     default:
       return state;
   }

@@ -18,6 +18,8 @@ export const APPEND_LOGIN_FORM = 'APPEND_LOGIN_FORM';
 export const VALIDATE_LOGIN_SUCCESS = 'VALIDATE_LOGIN_SUCCESS';
 export const VALIDATE_LOGIN_FAILURE = 'VALIDATE_LOGIN_FAILURE';
 
+export const RESET_TRANSACTION_FORM_ERROR = 'RESET_TRANSACTION_FORM_ERROR';
+
 /**
  * Reset transaction form
  */
@@ -66,6 +68,12 @@ function validateTransactionFailure(error) {
   return {
     type: VALIDATE_TRANSACTION_FAILURE,
     error
+  };
+}
+
+export function resetTransactionFormError() {
+  return {
+    type: RESET_TRANSACTION_FORM_ERROR
   };
 }
 

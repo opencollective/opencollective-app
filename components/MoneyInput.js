@@ -1,4 +1,5 @@
-import React, { Component, findDOMNode } from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 class MoneyInput extends Component {
   propTypes: {
@@ -25,7 +26,7 @@ class MoneyInput extends Component {
 
   handleChange() {
     const { handleChange } = this.props;
-    const value = findDOMNode(this.refs.input).value;
+    const value = ReactDOM.findDOMNode(this.refs.input).value;
     handleChange(value);
   }
 }

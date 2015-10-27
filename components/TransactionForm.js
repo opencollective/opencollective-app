@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+
 import ImageUpload from '../components/ImageUpload';
 import Input from '../components/Input';
 import MoneyInput from '../components/MoneyInput';
 import SelectTag from '../components/SelectTag';
 import Icon from '../components/Icon';
 import Notification from '../components/Notification';
+import SubmitButton from '../components/SubmitButton';
 
 class TransactionForm extends Component {
 
@@ -41,12 +43,7 @@ class TransactionForm extends Component {
               handleChange={this.handleTag.bind(this)}
             />
           </div>
-          <button
-            type='submit'
-            className='Button Button--submit'>
-            <Icon type='upload' />
-            Submit
-          </button>
+          <SubmitButton />
         </form>
       </div>
     );
@@ -70,7 +67,14 @@ class TransactionForm extends Component {
   }
 
   validate(attributes) {
-    return this.props.validateTransaction(attributes)
+    const {
+      validateTransaction,
+      resetTransactionFormError
+    } = this.props;
+
+    resetTransactionFormError()
+
+    return validateTransaction(attributes)
     .then(() => {
       const error = this.props.validationError;
       return error ? Promise.reject(error) : Promise.resolve(attributes);

@@ -6,6 +6,7 @@ import { createTransaction } from '../actions/transactions';
 import {
   resetTransactionForm,
   appendTransactionForm,
+  resetTransactionFormError,
   validateTransaction
 } from '../actions/form';
 import { uploadImage } from '../actions/images';
@@ -56,6 +57,7 @@ export default connect(mapStateToProps, {
   resetTransactionForm,
   appendTransactionForm,
   validateTransaction,
+  resetTransactionFormError,
   pushState,
   notify
 })(TransactionNew);
