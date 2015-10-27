@@ -17,11 +17,8 @@ class TransactionForm extends Component {
         <Notification {...this.props.notification} />
         <ImageUpload
           {...this.props}
+          url={attributes.link}
           onFinished={this.handleUpload.bind(this)} />
-        <div className='TransactionNew-imagePreview'>
-          <img src={attributes.link} />
-        </div>
-
         <form
           name='transaction'
           className='TransactionForm'

@@ -1,11 +1,11 @@
 .ImageUpload {
   padding: var(--spacing);
   padding-top: calc(var(--spacing) * 2);
-  margin-bottom: var(--spacing);
   background-color: var(--light-gray);
   text-transform: uppercase;
   text-align: center;
   color: #CDD0D4;
+  margin-bottom: var(--spacing);
 }
 
 .ImageUpload input {

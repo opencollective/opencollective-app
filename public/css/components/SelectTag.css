@@ -5,4 +5,5 @@
   background-color: var(--light-gray);
   border: none;
   display: inline-block;
+  padding-left: var(--spacing);
 }

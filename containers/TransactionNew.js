@@ -67,6 +67,7 @@ function mapStateToProps(state) {
     tags: state.form.transaction.defaults.tags,
     validationError: state.form.transaction.error,
     requestError: state.transactions.error,
-    notification: state.notification
+    notification: state.notification,
+    isUploading: state.images.isUploading
   };
 }

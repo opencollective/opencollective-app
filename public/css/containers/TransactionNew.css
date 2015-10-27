@@ -1,12 +1,3 @@
-.TransactionNew-imagePreview {
-  margin-bottom: var(--spacing);
-  display: inline-block;
-}
-
-.TransactionNew-imagePreview img {
-  max-height: 200px;
-}
-
 .TransactionForm {
   text-align: center;
 }
