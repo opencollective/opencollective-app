@@ -1,0 +1,3 @@
+export const GROUP_REQUEST = 'GROUP_REQUEST';
+export const GROUP_SUCCESS = 'GROUP_SUCCESS';
+export const GROUP_FAILURE = 'GROUP_FAILURE';

@@ -2,12 +2,8 @@ import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
-import {
-  PAY_TRANSACTION_REQUEST,
-  PAY_TRANSACTION_SUCCESS,
-  PAY_TRANSACTION_FAILURE,
-  payTransaction,
-} from '../../actions/transactions';
+import * as constants from '../../constants/transactions';
+import { payTransaction } from '../../actions/transactions';
 
 describe('transactions pay actions', () => {
 
@@ -27,8 +23,8 @@ describe('transactions pay actions', () => {
         .reply(200, response);
 
       const expected = [
-        { type: PAY_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: PAY_TRANSACTION_SUCCESS, groupid, transactionid, json: response }
+        { type: constants.PAY_TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.PAY_TRANSACTION_SUCCESS, groupid, transactionid, json: response }
       ];
 
       const store = mockStore({}, expected, done);
@@ -44,8 +40,8 @@ describe('transactions pay actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: PAY_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: PAY_TRANSACTION_FAILURE, error: {} }
+        { type: constants.PAY_TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.PAY_TRANSACTION_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done);

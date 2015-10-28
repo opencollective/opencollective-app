@@ -1,10 +1,6 @@
 import expect from 'expect';
 import reducer from '../../reducers/users';
-import {
-  USER_GROUPS_SUCCESS,
-  USER_TRANSACTIONS_SUCCESS,
-  FETCH_USER_SUCCESS
-} from '../../actions/users';
+import * as constants from '../../constants/users';
 
 describe('users reducer', () => {
 
@@ -19,7 +15,7 @@ describe('users reducer', () => {
     };
     const userid = 1;
     const state = reducer(undefined, {
-      type: USER_GROUPS_SUCCESS,
+      type: constants.USER_GROUPS_SUCCESS,
       groups,
       userid
     });
@@ -35,7 +31,7 @@ describe('users reducer', () => {
     };
     const userid = 1;
     const state = reducer(undefined, {
-      type: USER_TRANSACTIONS_SUCCESS,
+      type: constants.USER_TRANSACTIONS_SUCCESS,
       transactions,
       userid
     });
@@ -50,7 +46,7 @@ describe('users reducer', () => {
       1: {name: 'bob'}
     };
     const state = reducer(undefined, {
-      type: FETCH_USER_SUCCESS,
+      type: constants.FETCH_USER_SUCCESS,
       users
     });
 

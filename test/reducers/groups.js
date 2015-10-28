@@ -2,7 +2,7 @@ import expect from 'expect';
 import reducer from '../../reducers/groups';
 import {
   GROUP_SUCCESS
-} from '../../actions/groups';
+} from '../../constants/groups';
 
 describe('groups reducer', () => {
 

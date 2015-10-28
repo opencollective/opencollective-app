@@ -2,12 +2,12 @@ import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
+import { uploadImage } from '../../actions/images';
 import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAILURE,
-  uploadImage
-} from '../../actions/images';
+} from '../../constants/images';
 
 describe('images actions', () => {
 

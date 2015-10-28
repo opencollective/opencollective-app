@@ -1,6 +1,4 @@
-import {
-  NOTIFY,
-} from '../actions/notification';
+import { NOTIFY } from '../constants/notification';
 
 export default function notification(state={}, action={}) {
   switch (action.type) {

@@ -1,9 +1,7 @@
 import merge from 'lodash/object/merge';
-import { GROUP_SUCCESS, GROUPS_SUCCESS } from '../actions/groups';
+import { GROUP_SUCCESS, GROUPS_SUCCESS } from '../constants/groups';
 
-const initialState = {};
-
-export default function groups(state = initialState, action) {
+export default function groups(state={}, action={}) {
   switch (action.type) {
 
     case GROUP_SUCCESS:

@@ -3,31 +3,7 @@ import merge from 'lodash/object/merge';
 import { fetchTransactions } from './transactions';
 import { get, post } from '../lib/api';
 import Schemas from '../lib/schemas';
-
-/**
- * Constants
- */
-
-export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
-export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
-export const FETCH_USER_FROM_STATE = 'FETCH_USER_FROM_STATE';
-
-export const USER_GROUPS_REQUEST = 'USER_GROUPS_REQUEST';
-export const USER_GROUPS_SUCCESS = 'USER_GROUPS_SUCCESS';
-export const USER_GROUPS_FAILURE = 'USER_GROUPS_FAILURE';
-
-export const USER_TRANSACTIONS_REQUEST = 'USER_TRANSACTIONS_REQUEST';
-export const USER_TRANSACTIONS_SUCCESS = 'USER_TRANSACTIONS_SUCCESS';
-export const USER_TRANSACTIONS_FAILURE = 'USER_TRANSACTIONS_FAILURE';
-
-export const GET_APPROVAL_KEY_FOR_USER_REQUEST= 'GET_APPROVAL_KEY_FOR_USER_REQUEST';
-export const GET_APPROVAL_KEY_FOR_USER_SUCCESS = 'GET_APPROVAL_KEY_FOR_USER_SUCCESS';
-export const GET_APPROVAL_KEY_FOR_USER_FAILURE = 'GET_APPROVAL_KEY_FOR_USER_FAILURE';
-
-export const CONFIRM_APPROVAL_KEY_REQUEST = 'CONFIRM_APPROVAL_KEY_REQUEST';
-export const CONFIRM_APPROVAL_KEY_SUCCESS = 'CONFIRM_APPROVAL_KEY_SUCCESS';
-export const CONFIRM_APPROVAL_KEY_FAILURE = 'CONFIRM_APPROVAL_KEY_FAILURE';
+import * as constants from '../constants/users';
 
 /**
  * Fetch a user
@@ -55,21 +31,21 @@ export function fetchUser(id) {
 
 function fetchUserFromState(user) {
   return {
-    type: FETCH_USER_FROM_STATE,
+    type: constants.FETCH_USER_FROM_STATE,
     user
   };
 }
 
 function fetchUserRequest(id) {
   return {
-    type: FETCH_USER_REQUEST,
+    type: constants.FETCH_USER_REQUEST,
     id
   };
 }
 
 function fetchUserSuccess(id, json) {
   return {
-    type: FETCH_USER_SUCCESS,
+    type: constants.FETCH_USER_SUCCESS,
     id,
     users: json.users,
   };
@@ -77,7 +53,7 @@ function fetchUserSuccess(id, json) {
 
 function fetchUserFailure(error) {
   return {
-    type: FETCH_USER_FAILURE,
+    type: constants.FETCH_USER_FAILURE,
     error,
   };
 }
@@ -97,14 +73,14 @@ export function fetchUserGroups(userid) {
 
 function userGroupsRequest(userid) {
   return {
-    type: USER_GROUPS_REQUEST,
+    type: constants.USER_GROUPS_REQUEST,
     userid
   };
 }
 
 function userGroupsSuccess(userid, json) {
   return {
-    type: USER_GROUPS_SUCCESS,
+    type: constants.USER_GROUPS_SUCCESS,
     userid,
     groups: json.groups,
   };
@@ -112,7 +88,7 @@ function userGroupsSuccess(userid, json) {
 
 function userGroupsFailure(error) {
   return {
-    type: USER_GROUPS_FAILURE,
+    type: constants.USER_GROUPS_FAILURE,
     error,
   };
 }
@@ -141,14 +117,14 @@ export function fetchUserGroupsAndTransactions(userid) {
 
 function userTransactionsRequest(userid) {
   return {
-    type: USER_TRANSACTIONS_REQUEST,
+    type: constants.USER_TRANSACTIONS_REQUEST,
     userid
   };
 }
 
 function userTransactionsSuccess(userid, {transactions}) {
   return {
-    type: USER_TRANSACTIONS_SUCCESS,
+    type: constants.USER_TRANSACTIONS_SUCCESS,
     userid,
     transactions,
   };
@@ -156,7 +132,7 @@ function userTransactionsSuccess(userid, {transactions}) {
 
 function userTransactionsFailure(error) {
   return {
-    type: USER_TRANSACTIONS_FAILURE,
+    type: constants.USER_TRANSACTIONS_FAILURE,
     error,
   };
 }
@@ -189,7 +165,7 @@ export function getApprovalKeyForUser(userid, options={}) {
 
 function getApprovalKeyForUserRequest(userid) {
   return {
-    type: GET_APPROVAL_KEY_FOR_USER_REQUEST,
+    type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST,
     userid
   };
 }
@@ -198,7 +174,7 @@ function getApprovalKeyForUserSuccess(userid, json) {
   window.location = json.preapprovalUrl;
 
   return {
-    type: GET_APPROVAL_KEY_FOR_USER_SUCCESS,
+    type: constants.GET_APPROVAL_KEY_FOR_USER_SUCCESS,
     userid,
     json
   };
@@ -206,7 +182,7 @@ function getApprovalKeyForUserSuccess(userid, json) {
 
 function getApprovalKeyForUserFailure(error) {
   return {
-    type: GET_APPROVAL_KEY_FOR_USER_FAILURE,
+    type: constants.GET_APPROVAL_KEY_FOR_USER_FAILURE,
     error
   };
 }
@@ -232,7 +208,7 @@ export function confirmApprovalKey(userid, preapprovalKey) {
 
 function confirmApprovalKeyRequest(userid, preapprovalKey) {
   return {
-    type: CONFIRM_APPROVAL_KEY_REQUEST,
+    type: constants.CONFIRM_APPROVAL_KEY_REQUEST,
     preapprovalKey,
     userid
   };
@@ -240,7 +216,7 @@ function confirmApprovalKeyRequest(userid, preapprovalKey) {
 
 function confirmApprovalKeySuccess(userid, preapprovalKey, json) {
   return {
-    type: CONFIRM_APPROVAL_KEY_SUCCESS,
+    type: constants.CONFIRM_APPROVAL_KEY_SUCCESS,
     userid,
     preapprovalKey,
     json
@@ -249,7 +225,7 @@ function confirmApprovalKeySuccess(userid, preapprovalKey, json) {
 
 function confirmApprovalKeyFailure(error) {
   return {
-    type: CONFIRM_APPROVAL_KEY_FAILURE,
+    type: constants.CONFIRM_APPROVAL_KEY_FAILURE,
     error
   };
 }

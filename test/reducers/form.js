@@ -1,11 +1,6 @@
 import expect from 'expect';
 import reducer from '../../reducers/form';
-import {
-  RESET_TRANSACTION_FORM,
-  APPEND_TRANSACTION_FORM,
-  RESET_LOGIN_FORM,
-  APPEND_LOGIN_FORM
-} from '../../actions/form';
+import * as constants from '../../constants/form';
 
 describe('form reducer', () => {
 
@@ -32,16 +27,15 @@ describe('form reducer', () => {
       };
 
       const newState = reducer(state, {
-        type: RESET_TRANSACTION_FORM
+        type: constants.RESET_TRANSACTION_FORM
       });
-
       expect(newState.transaction.attributes.amount).toEqual(0);
     });
 
     it('should append new attributes to the form', () => {
       const description = 'Receipt';
       const state = reducer({}, {
-        type: APPEND_TRANSACTION_FORM,
+        type: constants.APPEND_TRANSACTION_FORM,
         attributes: { description }
       });
 
@@ -66,7 +60,7 @@ describe('form reducer', () => {
       };
 
       const newState = reducer(state, {
-        type: RESET_LOGIN_FORM
+        type: constants.RESET_LOGIN_FORM
       });
       expect(newState.login.attributes.email).toNotExist();
     });
@@ -74,7 +68,7 @@ describe('form reducer', () => {
     it('should append new attributes to the form', () => {
       const email = 'test@gmail.com';
       const state = reducer({}, {
-        type: APPEND_LOGIN_FORM,
+        type: constants.APPEND_LOGIN_FORM,
         attributes: { email }
       });
 

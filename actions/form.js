@@ -1,22 +1,6 @@
 import transactionIsValid from '../validators/transaction';
 import loginIsValid from '../validators/login';
-
-/**
- * Constants
- */
-
-export const RESET_TRANSACTION_FORM = 'RESET_TRANSACTION_FORM';
-export const APPEND_TRANSACTION_FORM = 'APPEND_TRANSACTION_FORM';
-
-export const VALIDATE_TRANSACTION_REQUEST = 'VALIDATE_TRANSACTION_REQUEST';
-export const VALIDATE_TRANSACTION_SUCCESS = 'VALIDATE_TRANSACTION_SUCCESS';
-export const VALIDATE_TRANSACTION_FAILURE = 'VALIDATE_TRANSACTION_FAILURE';
-
-export const RESET_LOGIN_FORM = 'RESET_LOGIN_FORM';
-export const APPEND_LOGIN_FORM = 'APPEND_LOGIN_FORM';
-
-export const VALIDATE_LOGIN_SUCCESS = 'VALIDATE_LOGIN_SUCCESS';
-export const VALIDATE_LOGIN_FAILURE = 'VALIDATE_LOGIN_FAILURE';
+import * as constants from '../constants/form';
 
 /**
  * Reset transaction form
@@ -24,7 +8,7 @@ export const VALIDATE_LOGIN_FAILURE = 'VALIDATE_LOGIN_FAILURE';
 
 export function resetTransactionForm() {
   return {
-    type: RESET_TRANSACTION_FORM
+    type: constants.RESET_TRANSACTION_FORM
   };
 }
 
@@ -35,7 +19,7 @@ export function resetTransactionForm() {
 
 export function appendTransactionForm(attributes) {
   return {
-    type: APPEND_TRANSACTION_FORM,
+    type: constants.APPEND_TRANSACTION_FORM,
     attributes,
   };
 }
@@ -59,21 +43,21 @@ export function validateTransaction(newTransaction) {
 
 function validateTransactionRequest(transaction) {
   return {
-    type: VALIDATE_TRANSACTION_REQUEST,
+    type: constants.VALIDATE_TRANSACTION_REQUEST,
     transaction
   };
 }
 
 function validateTransactionSuccess(transaction) {
   return {
-    type: VALIDATE_TRANSACTION_SUCCESS,
+    type: constants.VALIDATE_TRANSACTION_SUCCESS,
     transaction
   };
 }
 
 function validateTransactionFailure(error) {
   return {
-    type: VALIDATE_TRANSACTION_FAILURE,
+    type: constants.VALIDATE_TRANSACTION_FAILURE,
     error
   };
 }
@@ -84,7 +68,7 @@ function validateTransactionFailure(error) {
 
 export function resetLoginForm() {
   return {
-    type: RESET_LOGIN_FORM
+    type: constants.RESET_LOGIN_FORM
   };
 }
 
@@ -94,7 +78,7 @@ export function resetLoginForm() {
 
 export function appendLoginForm(attributes) {
   return {
-    type: APPEND_LOGIN_FORM,
+    type: constants.APPEND_LOGIN_FORM,
     attributes,
   };
 }
@@ -116,14 +100,14 @@ export function validateLogin(attributes) {
 
 function validateLoginSuccess(attributes) {
   return {
-    type: VALIDATE_LOGIN_SUCCESS,
+    type: constants.VALIDATE_LOGIN_SUCCESS,
     attributes
   };
 }
 
 function validateLoginFailure(error) {
   return {
-    type: VALIDATE_LOGIN_FAILURE,
+    type: constants.VALIDATE_LOGIN_FAILURE,
     error
   };
 }

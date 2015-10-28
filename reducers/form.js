@@ -12,7 +12,7 @@ import {
   VALIDATE_TRANSACTION_FAILURE,
   VALIDATE_LOGIN_FAILURE,
   VALIDATE_TRANSACTION_REQUEST
-} from '../actions/form';
+} from '../constants/form';
 
 /**
  * New transaction form reducer

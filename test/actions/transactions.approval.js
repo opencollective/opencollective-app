@@ -2,13 +2,8 @@ import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
+import * as constants from '../../constants/transactions';
 import {
-  APPROVE_TRANSACTION_REQUEST,
-  APPROVE_TRANSACTION_SUCCESS,
-  APPROVE_TRANSACTION_FAILURE,
-  REJECT_TRANSACTION_REQUEST,
-  REJECT_TRANSACTION_SUCCESS,
-  REJECT_TRANSACTION_FAILURE,
   approveTransaction,
   rejectTransaction
 } from '../../actions/transactions';
@@ -33,8 +28,8 @@ describe('transactions approval actions', () => {
         .reply(200, response);
 
       const expected = [
-        { type: APPROVE_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: APPROVE_TRANSACTION_SUCCESS, groupid, transactionid, response }
+        { type: constants.APPROVE_TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.APPROVE_TRANSACTION_SUCCESS, groupid, transactionid, response }
       ];
 
       const store = mockStore({}, expected, done);
@@ -52,8 +47,8 @@ describe('transactions approval actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: APPROVE_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: APPROVE_TRANSACTION_FAILURE, error: {} }
+        { type: constants.APPROVE_TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.APPROVE_TRANSACTION_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done);
@@ -76,8 +71,8 @@ describe('transactions approval actions', () => {
         .reply(200, response);
 
       const expected = [
-        { type: REJECT_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: REJECT_TRANSACTION_SUCCESS, groupid, transactionid, response }
+        { type: constants.REJECT_TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.REJECT_TRANSACTION_SUCCESS, groupid, transactionid, response }
       ];
 
       const store = mockStore({}, expected, done);
@@ -95,8 +90,8 @@ describe('transactions approval actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: REJECT_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: REJECT_TRANSACTION_FAILURE, error: {} }
+        { type: constants.REJECT_TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.REJECT_TRANSACTION_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done);

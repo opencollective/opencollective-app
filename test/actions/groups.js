@@ -2,12 +2,8 @@ import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
-import {
-  GROUP_REQUEST,
-  GROUP_SUCCESS,
-  GROUP_FAILURE,
-  fetchGroup,
-} from '../../actions/groups';
+import { fetchGroup } from '../../actions/groups';
+import * as constants from '../../constants/groups';
 
 describe('groups actions', () => {
 
@@ -26,8 +22,8 @@ describe('groups actions', () => {
       .reply(200, group);
 
     const expected = [
-      { type: GROUP_REQUEST, id: 1 },
-      { type: GROUP_SUCCESS, id: 1, groups: {1: group} }
+      { type: constants.GROUP_REQUEST, id: 1 },
+      { type: constants.GROUP_SUCCESS, id: 1, groups: {1: group} }
     ];
     const store = mockStore({}, expected, done);
     store.dispatch(fetchGroup(1));
@@ -40,8 +36,8 @@ describe('groups actions', () => {
 
     // Improve test with error message
     const expected = [
-      { type: GROUP_REQUEST, id: 1 },
-      { type: GROUP_FAILURE, id: 1, error: {}}
+      { type: constants.GROUP_REQUEST, id: 1 },
+      { type: constants.GROUP_FAILURE, id: 1, error: {}}
     ];
     const store = mockStore({}, expected, done);
     store.dispatch(fetchGroup(1));

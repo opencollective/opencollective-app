@@ -2,16 +2,8 @@ import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
-import {
-  TRANSACTIONS_REQUEST,
-  TRANSACTIONS_SUCCESS,
-  TRANSACTIONS_FAILURE,
-  TRANSACTION_REQUEST,
-  TRANSACTION_SUCCESS,
-  TRANSACTION_FAILURE,
-  fetchTransactions,
-  fetchTransaction,
-} from '../../actions/transactions';
+import * as constants from '../../constants/transactions';
+import { fetchTransactions, fetchTransaction } from '../../actions/transactions';
 
 describe('transactions actions', () => {
 
@@ -34,14 +26,14 @@ describe('transactions actions', () => {
         .reply(200, transaction);
 
       const success = {
-        type: TRANSACTION_SUCCESS,
+        type: constants.TRANSACTION_SUCCESS,
         groupid,
         transactionid,
         transactions: { 2: transaction }
       };
 
       const expected = [
-        { type: TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.TRANSACTION_REQUEST, groupid, transactionid },
         success
       ];
 
@@ -62,8 +54,8 @@ describe('transactions actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: TRANSACTION_REQUEST, groupid, transactionid },
-        { type: TRANSACTION_FAILURE, error: {} }
+        { type: constants.TRANSACTION_REQUEST, groupid, transactionid },
+        { type: constants.TRANSACTION_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done);
@@ -85,13 +77,13 @@ describe('transactions actions', () => {
         .reply(200, [transaction]);
 
       const success = {
-        type: TRANSACTIONS_SUCCESS,
+        type: constants.TRANSACTIONS_SUCCESS,
         groupid,
         transactions: { 2: transaction }
       };
 
       const expected = [
-        { type: TRANSACTIONS_REQUEST, groupid },
+        { type: constants.TRANSACTIONS_REQUEST, groupid },
         success
       ];
 
@@ -107,8 +99,8 @@ describe('transactions actions', () => {
         .replyWithError('Oops');
 
       const expected = [
-        { type: TRANSACTIONS_REQUEST, groupid },
-        { type: TRANSACTIONS_FAILURE, error: {} }
+        { type: constants.TRANSACTIONS_REQUEST, groupid },
+        { type: constants.TRANSACTIONS_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done);

@@ -12,7 +12,9 @@ import {
   DECODE_JWT_SUCCESS,
   DECODE_JWT_FAILURE,
   LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
+  LOGOUT_FAILURE
+} from '../../constants/session';
+import {
   login,
   decodeJWT,
   logout,

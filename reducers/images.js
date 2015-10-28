@@ -3,7 +3,7 @@ import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAILURE
-} from '../actions/images';
+} from '../constants/images';
 
 export default function images(state={}, action={}) {
   switch (action.type) {

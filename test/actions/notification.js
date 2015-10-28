@@ -1,8 +1,6 @@
 import expect from 'expect';
-import {
-  NOTIFY,
-  notify
-} from '../../actions/notification';
+import { notify } from '../../actions/notification';
+import { NOTIFY } from '../../constants/notification';
 
 describe('notification actions', () => {
 

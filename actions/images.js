@@ -1,13 +1,5 @@
 import { post } from '../lib/api';
-
-/**
- * Constants
- */
-
-export const UPLOAD_IMAGE_REQUEST = 'UPLOAD_IMAGE_REQUEST';
-export const UPLOAD_IMAGE_SUCCESS = 'UPLOAD_IMAGE_SUCCESS';
-export const UPLOAD_IMAGE_FAILURE = 'UPLOAD_IMAGE_FAILURE';
-
+import * as constants from '../constants/images';
 
 /**
  * Upload an image to S3
@@ -24,21 +16,21 @@ export function uploadImage(data) {
 
 function uploadImageRequest(data) {
   return {
-    type: UPLOAD_IMAGE_REQUEST,
+    type: constants.UPLOAD_IMAGE_REQUEST,
     data
   };
 }
 
 function uploadImageSuccess(json) {
   return {
-    type: UPLOAD_IMAGE_SUCCESS,
+    type: constants.UPLOAD_IMAGE_SUCCESS,
     response: json
   };
 }
 
 function uploadImageFailure(error) {
   return {
-    type: UPLOAD_IMAGE_FAILURE,
+    type: constants.UPLOAD_IMAGE_FAILURE,
     error: error
   };
 }

@@ -1,13 +1,6 @@
 import { get } from '../lib/api';
 import Schemas from '../lib/schemas';
-
-/**
- * Constants
- */
-
-export const GROUP_REQUEST = 'GROUP_REQUEST';
-export const GROUP_SUCCESS = 'GROUP_SUCCESS';
-export const GROUP_FAILURE = 'GROUP_FAILURE';
+import * as constants from '../constants/groups';
 
 /**
  * Fetch one group
@@ -26,14 +19,14 @@ export function fetchGroup(id) {
 
 function groupRequest(id) {
   return {
-    type: GROUP_REQUEST,
+    type: constants.GROUP_REQUEST,
     id
   };
 }
 
 function groupSuccess(id, json) {
   return {
-    type: GROUP_SUCCESS,
+    type: constants.GROUP_SUCCESS,
     id,
     groups: json.groups
   };
@@ -41,7 +34,7 @@ function groupSuccess(id, json) {
 
 function groupFailure(id, error) {
   return {
-    type: GROUP_FAILURE,
+    type: constants.GROUP_FAILURE,
     id,
     error
   };

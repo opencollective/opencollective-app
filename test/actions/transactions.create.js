@@ -3,10 +3,8 @@ import nock from 'nock';
 import _ from 'lodash';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
+import * as constants from '../../constants/transactions';
 import {
-  CREATE_TRANSACTION_REQUEST,
-  CREATE_TRANSACTION_SUCCESS,
-  CREATE_TRANSACTION_FAILURE,
   createTransaction
 } from '../../actions/transactions';
 
@@ -29,8 +27,8 @@ describe('transactions create actions', () => {
       .reply(200, response);
 
     const expected = [
-      { type: CREATE_TRANSACTION_REQUEST, groupid, transaction },
-      { type: CREATE_TRANSACTION_SUCCESS, groupid, transactions }
+      { type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction },
+      { type: constants.CREATE_TRANSACTION_SUCCESS, groupid, transactions }
     ];
 
     const store = mockStore({}, expected, done);
@@ -46,8 +44,8 @@ describe('transactions create actions', () => {
       .replyWithError('Something went wrong!');
 
     const expected = [
-      { type: CREATE_TRANSACTION_REQUEST, groupid, transaction },
-      { type: CREATE_TRANSACTION_FAILURE, error: {} }
+      { type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction },
+      { type: constants.CREATE_TRANSACTION_FAILURE, error: {} }
     ];
 
     const store = mockStore({}, expected, done);

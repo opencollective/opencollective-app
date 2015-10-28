@@ -2,23 +2,11 @@ import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
+import * as constants from '../../constants/users';
 import {
-  GET_APPROVAL_KEY_FOR_USER_REQUEST,
-  GET_APPROVAL_KEY_FOR_USER_SUCCESS,
-  GET_APPROVAL_KEY_FOR_USER_FAILURE,
   getApprovalKeyForUser,
-  CONFIRM_APPROVAL_KEY_REQUEST,
-  CONFIRM_APPROVAL_KEY_SUCCESS,
-  CONFIRM_APPROVAL_KEY_FAILURE,
   confirmApprovalKey,
-  FETCH_USER_REQUEST,
-  FETCH_USER_SUCCESS,
-  FETCH_USER_FAILURE,
-  FETCH_USER_FROM_STATE,
   fetchUserIfNeeded,
-  USER_GROUPS_REQUEST,
-  USER_GROUPS_SUCCESS,
-  USER_GROUPS_FAILURE,
   fetchUserGroups,
 } from '../../actions/users';
 
@@ -39,8 +27,8 @@ describe('users actions', () => {
         .reply(200, json);
 
       const expected = [
-        { type: GET_APPROVAL_KEY_FOR_USER_REQUEST, userid },
-        { type: GET_APPROVAL_KEY_FOR_USER_SUCCESS, userid, json },
+        { type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid },
+        { type: constants.GET_APPROVAL_KEY_FOR_USER_SUCCESS, userid, json },
       ];
 
       const store = mockStore({}, expected, done);
@@ -56,8 +44,8 @@ describe('users actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: GET_APPROVAL_KEY_FOR_USER_REQUEST, userid },
-        { type: GET_APPROVAL_KEY_FOR_USER_FAILURE, error: {} }
+        { type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid },
+        { type: constants.GET_APPROVAL_KEY_FOR_USER_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done);
@@ -77,8 +65,8 @@ describe('users actions', () => {
         .reply(200, json);
 
       const expected = [
-        { type: CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey },
-        { type: CONFIRM_APPROVAL_KEY_SUCCESS, userid, preapprovalKey, json }
+        { type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey },
+        { type: constants.CONFIRM_APPROVAL_KEY_SUCCESS, userid, preapprovalKey, json }
       ];
 
       const store = mockStore({}, expected, done);
@@ -94,8 +82,8 @@ describe('users actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey },
-        { type: CONFIRM_APPROVAL_KEY_FAILURE, error: {} }
+        { type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey },
+        { type: constants.CONFIRM_APPROVAL_KEY_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done);
@@ -112,7 +100,7 @@ describe('users actions', () => {
           [user.id]: user
         }
       };
-      const expected = [{ type: FETCH_USER_FROM_STATE, user }];
+      const expected = [{ type: constants.FETCH_USER_FROM_STATE, user }];
 
       const store = mockStore(state, expected, done);
       store.dispatch(fetchUserIfNeeded(user.id));
@@ -128,8 +116,8 @@ describe('users actions', () => {
         .reply(200, user);
 
       const expected = [
-        { type: FETCH_USER_REQUEST, id: id },
-        { type: FETCH_USER_SUCCESS, id: id, users }
+        { type: constants.FETCH_USER_REQUEST, id: id },
+        { type: constants.FETCH_USER_SUCCESS, id: id, users }
       ];
 
       const store = mockStore({ users: {} }, expected, done);
@@ -144,8 +132,8 @@ describe('users actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: FETCH_USER_REQUEST, id: id },
-        { type: FETCH_USER_FAILURE, error: {} }
+        { type: constants.FETCH_USER_REQUEST, id: id },
+        { type: constants.FETCH_USER_FAILURE, error: {} }
       ];
 
       const store = mockStore({ users: {} }, expected, done);
@@ -171,8 +159,8 @@ describe('users actions', () => {
         .reply(200, reponse);
 
       const expected = [
-        { type: USER_GROUPS_REQUEST, userid },
-        { type: USER_GROUPS_SUCCESS, userid, groups }
+        { type: constants.USER_GROUPS_REQUEST, userid },
+        { type: constants.USER_GROUPS_SUCCESS, userid, groups }
       ];
 
       const store = mockStore({}, expected, done);
@@ -187,8 +175,8 @@ describe('users actions', () => {
         .replyWithError('Something went wrong!');
 
       const expected = [
-        { type: USER_GROUPS_REQUEST, userid },
-        { type: USER_GROUPS_FAILURE, error: {} }
+        { type: constants.USER_GROUPS_REQUEST, userid },
+        { type: constants.USER_GROUPS_FAILURE, error: {} }
       ];
 
       const store = mockStore({}, expected, done, true);

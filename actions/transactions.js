@@ -1,33 +1,6 @@
 import { get, postJSON } from '../lib/api';
 import Schemas from '../lib/schemas';
-
-/**
- * Constants
- */
-
-export const TRANSACTIONS_REQUEST = 'TRANSACTIONS_REQUEST';
-export const TRANSACTIONS_SUCCESS = 'TRANSACTIONS_SUCCESS';
-export const TRANSACTIONS_FAILURE = 'TRANSACTIONS_FAILURE';
-
-export const TRANSACTION_REQUEST = 'TRANSACTION_REQUEST';
-export const TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS';
-export const TRANSACTION_FAILURE = 'TRANSACTION_FAILURE';
-
-export const APPROVE_TRANSACTION_REQUEST = 'APPROVE_TRANSACTION_REQUEST';
-export const APPROVE_TRANSACTION_SUCCESS = 'APPROVE_TRANSACTION_SUCCESS';
-export const APPROVE_TRANSACTION_FAILURE = 'APPROVE_TRANSACTION_FAILURE';
-
-export const REJECT_TRANSACTION_REQUEST = 'REJECT_TRANSACTION_REQUEST';
-export const REJECT_TRANSACTION_SUCCESS = 'REJECT_TRANSACTION_SUCCESS';
-export const REJECT_TRANSACTION_FAILURE = 'REJECT_TRANSACTION_FAILURE';
-
-export const CREATE_TRANSACTION_REQUEST = 'CREATE_TRANSACTION_REQUEST';
-export const CREATE_TRANSACTION_SUCCESS = 'CREATE_TRANSACTION_SUCCESS';
-export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE';
-
-export const PAY_TRANSACTION_REQUEST = 'PAY_TRANSACTION_REQUEST';
-export const PAY_TRANSACTION_SUCCESS = 'PAY_TRANSACTION_SUCCESS';
-export const PAY_TRANSACTION_FAILURE = 'PAY_TRANSACTION_FAILURE';
+import * as constants from '../constants/transactions';
 
 /**
  * Fetch multiple transactions in a group
@@ -46,14 +19,14 @@ export function fetchTransactions(groupid) {
 
 function transactionsRequest(groupid) {
   return {
-    type: TRANSACTIONS_REQUEST,
+    type: constants.TRANSACTIONS_REQUEST,
     groupid
   };
 }
 
 function transactionsSuccess(groupid, json) {
   return {
-    type: TRANSACTIONS_SUCCESS,
+    type: constants.TRANSACTIONS_SUCCESS,
     groupid,
     transactions: json.transactions,
   };
@@ -61,7 +34,7 @@ function transactionsSuccess(groupid, json) {
 
 function transactionsFailure(error) {
   return {
-    type: TRANSACTIONS_FAILURE,
+    type: constants.TRANSACTIONS_FAILURE,
     error,
   };
 }
@@ -83,7 +56,7 @@ export function fetchTransaction(groupid, transactionid) {
 
 function transactionRequest(groupid, transactionid) {
   return {
-    type: TRANSACTION_REQUEST,
+    type: constants.TRANSACTION_REQUEST,
     groupid,
     transactionid
   };
@@ -91,7 +64,7 @@ function transactionRequest(groupid, transactionid) {
 
 function transactionSuccess(groupid, transactionid, json) {
   return {
-    type: TRANSACTION_SUCCESS,
+    type: constants.TRANSACTION_SUCCESS,
     groupid,
     transactionid,
     transactions: json.transactions,
@@ -100,7 +73,7 @@ function transactionSuccess(groupid, transactionid, json) {
 
 function transactionFailure(error) {
   return {
-    type: TRANSACTION_FAILURE,
+    type: constants.TRANSACTION_FAILURE,
     error,
   };
 }
@@ -122,7 +95,7 @@ export function approveTransaction(groupid, transactionid) {
 
 function approveTransactionRequest(groupid, transactionid) {
   return {
-    type: APPROVE_TRANSACTION_REQUEST,
+    type: constants.APPROVE_TRANSACTION_REQUEST,
     groupid,
     transactionid
   };
@@ -130,7 +103,7 @@ function approveTransactionRequest(groupid, transactionid) {
 
 function approveTransactionSuccess(groupid, transactionid, json) {
   return {
-    type: APPROVE_TRANSACTION_SUCCESS,
+    type: constants.APPROVE_TRANSACTION_SUCCESS,
     groupid,
     transactionid,
     response: json,
@@ -139,7 +112,7 @@ function approveTransactionSuccess(groupid, transactionid, json) {
 
 function approveTransactionFailure(error) {
   return {
-    type: APPROVE_TRANSACTION_FAILURE,
+    type: constants.APPROVE_TRANSACTION_FAILURE,
     error,
   };
 }
@@ -161,7 +134,7 @@ export function rejectTransaction(groupid, transactionid) {
 
 function rejectTransactionRequest(groupid, transactionid) {
   return {
-    type: REJECT_TRANSACTION_REQUEST,
+    type: constants.REJECT_TRANSACTION_REQUEST,
     groupid,
     transactionid
   };
@@ -169,7 +142,7 @@ function rejectTransactionRequest(groupid, transactionid) {
 
 function rejectTransactionSuccess(groupid, transactionid, json) {
   return {
-    type: REJECT_TRANSACTION_SUCCESS,
+    type: constants.REJECT_TRANSACTION_SUCCESS,
     groupid,
     transactionid,
     response: json,
@@ -178,7 +151,7 @@ function rejectTransactionSuccess(groupid, transactionid, json) {
 
 function rejectTransactionFailure(error) {
   return {
-    type: REJECT_TRANSACTION_FAILURE,
+    type: constants.REJECT_TRANSACTION_FAILURE,
     error,
   };
 }
@@ -200,7 +173,7 @@ export function createTransaction(groupid, transaction) {
 
 function createTransactionRequest(groupid, transaction) {
   return {
-    type: CREATE_TRANSACTION_REQUEST,
+    type: constants.CREATE_TRANSACTION_REQUEST,
     groupid,
     transaction
   };
@@ -212,7 +185,7 @@ function createTransactionSuccess(groupid, transaction) {
   };
 
   return {
-    type: CREATE_TRANSACTION_SUCCESS,
+    type: constants.CREATE_TRANSACTION_SUCCESS,
     groupid,
     transactions,
   };
@@ -220,7 +193,7 @@ function createTransactionSuccess(groupid, transaction) {
 
 function createTransactionFailure(error) {
   return {
-    type: CREATE_TRANSACTION_FAILURE,
+    type: constants.CREATE_TRANSACTION_FAILURE,
     error,
   };
 }
@@ -245,7 +218,7 @@ export function payTransaction(groupid, transactionid) {
 
 function payTransactionRequest(groupid, transactionid) {
   return {
-    type: PAY_TRANSACTION_REQUEST,
+    type: constants.PAY_TRANSACTION_REQUEST,
     groupid,
     transactionid
   };
@@ -253,7 +226,7 @@ function payTransactionRequest(groupid, transactionid) {
 
 function payTransactionSuccess(groupid, transactionid, json) {
   return {
-    type: PAY_TRANSACTION_SUCCESS,
+    type: constants.PAY_TRANSACTION_SUCCESS,
     groupid,
     transactionid,
     json
@@ -262,7 +235,7 @@ function payTransactionSuccess(groupid, transactionid, json) {
 
 function payTransactionFailure(error) {
   return {
-    type: PAY_TRANSACTION_FAILURE,
+    type: constants.PAY_TRANSACTION_FAILURE,
     error,
   };
 }

@@ -1,19 +1,6 @@
 import expect from 'expect';
 import reducer from '../../reducers/transactions';
-import {
-  TRANSACTIONS_SUCCESS,
-  TRANSACTION_SUCCESS,
-  CREATE_TRANSACTION_SUCCESS,
-  APPROVE_TRANSACTION_REQUEST,
-  APPROVE_TRANSACTION_SUCCESS,
-  APPROVE_TRANSACTION_FAILURE,
-  REJECT_TRANSACTION_REQUEST,
-  REJECT_TRANSACTION_SUCCESS,
-  REJECT_TRANSACTION_FAILURE,
-  PAY_TRANSACTION_REQUEST,
-  PAY_TRANSACTION_SUCCESS,
-  PAY_TRANSACTION_FAILURE,
-} from '../../actions/transactions';
+import * as constants from '../../constants/transactions';
 
 describe('transactions reducer', () => {
 
@@ -27,7 +14,7 @@ describe('transactions reducer', () => {
       2: {amount: 12}
     };
     const state = reducer({}, {
-      type: TRANSACTION_SUCCESS,
+      type: constants.TRANSACTION_SUCCESS,
       transactions
     });
 
@@ -40,7 +27,7 @@ describe('transactions reducer', () => {
       3: {amount: 15}
     };
     const state = reducer({}, {
-      type: TRANSACTIONS_SUCCESS,
+      type: constants.TRANSACTIONS_SUCCESS,
       transactions
     });
 
@@ -52,7 +39,7 @@ describe('transactions reducer', () => {
       1: {amount: 15}
     };
     const state = reducer({}, {
-      type: CREATE_TRANSACTION_SUCCESS,
+      type: constants.CREATE_TRANSACTION_SUCCESS,
       transactions
     });
 
@@ -62,7 +49,7 @@ describe('transactions reducer', () => {
   describe('approve', () => {
     it('should be in progress after an APPROVE_TRANSACTION_REQUEST', () => {
       const state = reducer({}, {
-        type: APPROVE_TRANSACTION_REQUEST
+        type: constants.APPROVE_TRANSACTION_REQUEST
       });
 
       expect(state).toEqual({ approveInProgress: true});
@@ -70,7 +57,7 @@ describe('transactions reducer', () => {
 
     it('should not be in progress after an APPROVE_TRANSACTION_SUCCESS', () => {
       const state = reducer({ approveInProgress: true }, {
-        type: APPROVE_TRANSACTION_SUCCESS
+        type: constants.APPROVE_TRANSACTION_SUCCESS
       });
 
       expect(state).toEqual({ approveInProgress: false});
@@ -78,7 +65,7 @@ describe('transactions reducer', () => {
 
     it('should not be in progress after an APPROVE_TRANSACTION_FAILURE', () => {
       const state = reducer({ approveInProgress: true }, {
-        type: APPROVE_TRANSACTION_FAILURE
+        type: constants.APPROVE_TRANSACTION_FAILURE
       });
 
       expect(state).toEqual({ approveInProgress: false});
@@ -88,7 +75,7 @@ describe('transactions reducer', () => {
   describe('reject', () => {
     it('should be in progress after an REJECT_TRANSACTION_REQUEST', () => {
       const state = reducer({}, {
-        type: REJECT_TRANSACTION_REQUEST
+        type: constants.REJECT_TRANSACTION_REQUEST
       });
 
       expect(state).toEqual({ rejectInProgress: true});
@@ -96,7 +83,7 @@ describe('transactions reducer', () => {
 
     it('should not be in progress after an REJECT_TRANSACTION_SUCCESS', () => {
       const state = reducer({ rejectInProgress: true }, {
-        type: REJECT_TRANSACTION_SUCCESS
+        type: constants.REJECT_TRANSACTION_SUCCESS
       });
 
       expect(state).toEqual({ rejectInProgress: false});
@@ -104,7 +91,7 @@ describe('transactions reducer', () => {
 
     it('should not be in progress after an REJECT_TRANSACTION_FAILURE', () => {
       const state = reducer({ rejectInProgress: true }, {
-        type: REJECT_TRANSACTION_FAILURE
+        type: constants.REJECT_TRANSACTION_FAILURE
       });
 
       expect(state).toEqual({ rejectInProgress: false});
@@ -114,7 +101,7 @@ describe('transactions reducer', () => {
   describe('pay', () => {
     it('should be in progress after an PAY_TRANSACTION_REQUEST', () => {
       const state = reducer({}, {
-        type: PAY_TRANSACTION_REQUEST
+        type: constants.PAY_TRANSACTION_REQUEST
       });
 
       expect(state).toEqual({ payInProgress: true});
@@ -122,7 +109,7 @@ describe('transactions reducer', () => {
 
     it('should not be in progress after an PAY_TRANSACTION_SUCCESS', () => {
       const state = reducer({ payInProgress: true }, {
-        type: PAY_TRANSACTION_SUCCESS
+        type: constants.PAY_TRANSACTION_SUCCESS
       });
 
       expect(state).toEqual({ payInProgress: false});
@@ -130,7 +117,7 @@ describe('transactions reducer', () => {
 
     it('should not be in progress after an PAY_TRANSACTION_FAILURE', () => {
       const state = reducer({ payInProgress: true }, {
-        type: PAY_TRANSACTION_FAILURE
+        type: constants.PAY_TRANSACTION_FAILURE
       });
 
       expect(state).toEqual({ payInProgress: false});

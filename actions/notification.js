@@ -1,8 +1,4 @@
-/**
- * Constants
- */
-
-export const NOTIFY = 'NOTIFY';
+import { NOTIFY } from '../constants/notification';
 
 /**
  * Fetch one group

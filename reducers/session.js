@@ -1,7 +1,7 @@
 import merge from 'lodash/object/merge';
 import {
   DECODE_JWT_SUCCESS
-} from '../actions/session';
+} from '../constants/session';
 
 export default function session(state={
   user: {}
