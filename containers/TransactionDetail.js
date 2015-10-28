@@ -18,6 +18,7 @@ import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
 import TransactionDetailApproval from '../components/TransactionDetailApproval';
+import isViewerOnly from '../lib/is_viewer_only';
 
 class TransactionDetail extends Component {
   render() {
@@ -26,7 +27,8 @@ class TransactionDetail extends Component {
       transaction,
       tags,
       user,
-      isLoading
+      isLoading,
+      isViewerOnly
     } = this.props;
 
     return (
@@ -44,10 +46,7 @@ class TransactionDetail extends Component {
               {...this.props}
               handleChange={this.handleTag.bind(this)} />
             <TransactionDetailComment {...this.props} />
-            <TransactionDetailApproval
-              {...this.props}
-              approveTransaction={this.approveTransaction.bind(this)}
-              rejectTransaction={this.rejectTransaction.bind(this)} />
+            { isViewerOnly ? null : this.approvalButtons() }
           </div>
         </Content>
       </div>
@@ -66,6 +65,13 @@ class TransactionDetail extends Component {
 
     fetchTransaction(groupid, transactionid)
     .then(() => this.fetchUser.bind(this));
+  }
+
+  approvalButtons() {
+    return <TransactionDetailApproval
+      {...this.props}
+      approveTransaction={this.approveTransaction.bind(this)}
+      rejectTransaction={this.rejectTransaction.bind(this)} />
   }
 
   fetchUser() {
@@ -127,17 +133,20 @@ function mapStateToProps(state) {
     rejectInProgress,
     payInProgress
   } = state.transactions;
+
   const transaction = state.transactions[transactionid] || {};
+  const group = state.groups[groupid] || {};
 
   return {
     groupid,
     transactionid,
-    group: state.groups[groupid] || {},
+    group,
     transaction,
     tags: state.form.transaction.defaults.tags,
     user: state.users[transaction.UserId] || {},
     approveInProgress: approveInProgress || payInProgress,
     rejectInProgress: state.transactions.rejectInProgress,
-    isLoading: !transaction.id
+    isLoading: !transaction.id,
+    isViewerOnly: isViewerOnly([group])
   };
 }
