@@ -168,6 +168,7 @@ describe('users actions', () => {
 
       nock(env.API_ROOT)
         .get(`/users/${userid}/groups`)
+        .query(true) // match all query params
         .reply(200, reponse);
 
       const expected = [

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import values from 'lodash/object/values';
 import extend from 'lodash/object/extend';
 import filter from 'lodash/collection/filter';
+
 import {
   fetchUserGroupsAndTransactions,
   fetchUserIfNeeded,
@@ -17,26 +18,23 @@ import Footer from '../components/Footer';
 import PaypalReminder from '../components/PaypalReminder';
 import sortByDate from '../lib/sort_by_date';
 import getUniqueValues from '../lib/get_unique_values';
+import isViewerOnly from '../lib/is_viewer_only';
 
 class GroupsList extends Component {
   render() {
-    const { getApprovalKeyForUser, userid, query } = this.props;
+    const { users, groups, isLoading } = this.props;
 
     return (
       <div>
         <Header title='Accounting' hasBackButton={false} />
-        <Content isLoading={this.props.isLoading}>
-        <PaypalReminder
-          getApprovalKey={getApprovalKeyForUser.bind(this, userid)}
-          inProgress={this.props.inProgress}
-          approvalStatus={query.approvalStatus} />
-        {this.props.groups.map(group => {
-          return <Group
-            {...group}
-            users={this.props.users}
-            transactions={group.transactions}
-            key={group.id} />
-        })}
+        <Content isLoading={isLoading}>
+          {isViewerOnly ? null : this.paypalReminder(this.props)}
+          {groups.map(group => {
+            return <Group
+              {...group}
+              users={users}
+              key={group.id} />
+          })}
         </Content>
       </div>
     );
@@ -62,6 +60,13 @@ class GroupsList extends Component {
       confirmApprovalKey(userid, query.preapprovalKey);
     }
   }
+
+  paypalReminder({getApprovalKeyForUser, inProgress, query, userid}) {
+    return <PaypalReminder
+          getApprovalKey={getApprovalKeyForUser.bind(this, userid)}
+          inProgress={inProgress}
+          approvalStatus={query.approvalStatus} />;
+  }
 }
 
 export default connect(mapStateToProps, {
@@ -76,9 +81,9 @@ function mapStateToProps(state) {
   const userid = state.session.user.id;
   const currentUser = state.users[userid] || {};
   const transactions = values(currentUser.transactions);
-  const isLoading = !currentUser.groups;
+  const userGroups = values(currentUser.groups);
 
-  const groups = values(currentUser.groups).map((group) => {
+  const groups = userGroups.map((group) => {
     return extend(group, {
       transactions: filter(transactions, { GroupId: group.id }).sort(sortByDate)
     });
@@ -91,6 +96,7 @@ function mapStateToProps(state) {
     transactions,
     inProgress: state.users.inProgress,
     query: state.router.location.query,
-    isLoading
+    isLoading: !groups,
+    isViewerOnly: isViewerOnly(userGroups)
   };
 }
