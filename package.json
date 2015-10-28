@@ -66,6 +66,7 @@
     "expect": "^1.11.1",
     "jscs": "^2.1.1",
     "jsdom": "3.1.2",
+    "localmockage": "0.0.1",
     "mocha": "^2.3.3",
     "react-addons-test-utils": "^0.14.0",
     "react-unit": "^1.0.8",
