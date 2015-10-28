@@ -12,6 +12,9 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const DECODE_JWT_SUCCESS = 'DECODE_JWT_SUCCESS';
 export const DECODE_JWT_FAILURE = 'DECODE_JWT_FAILURE';
 
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
 /**
  * Authenticate user
  */
@@ -58,7 +61,6 @@ function loginFailure(error) {
  */
 
 export function decodeJWT() {
-
   const accessToken = localStorage.getItem('accessToken');
 
   if (!accessToken) {
@@ -87,5 +89,27 @@ function decodeJWTSuccess(json) {
   return {
     type: DECODE_JWT_SUCCESS,
     info: json,
+  };
+}
+
+/**
+ * Logout user by deleting JWT in localstorage
+ */
+
+export function logout() {
+  localStorage.removeItem('accessToken');
+
+  return !localStorage.getItem('accessToken') ? logoutSuccess() : logoutFailure();
+}
+
+function logoutSuccess() {
+  return {
+    type: LOGOUT_SUCCESS
+  };
+}
+
+function logoutFailure() {
+  return {
+    type: LOGOUT_FAILURE
   };
 }
