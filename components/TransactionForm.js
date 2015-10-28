@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 import ImageUpload from '../components/ImageUpload';
 import Input from '../components/Input';
@@ -11,11 +12,16 @@ import SubmitButton from '../components/SubmitButton';
 class TransactionForm extends Component {
 
   render() {
-    const { transaction, tags } = this.props;
+    const { transaction, tags, isUploading } = this.props;
     const attributes = transaction.attributes;
+    const className = classnames({
+      'TransactionForm': true,
+      'TransactionForm--isUploading': isUploading,
+      'js-form': true, // for testing
+    });
 
     return (
-      <div className='padded js-form'>
+      <div className={className}>
         <Notification {...this.props.notification} />
         <ImageUpload
           {...this.props}
@@ -23,7 +29,7 @@ class TransactionForm extends Component {
           onFinished={this.handleUpload.bind(this)} />
         <form
           name='transaction'
-          className='TransactionForm'
+          className='TransactionForm-form'
           onSubmit={this.handleSubmit.bind(this)} >
           <Input
             labelText='Title'

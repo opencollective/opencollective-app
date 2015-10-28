@@ -52,7 +52,8 @@ class ImageUpload extends Component {
   uploading() {
     return (
       <span>
-        <Icon type='loading' /> Uploading
+        <img src='/images/uploading.png' />
+        <div>Uploading...</div>
       </span>
     );
   }

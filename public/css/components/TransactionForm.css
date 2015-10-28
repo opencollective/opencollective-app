@@ -1,0 +1,28 @@
+.TransactionForm {
+  margin: var(--spacing);
+  text-align: center;
+}
+
+.TransactionForm--isUploading {
+  opacity: 0.5;
+}
+
+.TransactionForm-form .Field {
+  width: 60%;
+}
+
+.TransactionForm-form .Label {
+  padding-right: var(--spacing);
+}
+
+.TransactionForm-form div {
+  text-align: right;
+}
+
+.TransactionForm-form input[type="date"] {
+  height: var(--spacing);
+}
+
+.TransactionForm-form .Button--submit {
+  margin-top: calc(var(--spacing)/2);
+}
