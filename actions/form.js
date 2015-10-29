@@ -88,13 +88,21 @@ export function appendLoginForm(attributes) {
  */
 
 export function validateLogin(attributes) {
+  const request = validateLoginRequest;
   const success = validateLoginSuccess;
   const failure = validateLoginFailure;
 
   return dispatch => {
+    dispatch(request(attributes));
     return loginIsValid(attributes)
     .then(attributes => dispatch(success(attributes)))
     .catch(error => dispatch(failure(error)));
+  };
+}
+
+function validateLoginRequest() {
+  return {
+    type: constants.VALIDATE_LOGIN_REQUEST
   };
 }
 

@@ -24,9 +24,7 @@ class Input extends Component {
 
     return (
       <div className={className}>
-        <label className='Label'>
-          {labelText}:
-        </label>
+        {this.label(labelText)}
         <input
           className='Field'
           type={type}
@@ -35,6 +33,16 @@ class Input extends Component {
           onChange={this.handleChange.bind(this)} />
       </div>
     );
+  }
+
+  label(labelText) {
+    if (labelText) {
+      return <label className='Label'>
+          {labelText}:
+        </label>;
+    } else {
+      return null;
+    }
   }
 
   handleChange() {

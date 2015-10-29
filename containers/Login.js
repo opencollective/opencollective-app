@@ -43,15 +43,14 @@ class Login extends Component {
     this.validate(attributes)
     .then(() => this.login(attributes))
     .then(() => replaceState(null, '/'))
-    .catch(error => notify('error', error.message));
+    .catch(({message}) => notify('error', message));
   }
 
   validate(attributes) {
     return this.props.validateLogin(attributes)
-    .then(({error}) => {
-      return error ?
-        Promise.reject(this.props.errorMessage) :
-        Promise.resolve(attributes);
+    .then(() => {
+      const error = this.props.error;
+      return error.message ? Promise.reject(error) : Promise.resolve()
     });
   }
 
@@ -63,9 +62,9 @@ class Login extends Component {
     });
   }
 
-  handleField(key, event) {
+  handleField(key, value) {
     this.props.appendLoginForm({
-      [key]: event.target.value
+      [key]: value
     });
   }
 }
@@ -83,6 +82,6 @@ function mapStateToProps(state) {
   return {
     attributes: state.form.login.attributes,
     notification: state.notification,
-    errorMessage: state.form.login.error
+    error: state.form.login.error
   };
 }

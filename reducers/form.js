@@ -11,7 +11,8 @@ import {
   APPEND_LOGIN_FORM,
   VALIDATE_TRANSACTION_FAILURE,
   VALIDATE_LOGIN_FAILURE,
-  VALIDATE_TRANSACTION_REQUEST
+  VALIDATE_TRANSACTION_REQUEST,
+  VALIDATE_LOGIN_REQUEST,
 } from '../constants/form';
 
 /**
@@ -59,7 +60,8 @@ function transaction(state=transactionInitialState, action={}) {
  */
 
 const loginInitialState = {
-  attributes: {}
+  attributes: {},
+  error: {}
 };
 
 function login(state=loginInitialState, action={}) {
@@ -70,11 +72,17 @@ function login(state=loginInitialState, action={}) {
     case APPEND_LOGIN_FORM:
       return merge({}, state, { attributes: action.attributes });
 
+    case VALIDATE_LOGIN_REQUEST:
+      return merge({}, omit(state, 'error'), { error: {} });
+
     case VALIDATE_LOGIN_FAILURE:
-      const { message } = errorDetail(action);
+      const { message, path } = errorDetail(action);
 
       return merge({}, state, {
-        error: { message }
+        error: {
+          [path]: true,
+          message
+        }
       });
 
     default:

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Icon from './Icon';
 
 class Notification extends Component {
   propTypes: {
@@ -11,9 +12,21 @@ class Notification extends Component {
 
     return (
       <div className={`Notification Notification--${status}`}>
+        {this.icon(status)}
         {this.props.message}
       </div>
     );
+  }
+
+  icon(status) {
+    const type = {
+      error: 'rejected',
+      success: 'approved',
+      info: 'pending',
+      warning: 'pending'
+    };
+
+    return <Icon type={type[status]} />;
   }
 }
 

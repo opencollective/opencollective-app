@@ -5,6 +5,7 @@
   top: var(--header-height);
   left: 0;
   right: 0;
+  text-align: left;
 }
 
 .Notification--error {
@@ -25,4 +26,13 @@
 
 .Notification--hide {
   display: none;
+}
+
+.Notification span,
+.Notification .Icon:before {
+  vertical-align: middle;
+}
+
+.Notification .Icon {
+  margin-right: calc(var(--spacing) / 2);
 }
