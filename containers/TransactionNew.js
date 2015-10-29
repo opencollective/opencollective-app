@@ -65,7 +65,7 @@ function mapStateToProps(state) {
     groupid: state.router.params.groupid,
     transaction: state.form.transaction,
     tags: state.form.transaction.defaults.tags,
-    validationError: state.form.transaction.error,
+    validationError: state.form.transaction.error.message,
     requestError: state.transactions.error,
     notification: state.notification,
     isUploading: state.images.isUploading

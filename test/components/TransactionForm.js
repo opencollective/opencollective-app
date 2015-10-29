@@ -21,7 +21,7 @@ describe('TransactionForm component', () => {
 
   beforeEach(() => {
     const props = {
-      transaction: { attributes: {} },
+      transaction: { attributes: {}, error: {} },
       tags: ['a', 'b'],
       resetTransactionForm,
     };

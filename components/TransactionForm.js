@@ -3,7 +3,6 @@ import classnames from 'classnames';
 
 import ImageUpload from '../components/ImageUpload';
 import Input from '../components/Input';
-import MoneyInput from '../components/MoneyInput';
 import SelectTag from '../components/SelectTag';
 import Icon from '../components/Icon';
 import Notification from '../components/Notification';
@@ -33,13 +32,17 @@ class TransactionForm extends Component {
           onSubmit={this.handleSubmit.bind(this)} >
           <Input
             labelText='Title'
+            hasError={transaction.error.description}
             handleChange={this.handleField.bind(this, 'description')} />
-          <MoneyInput
+          <Input
             labelText='Amount'
+            placeholder='$ 10.00'
+            hasError={transaction.error.amount}
             handleChange={this.handleField.bind(this, 'amount')} />
           <Input
             labelText='Date'
             type='date'
+            hasError={transaction.error.createdAt}
             handleChange={this.handleField.bind(this, 'createdAt')} />
           <div className='Input'>
             <label className='Label'>Type:</label>
@@ -69,7 +72,7 @@ class TransactionForm extends Component {
 
     this.validate(attributes)
     .then(() => handleSubmit(attributes, groupid))
-    .catch(error => notify('error', error.message));
+    .catch(message => notify('error', message));
   }
 
   validate(attributes) {

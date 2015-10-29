@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import merge from 'lodash/object/merge';
 import omit from 'lodash/object/omit';
 
-import message from '../lib/error_message';
+import errorDetail from '../lib/error_detail';
 import tags from '../ui/tags';
 import {
   RESET_TRANSACTION_FORM,
@@ -24,7 +24,8 @@ const transactionInitialState = {
     amount: 0,
     tags: [tags[0]],
     description: ''
-  }
+  },
+  error: {}
 };
 
 function transaction(state=transactionInitialState, action={}) {
@@ -36,14 +37,17 @@ function transaction(state=transactionInitialState, action={}) {
       return merge({}, state, { attributes: action.attributes });
 
     case VALIDATE_TRANSACTION_FAILURE:
+      const { path, message } = errorDetail(action);
+
       return merge({}, state, {
         error: {
-          message: message(action)
+          [path]: true,
+          message
         }
       });
 
     case VALIDATE_TRANSACTION_REQUEST:
-      return merge({}, omit(state, 'error'));
+      return merge({}, omit(state, 'error'), { error: {} });
 
     default:
       return state;
@@ -67,10 +71,10 @@ function login(state=loginInitialState, action={}) {
       return merge({}, state, { attributes: action.attributes });
 
     case VALIDATE_LOGIN_FAILURE:
+      const { message } = errorDetail(action);
+
       return merge({}, state, {
-        error: {
-          message: message(action)
-        }
+        error: { message }
       });
 
     default:

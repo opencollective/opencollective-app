@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 
 class Input extends Component {
   propTypes: {
     labelText: React.PropTypes.string.isRequired,
     handleChange: React.PropTypes.func.isRequired,
     type: React.PropTypes.string,
+    hasError: React.PropTypes.bool
   }
 
   defaultProps: {
-    type: 'text'
+    type: 'text',
+    hasError: false
   }
 
   render() {
-    const { labelText, type } = this.props;
+    const { labelText, type, hasError, placeholder } = this.props;
+    const className = classnames({
+      Input: true,
+      'Input--error': hasError
+    });
 
     return (
-      <div className='Input'>
+      <div className={className}>
         <label className='Label'>
           {labelText}:
         </label>
@@ -24,9 +31,8 @@ class Input extends Component {
           className='Field'
           type={type}
           ref='input'
-          placeholder={labelText}
-          onChange={this.handleChange.bind(this)}
-        />
+          placeholder={placeholder || labelText}
+          onChange={this.handleChange.bind(this)} />
       </div>
     );
   }

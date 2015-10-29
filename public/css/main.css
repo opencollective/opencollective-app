@@ -30,6 +30,7 @@
 @import './components/Header.css';
 @import './components/Icon.css';
 @import './components/ImageUpload.css';
+@import './components/Input.css';
 @import './components/Label.css';
 @import './components/Notification.css';
 @import './components/PaypalReminder.css';
