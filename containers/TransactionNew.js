@@ -9,7 +9,7 @@ import {
   validateTransaction
 } from '../actions/form';
 import { uploadImage } from '../actions/images';
-import { notify } from '../actions/notification';
+import { notify, resetNotifications } from '../actions/notification';
 import Content from './Content';
 import TransactionForm from '../components/TransactionForm';
 import Header from '../components/Header';
@@ -57,7 +57,8 @@ export default connect(mapStateToProps, {
   appendTransactionForm,
   validateTransaction,
   pushState,
-  notify
+  notify,
+  resetNotifications
 })(TransactionNew);
 
 function mapStateToProps(state) {

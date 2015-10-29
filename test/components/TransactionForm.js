@@ -24,6 +24,7 @@ describe('TransactionForm component', () => {
       transaction: { attributes: {}, error: {} },
       tags: ['a', 'b'],
       resetTransactionForm,
+      resetNotifications: () => {}
     };
 
     const rendered = renderIntoDocument(<TransactionForm {...props} />);

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
 import { login } from '../actions/session';
-import { notify } from '../actions/notification';
+import { notify, resetNotifications } from '../actions/notification';
 import {
   resetLoginForm,
   appendLoginForm,
-  validateLogin
+  validateLogin,
 } from '../actions/form';
 import Content from './Content';
 import Header from '../components/Header';
@@ -16,11 +16,15 @@ import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
   render() {
+    const { notification, resetNotifications } = this.props;
+
     return (
       <div>
         <Header title='Sign in' />
         <Content>
-          <Notification {...this.props.notification} />
+          <Notification
+            {...notification}
+            resetNotifications={resetNotifications} />
           <LoginHeader />
           <LoginForm
             {...this.props}
@@ -75,7 +79,8 @@ export default connect(mapStateToProps, {
   resetLoginForm,
   appendLoginForm,
   notify,
-  validateLogin
+  validateLogin,
+  resetNotifications
 })(Login);
 
 function mapStateToProps(state) {

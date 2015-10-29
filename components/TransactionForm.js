@@ -11,7 +11,13 @@ import SubmitButton from '../components/SubmitButton';
 class TransactionForm extends Component {
 
   render() {
-    const { transaction, tags, isUploading } = this.props;
+    const {
+      transaction,
+      tags,
+      isUploading,
+      notification,
+      resetNotifications
+    } = this.props;
     const attributes = transaction.attributes;
     const className = classnames({
       'TransactionForm': true,
@@ -21,7 +27,9 @@ class TransactionForm extends Component {
 
     return (
       <div className={className}>
-        <Notification {...this.props.notification} />
+        <Notification
+          {...notification}
+          resetNotifications={resetNotifications} />
         <ImageUpload
           {...this.props}
           url={attributes.link}

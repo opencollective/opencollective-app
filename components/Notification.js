@@ -28,6 +28,10 @@ class Notification extends Component {
 
     return <Icon type={type[status]} />;
   }
+
+  componentDidMount() {
+    this.props.resetNotifications();
+  }
 }
 
 export default Notification;

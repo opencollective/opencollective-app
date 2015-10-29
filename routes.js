@@ -12,7 +12,8 @@ const routes = {
     { path: 'login', component: Login },
     { path: 'groups/:groupid/transactions', component: GroupTransactions},
     { path: 'groups/:groupid/transactions/new', component: TransactionNew },
-    { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail }
+    { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail },
+    { path: '*', component: Login }
   ]
 };
 
