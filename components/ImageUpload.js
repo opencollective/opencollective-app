@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 import Icon from './Icon';
 
 class ImageUpload extends Component {
@@ -11,31 +12,40 @@ class ImageUpload extends Component {
   }
 
   render() {
-    const { isUploading, url } = this.props;
+    const { url, isUploading } = this.props;
     const isUploaded = url && url.length > 0;
-
-    let content = this.emptyState();
-
-    if (isUploading) {
-      content = this.uploading();
-    } else if (isUploaded) {
-      content = this.uploaded(url);
-    }
+    const className = classnames({
+      ImageUpload: true,
+      'ImageUpload--isUploaded': isUploaded,
+      'ImageUpload--isUploading': isUploading
+    })
 
     return (
-      <div className='ImageUpload' onClick={this.clickInput.bind(this, isUploaded)}>
-        { content }
-        <div>
-          <input type='file' name='file' ref='file' onChange={this.handleChange.bind(this)} />
+      <div className={className} onClick={this.clickInput.bind(this, isUploaded)}>
+        <div className='ImageUpload-content'>
+          { this.content({isUploading, isUploaded, url}) }
         </div>
+        <span>
+          <input type='file' name='file' ref='file' className='ImageUpload-input' onChange={this.handleChange.bind(this)} />
+        </span>
       </div>
     );
+  }
+
+  content({isUploaded, isUploading, url}) {
+    if (isUploading) {
+      return this.uploading();
+    } else if (isUploaded) {
+      return this.uploaded(url);
+    } else {
+      return this.emptyState();
+    }
   }
 
   emptyState() {
     return (
       <div>
-        <img src='/images/camera.png' />
+        <img src='/images/camera.png' className='ImageUpload-img' />
         <div> Upload photo</div>
       </div>
     );
@@ -43,16 +53,16 @@ class ImageUpload extends Component {
 
   uploaded(url) {
     return (
-      <div>
-        <img src={url} />
-      </div>
+      <span>
+        <img className='ImageUpload-img' src={url} />
+      </span>
     );
   }
 
   uploading() {
     return (
       <span>
-        <img src='/images/uploading.png' />
+        <img src='/images/uploading.png'  className='ImageUpload-img' />
         <div>Uploading...</div>
       </span>
     );

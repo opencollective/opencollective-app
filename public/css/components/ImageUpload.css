@@ -1,21 +1,46 @@
 .ImageUpload {
   padding: var(--spacing);
-  padding-top: calc(var(--spacing) * 2);
+  height: var(--image-upload-height);
+  margin-bottom: var(--spacing);
   background-color: var(--light-gray);
   text-transform: uppercase;
   text-align: center;
   color: #CDD0D4;
-  margin-bottom: var(--spacing);
 }
 
-.ImageUpload input {
+.ImageUpload-content {
+  height: var(--image-upload-child-height);
+  /* simple way to center vertically */
+  margin-top: calc((var(--image-upload-height) - var(--image-upload-child-height)) / 2);
+}
+
+.ImageUpload-input {
   opacity: 0;
   height: 0;
   width: 0;
 }
 
-.ImageUpload img {
-  width: 90px;
-  height: auto;
+.ImageUpload-img {
+  width: auto;
+  height: 100%;
   padding-bottom: var(--spacing);
+}
+
+.ImageUpload--isUploading .ImageUpload-content {
+  margin-top: 0;
+}
+
+.ImageUpload--isUploaded {
+  padding: 0;
+  /* compensate for the padding to be same height */
+  height: calc(var(--image-upload-height) + var(--spacing) * 2);
+}
+
+.ImageUpload--isUploaded .ImageUpload-content {
+  margin-top: 0;
+  height: 100%;
+}
+
+.ImageUpload--isUploaded .ImageUpload-img {
+  height: 100%;
 }

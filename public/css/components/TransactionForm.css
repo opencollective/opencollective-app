@@ -3,8 +3,15 @@
   text-align: center;
 }
 
-.TransactionForm--isUploading {
+.TransactionForm--isUploading .TransactionForm-form {
   opacity: 0.5;
+}
+
+.TransactionForm--isUploading .ImageUpload {
+  -webkit-animation: loadingAnimation 1s infinite;
+  -moz-animation: loadingAnimation 1s infinite;
+  -o-animation: loadingAnimation 1s infinite;
+  animation: loadingAnimation 1s infinite;
 }
 
 .TransactionForm-form .Field {
@@ -25,4 +32,26 @@
 
 .TransactionForm-form .Button--submit {
   margin-top: calc(var(--spacing)/2);
+}
+
+
+@keyframes loadingAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0.5; }
+  100% { opacity:1; }
+}
+@-o-keyframes loadingAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0.5; }
+  100% { opacity:1; }
+}
+@-moz-keyframes loadingAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0.5; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes loadingAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0.5; }
+  100% { opacity:1; }
 }

@@ -24,6 +24,7 @@ class TransactionForm extends Component {
       'TransactionForm--isUploading': isUploading,
       'js-form': true, // for testing
     });
+    const today = (new Date()).toISOString().slice(0,10);
 
     return (
       <div className={className}>
@@ -50,6 +51,7 @@ class TransactionForm extends Component {
           <Input
             labelText='Date'
             type='date'
+            value={today}
             hasError={transaction.error.createdAt}
             handleChange={this.handleField.bind(this, 'createdAt')} />
           <div className='Input'>
@@ -57,8 +59,7 @@ class TransactionForm extends Component {
             <SelectTag
               attributes={attributes}
               tags={tags}
-              handleChange={this.handleTag.bind(this)}
-            />
+              handleChange={this.handleTag.bind(this)} />
           </div>
           <SubmitButton />
         </form>
