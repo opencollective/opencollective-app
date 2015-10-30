@@ -65,7 +65,9 @@ function fetchUserFailure(error) {
 export function fetchUserGroups(userid) {
   return dispatch => {
     dispatch(userGroupsRequest(userid));
-    return get(`users/${userid}/groups`, { schema: Schemas.GROUP_ARRAY })
+    return get(`users/${userid}/groups?userrole=true`, {
+        schema: Schemas.GROUP_ARRAY
+      })
       .then(json => dispatch(userGroupsSuccess(userid, json)))
       .catch(err => dispatch(userGroupsFailure(err)));
   };
