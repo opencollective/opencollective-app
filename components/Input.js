@@ -8,6 +8,7 @@ class Input extends Component {
     handleChange: React.PropTypes.func.isRequired,
     type: React.PropTypes.string,
     value: React.PropTypes.string,
+    max: React.PropTypes.string,
     hasError: React.PropTypes.bool
   }
 
@@ -18,7 +19,7 @@ class Input extends Component {
   }
 
   render() {
-    const { labelText, type, hasError, placeholder, value } = this.props;
+    const { labelText, type, hasError, placeholder, value, max } = this.props;
     const className = classnames({
       Input: true,
       'Input--error': hasError
@@ -32,6 +33,7 @@ class Input extends Component {
           type={type}
           ref='input'
           value={value}
+          max={max}
           placeholder={placeholder || labelText}
           onChange={this.handleChange.bind(this)} />
       </div>

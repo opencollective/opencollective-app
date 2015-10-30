@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 
-import ImageUpload from '../components/ImageUpload';
-import Input from '../components/Input';
-import SelectTag from '../components/SelectTag';
-import Icon from '../components/Icon';
-import Notification from '../components/Notification';
-import SubmitButton from '../components/SubmitButton';
+import dates from '../lib/dates';
+import ImageUpload from './ImageUpload';
+import Input from './Input';
+import SelectTag from './SelectTag';
+import Icon from './Icon';
+import Notification from './Notification';
+import SubmitButton from './SubmitButton';
 
 class TransactionForm extends Component {
 
@@ -19,15 +20,10 @@ class TransactionForm extends Component {
       resetNotifications
     } = this.props;
     const attributes = transaction.attributes;
-    const className = classnames({
-      'TransactionForm': true,
-      'TransactionForm--isUploading': isUploading,
-      'js-form': true, // for testing
-    });
-    const today = (new Date()).toISOString().slice(0,10);
+    const { today, tomorrow } = dates();
 
     return (
-      <div className={className}>
+      <div className={this.className(this.props)}>
         <Notification
           {...notification}
           resetNotifications={resetNotifications} />
@@ -52,6 +48,7 @@ class TransactionForm extends Component {
             labelText='Date'
             type='date'
             value={today}
+            max={tomorrow}
             hasError={transaction.error.createdAt}
             handleChange={this.handleField.bind(this, 'createdAt')} />
           <div className='Input'>
@@ -65,6 +62,14 @@ class TransactionForm extends Component {
         </form>
       </div>
     );
+  }
+
+  className({isUploading}) {
+    return classnames({
+      'TransactionForm': true,
+      'TransactionForm--isUploading': isUploading,
+      'js-form': true, // for testing
+    });
   }
 
   handleSubmit(event) {

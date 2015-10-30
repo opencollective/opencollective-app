@@ -27,4 +27,19 @@ describe('validator transaction', () => {
     });
   });
 
+  it('should not validate a createdAt date in the future', (done) => {
+    const transaction = {
+      description: 'Expense',
+      amount: 10,
+      createdAt: '2120-10-10',
+      tags: ['Computer']
+    };
+
+    validate(transaction)
+    .catch(error => {
+      expect(error.name).toEqual('ValidationError');
+      done();
+    });
+  });
+
 });
