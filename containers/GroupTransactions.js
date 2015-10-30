@@ -62,14 +62,13 @@ export default connect(mapStateToProps, {
   fetchUserIfNeeded
 })(GroupTransactions);
 
-function mapStateToProps(state) {
-  const groupid = state.router.params.groupid;
-  const group = state.groups[groupid] || {};
-  const transactions = filter(state.transactions, {GroupId: Number(groupid)}).sort(sortByDate);
+function mapStateToProps({transactions, router, groups}) {
+  const groupid = router.params.groupid;
+
   return {
     groupid,
-    group,
-    transactions,
+    group: groups[groupid] || {},
+    transactions: filter(transactions, {GroupId: Number(groupid)}).sort(sortByDate),
     users: state.users || {},
     isLoading: !group.id
   };

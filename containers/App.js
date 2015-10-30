@@ -7,9 +7,10 @@ import { decodeJWT } from '../actions/session';
 class App extends Component {
   componentWillMount() {
     const { decodeJWT, pushState } = this.props;
-    var infos = decodeJWT();
-    if (infos.redirectTo) {
-      pushState(null, infos.redirectTo);
+    const { redirectTo } = decodeJWT();
+
+    if (redirectTo) {
+      pushState(null, redirectTo);
     }
   }
 
@@ -22,13 +23,15 @@ class App extends Component {
   }
 }
 
-export default connect(function(store) {
+export default connect(mapStateToProps, {
+  decodeJWT,
+  pushState
+})(App);
+
+function mapStateToProps(store) {
   return {
     groups: store.groups,
     transactions: store.transactions,
     router: store.router
   };
-}, {
-  decodeJWT,
-  pushState
-})(App);
+}

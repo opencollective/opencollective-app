@@ -16,9 +16,10 @@ import Header from '../components/Header';
 import Group from '../components/Group';
 import Footer from '../components/Footer';
 import PaypalReminder from '../components/PaypalReminder';
-import sortByDate from '../lib/sort_by_date';
+import nestTransactionsInGroups from '../lib/nest_transactions_in_groups';
 import getUniqueValues from '../lib/get_unique_values';
 import isViewerOnly from '../lib/is_viewer_only';
+import isAdmin from '../lib/is_admin';
 
 class GroupsList extends Component {
   render() {
@@ -26,9 +27,9 @@ class GroupsList extends Component {
 
     return (
       <div>
-        <Header title='Accounting' hasBackButton={false} />
+        <Header title={this.title(this.props)} hasBackButton={false} />
         <Content isLoading={isLoading}>
-          {isViewerOnly ? null : this.paypalReminder(this.props)}
+          {this.paypalReminder(this.props)}
           {groups.map(group => {
             return <Group
               {...group}
@@ -38,6 +39,14 @@ class GroupsList extends Component {
         </Content>
       </div>
     );
+  }
+
+  title({groups=[]}) {
+    if (groups.length === 1) {
+      return groups[0].name;
+    } else {
+      return 'My Groups';
+    }
   }
 
   componentDidMount() {
@@ -61,11 +70,13 @@ class GroupsList extends Component {
     }
   }
 
-  paypalReminder({getApprovalKeyForUser, inProgress, query, userid}) {
-    return <PaypalReminder
-          getApprovalKey={getApprovalKeyForUser.bind(this, userid)}
-          inProgress={inProgress}
-          approvalStatus={query.approvalStatus} />;
+  paypalReminder({getApprovalKeyForUser, inProgress, query, userid, showPaypalReminder}) {
+    if (showPaypalReminder) {
+      return <PaypalReminder
+        getApprovalKey={getApprovalKeyForUser.bind(this, userid)}
+        inProgress={inProgress}
+        approvalStatus={query.approvalStatus} />;
+    }
   }
 }
 
@@ -76,27 +87,20 @@ export default connect(mapStateToProps, {
   confirmApprovalKey
 })(GroupsList);
 
-function mapStateToProps(state) {
+function mapStateToProps({users, session, router}) {
   // Logged in user
-  const userid = state.session.user.id;
-  const currentUser = state.users[userid] || {};
-  const transactions = values(currentUser.transactions);
-  const userGroups = values(currentUser.groups);
-
-  const groups = userGroups.map((group) => {
-    return extend(group, {
-      transactions: filter(transactions, { GroupId: group.id }).sort(sortByDate)
-    });
-  });
+  const userid = session.user.id;
+  const currentUser = users[userid] || {};
+  const { groups, transactions } = currentUser;
 
   return {
-    groups,
+    groups: nestTransactionsInGroups(groups, transactions),
     userid,
-    users: state.users,
+    users: users,
     transactions,
-    inProgress: state.users.inProgress,
-    query: state.router.location.query,
+    inProgress: users.inProgress,
+    query: router.location.query,
     isLoading: !groups,
-    isViewerOnly: isViewerOnly(userGroups)
+    showPaypalReminder: isAdmin(values(groups))
   };
 }

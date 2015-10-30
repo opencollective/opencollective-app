@@ -7,29 +7,20 @@ import {
   rejectTransaction,
   payTransaction
 } from '../actions/transactions';
-import { fetchGroup } from '../actions/groups';
+import { fetchUserGroups } from '../actions/users';
 import { appendTransactionForm } from '../actions/form';
 import { fetchUserIfNeeded } from '../actions/users';
 import Content from './Content';
 import Header from '../components/Header';
-import ApproveButton from '../components/ApproveButton';
-import RejectButton from '../components/RejectButton';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
 import TransactionDetailApproval from '../components/TransactionDetailApproval';
-import isViewerOnly from '../lib/is_viewer_only';
+import isAdmin from '../lib/is_admin';
 
 class TransactionDetail extends Component {
   render() {
-    const {
-      group,
-      transaction,
-      tags,
-      user,
-      isLoading,
-      isViewerOnly
-    } = this.props;
+    const { group, transaction, isLoading } = this.props;
 
     return (
       <div>
@@ -37,7 +28,6 @@ class TransactionDetail extends Component {
         <Content isLoading={isLoading}>
           <TransactionDetailTitle
             description={transaction.description} />
-
           <div className='TransactionDetail'>
             <div className='TransactionDetail-image'>
               <img src={transaction.link} />
@@ -46,7 +36,7 @@ class TransactionDetail extends Component {
               {...this.props}
               handleChange={this.handleTag.bind(this)} />
             <TransactionDetailComment {...this.props} />
-            { isViewerOnly ? null : this.approvalButtons() }
+            {this.approvalButtons(this.props)}
           </div>
         </Content>
       </div>
@@ -56,25 +46,28 @@ class TransactionDetail extends Component {
   componentDidMount() {
     const {
       fetchTransaction,
-      fetchGroup,
+      fetchUserGroups,
       groupid,
+      userid,
       transactionid
     } = this.props;
 
-    fetchGroup(groupid);
+    fetchUserGroups(userid); // User groups to get the role as well
 
     fetchTransaction(groupid, transactionid)
-    .then(() => this.fetchUser.bind(this));
+    .then(() => this.fetchTransactionUser.bind(this));
   }
 
-  approvalButtons() {
-    return <TransactionDetailApproval
-      {...this.props}
-      approveTransaction={this.approveTransaction.bind(this)}
-      rejectTransaction={this.rejectTransaction.bind(this)} />
+  approvalButtons({showApprovalButtons}) {
+    if (showApprovalButtons) {
+      return <TransactionDetailApproval
+        {...this.props}
+        approveTransaction={this.approveTransaction.bind(this)}
+        rejectTransaction={this.rejectTransaction.bind(this)} />
+    }
   }
 
-  fetchUser() {
+  fetchTransactionUser() {
     const { fetchUserIfNeeded, transaction } = this.props;
 
     if (transaction.UserId) {
@@ -119,34 +112,39 @@ export default connect(mapStateToProps, {
   fetchTransaction,
   approveTransaction,
   rejectTransaction,
-  fetchGroup,
+  fetchUserGroups,
   appendTransactionForm,
   pushState,
   fetchUserIfNeeded,
   payTransaction
 })(TransactionDetail);
 
-function mapStateToProps(state) {
-  const { transactionid, groupid } = state.router.params;
-  const {
-    approveInProgress,
-    rejectInProgress,
-    payInProgress
-  } = state.transactions;
-
-  const transaction = state.transactions[transactionid] || {};
-  const group = state.groups[groupid] || {};
+function mapStateToProps({
+  router,
+  transactions,
+  users,
+  form,
+  session
+}) {
+  const { transactionid, groupid } = router.params;
+  const currentUserId = session.user.id;
+  const currentUser = users[currentUserId] || {};
+  const groups = currentUser.groups || {};
+  const group = groups[groupid] || {};
+  const { approveInProgress, rejectInProgress, payInProgress } = transactions;
+  const transaction = transactions[transactionid] || {};
 
   return {
+    userid: currentUserId,
     groupid,
     transactionid,
     group,
     transaction,
-    tags: state.form.transaction.defaults.tags,
-    user: state.users[transaction.UserId] || {},
+    tags: form.transaction.defaults.tags,
+    user: users[transaction.UserId] || {},
     approveInProgress: approveInProgress || payInProgress,
-    rejectInProgress: state.transactions.rejectInProgress,
+    rejectInProgress,
     isLoading: !transaction.id,
-    isViewerOnly: isViewerOnly([group])
+    showApprovalButtons: isAdmin([group])
   };
 }
