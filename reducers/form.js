@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import merge from 'lodash/object/merge';
 import omit from 'lodash/object/omit';
 
+import dates from '../lib/dates';
 import errorDetail from '../lib/error_detail';
 import tags from '../ui/tags';
 import {
@@ -24,7 +25,8 @@ const transactionInitialState = {
   attributes: {
     amount: 0,
     tags: [tags[0]],
-    description: ''
+    description: '',
+    createdAt: dates().today
   },
   error: {}
 };

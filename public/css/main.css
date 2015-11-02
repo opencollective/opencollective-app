@@ -9,6 +9,12 @@
 @import './utilities.css';
 
 /**
+ * Vendors
+ */
+
+@import './vendors/react-datepicker.css';
+
+/**
  * Containers
  */
 
@@ -40,3 +46,4 @@
 @import './components/TransactionStatus.css';
 @import './components/TransactionComment.css';
 @import './components/Well.css';
+

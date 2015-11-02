@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import moment from 'moment';
 
 import dates from '../lib/dates';
 import ImageUpload from './ImageUpload';
@@ -8,6 +9,7 @@ import SelectTag from './SelectTag';
 import Icon from './Icon';
 import Notification from './Notification';
 import SubmitButton from './SubmitButton';
+import DatePicker from './DatePicker';
 
 class TransactionForm extends Component {
 
@@ -44,13 +46,13 @@ class TransactionForm extends Component {
             placeholder='$ 10.00'
             hasError={transaction.error.amount}
             handleChange={this.handleField.bind(this, 'amount')} />
-          <Input
-            labelText='Date'
-            type='date'
-            value={today}
-            max={tomorrow}
-            hasError={transaction.error.createdAt}
-            handleChange={this.handleField.bind(this, 'createdAt')} />
+          <div className='Input'>
+            <label className='Label'>Date:</label>
+            <DatePicker
+              selected={moment(attributes.createdAt)}
+              maxDate={moment(today)}
+              handleChange={this.handleField.bind(this, 'createdAt')} />
+          </div>
           <div className='Input'>
             <label className='Label'>Type:</label>
             <SelectTag

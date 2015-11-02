@@ -28,10 +28,6 @@ export default connect(mapStateToProps, {
   pushState
 })(App);
 
-function mapStateToProps(store) {
-  return {
-    groups: store.groups,
-    transactions: store.transactions,
-    router: store.router
-  };
+function mapStateToProps() {
+  return {};
 }

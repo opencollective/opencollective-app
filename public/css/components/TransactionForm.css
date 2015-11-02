@@ -14,7 +14,8 @@
   animation: loadingAnimation 1s infinite;
 }
 
-.TransactionForm-form .Field {
+.TransactionForm-form .Field,
+.TransactionForm-form .datepicker__input {
   width: 60%;
 }
 
