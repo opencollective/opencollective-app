@@ -27,7 +27,7 @@ class GroupsList extends Component {
 
     return (
       <div>
-        <Header title={this.title(this.props)} hasBackButton={false} />
+        <Header title='My collectives' hasBackButton={false} />
         <Content isLoading={isLoading}>
           {this.paypalReminder(this.props)}
           {groups.map(group => {
@@ -39,14 +39,6 @@ class GroupsList extends Component {
         </Content>
       </div>
     );
-  }
-
-  title({groups=[]}) {
-    if (groups.length === 1) {
-      return groups[0].name;
-    } else {
-      return 'My Groups';
-    }
   }
 
   componentDidMount() {

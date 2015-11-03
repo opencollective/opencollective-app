@@ -15,6 +15,7 @@ import Content from './Content';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GroupTitle from '../components/GroupTitle';
+import EmptyList from '../components/EmptyList';
 
 class GroupTransactions extends Component {
   render() {
@@ -28,14 +29,22 @@ class GroupTransactions extends Component {
           <GroupTitle group={group} />
           <div className='padded'>
             <div className='GroupTransactions-title'>Activity Detail</div>
-            <TransactionList
-              transactions={transactions}
-              users={users} />
+            {this.list(this.props)}
           </div>
         </Content>
         <Footer groupid={groupid} />
       </div>
     );
+  }
+
+  list({transactions, users}) {
+    if (transactions.length > 0) {
+      return <TransactionList
+        transactions={transactions}
+        users={users} />
+    } else {
+      return <EmptyList />;
+    }
   }
 
   componentDidMount() {
@@ -65,11 +74,12 @@ export default connect(mapStateToProps, {
 function mapStateToProps({transactions, router, groups, users={}}) {
   const groupid = router.params.groupid;
   const group = groups[groupid] || {};
+  const transactionsArray = values(transactions);
 
   return {
     groupid,
     group,
-    transactions: filter(transactions, {GroupId: Number(groupid)}).sort(sortByDate),
+    transactions: filter(transactionsArray, {GroupId: Number(groupid)}).sort(sortByDate),
     users: users,
     isLoading: !group.id
   };
