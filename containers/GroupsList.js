@@ -92,6 +92,7 @@ function mapStateToProps({users, session, router}) {
   const userid = session.user.id;
   const currentUser = users[userid] || {};
   const { groups, transactions } = currentUser;
+  const query = router.location.query;
 
   return {
     groups: nestTransactionsInGroups(groups, transactions),
@@ -99,8 +100,8 @@ function mapStateToProps({users, session, router}) {
     users: users,
     transactions,
     inProgress: users.inProgress,
-    query: router.location.query,
+    query,
     isLoading: !groups,
-    showPaypalReminder: isAdmin(values(groups))
+    showPaypalReminder: isAdmin(values(groups)) && query.paypalreminder
   };
 }

@@ -1,5 +1,6 @@
 .EmptyList {
   text-align: center;
+  padding-bottom: var(--spacing);
 }
 
 .EmptyList-icon {
