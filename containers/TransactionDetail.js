@@ -7,6 +7,7 @@ import {
   rejectTransaction,
   payTransaction
 } from '../actions/transactions';
+import { notify, resetNotifications } from '../actions/notification';
 import { fetchUserGroups } from '../actions/users';
 import { appendTransactionForm } from '../actions/form';
 import { fetchUserIfNeeded } from '../actions/users';
@@ -16,16 +17,27 @@ import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
 import TransactionDetailApproval from '../components/TransactionDetailApproval';
+import Notification from '../components/Notification';
 import isAdmin from '../lib/is_admin';
+import errorify from '../lib/errorify';
 
 class TransactionDetail extends Component {
   render() {
-    const { group, transaction, isLoading } = this.props;
+    const {
+      group,
+      transaction,
+      isLoading,
+      notification,
+      resetNotifications
+    } = this.props;
 
     return (
       <div>
         <Header title={group.name} hasBackButton={true} />
         <Content isLoading={isLoading}>
+          <Notification
+            {...notification}
+            resetNotifications={resetNotifications} />
           <TransactionDetailTitle
             description={transaction.description} />
           <div className='TransactionDetail'>
@@ -86,18 +98,23 @@ class TransactionDetail extends Component {
       group,
       transaction,
       approveTransaction,
-      payTransaction
+      payTransaction,
+      notify
     } = this.props;
 
     approveTransaction(group.id, transaction.id)
+    .then(errorify)
     .then(() => payTransaction(group.id, transaction.id))
-    .then(() => this.nextPage());
+    .then(errorify)
+    .then(() => this.nextPage())
+    .catch(({message}) => notify('error', message));
   }
 
   rejectTransaction() {
     const { group, transaction, rejectTransaction } = this.props;
 
     rejectTransaction(group.id, transaction.id)
+    .then(errorify)
     .then(() => this.nextPage())
   }
 
@@ -116,7 +133,9 @@ export default connect(mapStateToProps, {
   appendTransactionForm,
   pushState,
   fetchUserIfNeeded,
-  payTransaction
+  payTransaction,
+  notify,
+  resetNotifications
 })(TransactionDetail);
 
 function mapStateToProps({
@@ -124,6 +143,7 @@ function mapStateToProps({
   transactions,
   users,
   form,
+  notification,
   session
 }) {
   const { transactionid, groupid } = router.params;
@@ -140,6 +160,7 @@ function mapStateToProps({
     transactionid,
     group,
     transaction,
+    notification,
     tags: form.transaction.defaults.tags,
     user: users[transaction.UserId] || {},
     approveInProgress: approveInProgress || payInProgress,

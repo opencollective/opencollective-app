@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import Icon from './Icon';
 
-class BackButton extends Component {
-  render() {
-    return (
-      <span className='BackButton' onClick={this.handleClick}>
-        <Icon type='left' />
-      </span>
-    );
-  }
+export default () => {
+  const back = () => window.history.back();
 
-  handleClick() {
-    window.history.back();
-  }
+  return (
+    <span className='BackButton' onClick={back}>
+      <Icon type='left' />
+    </span>
+  );
 }
 
-export default BackButton;

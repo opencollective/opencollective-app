@@ -1,17 +1,13 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
-class Icon extends Component {
-  propTypes: {
-    type: PropTypes.string.isRequired
-  }
+const Icon = ({type}) => {
+  return (
+    <i className={`Icon Icon--${type}`} />
+  );
+};
 
-  render() {
-    const type = this.props.type;
-    const className = `Icon Icon--${type}`;
-    return (
-      <i className={className} />
-    );
-  }
-}
+Icon.PropTypes = {
+  type: PropTypes.string.isRequired
+};
 
 export default Icon;

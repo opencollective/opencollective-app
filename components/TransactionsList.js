@@ -1,27 +1,23 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import values from 'lodash/object/values';
 import Transaction from './Transaction';
+import EmptyList from './EmptyList';
 
-class TransactionList extends Component {
-  propTypes: {
-    groupid: PropTypes.string.isRequired
-  }
+export default ({transactions, users}) => {
+  const transactionsArray = values(transactions);
 
-  render() {
-    const { transactions, users } = this.props;
+  if (transactionsArray.length > 0) {
     return (
       <div>
-        {values(transactions).map(transaction => {
+        {transactionsArray.map(transaction => {
           return <Transaction
             key={transaction.id}
             {...transaction}
-            user={users[transaction.UserId] || {}}
-            />;
+            user={users[transaction.UserId] || {}} />;
         })}
       </div>
     );
+  } else {
+    return <EmptyList />;
   }
 }
-
-export default TransactionList;

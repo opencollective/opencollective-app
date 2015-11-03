@@ -6,13 +6,6 @@ import TransactionStatus from './TransactionStatus';
 import Avatar from './Avatar';
 
 class Transaction extends Component {
-  propTypes: {
-    groupid: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired
-  }
-
   render() {
     const {
       amount,
@@ -42,5 +35,11 @@ class Transaction extends Component {
     );
   }
 }
+
+Transaction.propTypes = {
+  id: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired
+};
 
 export default Transaction;
