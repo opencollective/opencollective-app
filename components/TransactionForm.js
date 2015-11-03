@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 
-import dates from '../lib/dates';
 import ImageUpload from './ImageUpload';
 import Input from './Input';
 import SelectTag from './SelectTag';
@@ -22,7 +21,6 @@ class TransactionForm extends Component {
       resetNotifications
     } = this.props;
     const attributes = transaction.attributes;
-    const { today, tomorrow } = dates();
 
     return (
       <div className={this.className(this.props)}>
@@ -50,7 +48,7 @@ class TransactionForm extends Component {
             <label className='Label'>Date:</label>
             <DatePicker
               selected={moment(attributes.createdAt)}
-              maxDate={moment(today)}
+              maxDate={moment()}
               handleChange={this.handleField.bind(this, 'createdAt')} />
           </div>
           <div className='Input'>

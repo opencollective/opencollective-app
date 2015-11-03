@@ -1,8 +1,6 @@
 import Joi from 'joi';
 import dates from '../lib/dates';
 
-const { tomorrow } = dates();
-
 export default validate;
 
 /**
@@ -16,7 +14,7 @@ const schema = Joi.object().keys({
     .label('Title'),
   amount: Joi.number().precision(2).greater(0).required()
     .label('Amount'),
-  createdAt: Joi.date().max(tomorrow).required()
+  createdAt: Joi.date().max(dates().tomorrow).required()
     .label('Date'),
   tags: Joi.array().items(Joi.string()).required()
     .label('Type'),

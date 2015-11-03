@@ -26,7 +26,7 @@ const transactionInitialState = {
     amount: 0,
     tags: [tags[0]],
     description: '',
-    createdAt: dates().today
+    createdAt: new Date()
   },
   error: {}
 };
