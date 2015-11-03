@@ -12,7 +12,7 @@ class DatePicker extends Component {
           selected={selected}
           maxDate={moment(maxDate)}
           onChange={this.handleChange.bind(this)}
-          dateFormat='DD/MM/YYYY' />
+          dateFormat='MM/DD/YYYY' />
       </span>
     );
   }

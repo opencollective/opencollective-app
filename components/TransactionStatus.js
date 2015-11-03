@@ -21,7 +21,7 @@ const TransactionStatus = ({approved, approvedAt}) => {
 }
 
 TransactionStatus.propTypes = {
-  approvedAt: PropTypes.string.isRequired,
+  approvedAt: PropTypes.string,
   approved: PropTypes.bool.isRequired
 };
 
