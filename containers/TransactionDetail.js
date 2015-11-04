@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import {
-  fetchTransaction,
-  approveTransaction,
-  rejectTransaction,
-  payTransaction
-} from '../actions/transactions';
-import { notify, resetNotifications } from '../actions/notification';
-import { fetchUserGroups } from '../actions/users';
-import { appendTransactionForm } from '../actions/form';
-import { fetchUserIfNeeded } from '../actions/users';
+import payTransaction from '../actions/transactions/pay';
+import approveTransaction from '../actions/transactions/approve';
+import rejectTransaction from '../actions/transactions/reject';
+import fetchTransaction from '../actions/transactions/fetch_by_id';
+import notify from '../actions/notification/notify';
+import resetNotifications from '../actions/notification/reset';
+import fetchUserGroups from '../actions/users/fetch_groups';
+import appendTransactionForm from '../actions/form/append_transaction';
+import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import Content from './Content';
 import Header from '../components/Header';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';

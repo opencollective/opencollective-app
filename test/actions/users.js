@@ -3,12 +3,11 @@ import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
 import * as constants from '../../constants/users';
-import {
-  getApprovalKeyForUser,
-  confirmApprovalKey,
-  fetchUserIfNeeded,
-  fetchUserGroups,
-} from '../../actions/users';
+
+import getPreapprovalKeyForUser from '../../actions/users/get_preapproval_key';
+import confirmPreapprovalKey from '../../actions/users/confirm_preapproval_key';
+import fetchUserIfNeeded from '../../actions/users/fetch_by_id_cached';
+import fetchUserGroups from '../../actions/users/fetch_groups';
 
 describe('users actions', () => {
 
@@ -32,7 +31,7 @@ describe('users actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(getApprovalKeyForUser(userid));
+      store.dispatch(getPreapprovalKeyForUser(userid));
     });
 
     it('creates GET_APPROVAL_KEY_FOR_USER_FAILURE if it fails', (done) => {
@@ -49,7 +48,7 @@ describe('users actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(getApprovalKeyForUser(userid));
+      store.dispatch(getPreapprovalKeyForUser(userid));
     });
   });
 
@@ -70,7 +69,7 @@ describe('users actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(confirmApprovalKey(userid, preapprovalKey));
+      store.dispatch(confirmPreapprovalKey(userid, preapprovalKey));
     });
 
     it('creates CONFIRM_APPROVAL_KEY_FAILURE if it fails', (done) => {
@@ -87,7 +86,7 @@ describe('users actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(confirmApprovalKey(userid, preapprovalKey));
+      store.dispatch(confirmPreapprovalKey(userid, preapprovalKey));
     });
   });
 

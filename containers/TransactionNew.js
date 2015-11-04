@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
-import { createTransaction } from '../actions/transactions';
-import {
-  resetTransactionForm,
-  appendTransactionForm,
-  validateTransaction
-} from '../actions/form';
-import { uploadImage } from '../actions/images';
-import { notify, resetNotifications } from '../actions/notification';
+import createTransaction from '../actions/transactions/create';
+import resetTransactionForm from '../actions/form/reset_transaction';
+import appendTransactionForm from '../actions/form/append_transaction';
+import validateTransaction from '../actions/form/validate_transaction';
+import uploadImage from '../actions/images/upload';
+import notify from '../actions/notification/notify';
+import resetNotifications from '../actions/notification/reset';
 import Content from './Content';
 import TransactionForm from '../components/TransactionForm';
 import Header from '../components/Header';

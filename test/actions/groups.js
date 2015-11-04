@@ -2,7 +2,7 @@ import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
-import { fetchGroup } from '../../actions/groups';
+import fetchById from '../../actions/groups/fetch_by_id';
 import * as constants from '../../constants/groups';
 
 describe('groups actions', () => {
@@ -26,7 +26,7 @@ describe('groups actions', () => {
       { type: constants.GROUP_SUCCESS, id: 1, groups: {1: group} }
     ];
     const store = mockStore({}, expected, done);
-    store.dispatch(fetchGroup(1));
+    store.dispatch(fetchById(1));
   });
 
   it('creates GROUP_ERROR when fetching a group fails', (done) => {
@@ -40,7 +40,7 @@ describe('groups actions', () => {
       { type: constants.GROUP_FAILURE, id: 1, error: {}}
     ];
     const store = mockStore({}, expected, done);
-    store.dispatch(fetchGroup(1));
+    store.dispatch(fetchById(1));
   });
 
 });

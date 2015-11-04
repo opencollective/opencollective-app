@@ -4,13 +4,10 @@ import values from 'lodash/object/values';
 import extend from 'lodash/object/extend';
 import filter from 'lodash/collection/filter';
 
-import {
-  fetchUserGroupsAndTransactions,
-  fetchUserIfNeeded,
-  getApprovalKeyForUser,
-  confirmApprovalKey
-} from '../actions/users';
-import { fetchTransactions } from '../actions/transactions';
+import fetchUserGroupsAndTransactions from '../actions/users/fetch_groups_and_transactions';
+import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
+import getPreapprovalKeyForUser from '../actions/users/get_preapproval_key';
+import confirmPreapprovalKey from '../actions/users/confirm_preapproval_key';
 import Content from './Content';
 import Header from '../components/Header';
 import Group from '../components/Group';
@@ -54,7 +51,7 @@ class GroupsList extends Component {
       fetchUserGroupsAndTransactions,
       userid,
       fetchUserIfNeeded,
-      confirmApprovalKey,
+      confirmPreapprovalKey,
       query
     } = this.props;
 
@@ -66,14 +63,14 @@ class GroupsList extends Component {
     }
 
     if (query.preapprovalKey && query.approvalStatus === 'success') {
-      confirmApprovalKey(userid, query.preapprovalKey);
+      confirmPreapprovalKey(userid, query.preapprovalKey);
     }
   }
 
-  paypalReminder({getApprovalKeyForUser, inProgress, query, userid, showPaypalReminder}) {
+  paypalReminder({getPreapprovalKeyForUser, inProgress, query, userid, showPaypalReminder}) {
     if (showPaypalReminder) {
       return <PaypalReminder
-        getApprovalKey={getApprovalKeyForUser.bind(this, userid)}
+        getApprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
         inProgress={inProgress}
         approvalStatus={query.approvalStatus} />;
     }
@@ -83,8 +80,8 @@ class GroupsList extends Component {
 export default connect(mapStateToProps, {
   fetchUserGroupsAndTransactions,
   fetchUserIfNeeded,
-  getApprovalKeyForUser,
-  confirmApprovalKey
+  getPreapprovalKeyForUser,
+  confirmPreapprovalKey
 })(GroupsList);
 
 function mapStateToProps({users, session, router}) {

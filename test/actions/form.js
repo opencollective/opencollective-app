@@ -1,10 +1,8 @@
 import expect from 'expect';
-import {
-  resetTransactionForm,
-  appendTransactionForm,
-  resetLoginForm,
-  appendLoginForm,
-} from '../../actions/form';
+import resetTransactionForm from '../../actions/form/reset_transaction';
+import appendTransactionForm from '../../actions/form/append_transaction';
+import resetLoginForm from '../../actions/form/reset_login';
+import appendLoginForm from '../../actions/form/append_login';
 import * as constants from '../../constants/form';
 
 describe('form actions', () => {

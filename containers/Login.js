@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
-import { login } from '../actions/session';
-import { notify, resetNotifications } from '../actions/notification';
-import {
-  resetLoginForm,
-  appendLoginForm,
-  validateLogin,
-} from '../actions/form';
+import login from '../actions/session/login';
+import notify from '../actions/notification/notify';
+import resetNotifications from '../actions/notification/reset';
+import resetLoginForm from '../actions/form/reset_login';
+import appendLoginForm from '../actions/form/append_login';
+import validateLogin from '../actions/form/validate_login';
 import Content from './Content';
 import Header from '../components/Header';
 import Notification from '../components/Notification';

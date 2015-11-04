@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
-import { decodeJWT } from '../actions/session';
+import decodeJWT from '../actions/session/decode_jwt';
 
 class App extends Component {
   componentWillMount() {

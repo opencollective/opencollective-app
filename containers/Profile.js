@@ -5,9 +5,14 @@ import Header from '../components/Header';
 import ProfileHeader from '../components/ProfileHeader';
 import ProfileForm from '../components/ProfileForm';
 import Notification from '../components/Notification';
-import { setEditMode, appendProfileForm, validateProfile } from '../actions/form';
-import { updatePaypalEmail, fetchUser } from '../actions/users';
-import { notify, resetNotifications } from '../actions/notification';
+import setEditMode from '../actions/form/set_edit_mode_profile';
+import appendProfileForm from '../actions/form/append_profile';
+import validateProfile from '../actions/form/validate_profile';
+
+import updatePaypalEmail from '../actions/users/update_paypal_email';
+import fetchUser from '../actions/users/fetch_by_id';
+import notify from '../actions/notification/notify';
+import resetNotifications from '../actions/notification/reset';
 import errorify from '../lib/errorify';
 
 class Profile extends Component {

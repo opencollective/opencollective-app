@@ -6,9 +6,9 @@ import filter from 'lodash/collection/filter';
 import sortByDate from '../lib/sort_by_date';
 import getUniqueValues from '../lib/get_unique_values';
 
-import { fetchUser, fetchUserIfNeeded } from '../actions/users';
-import { fetchTransactions } from '../actions/transactions';
-import { fetchGroup } from '../actions/groups';
+import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
+import fetchTransactions from '../actions/transactions/fetch_by_group';
+import fetchGroup from '../actions/groups/fetch_by_id';
 import TransactionList from '../components/TransactionsList';
 
 import Content from './Content';
@@ -58,7 +58,6 @@ class GroupTransactions extends Component {
 export default connect(mapStateToProps, {
   fetchTransactions,
   fetchGroup,
-  fetchUser,
   fetchUserIfNeeded
 })(GroupTransactions);
 
