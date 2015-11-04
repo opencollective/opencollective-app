@@ -1,5 +1,6 @@
 .Button {
   color: white;
+  background: var(--gray);
   border-radius: 3px;
   border: 1px solid transparent;
   vertical-align: middle;
@@ -26,28 +27,36 @@
   display: block;
 }
 
-.Button--approve {
+.Button--approve,
+.Button--save {
   background-color: var(--green);
   margin-right: calc(var(--spacing)/2);
 }
 
 .Button--approve:hover,
-.Button--approve:active {
+.Button--save:hover,
+.Button--approve:active,
+.Button--save:active {
   background-color: var(--dark-green);
 }
 
-.Button--reject {
+.Button--reject,
+.Button--cancel {
   background-color: var(--red);
   margin-left: calc(var(--spacing)/2);
 }
 
 .Button--reject:hover,
-.Button--reject:active {
+.Button--cancel:hover,
+.Button--reject:active,
+.Button--cancel:active {
   background-color: var(--dark-red);
 }
 
 .Button--approve,
-.Button--reject {
+.Button--save,
+.Button--reject,
+.Button--cancel {
   box-sizing: border-box;
   width: calc(50% - calc(var(--spacing)/2));
   float: left;

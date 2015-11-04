@@ -1,5 +1,6 @@
 import transactionIsValid from '../validators/transaction';
 import loginIsValid from '../validators/login';
+import profileIsValid from '../validators/profile';
 import * as constants from '../constants/form';
 
 /**
@@ -116,6 +117,66 @@ function validateLoginSuccess(attributes) {
 function validateLoginFailure(error) {
   return {
     type: constants.VALIDATE_LOGIN_FAILURE,
+    error
+  };
+}
+
+/**
+ * Profile form
+ */
+
+export function setEditMode(isEditMode) {
+  return {
+    type: constants.SET_EDIT_MODE_PROFILE,
+    isEditMode
+  };
+}
+
+/**
+ * Append field in profile form
+ */
+
+export function appendProfileForm(attributes) {
+  return {
+    type: constants.APPEND_PROFILE_FORM,
+    attributes,
+  };
+}
+
+/**
+ * Validate transaction form
+ */
+
+export function validateProfile(newProfile) {
+  const request = validateProfileRequest;
+  const success = validateProfileSuccess;
+  const failure = validateProfileFailure;
+
+  return dispatch => {
+    dispatch(request(newProfile));
+    return profileIsValid(newProfile)
+    .then(profile => dispatch(success(profile)))
+    .catch(error => dispatch(failure(error)));
+  };
+}
+
+function validateProfileRequest(profile) {
+  return {
+    type: constants.VALIDATE_PROFILE_REQUEST,
+    profile
+  };
+}
+
+function validateProfileSuccess(profile) {
+  return {
+    type: constants.VALIDATE_PROFILE_SUCCESS,
+    profile
+  };
+}
+
+function validateProfileFailure(error) {
+  return {
+    type: constants.VALIDATE_PROFILE_FAILURE,
     error
   };
 }

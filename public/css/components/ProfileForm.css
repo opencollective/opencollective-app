@@ -1,0 +1,29 @@
+.ProfileForm {
+  padding-top: calc(var(--spacing) * 2);
+}
+
+.ProfileForm-label {
+  font-weight: bold;
+  padding-bottom: var(--spacing);
+}
+
+.ProfileForm-email {
+  border-top: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
+  padding: var(--spacing) 0;
+}
+
+.ProfileForm-buttonContainer {
+  text-align: center;
+}
+
+.ProfileForm-button {
+  background-color: var(--orange);
+  margin-top: calc(var(--spacing) * 2);
+  display: inline-block;
+}
+
+.ProfileForm-field {
+  box-sizing: border-box;
+  width: 100%;
+}

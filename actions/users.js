@@ -1,7 +1,7 @@
 import keys from 'lodash/object/keys';
 import merge from 'lodash/object/merge';
 import { fetchTransactions } from './transactions';
-import { get, post } from '../lib/api';
+import { get, post, putJSON } from '../lib/api';
 import Schemas from '../lib/schemas';
 import * as constants from '../constants/users';
 
@@ -231,4 +231,47 @@ function confirmApprovalKeyFailure(error) {
     error
   };
 }
+
+/**
+ * Update user paypalEmail
+ */
+
+export function updatePaypalEmail(userid, paypalEmail) {
+  const url = `users/${userid}/paypalemail`;
+  const request = updatePaypalEmailRequest;
+  const success = updatePaypalEmailSuccess;
+  const failure = updatePaypalEmailFailure;
+
+  return dispatch => {
+    dispatch(request(userid, paypalEmail));
+    return putJSON(url, { paypalEmail })
+      .then(json => dispatch(success(userid, paypalEmail, json)))
+      .catch(err => dispatch(failure(err)));
+  };
+}
+
+function updatePaypalEmailRequest(userid, paypalEmail) {
+  return {
+    type: constants.UPDATE_PAYPAL_EMAIL_REQUEST,
+    paypalEmail,
+    userid
+  };
+}
+
+function updatePaypalEmailSuccess(userid, paypalEmail, json) {
+  return {
+    type: constants.UPDATE_PAYPAL_EMAIL_SUCCESS,
+    userid,
+    paypalEmail,
+    json
+  };
+}
+
+function updatePaypalEmailFailure(error) {
+  return {
+    type: constants.UPDATE_PAYPAL_EMAIL_FAILURE,
+    error
+  };
+}
+
 

@@ -26,6 +26,13 @@ export default function users(state={}, action={}) {
     case constants.GET_APPROVAL_KEY_FOR_USER_FAILURE:
       return merge({}, state, { inProgress: false });
 
+    case constants.UPDATE_PAYPAL_EMAIL_REQUEST:
+      return merge({}, state, { updateInProgress: true });
+
+    case constants.UPDATE_PAYPAL_EMAIL_SUCCESS:
+    case constants.UPDATE_PAYPAL_EMAIL_FAILURE:
+      return merge({}, state, { updateInProgress: false });
+
 
     default:
       return state;
