@@ -6,10 +6,15 @@ const Avatar = ({url, size}) => {
     height: size || '55px'
   };
 
-  return <img
-      src={url || 'http://api.randomuser.me/portraits/women/39.jpg'}
+  if (url) {
+    return <img src={url} className='Avatar' style={style} />;
+  } else {
+    return <img
+      src='/images/default_avatar.svg'
       className='Avatar'
       style={style} />;
+  }
+
 }
 
 Avatar.propTypes = {
