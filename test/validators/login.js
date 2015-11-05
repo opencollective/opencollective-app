@@ -20,7 +20,7 @@ describe('validator login', () => {
 
     validate(transaction)
     .then(value => {
-      expect(value).toEqual(value);
+      expect(value).toEqual(transaction);
       done();
     });
   });

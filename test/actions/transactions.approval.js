@@ -3,10 +3,8 @@ import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
 import * as constants from '../../constants/transactions';
-import {
-  approveTransaction,
-  rejectTransaction
-} from '../../actions/transactions';
+import approveTransaction from '../../actions/transactions/approve';
+import rejectTransaction from '../../actions/transactions/reject';
 
 describe('transactions approval actions', () => {
 

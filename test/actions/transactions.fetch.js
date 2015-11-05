@@ -3,7 +3,8 @@ import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
 import * as constants from '../../constants/transactions';
-import { fetchTransactions, fetchTransaction } from '../../actions/transactions';
+import fetchById from '../../actions/transactions/fetch_by_id';
+import fetchByGroup from '../../actions/transactions/fetch_by_group';
 
 describe('transactions actions', () => {
 
@@ -38,7 +39,7 @@ describe('transactions actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(fetchTransaction(groupid, transactionid));
+      store.dispatch(fetchById(groupid, transactionid));
     });
 
     it('creates TRANSACTION_FAILURE if it fails to fetch a transaction', (done) => {
@@ -59,7 +60,7 @@ describe('transactions actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(fetchTransaction(groupid, transactionid));
+      store.dispatch(fetchById(groupid, transactionid));
     });
   });
 
@@ -88,7 +89,7 @@ describe('transactions actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(fetchTransactions(groupid));
+      store.dispatch(fetchByGroup(groupid));
     });
 
     it('creates TRANSACTIONS_FAILURE if it fails', (done) => {
@@ -104,7 +105,7 @@ describe('transactions actions', () => {
       ];
 
       const store = mockStore({}, expected, done);
-      store.dispatch(fetchTransactions(groupid));
+      store.dispatch(fetchByGroup(groupid));
     });
   });
 

@@ -24,12 +24,12 @@ class PaypalReminder extends Component {
     }
   }
 
-  button({inProgress, getApprovalKey}) {
+  button({inProgress, getPreapprovalKey}) {
     return (
       <AsyncButton
         customClass='Button--paypal'
         inProgress={inProgress}
-        onClick={getApprovalKey}>
+        onClick={getPreapprovalKey}>
         Login with Paypal
       </AsyncButton>
     );

@@ -20,6 +20,7 @@
 
 @import './containers/Content.css';
 @import './containers/Login.css';
+@import './containers/Profile.css';
 @import './containers/TransactionDetail.css';
 
 /**
@@ -41,6 +42,7 @@
 @import './components/Label.css';
 @import './components/Notification.css';
 @import './components/PaypalReminder.css';
+@import './components/ProfileForm.css';
 @import './components/SelectTag.css';
 @import './components/Transaction.css';
 @import './components/TransactionForm.css';

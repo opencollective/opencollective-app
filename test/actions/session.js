@@ -14,11 +14,9 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE
 } from '../../constants/session';
-import {
-  login,
-  decodeJWT,
-  logout,
-} from '../../actions/session';
+import login from '../../actions/session/login';
+import logout from '../../actions/session/logout';
+import decodeJWT from '../../actions/session/decode_jwt';
 
 describe('session actions', () => {
   beforeEach(() => {

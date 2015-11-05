@@ -4,9 +4,7 @@ import _ from 'lodash';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
 import * as constants from '../../constants/transactions';
-import {
-  createTransaction
-} from '../../actions/transactions';
+import createTransaction from '../../actions/transactions/create';
 
 describe('transactions create actions', () => {
 
