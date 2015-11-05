@@ -15,7 +15,9 @@ import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import errorify from '../lib/errorify';
 
-class Profile extends Component {
+// Use named export for unconnected component (for tests)
+// http://rackt.org/redux/docs/recipes/WritingTests.html
+export class Profile extends Component {
   render() {
     const { user, notification, resetNotifications } = this.props;
 
@@ -30,46 +32,50 @@ class Profile extends Component {
             <ProfileHeader {...user} />
             <ProfileForm
               {...this.props}
-              save={this.save.bind(this)}
-              cancel={this.cancel.bind(this)} />
+              save={save.bind(this)}
+              cancel={cancel.bind(this)} />
           </div>
         </Content>
       </div>
     );
   }
 
-  save() {
-    const {
-      user,
-      updatePaypalEmail,
-      form,
-      validateProfile,
-      notify,
-      setEditMode,
-      fetchUser
-    } = this.props;
-
-    return validateProfile(form.attributes)
-    .then(({error}) => {
-      if (error && error.message) {
-        return notify('error', this.props.validationError);
-      } else {
-        return updatePaypalEmail(user.id, form.attributes.paypalEmail).then(errorify);
-      }
-    })
-    .then(() => fetchUser(user.id)) // refresh email after saving
-    .then(() => setEditMode(false))
-    .catch(({message}) => notify('error', message));
-  }
-
-  cancel() {
-    this.props.setEditMode(false);
-  }
-
   componentWillMount() {
     this.props.fetchUser(this.props.userid);
   }
 }
+
+/**
+ * Export methods for testing
+ */
+
+export function cancel() {
+  this.props.setEditMode(false);
+};
+
+export function save() {
+  const {
+    user,
+    updatePaypalEmail,
+    form,
+    validateProfile,
+    notify,
+    setEditMode,
+    fetchUser
+  } = this.props;
+
+  return validateProfile(form.attributes)
+  .then(({error}) => {
+    if (error && error.message) {
+      return notify('error', this.props.validationError);
+    } else {
+      return updatePaypalEmail(user.id, form.attributes.paypalEmail).then(errorify);
+    }
+  })
+  .then(() => fetchUser(user.id)) // refresh email after saving
+  .then(() => setEditMode(false))
+  .catch(({message}) => notify('error', message));
+};
 
 export default connect(mapStateToProps, {
   setEditMode,
