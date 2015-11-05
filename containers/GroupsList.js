@@ -62,7 +62,7 @@ class GroupsList extends Component {
   paypalReminder({getPreapprovalKeyForUser, inProgress, query, userid, showPaypalReminder}) {
     if (showPaypalReminder) {
       return <PaypalReminder
-        getApprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
+        getPreapprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
         inProgress={inProgress}
         approvalStatus={query.approvalStatus} />;
     }
