@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 class ProfileFormDefault extends Component {
   render() {
-    const { user, isEditMode } = this.props;
+    const { user, isEditMode, logoutAndRedirect } = this.props;
     const email = user.paypalEmail || user.email;
 
     return (
@@ -20,6 +20,14 @@ class ProfileFormDefault extends Component {
             Edit profile
           </div>
         </div>
+        <div className='ProfileForm-buttonContainer'>
+          <div
+            className='ProfileForm-logout'
+            onClick={logoutAndRedirect}>
+            Sign Out
+          </div>
+        </div>
+
       </div>
     );
   }

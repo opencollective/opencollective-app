@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { replaceState } from 'redux-router';
 import Content from './Content';
 import Header from '../components/Header';
 import ProfileHeader from '../components/ProfileHeader';
@@ -13,6 +14,7 @@ import updatePaypalEmail from '../actions/users/update_paypal_email';
 import fetchUser from '../actions/users/fetch_by_id';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
+import logout from '../actions/session/logout';
 import errorify from '../lib/errorify';
 
 // Use named export for unconnected component (for tests)
@@ -32,6 +34,7 @@ export class Profile extends Component {
             <ProfileHeader {...user} />
             <ProfileForm
               {...this.props}
+              logoutAndRedirect={logoutAndRedirect.bind(this)}
               save={save.bind(this)}
               cancel={cancel.bind(this)} />
           </div>
@@ -48,6 +51,11 @@ export class Profile extends Component {
 /**
  * Export methods for testing
  */
+
+export function logoutAndRedirect() {
+  this.props.logout();
+  this.props.replaceState(null, '/login');
+};
 
 export function cancel() {
   this.props.setEditMode(false);
@@ -84,7 +92,9 @@ export default connect(mapStateToProps, {
   validateProfile,
   resetNotifications,
   fetchUser,
-  notify
+  notify,
+  logout,
+  replaceState
 })(Profile);
 
 function mapStateToProps({session, form, notification, users}) {

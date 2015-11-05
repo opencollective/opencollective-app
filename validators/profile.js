@@ -7,7 +7,7 @@ import validate from '../lib/validate';
 
 const schema = Joi.object().keys({
   paypalEmail: Joi.string().email().required()
-    .label('Email'),
+    .label('PayPal account'),
 });
 
 export default (obj) => validate(obj, schema);

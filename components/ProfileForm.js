@@ -20,7 +20,8 @@ class ProfileForm extends Component {
     setEditMode,
     save,
     cancel,
-    appendProfileForm
+    appendProfileForm,
+    logoutAndRedirect
   }) {
     if (isEditMode) {
       return <ProfileFormEdit
@@ -33,6 +34,7 @@ class ProfileForm extends Component {
     } else {
       return <ProfileFormDefault
         user={user}
+        logoutAndRedirect={logoutAndRedirect}
         isEditMode={isEditMode}
         setEditMode={setEditMode} />
     }
