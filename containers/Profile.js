@@ -45,7 +45,8 @@ class Profile extends Component {
       form,
       validateProfile,
       notify,
-      setEditMode
+      setEditMode,
+      fetchUser
     } = this.props;
 
     return validateProfile(form.attributes)
@@ -56,6 +57,7 @@ class Profile extends Component {
         return updatePaypalEmail(user.id, form.attributes.paypalEmail).then(errorify);
       }
     })
+    .then(() => fetchUser(user.id)) // refresh email after saving
     .then(() => setEditMode(false))
     .catch(({message}) => notify('error', message));
   }

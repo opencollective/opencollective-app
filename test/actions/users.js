@@ -8,6 +8,7 @@ import getPreapprovalKeyForUser from '../../actions/users/get_preapproval_key';
 import confirmPreapprovalKey from '../../actions/users/confirm_preapproval_key';
 import fetchUserIfNeeded from '../../actions/users/fetch_by_id_cached';
 import fetchUserGroups from '../../actions/users/fetch_groups';
+import updatePaypalEmail from '../../actions/users/update_paypal_email';
 
 describe('users actions', () => {
 
@@ -181,6 +182,56 @@ describe('users actions', () => {
 
       const store = mockStore({}, expected, done, true);
       store.dispatch(fetchUserGroups(userid));
+    });
+  });
+
+  describe('update paypal email', () => {
+
+    it('creates UPDATE_PAYPAL_EMAIL_SUCCESS if it successfully updates email', (done) => {
+      const userid = 1;
+      const paypalEmail = 'paypal@email.com';
+      const response = {
+        id: userid,
+        paypalEmail
+      };
+
+      nock(env.API_ROOT)
+        .put(`/users/${userid}/paypalemail`, { paypalEmail })
+        .reply(200, response);
+
+      const expected = [
+        {
+          type: constants.UPDATE_PAYPAL_EMAIL_REQUEST,
+          userid,
+          paypalEmail
+        },
+        {
+          type: constants.UPDATE_PAYPAL_EMAIL_SUCCESS,
+          userid,
+          paypalEmail,
+          json: response
+        }
+      ];
+
+      const store = mockStore({}, expected, done);
+      store.dispatch(updatePaypalEmail(userid, paypalEmail));
+    });
+
+    it('creates UPDATE_PAYPAL_EMAIL_FAILURE if it fails', (done) => {
+      const userid = 1;
+      const paypalEmail = 'paypal@email.com';
+
+      nock(env.API_ROOT)
+        .put(`/users/${userid}/paypalemail`, { paypalEmail })
+        .replyWithError('Something went wrong!');
+
+      const expected = [
+        { type: constants.UPDATE_PAYPAL_EMAIL_REQUEST, userid, paypalEmail },
+        { type: constants.UPDATE_PAYPAL_EMAIL_FAILURE, error: {} }
+      ];
+
+      const store = mockStore({}, expected, done, true);
+      store.dispatch(updatePaypalEmail(userid, paypalEmail));
     });
   });
 

@@ -22,9 +22,10 @@ describe('validator transaction', () => {
 
     validate(transaction)
     .then(value => {
-      expect(value).toEqual(value);
+      expect(value).toEqual(transaction);
       done();
-    });
+    })
+    .catch(error => console.log('error', error));
   });
 
   it('should not validate a createdAt date in the future', (done) => {

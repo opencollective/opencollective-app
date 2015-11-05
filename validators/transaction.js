@@ -1,7 +1,6 @@
 import Joi from 'joi';
 import dates from '../lib/dates';
-
-export default validate;
+import validate from '../lib/validate';
 
 /**
  * New transaction schema
@@ -15,13 +14,10 @@ const schema = Joi.object().keys({
   amount: Joi.number().precision(2).greater(0).required()
     .label('Amount'),
   createdAt: Joi.date().max(dates().tomorrow).required()
+    .raw() // doesn't convert date into Date object
     .label('Date'),
   tags: Joi.array().items(Joi.string()).required()
     .label('Type'),
 });
 
-function validate(transaction) {
-  const { error, value } = Joi.validate(transaction, schema);
-
-  return error ? Promise.reject(error) : Promise.resolve(value);
-}
+export default (obj) => validate(obj, schema);
