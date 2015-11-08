@@ -1,5 +1,5 @@
 import expect from 'expect';
-import validate from '../../validators/profile';
+import validate from '../../src/validators/profile';
 
 describe('validator profile', () => {
   it('should reject the promise when the data is not valid', (done) => {

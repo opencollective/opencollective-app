@@ -1,5 +1,5 @@
 import expect from 'expect';
-import * as reducers from '../../reducers/index';
+import * as reducers from '../../src/reducers/index';
 
 describe('router reducer', () => {
 

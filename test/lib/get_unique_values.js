@@ -1,5 +1,5 @@
 import expect from 'expect';
-import getUniqueValues from '../../lib/get_unique_values';
+import getUniqueValues from '../../src/lib/get_unique_values';
 
 describe('getUniqueValues', () => {
 

@@ -1,5 +1,5 @@
 import expect from 'expect';
-import validate from '../../validators/login';
+import validate from '../../src/validators/login';
 
 describe('validator login', () => {
   it('should reject the promise when the data is not valid', (done) => {

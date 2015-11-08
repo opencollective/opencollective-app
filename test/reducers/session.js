@@ -1,8 +1,8 @@
 import expect from 'expect';
-import reducer from '../../reducers/session';
+import reducer from '../../src/reducers/session';
 import {
   DECODE_JWT_SUCCESS,
-} from '../../constants/session';
+} from '../../src/constants/session';
 
 describe('session reducer', () => {
 
