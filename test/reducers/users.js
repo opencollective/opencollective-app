@@ -1,6 +1,6 @@
 import expect from 'expect';
-import reducer from '../../reducers/users';
-import * as constants from '../../constants/users';
+import reducer from '../../src/reducers/users';
+import * as constants from '../../src/constants/users';
 
 describe('users reducer', () => {
 

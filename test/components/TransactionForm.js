@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import TransactionForm from '../../components/TransactionForm';
+import TransactionForm from '../../src/components/TransactionForm';
 
 const {expect} = chai;
 const {

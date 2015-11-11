@@ -3,7 +3,7 @@ import nock from 'nock';
 import jwt from 'jwt-simple';
 import sinon from 'sinon';
 
-import env from '../../lib/env';
+import env from '../../src/lib/env';
 import mockStore from '../helpers/mockStore';
 import {
   LOGIN_REQUEST,
@@ -13,10 +13,10 @@ import {
   DECODE_JWT_FAILURE,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE
-} from '../../constants/session';
-import login from '../../actions/session/login';
-import logout from '../../actions/session/logout';
-import decodeJWT from '../../actions/session/decode_jwt';
+} from '../../src/constants/session';
+import login from '../../src/actions/session/login';
+import logout from '../../src/actions/session/logout';
+import decodeJWT from '../../src/actions/session/decode_jwt';
 
 describe('session actions', () => {
   beforeEach(() => {

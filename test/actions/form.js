@@ -1,10 +1,10 @@
 import expect from 'expect';
-import resetTransactionForm from '../../actions/form/reset_transaction';
-import appendTransactionForm from '../../actions/form/append_transaction';
-import resetLoginForm from '../../actions/form/reset_login';
-import appendLoginForm from '../../actions/form/append_login';
-import setEditMode from '../../actions/form/set_edit_mode_profile';
-import * as constants from '../../constants/form';
+import resetTransactionForm from '../../src/actions/form/reset_transaction';
+import appendTransactionForm from '../../src/actions/form/append_transaction';
+import resetLoginForm from '../../src/actions/form/reset_login';
+import appendLoginForm from '../../src/actions/form/append_login';
+import setEditMode from '../../src/actions/form/set_edit_mode_profile';
+import * as constants from '../../src/constants/form';
 
 describe('form actions', () => {
 

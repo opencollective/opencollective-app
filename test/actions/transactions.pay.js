@@ -1,9 +1,9 @@
 import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
-import env from '../../lib/env';
-import * as constants from '../../constants/transactions';
-import payTransaction from '../../actions/transactions/pay';
+import env from '../../src/lib/env';
+import * as constants from '../../src/constants/transactions';
+import payTransaction from '../../src/actions/transactions/pay';
 
 describe('transactions pay actions', () => {
 

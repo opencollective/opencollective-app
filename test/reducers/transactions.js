@@ -1,6 +1,6 @@
 import expect from 'expect';
-import reducer from '../../reducers/transactions';
-import * as constants from '../../constants/transactions';
+import reducer from '../../src/reducers/transactions';
+import * as constants from '../../src/constants/transactions';
 
 describe('transactions reducer', () => {
 

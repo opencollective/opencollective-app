@@ -1,6 +1,6 @@
 import expect from 'expect';
-import reducer from '../../reducers/form';
-import * as constants from '../../constants/form';
+import reducer from '../../src/reducers/form';
+import * as constants from '../../src/constants/form';
 
 describe('form reducer', () => {
 

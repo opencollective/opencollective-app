@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { Profile, save, cancel } from '../../containers/Profile';
+import { Profile, save, cancel } from '../../src/containers/Profile';
 
 const {expect} = chai;
 const {

@@ -1,5 +1,5 @@
 import expect from 'expect';
-import isViewerOnly from '../../lib/is_viewer_only';
+import isViewerOnly from '../../src/lib/is_viewer_only';
 
 describe('isViewerOnly', () => {
 

@@ -1,10 +1,10 @@
-import App from './containers/App';
-import GroupsList from './containers/GroupsList';
-import GroupTransactions from './containers/GroupTransactions';
-import TransactionNew from './containers/TransactionNew';
-import TransactionDetail from './containers/TransactionDetail';
-import Login from './containers/Login';
-import Profile from './containers/Profile';
+import App from './src/containers/App';
+import GroupsList from './src/containers/GroupsList';
+import GroupTransactions from './src/containers/GroupTransactions';
+import TransactionNew from './src/containers/TransactionNew';
+import TransactionDetail from './src/containers/TransactionDetail';
+import Login from './src/containers/Login';
+import Profile from './src/containers/Profile';
 
 const routes = {
   component: App,

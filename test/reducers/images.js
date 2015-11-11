@@ -1,6 +1,6 @@
 import expect from 'expect';
-import reducer from '../../reducers/images';
-import * as constants from '../../constants/images';
+import reducer from '../../src/reducers/images';
+import * as constants from '../../src/constants/images';
 
 describe('images reducer', () => {
 

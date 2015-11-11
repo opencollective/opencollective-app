@@ -1,5 +1,5 @@
 import expect from 'expect';
-import errorDetail from '../../lib/error_detail';
+import errorDetail from '../../src/lib/error_detail';
 
 describe('errorDetail', () => {
 

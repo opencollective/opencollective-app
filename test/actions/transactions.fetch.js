@@ -1,10 +1,10 @@
 import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
-import env from '../../lib/env';
-import * as constants from '../../constants/transactions';
-import fetchById from '../../actions/transactions/fetch_by_id';
-import fetchByGroup from '../../actions/transactions/fetch_by_group';
+import env from '../../src/lib/env';
+import * as constants from '../../src/constants/transactions';
+import fetchById from '../../src/actions/transactions/fetch_by_id';
+import fetchByGroup from '../../src/actions/transactions/fetch_by_group';
 
 describe('transactions actions', () => {
 
