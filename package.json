@@ -1,7 +1,8 @@
 {
   "name": "open-collective-mobile-app",
   "engines": {
-    "npm": "2.11.2"
+    "npm": "3.3.6",
+    "node": ">= 4.0.0"
   },
   "browserify": {
     "transform": [
