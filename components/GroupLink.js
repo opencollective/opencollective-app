@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import Currency from './Currency';
 import Icon from './Icon';
 
-const GroupLink = ({id, name, budget}) => {
+const GroupLink = ({id, name, balance}) => {
   const url = `/groups/${id}/transactions/`;
 
   return (
@@ -14,7 +14,7 @@ const GroupLink = ({id, name, budget}) => {
             {name}
           </span>
           <span className='Well-right'>
-            <Currency value={budget} /> <Icon type='right' />
+            <Currency value={balance} /> <Icon type='right' />
           </span>
         </div>
       </Link>
@@ -24,7 +24,7 @@ const GroupLink = ({id, name, budget}) => {
 
 GroupLink.propTypes = {
   id: PropTypes.number.isRequired,
-  budget: PropTypes.number.isRequired,
+  balance: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired
 };
 
