@@ -1,0 +1,6 @@
+.Select {
+  line-height: 48px;
+  background-color: var(--light-gray);
+  border: none;
+  padding-left: var(--spacing);
+}

@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import React from 'react';
 import BackButton from './BackButton';
 
 const Header = ({hasBackButton, title}) => {

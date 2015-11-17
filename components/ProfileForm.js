@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 import ProfileFormDefault from './ProfileFormDefault';
 import ProfileFormEdit from './ProfileFormEdit';
@@ -24,19 +24,23 @@ class ProfileForm extends Component {
     logoutAndRedirect
   }) {
     if (isEditMode) {
-      return <ProfileFormEdit
-        user={user}
-        form={form}
-        append={appendProfileForm}
-        saveInProgress={saveInProgress}
-        cancel={cancel}
-        save={save} />;
+      return (
+        <ProfileFormEdit
+          user={user}
+          form={form}
+          append={appendProfileForm}
+          saveInProgress={saveInProgress}
+          cancel={cancel}
+          save={save} />
+      );
     } else {
-      return <ProfileFormDefault
-        user={user}
-        logoutAndRedirect={logoutAndRedirect}
-        isEditMode={isEditMode}
-        setEditMode={setEditMode} />
+      return (
+        <ProfileFormDefault
+          user={user}
+          logoutAndRedirect={logoutAndRedirect}
+          isEditMode={isEditMode}
+          setEditMode={setEditMode} />
+      );
     }
   }
 }

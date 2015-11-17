@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 class ProfileFormDefault extends Component {
   render() {
-    const { user, isEditMode, logoutAndRedirect } = this.props;
+    const { user, logoutAndRedirect } = this.props;
     const email = user.paypalEmail || user.email;
 
     return (

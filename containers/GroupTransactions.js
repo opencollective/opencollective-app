@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import values from 'lodash/object/values';
 import filter from 'lodash/collection/filter';
 import sortByDate from '../lib/sort_by_date';
@@ -19,7 +18,7 @@ import EmptyList from '../components/EmptyList';
 
 class GroupTransactions extends Component {
   render() {
-    const { group, groupid, transactions, users, isLoading } = this.props;
+    const { group, groupid, isLoading } = this.props;
     return (
       <div className='GroupTransactions'>
         <Header
@@ -39,9 +38,7 @@ class GroupTransactions extends Component {
 
   list({transactions, users}) {
     if (transactions.length > 0) {
-      return <TransactionList
-        transactions={transactions}
-        users={users} />
+      return <TransactionList transactions={transactions} users={users} />
     } else {
       return <EmptyList />;
     }

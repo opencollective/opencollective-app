@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 const Avatar = ({url, size}) => {
   const style = {
@@ -9,10 +9,12 @@ const Avatar = ({url, size}) => {
   if (url) {
     return <img src={url} className='Avatar' style={style} />;
   } else {
-    return <img
+    return (
+      <img
       src='/images/default_avatar.svg'
       className='Avatar'
-      style={style} />;
+      style={style} />
+    );
   }
 
 }

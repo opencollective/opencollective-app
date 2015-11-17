@@ -1,0 +1,8 @@
+.DonationPicker-amount {
+  width: 25%;
+  display: inline-block;
+}
+
+.DonationPicker-amount--selected {
+  color: var(--green);
+}

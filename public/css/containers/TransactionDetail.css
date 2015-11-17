@@ -34,7 +34,7 @@
   padding-top: var(--spacing);
 }
 
-.TransactionDetail-category .SelectTag {
+.TransactionDetail-category .Select {
   margin-top: calc(var(--spacing) / 2);
   display: block;
   width: 100%;

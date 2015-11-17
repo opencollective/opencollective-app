@@ -2,23 +2,9 @@ import { combineReducers } from 'redux';
 import merge from 'lodash/object/merge';
 import omit from 'lodash/object/omit';
 
-import dates from '../lib/dates';
 import errorDetail from '../lib/error_detail';
 import tags from '../ui/tags';
-import {
-  RESET_TRANSACTION_FORM,
-  APPEND_TRANSACTION_FORM,
-  RESET_LOGIN_FORM,
-  APPEND_LOGIN_FORM,
-  VALIDATE_TRANSACTION_FAILURE,
-  VALIDATE_LOGIN_FAILURE,
-  VALIDATE_TRANSACTION_REQUEST,
-  VALIDATE_LOGIN_REQUEST,
-  VALIDATE_PROFILE_REQUEST,
-  VALIDATE_PROFILE_FAILURE,
-  SET_EDIT_MODE_PROFILE,
-  APPEND_PROFILE_FORM
-} from '../constants/form';
+import * as constants from '../constants/form';
 
 /**
  * New transaction form reducer
@@ -37,13 +23,13 @@ const transactionInitialState = {
 
 function transaction(state=transactionInitialState, action={}) {
   switch (action.type) {
-    case RESET_TRANSACTION_FORM:
+    case constants.RESET_TRANSACTION_FORM:
       return merge({}, transactionInitialState);
 
-    case APPEND_TRANSACTION_FORM:
+    case constants.APPEND_TRANSACTION_FORM:
       return merge({}, state, { attributes: action.attributes });
 
-    case VALIDATE_TRANSACTION_FAILURE:
+    case constants.VALIDATE_TRANSACTION_FAILURE:
       const { path, message } = errorDetail(action);
 
       return merge({}, state, {
@@ -53,7 +39,7 @@ function transaction(state=transactionInitialState, action={}) {
         }
       });
 
-    case VALIDATE_TRANSACTION_REQUEST:
+    case constants.VALIDATE_TRANSACTION_REQUEST:
       return merge({}, omit(state, 'error'), { error: {} });
 
     default:
@@ -72,16 +58,16 @@ const loginInitialState = {
 
 function login(state=loginInitialState, action={}) {
   switch (action.type) {
-    case RESET_LOGIN_FORM:
+    case constants.RESET_LOGIN_FORM:
       return merge({}, loginInitialState);
 
-    case APPEND_LOGIN_FORM:
+    case constants.APPEND_LOGIN_FORM:
       return merge({}, state, { attributes: action.attributes });
 
-    case VALIDATE_LOGIN_REQUEST:
+    case constants.VALIDATE_LOGIN_REQUEST:
       return merge({}, omit(state, 'error'), { error: {} });
 
-    case VALIDATE_LOGIN_FAILURE:
+    case constants.VALIDATE_LOGIN_FAILURE:
       const { message, path } = errorDetail(action);
 
       return merge({}, state, {
@@ -108,16 +94,16 @@ const profileInitialState = {
 
 function profile(state=profileInitialState, action={}) {
   switch (action.type) {
-    case SET_EDIT_MODE_PROFILE:
+    case constants.SET_EDIT_MODE_PROFILE:
       return merge({}, state, { isEditMode: action.isEditMode });
 
-    case APPEND_PROFILE_FORM:
+    case constants.APPEND_PROFILE_FORM:
       return merge({}, state, { attributes: action.attributes });
 
-    case VALIDATE_PROFILE_REQUEST:
+    case constants.VALIDATE_PROFILE_REQUEST:
       return merge({}, omit(state, 'error'), { error: {} });
 
-    case VALIDATE_PROFILE_FAILURE:
+    case constants.VALIDATE_PROFILE_FAILURE:
       const { path, message } = errorDetail(action);
 
       return merge({}, state, {
@@ -131,8 +117,26 @@ function profile(state=profileInitialState, action={}) {
   }
 }
 
+/**
+ * Donation form
+ */
+
+function donation(state={
+  isCustomMode: false
+}, action={}) {
+  switch(action.type) {
+    case constants.SET_DONATION_AMOUNT:
+      return merge({}, state, { amount: action.amount });
+    case constants.SET_DONATION_CUSTOM:
+      return merge({}, state, { isCustomMode: action.isCustomMode, amount: -1 });
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   transaction,
   login,
-  profile
+  profile,
+  donation
 });

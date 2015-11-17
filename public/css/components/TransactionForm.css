@@ -35,6 +35,9 @@
   margin-top: calc(var(--spacing)/2);
 }
 
+.TransactionForm-form .Select {
+  width: calc(60% + calc(var(--spacing)*2)); /* input padding */
+}
 
 @keyframes loadingAnimation {
   0%   { opacity:1; }

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
@@ -9,8 +9,7 @@ class ProfileFormEdit extends Component {
       form,
       save,
       saveInProgress,
-      cancel,
-      cancelInProgress
+      cancel
     } = this.props;
 
     return (

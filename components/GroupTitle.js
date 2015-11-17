@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import Currency from './Currency';
 
 export default ({group}) => {

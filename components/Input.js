@@ -1,60 +1,47 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
-class Input extends Component {
-  propTypes: {
-    labelText: React.PropTypes.string.isRequired,
-    handleChange: React.PropTypes.func.isRequired,
-    type: React.PropTypes.string,
-    value: React.PropTypes.string,
-    max: React.PropTypes.string,
-    hasError: React.PropTypes.bool
-  }
+const Input = ({
+  labelText,
+  type,
+  hasError,
+  placeholder,
+  max,
+  handleChange,
+  customClass
+}) => {
+  const className = classnames({
+    Input: true,
+    'Input--error': hasError,
+    [customClass]: !!customClass
+  });
 
-  defaultProps: {
-    type: 'text',
-    hasError: false,
-    value: ''
-  }
+  return (
+    <div className={className}>
+      {labelText ? <label className='Label'>{labelText}:</label> : null}
+      <input
+        className='Field'
+        type={type}
+        max={max}
+        placeholder={placeholder || labelText}
+        onChange={(e) => handleChange(e.target.value) } />
+    </div>
+  );
+};
 
-  render() {
-    const { labelText, type, hasError, placeholder, value, max } = this.props;
-    const className = classnames({
-      Input: true,
-      'Input--error': hasError
-    });
+Input.propTypes = {
+  labelText: PropTypes.string,
+  handleChange: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  max: PropTypes.string,
+  hasError: PropTypes.bool,
+  placeholder: PropTypes.string
+};
 
-    return (
-      <div className={className}>
-        {this.label(labelText)}
-        <input
-          className='Field'
-          type={type}
-          ref='input'
-          value={value}
-          max={max}
-          placeholder={placeholder || labelText}
-          onChange={this.handleChange.bind(this)} />
-      </div>
-    );
-  }
-
-  label(labelText) {
-    if (labelText) {
-      return <label className='Label'>
-          {labelText}:
-        </label>;
-    } else {
-      return null;
-    }
-  }
-
-  handleChange() {
-    const { handleChange } = this.props;
-    const value = ReactDOM.findDOMNode(this.refs.input).value;
-    handleChange(value);
-  }
-}
+Input.defaultProps = {
+  type: 'text',
+  hasError: false,
+  value: ''
+};
 
 export default Input;

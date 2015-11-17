@@ -1,11 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 
 import ImageUpload from './ImageUpload';
 import Input from './Input';
 import SelectTag from './SelectTag';
-import Icon from './Icon';
 import Notification from './Notification';
 import SubmitButton from './SubmitButton';
 import DatePicker from './DatePicker';
@@ -16,7 +15,6 @@ class TransactionForm extends Component {
     const {
       transaction,
       tags,
-      isUploading,
       notification,
       resetNotifications
     } = this.props;
@@ -76,7 +74,6 @@ class TransactionForm extends Component {
     const {
       groupid,
       transaction,
-      pushState,
       notify,
       handleSubmit
     } = this.props;

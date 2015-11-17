@@ -1,0 +1,18 @@
+.DonationForm-header {
+  text-align: center;
+}
+
+.DonationForm-name {
+  font-weight: bold;
+  padding-bottom: calc(var(--spacing) / 2);
+}
+
+.DonationForm-description {
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
+.DonationForm-title {
+  border-bottom: 1px solid var(--gray);
+  padding-bottom: calc(var(--spacing) / 2);
+  margin-bottom: var(--spacing);
+}

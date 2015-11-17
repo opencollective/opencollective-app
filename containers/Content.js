@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
+import React from 'react';
+import classnames from 'classnames';
 
 export default ({isLoading, children}) => {
-  const contentClassNames = classNames({
+  const className = classnames({
     'Content': true,
     'Content--isLoading': isLoading
   });
 
   return (
-    <div className={contentClassNames}>
+    <div className={className}>
       {
         isLoading ?
         <div className='Content-loadingIcon'></div> :

@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import moment from 'moment';
 
 class DatePicker extends Component {
   render() {
-    const { selected, handleChange, maxDate } = this.props;
+    const { selected, maxDate } = this.props;
 
     return (
       <span className='DatePicker'>
