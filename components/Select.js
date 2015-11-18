@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
 const Select = ({options=[], value, handleChange, customClass}) => {
@@ -8,15 +8,23 @@ const Select = ({options=[], value, handleChange, customClass}) => {
   });
 
   return (
-    <select
-      className={className}
-      value={value}
-      onChange={(event) => handleChange(event.target.value)} >
-      {options.map(value => {
-        return <option value={value} key={value}>{value}</option>
-      })}
-    </select>
+    <div className='SelectContainer'>
+      <select
+        className={className}
+        value={value}
+        onChange={(event) => handleChange(event.target.value)} >
+        {options.map(value => {
+          return <option value={value} key={value}>{value}</option>
+        })}
+      </select>
+    </div>
   );
-}
+};
+
+Select.propTypes = {
+  options: PropTypes.array.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
+};
 
 export default Select;

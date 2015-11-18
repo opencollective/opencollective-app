@@ -34,7 +34,7 @@
   padding-top: var(--spacing);
 }
 
-.TransactionDetail-category .Select {
+.TransactionDetail-category .SelectContainer {
   margin-top: calc(var(--spacing) / 2);
   display: block;
   width: 100%;

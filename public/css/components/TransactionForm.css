@@ -35,7 +35,7 @@
   margin-top: calc(var(--spacing)/2);
 }
 
-.TransactionForm-form .Select {
+.TransactionForm-form .SelectContainer {
   width: calc(60% + calc(var(--spacing)*2)); /* input padding */
 }
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
-export default ({inProgress, onClick, customClass, children}) => {
+export default ({inProgress, onClick, customClass, children, color}) => {
   const noop = () => {};
   const btnClass = classNames({
     'Button': true,
-    [customClass]: true,
+    [customClass]: !!customClass,
+    [`Button--${color}`]: !!color,
     'Button--inProgress': inProgress
   });
 

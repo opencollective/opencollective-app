@@ -12,7 +12,29 @@
 }
 
 .DonationForm-title {
+  font-weight: bold;
   border-bottom: 1px solid var(--gray);
   padding-bottom: calc(var(--spacing) / 2);
   margin-bottom: var(--spacing);
+}
+
+.DonationForm-subtitle {
+  font-weight: bold;
+  margin-top: var(--spacing);
+  margin-bottom: calc(var(--spacing) / 2);
+
+}
+
+.DonationForm-select,
+.DonationForm .SelectContainer {
+  width: 100%;
+}
+
+.DonationForm-buttonContainer {
+  text-align: center;
+  margin-top: var(--spacing);
+}
+
+.DonationForm-button {
+  display: inline-block;
 }

@@ -43,10 +43,8 @@ function handleClick({value, setDonationCustom, setDonationAmount}) {
 }
 
 function className(selected, value, isCustomMode) {
-  const same = selected === value;
-  console.log('call', selected, value, isCustomMode);
   return classnames({
     'DonationPicker-amount': true,
-    'DonationPicker-amount--selected': same || (same && isCustomMode)
+    'DonationPicker-amount--selected': (selected === value) || (value === 'custom' && isCustomMode)
   });
 }

@@ -11,6 +11,7 @@ import setDonationAmount from '../actions/form/set_donation_amount';
 import setDonationCustom from '../actions/form/set_donation_custom';
 import resetNotifications from '../actions/notification/reset';
 import fetchGroup from '../actions/groups/fetch_by_id';
+import fetchUser from '../actions/users/fetch_by_id';
 
 export class Donation extends Component {
   render() {
@@ -29,6 +30,7 @@ export class Donation extends Component {
 
   componentWillMount() {
     this.props.fetchGroup(this.props.groupid);
+    this.props.fetchUser(this.props.userid);
   }
 
   notification({notification, resetNotifications}) {
@@ -44,16 +46,20 @@ export default connect(mapStateToProps, {
   resetNotifications,
   fetchGroup,
   setDonationAmount,
-  setDonationCustom
+  setDonationCustom,
+  fetchUser
 })(Donation);
 
-function mapStateToProps({router, groups, form}) {
+function mapStateToProps({router, groups, form, session, users}) {
   const groupid = router.params.groupid;
+  const userid = session.user.id;
 
   return {
     groupid,
     group: groups[groupid] || {},
     amount: form.donation.amount,
-    isCustomMode: form.donation.isCustomMode
+    isCustomMode: form.donation.isCustomMode,
+    userid,
+    user: users[userid] || {}
   };
 }
