@@ -10,6 +10,11 @@ const Footer = ({groupid}) => {
           <Icon type='add' />
         </Link>
       </div>
+      <div className='Footer-left'>
+        <Link to='profile'>
+          <div className='Footer-userIcon'></div>
+        </Link>
+      </div>
     </div>
   );
 }

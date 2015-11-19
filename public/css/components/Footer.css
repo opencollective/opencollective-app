@@ -14,12 +14,14 @@
 }
 
 .Footer-addButton {
-  position: relative;
+  position: absolute;
   z-index: 20;
   height: 79px;
   width: 75px;
   margin: 0 auto;
   top: -4px;
+  left: 0;
+  right: 0;
   text-align: center;
   background-color: var(--light-blue);
 }
@@ -34,4 +36,18 @@
   top: 24px;
   font-size: 2rem;
   color: white;
+}
+
+.Footer-left {
+  float: left;
+}
+
+.Footer-userIcon {
+  background: url(/images/user.svg) no-repeat top left;
+  background-size: contain;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: calc(50% - 15px); /* half of the logo height */
+  left: 20px;
 }
