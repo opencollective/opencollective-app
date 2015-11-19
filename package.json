@@ -22,6 +22,7 @@
     "build:css": "cssnext public/css/main.css public/build.css",
     "watch:css": "cssnext --watch public/css/main.css public/build.css -v",
     "watch:js": "NODE_ENV=development watchify main.js -o public/bundle.js -dv",
+    "watch:test": "NODE_ENV=test mocha --compilers js:babel/register --recursive --timeout 5000 --watch",
     "postinstall": "npm run build"
   },
   "dependencies": {

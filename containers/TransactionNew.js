@@ -9,11 +9,13 @@ import validateTransaction from '../actions/form/validate_transaction';
 import uploadImage from '../actions/images/upload';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
+
 import Content from './Content';
+
 import TransactionForm from '../components/TransactionForm';
 import Header from '../components/Header';
 
-class TransactionNew extends Component {
+export class TransactionNew extends Component {
   render() {
     return (
       <div>
@@ -30,23 +32,28 @@ class TransactionNew extends Component {
   handleSubmit(transaction) {
     const { notify, groupid, pushState } = this.props;
 
-    this.createTransaction(transaction)
+    return createExpense.call(this, transaction)
     .then(() => pushState(null, `/groups/${groupid}/transactions`))
     .catch(error => notify('error', error.message));
   }
+};
 
-  createTransaction(transaction) {
-    const {
-      groupid,
-      createTransaction
-    } = this.props;
+/**
+ * Export methods for testing
+ */
 
-    return createTransaction(groupid, transaction)
-    .then(() => {
-      const error = this.props.requestError;
-      return error ? Promise.reject(error) : Promise.resolve(transaction);
-    });
-  }
+export function createExpense(transaction) {
+  const {
+    groupid,
+    createTransaction
+  } = this.props;
+
+  // An expense is a negative transaction in the backend
+  return createTransaction(groupid, {...transaction, amount: -transaction.amount })
+  .then(() => {
+    const error = this.props.requestError;
+    return error ? Promise.reject(error) : Promise.resolve(transaction);
+  });
 }
 
 export default connect(mapStateToProps, {
@@ -68,6 +75,6 @@ function mapStateToProps(state) {
     validationError: state.form.transaction.error.message,
     requestError: state.transactions.error,
     notification: state.notification,
-    isUploading: state.images.isUploading
+    isUploading: state.images.isUploading || false
   };
 }

@@ -10,7 +10,8 @@ const DonationForm = ({
   amount,
   isCustomMode,
   setDonationCustom,
-  user
+  user,
+  donate
 }) => {
   const options = [`Paypal (${user.paypalEmail})`];
 
@@ -35,7 +36,10 @@ const DonationForm = ({
         customClass='DonationForm-select' />
 
       <div className='DonationForm-buttonContainer'>
-        <AsyncButton color='green' customClass='DonationForm-button'>
+        <AsyncButton
+          color='green'
+          customClass='DonationForm-button'
+          onClick={donate}>
           Donate
         </AsyncButton>
       </div>
