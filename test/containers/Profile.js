@@ -21,7 +21,7 @@ describe('Profile container', () => {
 
   it('should fetch user data on mount', () => {
       const handler = chai.spy(() => {});
-      const element = createElement({
+      createElement({
         fetchUser: handler,
         resetNotifications: () => {},
         userid: 1,
@@ -32,7 +32,7 @@ describe('Profile container', () => {
 
   it('should fetch reset notifications on mount', () => {
       const handler = chai.spy(() => {});
-      const element = createElement({
+      createElement({
         fetchUser: () => {},
         resetNotifications: handler,
         userid: 1,

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
+import rejectError from '../lib/reject_error';
+
 import payTransaction from '../actions/transactions/pay';
 import approveTransaction from '../actions/transactions/approve';
 import rejectTransaction from '../actions/transactions/reject';
@@ -22,7 +24,6 @@ import TransactionDetailApproval from '../components/TransactionDetailApproval';
 import Notification from '../components/Notification';
 
 import isAdmin from '../lib/is_admin';
-import errorify from '../lib/errorify';
 
 class TransactionDetail extends Component {
   render() {
@@ -108,9 +109,9 @@ class TransactionDetail extends Component {
     } = this.props;
 
     approveTransaction(group.id, transaction.id)
-    .then(errorify)
+    .then(rejectError)
     .then(() => payTransaction(group.id, transaction.id))
-    .then(errorify)
+    .then(rejectError)
     .then(() => this.nextPage())
     .catch(({message}) => notify('error', message));
   }
@@ -119,7 +120,7 @@ class TransactionDetail extends Component {
     const { group, transaction, rejectTransaction } = this.props;
 
     rejectTransaction(group.id, transaction.id)
-    .then(errorify)
+    .then(rejectError)
     .then(() => this.nextPage())
   }
 

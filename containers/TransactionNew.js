@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
+import rejectError from '../lib/reject_error';
+
 import createTransaction from '../actions/transactions/create';
 import resetTransactionForm from '../actions/form/reset_transaction';
 import appendTransactionForm from '../actions/form/append_transaction';
@@ -50,10 +52,7 @@ export function createExpense(transaction) {
 
   // An expense is a negative transaction in the backend
   return createTransaction(groupid, {...transaction, amount: -transaction.amount })
-  .then(() => {
-    const error = this.props.requestError;
-    return error ? Promise.reject(error) : Promise.resolve(transaction);
-  });
+  .then(rejectError.bind(this, 'requestError'));
 }
 
 export default connect(mapStateToProps, {
@@ -67,14 +66,16 @@ export default connect(mapStateToProps, {
   resetNotifications
 })(TransactionNew);
 
-function mapStateToProps(state) {
+function mapStateToProps({router, form, transactions, notification, images}) {
+  const transaction = form.transaction;
+
   return {
-    groupid: state.router.params.groupid,
-    transaction: state.form.transaction,
-    tags: state.form.transaction.defaults.tags,
-    validationError: state.form.transaction.error.message,
-    requestError: state.transactions.error,
-    notification: state.notification,
-    isUploading: state.images.isUploading || false
+    groupid: router.params.groupid,
+    notification,
+    transaction,
+    tags: transaction.defaults.tags,
+    isUploading: images.isUploading || false,
+    validationError: form.transaction.error.message,
+    requestError: transactions.error
   };
 }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
+import rejectError from '../lib/reject_error';
+
 import Content from './Content';
 
 import Header from '../components/Header';
@@ -69,21 +71,11 @@ export function donate() {
   };
 
   return validateTransaction(transaction)
-  .then(rejectValidationError.bind(this))
+  .then(rejectError.bind(this, 'validationError'))
   .then(() => createTransaction(groupid, transaction))
-  .then(rejectServerError.bind(this))
+  .then(rejectError.bind(this, 'serverError'))
   .then(() => pushState(null, `/groups/${groupid}/transactions`))
   .catch(error => notify('error', error.message));
-}
-
-function rejectServerError() {
-  const error = this.props.serverError; // server side error
-  return error && error.message ? Promise.reject(error) : Promise.resolve();
-}
-
-function rejectValidationError() {
-  const error = this.props.clientError; // validation error
-  return error && error.message ? Promise.reject(error) : Promise.resolve();
 }
 
 export default connect(mapStateToProps, {
@@ -104,16 +96,16 @@ function mapStateToProps({router, groups, form, session, users, transactions, no
 
   return {
     groupid,
-    group: groups[groupid] || {},
-    amount: form.donation.attributes.amount,
-    isCustomMode: form.donation.isCustomMode,
-    description: form.donation.attributes.description,
     userid,
     notification,
-    user: users[userid] || {},
     form,
     transactions,
-    serverError: transactions.error,
-    clientError: form.transaction.error
+    isCustomMode: form.donation.isCustomMode,
+    description: form.donation.attributes.description,
+    amount: form.donation.attributes.amount,
+    group: groups[groupid] || {},
+    user: users[userid] || {},
+    validationError: form.transaction.error,
+    serverError: transactions.error
   };
 }

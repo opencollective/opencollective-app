@@ -63,11 +63,12 @@ class GroupTransactions extends Component {
       fetchGroup,
       fetchTransactions,
       groupid,
-      fetchUserIfNeeded
+      fetchUserIfNeeded,
+      showPopOverMenu
     } = this.props;
 
+    showPopOverMenu(false);
     fetchGroup(groupid);
-
     fetchTransactions(groupid)
     .then(({transactions}) => {
       return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);

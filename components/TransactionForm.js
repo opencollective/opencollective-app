@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 
+import rejectError from '../lib/reject_error';
+
 import ImageUpload from './ImageUpload';
 import Input from './Input';
 import SelectTag from './SelectTag';
@@ -88,10 +90,7 @@ class TransactionForm extends Component {
 
   validate(attributes) {
     return this.props.validateTransaction(attributes)
-    .then(() => {
-      const error = this.props.validationError;
-      return error ? Promise.reject(error) : Promise.resolve(attributes);
-    });
+    .then(rejectError.bind(this, 'validationError'));
   }
 
   handleField(key, value) {

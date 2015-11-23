@@ -4,6 +4,7 @@ import appendTransactionForm from '../../actions/form/append_transaction';
 import resetLoginForm from '../../actions/form/reset_login';
 import appendLoginForm from '../../actions/form/append_login';
 import setEditMode from '../../actions/form/set_edit_mode_profile';
+import setDonationCustom from '../../actions/form/set_donation_custom';
 import * as constants from '../../constants/form';
 
 describe('form actions', () => {
@@ -63,6 +64,19 @@ describe('form actions', () => {
       type: constants.SET_EDIT_MODE_PROFILE,
       isEditMode: false
     });
+  });
+
+  describe('donation', function () {
+   it('should set isCustomMode variable', () => {
+    expect(setDonationCustom(true)).toEqual({
+      type: constants.SET_DONATION_CUSTOM,
+      isCustomMode: true
+    });
+    expect(setDonationCustom(false)).toEqual({
+      type: constants.SET_DONATION_CUSTOM,
+      isCustomMode: false
+    });
+  });
   });
 
 });

@@ -1,7 +1,9 @@
 import merge from 'lodash/object/merge';
 import * as constants from '../constants/users';
 
-export default function users(state={}, action={}) {
+export default function users(state={
+  updateInProgress: false
+}, action={}) {
   const { groups, transactions, userid, type } = action;
 
   switch (type) {
@@ -30,9 +32,11 @@ export default function users(state={}, action={}) {
       return merge({}, state, { updateInProgress: true });
 
     case constants.UPDATE_PAYPAL_EMAIL_SUCCESS:
-    case constants.UPDATE_PAYPAL_EMAIL_FAILURE:
       return merge({}, state, { updateInProgress: false });
 
+    case constants.UPDATE_PAYPAL_EMAIL_FAILURE:
+      const error = action.error;
+      return merge({}, state, { updateInProgress: false, error });
 
     default:
       return state;
