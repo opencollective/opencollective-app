@@ -10,7 +10,7 @@ import DonationForm from '../components/DonationForm';
 
 import validateTransaction from '../actions/form/validate_transaction';
 import createTransaction from '../actions/transactions/create';
-import setDonationAmount from '../actions/form/set_donation_amount';
+import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
 import resetNotifications from '../actions/notification/reset';
 import fetchGroup from '../actions/groups/fetch_by_id';
@@ -55,12 +55,13 @@ export function donate() {
     group,
     user,
     notify,
-    pushState
+    pushState,
+    description
   } = this.props;
 
   const transaction = {
     amount,
-    description: `Donation from ${user.email} to ${group.name}`,
+    description: description || `Donation from ${user.email} to ${group.name}`,
     tags: ['Donation'],
     approvedAt: Date.now(),
     approved: true,
@@ -88,13 +89,13 @@ function rejectValidationError() {
 export default connect(mapStateToProps, {
   resetNotifications,
   fetchGroup,
-  setDonationAmount,
   setDonationCustom,
   fetchUser,
   createTransaction,
   validateTransaction,
   notify,
-  pushState
+  pushState,
+  appendDonationForm
 })(Donation);
 
 function mapStateToProps({router, groups, form, session, users, transactions, notification}) {
@@ -104,8 +105,9 @@ function mapStateToProps({router, groups, form, session, users, transactions, no
   return {
     groupid,
     group: groups[groupid] || {},
-    amount: form.donation.amount,
+    amount: form.donation.attributes.amount,
     isCustomMode: form.donation.isCustomMode,
+    description: form.donation.attributes.description,
     userid,
     notification,
     user: users[userid] || {},

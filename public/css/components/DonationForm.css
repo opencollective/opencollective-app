@@ -22,7 +22,6 @@
   font-weight: bold;
   margin-top: var(--spacing);
   margin-bottom: calc(var(--spacing) / 2);
-
 }
 
 .DonationForm-select,
@@ -37,4 +36,9 @@
 
 .DonationForm-button {
   display: inline-block;
+}
+
+.DonationForm .Input--fullwidth .Field{
+  width: 100%;
+  box-sizing: border-box;
 }

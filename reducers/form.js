@@ -122,13 +122,19 @@ function profile(state=profileInitialState, action={}) {
  */
 
 function donation(state={
-  isCustomMode: false
+  isCustomMode: false,
+  attributes: {}
 }, action={}) {
   switch(action.type) {
-    case constants.SET_DONATION_AMOUNT:
-      return merge({}, state, { amount: action.amount });
+    case constants.APPEND_DONATION_FORM:
+      return merge({}, state, { attributes: action.attributes });
     case constants.SET_DONATION_CUSTOM:
-      return merge({}, state, { isCustomMode: action.isCustomMode, amount: -1 });
+      return merge({}, state, {
+        isCustomMode: action.isCustomMode,
+        attributes: {
+          amount: 0
+        }
+      });
     default:
       return state;
   }

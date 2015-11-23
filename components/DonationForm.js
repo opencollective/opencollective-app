@@ -1,19 +1,17 @@
 import React from 'react';
 
 import DonationPicker from './DonationPicker';
-import Select from './Select';
+import Input from './Input';
 import AsyncButton from './AsyncButton';
 
 const DonationForm = ({
   group,
-  setDonationAmount,
+  appendDonationForm,
   amount,
   isCustomMode,
   setDonationCustom,
-  user,
   donate
 }) => {
-  const options = [`Paypal (${user.paypalEmail})`];
 
   return (
      <div className='DonationForm'>
@@ -22,18 +20,17 @@ const DonationForm = ({
       <div className='DonationForm-title'>Make your donation</div>
 
       <DonationPicker
-        setDonationAmount={setDonationAmount}
+        setDonationAmount={(amount) => appendDonationForm({amount})}
         selected={amount}
         isCustomMode={isCustomMode}
         setDonationCustom={setDonationCustom} />
 
-      <div className='DonationForm-subtitle'>Your payment method</div>
+      <div className='DonationForm-subtitle'>Description</div>
 
-      <Select
-        options={options}
-        value={options[0]}
-        handleChange={handleMethod.bind(this)}
-        customClass='DonationForm-select' />
+      <Input
+        placeholder='Description'
+        customClass='Input--fullwidth'
+        handleChange={(description) => appendDonationForm({description})} />
 
       <div className='DonationForm-buttonContainer'>
         <AsyncButton
@@ -54,10 +51,6 @@ function header(group) {
       <div className='DonationForm-description'>{group.description}</div>
     </div>
   );
-}
-
-function handleMethod(value) {
-  console.log('value', value);
 }
 
 export default DonationForm;
