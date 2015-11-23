@@ -1,10 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
 
-export default ({isLoading, children}) => {
+export default ({isLoading, hasPopOverMenuOpen, children}) => {
   const className = classnames({
     'Content': true,
-    'Content--isLoading': isLoading
+    'Content--isLoading': isLoading,
+    'Content--hasPopOverMenuOpen': hasPopOverMenuOpen
   });
 
   return (

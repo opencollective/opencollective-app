@@ -45,6 +45,7 @@
 @import './components/Label.css';
 @import './components/Notification.css';
 @import './components/PaypalReminder.css';
+@import './components/PopOverMenu.css';
 @import './components/ProfileForm.css';
 @import './components/Select.css';
 @import './components/Transaction.css';
