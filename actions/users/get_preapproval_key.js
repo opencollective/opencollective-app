@@ -12,7 +12,6 @@ export default (userid, options={}) => {
   const params = {
     returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
     cancelUrl: callback + 'cancel',
-    endingDate: new Date('2020-01-01').toISOString(),
     maxTotalAmountOfAllPayments: options.maxTotalAmountOfAllPayments || 2000
   };
 
