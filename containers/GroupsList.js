@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import values from 'lodash/object/values';
-import extend from 'lodash/object/extend';
-import filter from 'lodash/collection/filter';
 
 import fetchUserGroupsAndTransactions from '../actions/users/fetch_groups_and_transactions';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
@@ -11,11 +9,9 @@ import confirmPreapprovalKey from '../actions/users/confirm_preapproval_key';
 import Content from './Content';
 import Header from '../components/Header';
 import Group from '../components/Group';
-import Footer from '../components/Footer';
 import PaypalReminder from '../components/PaypalReminder';
 import nestTransactionsInGroups from '../lib/nest_transactions_in_groups';
 import getUniqueValues from '../lib/get_unique_values';
-import isViewerOnly from '../lib/is_viewer_only';
 import isAdmin from '../lib/is_admin';
 
 class GroupsList extends Component {
@@ -28,10 +24,7 @@ class GroupsList extends Component {
         <Content isLoading={isLoading}>
           {this.paypalReminder(this.props)}
           {groups.map(group => {
-            return <Group
-              {...group}
-              users={users}
-              key={group.id} />
+            return <Group {...group} users={users} key={group.id} />
           })}
         </Content>
       </div>
@@ -61,10 +54,12 @@ class GroupsList extends Component {
 
   paypalReminder({getPreapprovalKeyForUser, inProgress, query, userid, showPaypalReminder}) {
     if (showPaypalReminder) {
-      return <PaypalReminder
-        getPreapprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
-        inProgress={inProgress}
-        approvalStatus={query.approvalStatus} />;
+      return (
+        <PaypalReminder
+          getPreapprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
+          inProgress={inProgress}
+          approvalStatus={query.approvalStatus} />
+      );
     }
   }
 }

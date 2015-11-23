@@ -7,7 +7,6 @@ import { Profile, save, cancel } from '../../containers/Profile';
 const {expect} = chai;
 const {
   findRenderedDOMComponentWithClass,
-  Simulate,
   renderIntoDocument
 } = TestUtils;
 

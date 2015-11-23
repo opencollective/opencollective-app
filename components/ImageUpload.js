@@ -1,16 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import Icon from './Icon';
 
 class ImageUpload extends Component {
-  propTypes: {
-    onFinished: PropTypes.func.isRequired,
-    uploadImage: PropTypes.func.isRequired,
-    isUploading: PropTypes.bool.isRequired,
-    url: PropTypes.string
-  }
-
   render() {
     const { url, isUploading } = this.props;
     const isUploaded = url && url.length > 0;
@@ -68,7 +60,7 @@ class ImageUpload extends Component {
     );
   }
 
-  handleChange(e) {
+  handleChange() {
     const { onFinished, uploadImage } = this.props;
     const file = ReactDOM.findDOMNode(this.refs.file).files[0];
 
@@ -86,5 +78,12 @@ class ImageUpload extends Component {
   }
 
 }
+
+ImageUpload.propTypes = {
+  onFinished: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired,
+  isUploading: PropTypes.bool.isRequired,
+  url: PropTypes.string
+};
 
 export default ImageUpload;

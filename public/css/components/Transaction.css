@@ -10,6 +10,12 @@
   color: var(--dark-gray);
 }
 
+/* Disable links when overlay */
+.Content.Content--hasPopOverMenuOpen .Transaction > a {
+  pointer-events: none;
+  cursor: default;
+}
+
 .Transaction-description {
   text-transform: uppercase;
   color: var(--dark-gray);

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import GroupLink from './GroupLink';
 import TransactionsList from './TransactionsList';
 

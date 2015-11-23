@@ -28,15 +28,21 @@
 }
 
 .Button--approve,
-.Button--save {
+.Button--save,
+.Button--green,
+.Button--add {
   background-color: var(--green);
   margin-right: calc(var(--spacing)/2);
 }
 
 .Button--approve:hover,
 .Button--save:hover,
+.Button--add:hover,
+.Button--green:hover,
 .Button--approve:active,
-.Button--save:active {
+.Button--save:active,
+.Button--add:active,
+.Button--green:active {
   background-color: var(--dark-green);
 }
 

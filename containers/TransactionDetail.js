@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
+
 import payTransaction from '../actions/transactions/pay';
 import approveTransaction from '../actions/transactions/approve';
 import rejectTransaction from '../actions/transactions/reject';
@@ -10,13 +11,16 @@ import resetNotifications from '../actions/notification/reset';
 import fetchUserGroups from '../actions/users/fetch_groups';
 import appendTransactionForm from '../actions/form/append_transaction';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
+
 import Content from './Content';
+
 import Header from '../components/Header';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
 import TransactionDetailApproval from '../components/TransactionDetailApproval';
 import Notification from '../components/Notification';
+
 import isAdmin from '../lib/is_admin';
 import errorify from '../lib/errorify';
 
@@ -71,10 +75,12 @@ class TransactionDetail extends Component {
 
   approvalButtons({showApprovalButtons}) {
     if (showApprovalButtons) {
-      return <TransactionDetailApproval
+      return (
+        <TransactionDetailApproval
         {...this.props}
         approveTransaction={this.approveTransaction.bind(this)}
         rejectTransaction={this.rejectTransaction.bind(this)} />
+      );
     }
   }
 
