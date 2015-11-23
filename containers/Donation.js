@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
 
 import Content from './Content';
 
@@ -53,13 +54,16 @@ export function donate() {
     amount,
     group,
     user,
-    notify
+    notify,
+    pushState
   } = this.props;
 
   const transaction = {
     amount,
     description: `Donation from ${user.email} to ${group.name}`,
     tags: ['Donation'],
+    approvedAt: Date.now(),
+    approved: true,
     createdAt: Date.now()
   };
 
@@ -67,6 +71,7 @@ export function donate() {
   .then(rejectValidationError.bind(this))
   .then(() => createTransaction(groupid, transaction))
   .then(rejectServerError.bind(this))
+  .then(() => pushState(null, `/groups/${groupid}/transactions`))
   .catch(error => notify('error', error.message));
 }
 
@@ -76,7 +81,7 @@ function rejectServerError() {
 }
 
 function rejectValidationError() {
-  const error = this.props.clientError; // validation erro
+  const error = this.props.clientError; // validation error
   return error && error.message ? Promise.reject(error) : Promise.resolve();
 }
 
@@ -88,7 +93,8 @@ export default connect(mapStateToProps, {
   fetchUser,
   createTransaction,
   validateTransaction,
-  notify
+  notify,
+  pushState
 })(Donation);
 
 function mapStateToProps({router, groups, form, session, users, transactions, notification}) {

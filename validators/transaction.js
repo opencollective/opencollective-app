@@ -16,8 +16,12 @@ const schema = Joi.object().keys({
   createdAt: Joi.date().max(dates().tomorrow).required()
     .raw() // doesn't convert date into Date object
     .label('Date'),
+  approvedAt: Joi.date().max(dates().tomorrow)
+    .raw() // doesn't convert date into Date object
+    .label('Date'),
   tags: Joi.array().items(Joi.string()).required()
     .label('Type'),
+  approved: Joi.boolean(),
 });
 
 export default (obj) => validate(obj, schema);
