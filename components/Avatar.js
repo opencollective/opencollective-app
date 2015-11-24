@@ -16,7 +16,6 @@ const Avatar = ({url, size}) => {
       style={style} />
     );
   }
-
 }
 
 Avatar.propTypes = {

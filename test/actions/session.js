@@ -5,18 +5,12 @@ import sinon from 'sinon';
 
 import env from '../../lib/env';
 import mockStore from '../helpers/mockStore';
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  DECODE_JWT_SUCCESS,
-  DECODE_JWT_FAILURE,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILURE
-} from '../../constants/session';
+import * as constants from '../../constants/session';
+
 import login from '../../actions/session/login';
 import logout from '../../actions/session/logout';
 import decodeJWT from '../../actions/session/decode_jwt';
+import showPopOverMenu from '../../actions/session/show_popovermenu';
 
 describe('session actions', () => {
   beforeEach(() => {
@@ -39,9 +33,9 @@ describe('session actions', () => {
         .reply(200, response);
 
       const expected = [
-        { type: LOGIN_REQUEST, email },
-        { type: LOGIN_SUCCESS, json: response },
-        { type: DECODE_JWT_SUCCESS, info }
+        { type: constants.LOGIN_REQUEST, email },
+        { type: constants.LOGIN_SUCCESS, json: response },
+        { type: constants.DECODE_JWT_SUCCESS, info }
       ];
       const store = mockStore({}, expected, done);
       store.dispatch(login({email}));
@@ -56,8 +50,8 @@ describe('session actions', () => {
         .replyWithError('Wrong stuff');
 
         const expected = [
-          { type: LOGIN_REQUEST, email },
-          { type: LOGIN_FAILURE, error: {} }
+          { type: constants.LOGIN_REQUEST, email },
+          { type: constants.LOGIN_FAILURE, error: {} }
         ];
         const store = mockStore({}, expected, done);
         store.dispatch(login({email}));
@@ -72,7 +66,7 @@ describe('session actions', () => {
       localStorage.setItem('accessToken', accessToken);
 
       expect(decodeJWT()).toEqual({
-        type: DECODE_JWT_SUCCESS,
+        type: constants.DECODE_JWT_SUCCESS,
         info
       });
     });
@@ -81,7 +75,7 @@ describe('session actions', () => {
       localStorage.setItem('accessToken', 'lol');
 
       expect(decodeJWT()).toEqual({
-        type: DECODE_JWT_FAILURE,
+        type: constants.DECODE_JWT_FAILURE,
         redirectTo: '/login'
       });
     });
@@ -90,7 +84,7 @@ describe('session actions', () => {
       localStorage.setItem('accessToken', jwt.encode({ a: 'b'}, 'aaa'));
 
       expect(decodeJWT()).toEqual({
-        type: DECODE_JWT_FAILURE,
+        type: constants.DECODE_JWT_FAILURE,
         redirectTo: '/login'
       });
     });
@@ -105,7 +99,7 @@ describe('session actions', () => {
 
     it('returns LOGIN_SUCCESS after logout', () => {
       expect(logout()).toEqual({
-        type: LOGOUT_SUCCESS
+        type: constants.LOGOUT_SUCCESS
       });
     });
 
@@ -114,10 +108,24 @@ describe('session actions', () => {
       localStorage.setItem('accessToken', 'aaa');
 
       expect(logout()).toEqual({
-        type: LOGOUT_FAILURE
+        type: constants.LOGOUT_FAILURE
       });
 
       stub.restore();
+    });
+  });
+
+  describe('show popovermenu', () => {
+    it('should set the hasPopOverMenuOpen variable ', () => {
+      expect(showPopOverMenu(false)).toEqual({
+        type: constants.SHOW_POPOVERMENU,
+        hasPopOverMenuOpen: false
+      });
+
+      expect(showPopOverMenu(true)).toEqual({
+        type: constants.SHOW_POPOVERMENU,
+        hasPopOverMenuOpen: true
+      });
     });
   });
 

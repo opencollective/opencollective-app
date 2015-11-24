@@ -5,6 +5,7 @@ import resetLoginForm from '../../actions/form/reset_login';
 import appendLoginForm from '../../actions/form/append_login';
 import setEditMode from '../../actions/form/set_edit_mode_profile';
 import setDonationCustom from '../../actions/form/set_donation_custom';
+import appendDonation from '../../actions/form/append_donation';
 import * as constants from '../../constants/form';
 
 describe('form actions', () => {
@@ -67,16 +68,26 @@ describe('form actions', () => {
   });
 
   describe('donation', function () {
-   it('should set isCustomMode variable', () => {
-    expect(setDonationCustom(true)).toEqual({
-      type: constants.SET_DONATION_CUSTOM,
-      isCustomMode: true
+    it('should set isCustomMode variable', () => {
+      expect(setDonationCustom(true)).toEqual({
+        type: constants.SET_DONATION_CUSTOM,
+        isCustomMode: true
+      });
+      expect(setDonationCustom(false)).toEqual({
+        type: constants.SET_DONATION_CUSTOM,
+        isCustomMode: false
+      });
     });
-    expect(setDonationCustom(false)).toEqual({
-      type: constants.SET_DONATION_CUSTOM,
-      isCustomMode: false
+
+    it('should set append a field to the donation form', () => {
+      const attributes = { amount: 10 };
+
+      expect(appendDonation(attributes)).toEqual({
+        type: constants.APPEND_DONATION_FORM,
+        attributes
+      });
     });
-  });
+
   });
 
 });
