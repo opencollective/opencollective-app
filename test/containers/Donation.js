@@ -29,6 +29,7 @@ describe('Donation container', () => {
       fetchGroup,
       resetNotifications: () => {},
       group: {},
+      user: {}
     });
 
     expect(fetchUser).to.have.been.called();

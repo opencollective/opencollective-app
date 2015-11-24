@@ -42,3 +42,11 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.DonationForm-addNew {
+  float: right;
+  font-weight: normal;
+  font-variant: small-caps;
+  text-transform: uppercase;
+  color: var(--light-blue);
+}
