@@ -35,7 +35,7 @@ class Footer extends Component {
               hasPopOverMenuOpen={hasPopOverMenuOpen} />
         </div>
         <div className='Footer-left'>
-          <Link to='profile'>
+          <Link to='/profile'>
             <div className='Footer-userIcon'></div>
           </Link>
         </div>

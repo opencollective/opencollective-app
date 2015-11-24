@@ -32,12 +32,17 @@ class TransactionDetail extends Component {
       transaction,
       isLoading,
       notification,
-      resetNotifications
+      resetNotifications,
+      groupid
     } = this.props;
+
+    const backLink = `/groups/${groupid}/transactions/`;
 
     return (
       <div>
-        <Header title={group.name} hasBackButton={true} />
+        <Header
+          title={group.name}
+          backLink={backLink} />
         <Content isLoading={isLoading}>
           <Notification
             {...notification}
@@ -78,9 +83,9 @@ class TransactionDetail extends Component {
     if (showApprovalButtons) {
       return (
         <TransactionDetailApproval
-        {...this.props}
-        approveTransaction={this.approveTransaction.bind(this)}
-        rejectTransaction={this.rejectTransaction.bind(this)} />
+          {...this.props}
+          approveTransaction={approveAndPay.bind(this)}
+          rejectTransaction={reject.bind(this)} />
       );
     }
   }
@@ -99,30 +104,6 @@ class TransactionDetail extends Component {
     });
   }
 
-  approveTransaction() {
-    const {
-      group,
-      transaction,
-      approveTransaction,
-      payTransaction,
-      notify
-    } = this.props;
-
-    approveTransaction(group.id, transaction.id)
-    .then(rejectError)
-    .then(() => payTransaction(group.id, transaction.id))
-    .then(rejectError)
-    .then(() => this.nextPage())
-    .catch(({message}) => notify('error', message));
-  }
-
-  rejectTransaction() {
-    const { group, transaction, rejectTransaction } = this.props;
-
-    rejectTransaction(group.id, transaction.id)
-    .then(rejectError)
-    .then(() => this.nextPage())
-  }
 
   nextPage() {
     const { group, pushState } = this.props;
@@ -130,6 +111,32 @@ class TransactionDetail extends Component {
     pushState(null, `/groups/${group.id}/transactions`)
   }
 }
+
+
+export function approveAndPay() {
+  const {
+    group,
+    transaction,
+    approveTransaction,
+    payTransaction,
+    notify
+  } = this.props;
+
+  approveTransaction(group.id, transaction.id)
+  .then(rejectError)
+  .then(() => payTransaction(group.id, transaction.id))
+  .then(rejectError)
+  .then(() => this.nextPage())
+  .catch(({message}) => notify('error', message));
+};
+
+export function reject() {
+  const { group, transaction, rejectTransaction } = this.props;
+
+  rejectTransaction(group.id, transaction.id)
+  .then(rejectError)
+  .then(() => this.nextPage());
+};
 
 export default connect(mapStateToProps, {
   fetchTransaction,

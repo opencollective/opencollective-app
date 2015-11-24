@@ -21,9 +21,13 @@ import notify from '../actions/notification/notify';
 
 export class Donation extends Component {
   render() {
+    const backLink = `/groups/${this.props.groupid}/transactions/`;
+
     return (
       <div className='Donation'>
-        <Header title='Donate' hasBackButton={true} />
+        <Header
+          title='Add funds'
+          backLink={backLink} />
         <Content>
           {this.notification(this.props)}
           <div className='padded'>

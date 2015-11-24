@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import BackButton from './BackButton';
 
-const Header = ({hasBackButton, title}) => {
+const Header = ({hasBackButton, title, backLink}) => {
   return (
     <div className='Header'>
       <span className='Header-backButton'>
-        {hasBackButton ? <BackButton /> : undefined}
+        {hasBackButton || backLink ? <BackButton backLink={backLink}/> : null}
       </span>
       <div className='Header-title'>{title}</div>
     </div>
@@ -13,8 +13,9 @@ const Header = ({hasBackButton, title}) => {
 }
 
 Header.propTypes = {
-  hasBackButton: React.PropTypes.bool,
-  title: React.PropTypes.string.isRequired
+  hasBackButton: PropTypes.bool,
+  title: PropTypes.string.isRequired,
+  backLink: PropTypes.string
 };
 
 Header.defaultProps = {

@@ -7,7 +7,7 @@ import * as constants from '../../constants/users';
 
 export default (userid, options={}) => {
   const root = window.location.href;
-  const callback = `${root}?approvalStatus=`;
+  const callback = `${root}&approvalStatus=`;
 
   const params = {
     returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',

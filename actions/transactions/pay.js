@@ -36,6 +36,6 @@ function success(groupid, transactionid, json) {
 function failure(error) {
   return {
     type: constants.PAY_TRANSACTION_FAILURE,
-    error,
+    error
   };
 }

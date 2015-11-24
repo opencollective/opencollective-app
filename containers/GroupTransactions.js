@@ -32,7 +32,7 @@ class GroupTransactions extends Component {
       <div className='GroupTransactions'>
         <Header
           title={group.name}
-          hasBackButton={true} />
+          backLink='/' />
         <Content
           isLoading={isLoading}
           hasPopOverMenuOpen={hasPopOverMenuOpen} >

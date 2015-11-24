@@ -19,9 +19,13 @@ import Header from '../components/Header';
 
 export class TransactionNew extends Component {
   render() {
+    const backLink = `/groups/${this.props.groupid}/transactions/`;
+
     return (
       <div>
-        <Header title='Submit Expense' hasBackButton={true} />
+        <Header
+          title='Submit Expense'
+          backLink={backLink} />
         <Content>
           <TransactionForm
             {...this.props}
