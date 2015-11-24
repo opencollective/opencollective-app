@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import values from 'lodash/object/values';
+import any from 'lodash/collection/any';
 
 import fetchUserGroupsAndTransactions from '../actions/users/fetch_groups_and_transactions';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import getPreapprovalKeyForUser from '../actions/users/get_preapproval_key';
 import confirmPreapprovalKey from '../actions/users/confirm_preapproval_key';
+import fetchCards from '../actions/users/fetch_cards';
+
 import Content from './Content';
 import Header from '../components/Header';
 import Group from '../components/Group';
@@ -37,6 +40,7 @@ class GroupsList extends Component {
       userid,
       fetchUserIfNeeded,
       confirmPreapprovalKey,
+      fetchCards,
       query
     } = this.props;
 
@@ -45,7 +49,12 @@ class GroupsList extends Component {
       .then(({transactions}) => {
         return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
       });
+
+      fetchCards(userid, {
+        service: 'paypal'
+      });
     }
+
 
     if (query.preapprovalKey && query.approvalStatus === 'success') {
       confirmPreapprovalKey(userid, query.preapprovalKey);
@@ -68,7 +77,8 @@ export default connect(mapStateToProps, {
   fetchUserGroupsAndTransactions,
   fetchUserIfNeeded,
   getPreapprovalKeyForUser,
-  confirmPreapprovalKey
+  confirmPreapprovalKey,
+  fetchCards
 })(GroupsList);
 
 function mapStateToProps({users, session, router}) {
@@ -77,15 +87,17 @@ function mapStateToProps({users, session, router}) {
   const currentUser = users[userid] || {};
   const { groups, transactions } = currentUser;
   const query = router.location.query;
+  const userCards = values(currentUser.cards);
+  const hasConfirmedCards = any(userCards, (c) => !!c.confirmedAt);
 
   return {
     groups: nestTransactionsInGroups(groups, transactions),
     userid,
-    users: users,
+    users,
     transactions,
     inProgress: users.inProgress,
     query,
     isLoading: !groups,
-    showPaypalReminder: isAdmin(values(groups)) && query.paypalreminder
+    showPaypalReminder: isAdmin(values(groups)) && !hasConfirmedCards
   };
 }

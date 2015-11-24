@@ -4,13 +4,18 @@ import * as constants from '../constants/users';
 export default function users(state={
   updateInProgress: false
 }, action={}) {
-  const { groups, transactions, userid, type } = action;
+  const { groups, transactions, userid, type, cards } = action;
 
   switch (type) {
 
     case constants.USER_GROUPS_SUCCESS:
       return merge({}, state, {
         [userid]: { groups }
+      });
+
+    case constants.USER_CARDS_SUCCESS:
+      return merge({}, state, {
+        [userid]: { cards }
       });
 
     case constants.USER_TRANSACTIONS_SUCCESS:
