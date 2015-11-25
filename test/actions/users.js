@@ -8,6 +8,7 @@ import getPreapprovalKeyForUser from '../../actions/users/get_preapproval_key';
 import confirmPreapprovalKey from '../../actions/users/confirm_preapproval_key';
 import fetchUserIfNeeded from '../../actions/users/fetch_by_id_cached';
 import fetchUserGroups from '../../actions/users/fetch_groups';
+import fetchCards from '../../actions/users/fetch_cards';
 import updatePaypalEmail from '../../actions/users/update_paypal_email';
 
 describe('users actions', () => {
@@ -235,4 +236,46 @@ describe('users actions', () => {
     });
   });
 
+  describe('fetch user cards', () => {
+
+    it('creates USER_CARDS_SUCCESS if it successfully fetches cards', (done) => {
+      const userid = 1;
+      const reponse = [
+        { id: 2 },
+        { id: 3 }
+      ];
+      const cards = {
+        2: { id: 2 },
+        3: { id: 3 }
+      };
+
+      nock(env.API_ROOT)
+        .get(`/users/${userid}/cards`)
+        .reply(200, reponse);
+
+      const expected = [
+        { type: constants.USER_CARDS_REQUEST, userid },
+        { type: constants.USER_CARDS_SUCCESS, userid, cards }
+      ];
+
+      const store = mockStore({}, expected, done);
+      store.dispatch(fetchCards(userid));
+    });
+
+    it('creates USER_CARDS_FAILURE if it fails', (done) => {
+      const userid = 1;
+
+      nock(env.API_ROOT)
+        .get(`/users/${userid}/cards`)
+        .replyWithError('Something went wrong!');
+
+      const expected = [
+        { type: constants.USER_CARDS_REQUEST, userid },
+        { type: constants.USER_CARDS_FAILURE, error: {} }
+      ];
+
+      const store = mockStore({}, expected, done, true);
+      store.dispatch(fetchCards(userid));
+    });
+  });
 });
