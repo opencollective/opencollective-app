@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
+import StripeCheckout from 'react-stripe-checkout';
+
 import values from 'lodash/object/values';
 import filter from 'lodash/collection/filter';
-
-import rejectError from '../lib/reject_error';
-
-import Content from './Content';
 
 import PublicGroupHeader from '../components/PublicGroupHeader';
 import GroupTitle from '../components/GroupTitle';
@@ -16,14 +13,24 @@ import fetchTransactions from '../actions/transactions/fetch_by_group';
 
 export class PublicGroup extends Component {
   render() {
+    const { group } = this.props;
 
     return (
       <div className='PublicGroup'>
         <div className='padded'>
-          <PublicGroupHeader {...this.props.group} />
+          <PublicGroupHeader {...group} />
           <GroupTitle
-            group={this.props.group}
+            group={group}
             label='Available budget' />
+          <StripeCheckout
+            token={handleToken}
+            stripeKey='pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+            name={group.name}
+            description={group.description}>
+            <div className='Button'>
+              Donate
+            </div>
+          </StripeCheckout>
         </div>
       </div>
     );
@@ -41,19 +48,23 @@ export class PublicGroup extends Component {
   }
 }
 
+function handleToken(res) {
+  console.log('res', res);
+}
 
 export default connect(mapStateToProps, {
   fetchGroup,
   fetchTransactions
 })(PublicGroup);
 
-function mapStateToProps({router, groups, form, session, users, transactions, notification}) {
+function mapStateToProps({router, groups, transactions}) {
   const groupid = router.params.groupid;
-  const trans = values(transactions).filter({GroupId: groupid});
+  const transactionsArray = values(transactions);
 
 console.log('router', groupid, router);
   return {
     groupid,
+    transactions: filter(transactionsArray, {GroupId: Number(groupid)}),
     group: groups[groupid] || {}
   };
 }

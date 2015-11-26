@@ -6,7 +6,7 @@ import * as constants from '../../constants/transactions';
  * Fetch multiple transactions in a group
  */
 
-export default (groupid, options) => {
+export default (groupid, options={}) => {
   const params = options.per_page ? `?per_page=${options.per_page}` : '';
 
   return dispatch => {
