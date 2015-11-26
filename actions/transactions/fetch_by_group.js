@@ -6,10 +6,12 @@ import * as constants from '../../constants/transactions';
  * Fetch multiple transactions in a group
  */
 
-export default (groupid) => {
+export default (groupid, options) => {
+  const params = options.per_page ? `?per_page=${options.per_page}` : '';
+
   return dispatch => {
     dispatch(request(groupid));
-    return get(`groups/${groupid}/transactions`, {
+    return get(`groups/${groupid}/transactions${params}`, {
       schema: Schemas.TRANSACTION_ARRAY
     })
     .then(json => dispatch(success(groupid, json)))
