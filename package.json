@@ -50,6 +50,7 @@
     "numeral": "^1.5.3",
     "query-string": "^3.0.0",
     "react": "~0.14.0",
+    "react-body-classname": "^1.0.1",
     "react-datepicker": "^0.15.2",
     "react-dom": "^0.14.0",
     "react-onclickoutside": "^4.5.0",

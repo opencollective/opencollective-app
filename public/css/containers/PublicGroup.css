@@ -1,0 +1,14 @@
+.PublicGroup-container {
+  background: white;
+  margin: var(--spacing);
+  padding: var(--spacing);
+}
+
+.PublicGroup-buttonContainer {
+  text-align: center;
+}
+
+.PublicGroup .Button {
+  display: inline-block;
+  margin-top: var(--spacing);
+}

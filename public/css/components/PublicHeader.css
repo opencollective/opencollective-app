@@ -1,0 +1,18 @@
+.PublicHeader {
+  background-color: var(--aqua);
+  color: white;
+  height: var(--public-header-height);
+}
+
+.PublicHeader-signup {
+  display: inline-block;
+  line-height: var(--public-header-height);
+  float: right;
+  margin-right: var(--spacing);
+}
+
+.PublicHeader-tagLine {
+  display: inline-block;
+  line-height: var(--public-header-height);
+  margin-left: var(--spacing);
+}

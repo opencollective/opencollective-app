@@ -4,6 +4,7 @@
   --dark-gray: #7A7B82;
   --darkest-gray: #e7ecf1;
   --light-blue: #7FADF2;
+  --aqua: #34D6BF;
   --green: #88C92E;
   --dark-green: #6eb808;
   --red: #C92E5A;
@@ -13,6 +14,7 @@
   --gold: #CFA236;
   --spacing: 1rem;
   --header-height: 62px;
+  --public-header-height: 60px;
   --footer-height: 72px;
   --image-upload-height: 160px;
   --image-upload-child-height: 100px;

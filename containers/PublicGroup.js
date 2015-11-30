@@ -1,70 +1,110 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
+import BodyClassName from 'react-body-classname';
 
-import values from 'lodash/object/values';
-import filter from 'lodash/collection/filter';
+import rejectError from '../lib/reject_error';
+import convertToCents from '../lib/convert_to_cents';
 
+import PublicHeader from '../components/PublicHeader';
 import PublicGroupHeader from '../components/PublicGroupHeader';
-import GroupTitle from '../components/GroupTitle';
+import DonationPicker from '../components/DonationPicker';
+import SubTitle from '../components/SubTitle';
 
+import appendDonationForm from '../actions/form/append_donation';
+import setDonationCustom from '../actions/form/set_donation_custom';
 import fetchGroup from '../actions/groups/fetch_by_id';
-import fetchTransactions from '../actions/transactions/fetch_by_group';
+import donate from '../actions/groups/donate';
+import notify from '../actions/notification/notify';
 
 export class PublicGroup extends Component {
   render() {
-    const { group } = this.props;
+    const {
+      group,
+      amount,
+      stripeAmount,
+      isCustomMode,
+      setDonationCustom,
+      appendDonationForm
+    } = this.props;
 
     return (
-      <div className='PublicGroup'>
-        <div className='padded'>
-          <PublicGroupHeader {...group} />
-          <GroupTitle
-            group={group}
-            label='Available budget' />
-          <StripeCheckout
-            token={handleToken}
-            stripeKey='pk_test_6pRNASCoBOKtIshFeQd4XMUh'
-            name={group.name}
-            description={group.description}>
-            <div className='Button'>
-              Donate
-            </div>
-          </StripeCheckout>
+      <BodyClassName className='Public'>
+        <div className='PublicGroup'>
+          <PublicHeader />
+          <div className='PublicGroup-container'>
+            <PublicGroupHeader {...group} />
+            <SubTitle text='Make your donation' />
+            <DonationPicker
+              setDonationAmount={amount => appendDonationForm({amount})}
+              selected={amount}
+              isCustomMode={isCustomMode}
+              setDonationCustom={setDonationCustom} />
+
+            <StripeCheckout
+              token={donateToGroup.bind(this, stripeAmount)}
+              stripeKey='pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+              name={group.name}
+              amount={stripeAmount}
+              description={group.description}>
+              <div className='PublicGroup-buttonContainer'>
+                <div className='Button Button--green'>
+                  Donate
+                </div>
+              </div>
+            </StripeCheckout>
+          </div>
         </div>
-      </div>
+      </BodyClassName>
     );
   }
 
   componentWillMount() {
     const {
       fetchGroup,
-      fetchTransactions,
       groupid
     } = this.props;
 
     fetchGroup(groupid);
-    fetchTransactions(groupid, { per_page: 1 });
   }
 }
 
-function handleToken(res) {
-  console.log('res', res);
+function donateToGroup(amount, token) {
+  const {
+    groupid,
+    notify,
+    donate
+  } = this.props;
+
+  const payment = {
+    stripeToken: token.id,
+    email: token.email,
+    amount
+  };
+
+  donate(groupid, payment)
+  .then(rejectError.bind(this))
+  .catch(error => notify('error', error.message));
 }
 
 export default connect(mapStateToProps, {
   fetchGroup,
-  fetchTransactions
+  appendDonationForm,
+  setDonationCustom,
+  donate,
+  notify
 })(PublicGroup);
 
-function mapStateToProps({router, groups, transactions}) {
+function mapStateToProps({router, groups, form}) {
   const groupid = router.params.groupid;
-  const transactionsArray = values(transactions);
+  const amount = form.donation.attributes.amount || 5;
+  const stripeAmount = convertToCents(amount);
 
-console.log('router', groupid, router);
   return {
     groupid,
-    transactions: filter(transactionsArray, {GroupId: Number(groupid)}),
-    group: groups[groupid] || {}
+    group: groups[groupid] || {},
+    amount,
+    stripeAmount,
+    isCustomMode: form.donation.isCustomMode,
   };
 }
