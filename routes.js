@@ -20,7 +20,7 @@ const routes = {
     { path: 'groups/:groupid/donation/method', component: DonationMethod},
     { path: 'groups/:groupid/transactions/new', component: TransactionNew },
     { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail },
-    { path: 'public/groups/:groupid/', component: PublicGroup },
+    { path: 'public/groups/:groupid', component: PublicGroup },
     { path: '*', component: Login }
   ]
 };
