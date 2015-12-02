@@ -11,6 +11,7 @@ import PublicGroupHeader from '../components/PublicGroupHeader';
 import DonationPicker from '../components/DonationPicker';
 import SubTitle from '../components/SubTitle';
 import Notification from '../components/Notification';
+import AsyncButton from '../components/AsyncButton';
 
 import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
@@ -29,7 +30,8 @@ export class PublicGroup extends Component {
       setDonationCustom,
       appendDonationForm,
       notification,
-      resetNotifications
+      resetNotifications,
+      inProgress
     } = this.props;
 
     return (
@@ -50,14 +52,16 @@ export class PublicGroup extends Component {
 
             <StripeCheckout
               token={donateToGroup.bind(this, stripeAmount)}
-              stripeKey='pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+              stripeKey={window.__env.stripePublicKey} // Next level config
               name={group.name}
               amount={stripeAmount}
               description={group.description}>
               <div className='PublicGroup-buttonContainer'>
-                <div className='Button Button--green'>
+                <AsyncButton
+                  color='green'
+                  inProgress={inProgress} >
                   Donate
-                </div>
+                </AsyncButton>
               </div>
             </StripeCheckout>
           </div>
@@ -96,6 +100,7 @@ export function donateToGroup(amount, token) {
 
   return donate(groupid, payment)
   .then(rejectError.bind(this))
+  .then(() => notify('success', 'Thank you for your donation'))
   .catch(error => notify('error', error.message));
 }
 
@@ -119,6 +124,7 @@ function mapStateToProps({router, groups, form, notification}) {
     amount,
     stripeAmount,
     isCustomMode: form.donation.isCustomMode,
-    notification
+    notification,
+    inProgress: groups.donateInProgress
   };
 }

@@ -67,7 +67,9 @@ app.set('view engine', 'ejs');
  */
 
 app.all('*', function(req, res) {
-  res.render('index', {});
+  res.render('index', {
+    stripePublicKey: config.stripePublicKey
+  });
 });
 
 /**
