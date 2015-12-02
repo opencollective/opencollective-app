@@ -36,7 +36,9 @@ describe('PublicGroup container', () => {
 
   it('should donate to the group', (done) => {
     const donate = chai.spy(() => Promise.resolve());
-    const notify = chai.spy(() => {});
+    const notify = chai.spy((type) => {
+      expect(type).to.be.equal('success');
+    });
     const props = {
       groupid: 1,
       donate,
@@ -50,7 +52,7 @@ describe('PublicGroup container', () => {
     donateToGroup.call({props}, 10, token)
     .then(() => {
       expect(donate).to.have.been.called();
-      expect(notify).to.not.have.been.called();
+      expect(notify).to.have.been.called();
       done();
     });
   });
@@ -58,7 +60,9 @@ describe('PublicGroup container', () => {
   it('should send a notification if the donation fails', (done) => {
     const error = { message: 'Fail' };
     const donate = chai.spy(() => Promise.resolve({ error }));
-    const notify = chai.spy(() => {});
+    const notify = chai.spy((type) => {
+      expect(type).to.be.equal('error');
+    });
     const props = {
       groupid: 1,
       donate,
