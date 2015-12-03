@@ -13,19 +13,21 @@ import Content from './Content';
 import Header from '../components/Header';
 import Group from '../components/Group';
 import PaypalReminder from '../components/PaypalReminder';
+import ProfileReminder from '../components/ProfileReminder';
+
 import nestTransactionsInGroups from '../lib/nest_transactions_in_groups';
 import getUniqueValues from '../lib/get_unique_values';
 import isAdmin from '../lib/is_admin';
 
-class GroupsList extends Component {
+export class GroupsList extends Component {
   render() {
     const { users, groups, isLoading } = this.props;
 
     return (
-      <div>
+      <div className='GroupsList'>
         <Header title='My collectives' hasBackButton={false} />
         <Content isLoading={isLoading}>
-          {this.paypalReminder(this.props)}
+          {reminder.call(this, this.props)}
           {groups.map(group => {
             return <Group {...group} users={users} key={group.id} />
           })}
@@ -55,21 +57,31 @@ class GroupsList extends Component {
       });
     }
 
-
     if (query.preapprovalKey && query.approvalStatus === 'success') {
       confirmPreapprovalKey(userid, query.preapprovalKey);
     }
   }
+}
 
-  paypalReminder({getPreapprovalKeyForUser, inProgress, query, userid, showPaypalReminder}) {
-    if (showPaypalReminder) {
-      return (
-        <PaypalReminder
-          getPreapprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
-          inProgress={inProgress}
-          approvalStatus={query.approvalStatus} />
-      );
-    }
+export function reminder({
+  getPreapprovalKeyForUser,
+  inProgress,
+  query,
+  userid,
+  showPaypalReminder,
+  showProfileReminder
+}) {
+  if (showPaypalReminder) {
+    return (
+      <PaypalReminder
+        getPreapprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
+        inProgress={inProgress}
+        approvalStatus={query.approvalStatus} />
+    );
+  } else if (showProfileReminder) {
+    return (
+      <ProfileReminder />
+    );
   }
 }
 
@@ -81,7 +93,7 @@ export default connect(mapStateToProps, {
   fetchCards
 })(GroupsList);
 
-function mapStateToProps({users, session, router}) {
+export function mapStateToProps({users, session, router}) {
   // Logged in user
   const userid = session.user.id;
   const currentUser = users[userid] || {};
@@ -89,6 +101,7 @@ function mapStateToProps({users, session, router}) {
   const query = router.location.query;
   const userCards = values(currentUser.cards);
   const hasConfirmedCards = any(userCards, (c) => !!c.confirmedAt);
+  const userIsAdmin = isAdmin(values(groups));
 
   return {
     groups: nestTransactionsInGroups(groups, transactions),
@@ -98,6 +111,9 @@ function mapStateToProps({users, session, router}) {
     inProgress: users.inProgress,
     query,
     isLoading: !groups,
-    showPaypalReminder: isAdmin(values(groups)) && (!hasConfirmedCards || query.preapprovalKey)
+    showPaypalReminder: userIsAdmin && (!hasConfirmedCards || query.preapprovalKey),
+    showProfileReminder: !userIsAdmin && !currentUser.paypalEmail,
+    userIsAdmin, // for testing
+    hasConfirmedCards // for testing
   };
 }
