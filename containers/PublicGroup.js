@@ -64,6 +64,7 @@ export class PublicGroup extends Component {
                 </AsyncButton>
               </div>
             </StripeCheckout>
+            <div className='PublicGroup-footer'></div>
           </div>
         </div>
       </BodyClassName>

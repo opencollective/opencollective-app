@@ -1,9 +1,11 @@
 .PublicGroupHeader {
   text-align: center;
+  padding-top: var(--spacing);
 }
 
 .PublicGroupHeader-name {
   padding-bottom: calc(var(--spacing)/2);
+  font-weight: bold;
 }
 
 .PublicGroupHeader-description {
