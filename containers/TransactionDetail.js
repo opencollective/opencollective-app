@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-
 import rejectError from '../lib/reject_error';
 
 import payTransaction from '../actions/transactions/pay';
@@ -24,6 +23,7 @@ import TransactionDetailApproval from '../components/TransactionDetailApproval';
 import Notification from '../components/Notification';
 
 import isAdmin from '../lib/is_admin';
+import isDonation from '../lib/is_donation';
 
 class TransactionDetail extends Component {
   render() {
@@ -112,7 +112,6 @@ class TransactionDetail extends Component {
   }
 }
 
-
 export function approveAndPay() {
   const {
     group,
@@ -179,6 +178,7 @@ function mapStateToProps({
     approveInProgress: approveInProgress || payInProgress,
     rejectInProgress,
     isLoading: !transaction.id,
-    showApprovalButtons: isAdmin([group])
+    showApprovalButtons: isAdmin([group]) && !isDonation(transaction),
+    isDonation: isDonation(transaction)
   };
 }

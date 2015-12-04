@@ -4,6 +4,7 @@
 
 export default [
   'Food and Beverage',
+  'Donation',
   'Supplies',
   'Travel ',
   'Event Prizes',
