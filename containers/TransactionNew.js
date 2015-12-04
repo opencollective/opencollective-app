@@ -19,13 +19,11 @@ import Header from '../components/Header';
 
 export class TransactionNew extends Component {
   render() {
-    const backLink = `/groups/${this.props.groupid}/transactions/`;
-
     return (
       <div>
         <Header
           title='Submit Expense'
-          backLink={backLink} />
+          backLink={`/groups/${this.props.groupid}/transactions/`} />
         <Content>
           <TransactionForm
             {...this.props}
@@ -79,7 +77,7 @@ function mapStateToProps({router, form, transactions, notification, images}) {
     transaction,
     tags: transaction.defaults.tags,
     isUploading: images.isUploading || false,
-    validationError: form.transaction.error.message,
+    validationError: form.transaction.error,
     requestError: transactions.error
   };
 }

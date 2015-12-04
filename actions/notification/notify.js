@@ -5,6 +5,7 @@ import { NOTIFY } from '../../constants/notification';
  */
 
 export default (status, message) => {
+  console.log('notify', status, message);
   return {
     type: NOTIFY,
     status,

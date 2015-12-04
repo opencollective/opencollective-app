@@ -31,24 +31,17 @@ class TransactionDetail extends Component {
       group,
       transaction,
       isLoading,
-      notification,
-      resetNotifications,
       groupid
     } = this.props;
-
-    const backLink = `/groups/${groupid}/transactions/`;
 
     return (
       <div>
         <Header
           title={group.name}
-          backLink={backLink} />
+          backLink={`/groups/${groupid}/transactions/`} />
         <Content isLoading={isLoading}>
-          <Notification
-            {...notification}
-            resetNotifications={resetNotifications} />
-          <TransactionDetailTitle
-            description={transaction.description} />
+          <Notification {...this.props} />
+          <TransactionDetailTitle {...transaction} />
           <div className='TransactionDetail'>
             <div className='TransactionDetail-image'>
               <img src={transaction.link} />

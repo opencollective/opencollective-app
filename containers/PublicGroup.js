@@ -29,8 +29,6 @@ export class PublicGroup extends Component {
       isCustomMode,
       setDonationCustom,
       appendDonationForm,
-      notification,
-      resetNotifications,
       inProgress
     } = this.props;
 
@@ -38,9 +36,7 @@ export class PublicGroup extends Component {
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
           <PublicHeader />
-          <Notification
-            {...notification}
-            resetNotifications={resetNotifications} />
+          <Notification {...this.props} />
           <div className='PublicGroup-container'>
             <PublicGroupHeader {...group} />
             <SubTitle text='Make your donation' />
