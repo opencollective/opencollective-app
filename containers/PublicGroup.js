@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import StripeCheckout from 'react-stripe-checkout';
+import { pushState } from 'redux-router';
 import BodyClassName from 'react-body-classname';
 
 import rejectError from '../lib/reject_error';
 import convertToCents from '../lib/convert_to_cents';
 
 import PublicHeader from '../components/PublicHeader';
-import PublicGroupHeader from '../components/PublicGroupHeader';
-import DonationPicker from '../components/DonationPicker';
-import SubTitle from '../components/SubTitle';
 import Notification from '../components/Notification';
-import AsyncButton from '../components/AsyncButton';
+import PublicGroupForm from '../components/PublicGroupForm';
+import PublicGroupThanks from '../components/PublicGroupThanks';
+import PublicGroupHeader from '../components/PublicGroupHeader';
 
 import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
@@ -22,45 +21,19 @@ import resetNotifications from '../actions/notification/reset';
 
 export class PublicGroup extends Component {
   render() {
-    const {
-      group,
-      amount,
-      stripeAmount,
-      isCustomMode,
-      setDonationCustom,
-      appendDonationForm,
-      inProgress
-    } = this.props;
-
     return (
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
           <PublicHeader />
           <Notification {...this.props} />
           <div className='PublicGroup-container'>
-            <PublicGroupHeader {...group} />
-            <SubTitle text='Make your donation' />
-            <DonationPicker
-              setDonationAmount={amount => appendDonationForm({amount})}
-              selected={amount}
-              isCustomMode={isCustomMode}
-              setDonationCustom={setDonationCustom} />
-
-            <StripeCheckout
-              token={donateToGroup.bind(this, stripeAmount)}
-              stripeKey={window.__env.stripePublicKey} // Next level config
-              name={group.name}
-              amount={stripeAmount}
-              description={group.description}>
-              <div className='PublicGroup-buttonContainer'>
-                <AsyncButton
-                  color='green'
-                  inProgress={inProgress} >
-                  Donate
-                </AsyncButton>
-              </div>
-            </StripeCheckout>
-            <div className='PublicGroup-footer'></div>
+            <PublicGroupHeader {...this.props.group} />
+            {this.props.showThankYouPage ?
+              <PublicGroupThanks /> :
+              <PublicGroupForm
+                {...this.props}
+                onToken={donateToGroup.bind(this, this.props.stripeAmount)} />
+            }
           </div>
         </div>
       </BodyClassName>
@@ -86,7 +59,8 @@ export function donateToGroup(amount, token) {
   const {
     groupid,
     notify,
-    donate
+    donate,
+    pushState
   } = this.props;
 
   const payment = {
@@ -97,7 +71,7 @@ export function donateToGroup(amount, token) {
 
   return donate(groupid, payment)
   .then(rejectError.bind(this))
-  .then(() => notify('success', 'Thank you for your donation'))
+  .then(() => pushState(null, `/public/groups/${groupid}/?status=thankyou`))
   .catch(error => notify('error', error.message));
 }
 
@@ -107,14 +81,16 @@ export default connect(mapStateToProps, {
   setDonationCustom,
   donate,
   notify,
-  resetNotifications
+  resetNotifications,
+  pushState
 })(PublicGroup);
 
 function mapStateToProps({router, groups, form, notification}) {
   const groupid = router.params.groupid;
+  const status = router.location.query.status;
   const amount = form.donation.attributes.amount || 5;
   const stripeAmount = convertToCents(amount);
-
+  console.log('status', status);
   return {
     groupid,
     group: groups[groupid] || {},
@@ -122,6 +98,8 @@ function mapStateToProps({router, groups, form, notification}) {
     stripeAmount,
     isCustomMode: form.donation.isCustomMode,
     notification,
-    inProgress: groups.donateInProgress
+    inProgress: groups.donateInProgress,
+    stripeKey: window.__env.stripePublicKey, // Next level config
+    showThankYouPage: status === 'thankyou'
   };
 }

@@ -28,6 +28,7 @@ describe('Donation container', () => {
       fetchUser,
       fetchGroup,
       resetNotifications: () => {},
+      notification: {},
       group: {},
       user: {}
     });

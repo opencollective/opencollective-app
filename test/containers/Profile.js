@@ -24,6 +24,7 @@ describe('Profile container', () => {
       createElement({
         fetchUser: handler,
         resetNotifications: () => {},
+        notification: {},
         userid: 1,
         user: {}
       });
@@ -35,6 +36,7 @@ describe('Profile container', () => {
       createElement({
         fetchUser: () => {},
         resetNotifications: handler,
+        notification: {},
         userid: 1,
         user: {}
       });

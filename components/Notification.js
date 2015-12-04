@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Icon from './Icon';
 
 class Notification extends Component {
   render() {
-    console.log('this.', this.props);
     const { notification } = this.props;
     const status = notification.status || 'hide';
 
@@ -29,11 +28,6 @@ class Notification extends Component {
   componentDidMount() {
     this.props.resetNotifications();
   }
-};
-
-Notification.propTypes = {
-  message: PropTypes.string,
-  status: PropTypes.string
 };
 
 export default Notification;
