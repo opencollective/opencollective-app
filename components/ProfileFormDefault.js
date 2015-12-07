@@ -3,16 +3,13 @@ import React, { Component } from 'react';
 class ProfileFormDefault extends Component {
   render() {
     const { user, logoutAndRedirect } = this.props;
-    const email = user.paypalEmail || user.email;
+    const { paypalEmail, email } = user;
 
     return (
       <div className='ProfileForm'>
-        <div className='ProfileForm-label'>
-          Paypal Account
-        </div>
-        <div className='ProfileForm-email'>
-          {email}
-        </div>
+        {this.listItem('User email', email)}
+        {email !== paypalEmail ?
+            this.listItem('Paypal email', paypalEmail) : '' }
         <div className='ProfileForm-buttonContainer'>
           <div
             className='Button ProfileForm-button'
@@ -36,6 +33,19 @@ class ProfileFormDefault extends Component {
     const { isEditMode, setEditMode } = this.props;
 
     setEditMode(!isEditMode);
+  }
+
+  listItem(label, email) {
+    return (
+      <div>
+        <div className='ProfileForm-label'>
+          {label}
+        </div>
+        <div className='ProfileForm-email'>
+          {email}
+        </div>
+      </div>
+    );
   }
 
 }
