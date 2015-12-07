@@ -21,7 +21,9 @@ class ProfileForm extends Component {
     save,
     cancel,
     appendProfileForm,
-    logoutAndRedirect
+    logoutAndRedirect,
+    preapprovalDetails,
+    getPreapprovalKey
   }) {
     if (isEditMode) {
       return (
@@ -37,9 +39,11 @@ class ProfileForm extends Component {
       return (
         <ProfileFormDefault
           user={user}
+          preapprovalDetails={preapprovalDetails}
           logoutAndRedirect={logoutAndRedirect}
           isEditMode={isEditMode}
-          setEditMode={setEditMode} />
+          setEditMode={setEditMode}
+          getPreapprovalKey={getPreapprovalKey} />
       );
     }
   }

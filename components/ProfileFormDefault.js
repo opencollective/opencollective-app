@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Currency from './Currency';
+
 class ProfileFormDefault extends Component {
   render() {
     const { user, logoutAndRedirect } = this.props;
@@ -7,9 +9,11 @@ class ProfileFormDefault extends Component {
 
     return (
       <div className='ProfileForm'>
-        {this.listItem('User email', email)}
-        {email !== paypalEmail ?
-            this.listItem('Paypal email', paypalEmail) : '' }
+
+        {item('User email', email)}
+        {email !== paypalEmail ? item('Paypal email', paypalEmail) : '' }
+        {balance(this.props)}
+
         <div className='ProfileForm-buttonContainer'>
           <div
             className='Button ProfileForm-button'
@@ -35,19 +39,39 @@ class ProfileFormDefault extends Component {
     setEditMode(!isEditMode);
   }
 
-  listItem(label, email) {
-    return (
-      <div>
-        <div className='ProfileForm-label'>
-          {label}
-        </div>
-        <div className='ProfileForm-email'>
-          {email}
-        </div>
-      </div>
-    );
-  }
-
 }
 
+function item(label, email) {
+  return (
+    <div>
+      <div className='ProfileForm-label'>
+        {label}
+      </div>
+      <div className='ProfileForm-email'>
+        {email}
+      </div>
+    </div>
+  );
+};
+
+export function balance({preapprovalDetails}) {
+  if (!preapprovalDetails.maxTotalAmountOfAllPayments) return '';
+
+  const {
+    curPaymentsAmount,
+    maxTotalAmountOfAllPayments,
+    senderEmail
+  } = preapprovalDetails;
+
+  const difference = parseFloat(maxTotalAmountOfAllPayments) - parseFloat(curPaymentsAmount);
+
+  return item('Preapproved account', (
+    <span>
+      {senderEmail} pre approved for <Currency value={maxTotalAmountOfAllPayments} /> (
+      <Currency value={difference} /> remaining)
+    </span>
+  ));
+};
+
 export default ProfileFormDefault;
+

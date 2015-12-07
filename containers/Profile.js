@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
+
 import Content from './Content';
 import Header from '../components/Header';
 import ProfileHeader from '../components/ProfileHeader';
@@ -12,9 +13,13 @@ import validateProfile from '../actions/form/validate_profile';
 
 import updatePaypalEmail from '../actions/users/update_paypal_email';
 import fetchUser from '../actions/users/fetch_by_id';
+import fetchCards from '../actions/users/fetch_cards';
+import getPreapprovalDetails from '../actions/users/get_preapproval_details';
+import getPreapprovalKey from '../actions/users/get_preapproval_key';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import logout from '../actions/session/logout';
+import { getPaypalCard } from '../reducers/users';
 import rejectError from '../lib/reject_error';
 
 // Use named export for unconnected component (for tests)
@@ -41,12 +46,20 @@ export class Profile extends Component {
 
   componentWillMount() {
     this.props.fetchUser(this.props.userid);
+    getPreapprovalInfo.call(this);
   }
 }
 
 /**
  * Export methods for testing
  */
+
+export function getPreapprovalInfo() {
+  const { userid, getPreapprovalDetails, fetchCards } = this.props;
+
+  fetchCards(userid, { service: 'paypal' })
+  .then(() => getPreapprovalDetails(userid, this.props.card.token));
+};
 
 export function logoutAndRedirect() {
   this.props.logout();
@@ -86,15 +99,22 @@ export default connect(mapStateToProps, {
   fetchUser,
   notify,
   logout,
-  replaceState
+  replaceState,
+  getPreapprovalDetails,
+  fetchCards,
+  getPreapprovalKey
 })(Profile);
 
 function mapStateToProps({session, form, notification, users}) {
   const userid = session.user.id;
+  const card = getPaypalCard(users, userid);
+  const preapprovalDetails = users.preapprovalDetails || {};
 
   return {
     userid,
     notification,
+    card,
+    preapprovalDetails,
     form: form.profile,
     user: users[userid] || {},
     isEditMode: form.profile.isEditMode,
