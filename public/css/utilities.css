@@ -1,3 +1,11 @@
 .padded {
   margin: var(--spacing);
 }
+
+.u-lightBlue {
+  color: var(--light-blue);
+}
+
+.u-bold {
+  font-weight: bold;
+}

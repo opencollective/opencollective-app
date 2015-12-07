@@ -16,6 +16,7 @@ class ProfileForm extends Component {
     isEditMode,
     saveInProgress,
     user,
+    userid,
     form,
     setEditMode,
     save,
@@ -39,6 +40,7 @@ class ProfileForm extends Component {
       return (
         <ProfileFormDefault
           user={user}
+          userid={userid}
           preapprovalDetails={preapprovalDetails}
           logoutAndRedirect={logoutAndRedirect}
           isEditMode={isEditMode}

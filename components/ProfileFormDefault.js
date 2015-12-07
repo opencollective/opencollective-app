@@ -54,7 +54,7 @@ function item(label, email) {
   );
 };
 
-export function balance({preapprovalDetails}) {
+export function balance({preapprovalDetails, getPreapprovalKey, userid}) {
   if (!preapprovalDetails.maxTotalAmountOfAllPayments) return '';
 
   const {
@@ -69,6 +69,9 @@ export function balance({preapprovalDetails}) {
     <span>
       {senderEmail} pre approved for <Currency value={maxTotalAmountOfAllPayments} /> (
       <Currency value={difference} /> remaining)
+      <span className='u-lightBlue' onClick={getPreapprovalKey.bind(this, userid)}>
+        reapprove
+      </span>
     </span>
   ));
 };
