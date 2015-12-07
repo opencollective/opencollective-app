@@ -88,9 +88,9 @@ export default connect(mapStateToProps, {
 function mapStateToProps({router, groups, form, notification}) {
   const groupid = router.params.groupid;
   const status = router.location.query.status;
-  const amount = form.donation.attributes.amount || 5;
+  const amount = form.donation.attributes.amount || 0;
   const stripeAmount = convertToCents(amount);
-  console.log('status', status);
+
   return {
     groupid,
     group: groups[groupid] || {},

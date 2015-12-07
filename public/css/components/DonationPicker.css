@@ -12,3 +12,11 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.DonationPicker-currency {
+  display: block;
+  content: '';
+  width: 48px;
+  height: 48px;
+  background: red;
+}
