@@ -89,17 +89,18 @@ function mapStateToProps({router, groups, form, notification}) {
   const groupid = router.params.groupid;
   const status = router.location.query.status;
   const amount = form.donation.attributes.amount || 0;
-  const stripeAmount = convertToCents(amount);
+  const group = groups[groupid] || { stripeManagedAccount: {} };
+  const stripeKey = group.stripeManagedAccount.stripeKey;
 
   return {
     groupid,
-    group: groups[groupid] || {},
+    group,
+    stripeKey,
     amount,
-    stripeAmount,
+    stripeAmount: convertToCents(amount),
     isCustomMode: form.donation.isCustomMode,
     notification,
     inProgress: groups.donateInProgress,
-    stripeKey: window.__env.stripePublicKey, // Next level config
     showThankYouPage: status === 'thankyou'
   };
 }
