@@ -32,7 +32,7 @@ export class PublicGroup extends Component {
               <PublicGroupThanks /> :
               <PublicGroupForm
                 {...this.props}
-                onToken={donateToGroup.bind(this, this.props.stripeAmount)} />
+                onToken={donateToGroup.bind(this, this.props.amount)} />
             }
           </div>
         </div>
