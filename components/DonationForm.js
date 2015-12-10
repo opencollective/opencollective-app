@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import DonationPicker from './DonationPicker';
 import Input from './Input';
 import AsyncButton from './AsyncButton';
+import SubTitle from './SubTitle';
 import Select from './Select';
 
 const DonationForm = ({
@@ -22,7 +23,7 @@ const DonationForm = ({
      <div className='DonationForm'>
       {header(group)}
 
-      <div className='DonationForm-title'>Make your donation</div>
+      <SubTitle text='Make your donation' />
 
       <DonationPicker
         setDonationAmount={(amount) => appendDonationForm({amount})}
@@ -30,7 +31,7 @@ const DonationForm = ({
         isCustomMode={isCustomMode}
         setDonationCustom={setDonationCustom} />
 
-      <div className='DonationForm-subtitle'>
+      <div className='DonationForm-bold'>
         Your payment method
         <Link
           to={`/groups/${groupid}/donation/method`}
@@ -45,7 +46,7 @@ const DonationForm = ({
         handleChange={handleMethod.bind(this)}
         customClass='DonationForm-select' />
 
-      <div className='DonationForm-subtitle'>
+      <div className='DonationForm-bold'>
         Description
       </div>
 

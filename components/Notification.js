@@ -2,18 +2,14 @@ import React, { Component } from 'react';
 import Icon from './Icon';
 
 class Notification extends Component {
-  propTypes: {
-    message: React.PropTypes.string.isRequired,
-    status: React.PropTypes.string.isRequired
-  }
-
   render() {
-    const status = this.props.status || 'hide';
+    const { notification } = this.props;
+    const status = notification.status || 'hide';
 
     return (
       <div className={`Notification Notification--${status}`}>
         {this.icon(status)}
-        {this.props.message}
+        {notification.message}
       </div>
     );
   }
@@ -32,6 +28,6 @@ class Notification extends Component {
   componentDidMount() {
     this.props.resetNotifications();
   }
-}
+};
 
 export default Notification;

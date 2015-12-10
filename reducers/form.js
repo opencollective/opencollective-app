@@ -122,7 +122,7 @@ function profile(state=profileInitialState, action={}) {
  */
 
 function donation(state={
-  isCustomMode: false,
+  isCustomMode: true,
   attributes: {}
 }, action={}) {
   switch(action.type) {

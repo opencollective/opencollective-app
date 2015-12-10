@@ -1,9 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
+
+import isDonation from '../lib/is_donation';
+
 import Currency from './Currency';
 import TransactionStatus from './TransactionStatus';
 import Avatar from './Avatar';
+
 
 class Transaction extends Component {
   render() {
@@ -15,6 +19,7 @@ class Transaction extends Component {
       createdAt,
       user
     } = this.props;
+    const hideStatus = isDonation(this.props);
 
     return (
       <div className='Transaction'>
@@ -27,7 +32,9 @@ class Transaction extends Component {
             <div className='Transaction-description'>{description}</div>
             <div className='Transaction-status'>
               <div className='Transaction-amount'><Currency value={amount} /></div>
-              <div className='Transaction-approved'><TransactionStatus {...this.props} /></div>
+              <div className='Transaction-approved'>
+                {hideStatus ? null : <TransactionStatus {...this.props} />}
+              </div>
             </div>
           </div>
         </Link>

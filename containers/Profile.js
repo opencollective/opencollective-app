@@ -21,17 +21,13 @@ import rejectError from '../lib/reject_error';
 // http://rackt.org/redux/docs/recipes/WritingTests.html
 export class Profile extends Component {
   render() {
-    const { user, notification, resetNotifications } = this.props;
-
     return (
       <div className='Profile'>
         <Header title='Profile' hasBackButton={true} />
         <Content>
-          <Notification
-            {...notification}
-            resetNotifications={resetNotifications} />
+          <Notification {...this.props} />
           <div className='padded'>
-            <ProfileHeader {...user} />
+            <ProfileHeader {...this.props.user} />
             <ProfileForm
               {...this.props}
               logoutAndRedirect={logoutAndRedirect.bind(this)}

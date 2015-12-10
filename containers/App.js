@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
+import contains from 'lodash/collection/contains';
 
 import decodeJWT from '../actions/session/decode_jwt';
 
-class App extends Component {
+export class App extends Component {
   componentWillMount() {
-    const { decodeJWT, pushState } = this.props;
-    const { redirectTo } = decodeJWT();
+    const {
+      decodeJWT,
+      pushState,
+      needsLogin
+    } = this.props;
 
-    if (redirectTo) {
-      pushState(null, redirectTo);
+    const { user } = decodeJWT();
+
+    if (needsLogin && !user) {
+      pushState(null, '/login');
     }
   }
 
   render() {
     return (
-      <div>
+      <div className='App'>
         {this.props.children}
       </div>
     );
@@ -28,6 +34,8 @@ export default connect(mapStateToProps, {
   pushState
 })(App);
 
-function mapStateToProps() {
-  return {};
+export function mapStateToProps({router}) {
+  return {
+    needsLogin: !contains(router.location.pathname, 'public')
+  };
 }
