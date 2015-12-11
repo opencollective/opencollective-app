@@ -51,7 +51,9 @@ class TransactionDetail extends Component {
             description={transaction.description} />
           <div className='TransactionDetail'>
             <div className='TransactionDetail-image'>
-              <img src={transaction.link} />
+              <Link to={transaction.link}>
+                <img src={transaction.link} />
+              </Link>
             </div>
             <TransactionDetailInfo
               {...this.props}
