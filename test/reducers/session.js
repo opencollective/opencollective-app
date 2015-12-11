@@ -7,13 +7,13 @@ import {
 describe('session reducer', () => {
 
   it('should save the decoded user info', () => {
-    const info = {id: 1};
+    const user = {id: 1};
 
     expect(reducer({}, {
       type: DECODE_JWT_SUCCESS,
-      info
+      user
     }))
-    .toEqual({user: info});
+    .toEqual({user});
   });
 
 });

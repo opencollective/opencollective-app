@@ -31,6 +31,7 @@ describe('TransactionNew container', () => {
         transaction,
         tags: [],
         resetNotifications: () => {},
+        notification: {},
         resetTransactionForm: handler
       });
       expect(handler).to.have.been.called();

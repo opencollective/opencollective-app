@@ -15,15 +15,11 @@ import LoginForm from '../components/LoginForm';
 
 class Login extends Component {
   render() {
-    const { notification, resetNotifications } = this.props;
-
     return (
       <div>
         <Header title='Sign in' />
         <Content>
-          <Notification
-            {...notification}
-            resetNotifications={resetNotifications} />
+          <Notification {...this.props} />
           <LoginHeader />
           <LoginForm
             {...this.props}

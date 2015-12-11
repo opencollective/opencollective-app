@@ -1,8 +1,9 @@
 import React from 'react';
-import Currency from '../components/Currency';
-import SelectTag from '../components/SelectTag';
 
-export default ({transaction, tags, handleChange}) => {
+import Currency from './Currency';
+import SelectTag from './SelectTag';
+
+export default ({transaction, tags, handleChange, isDonation}) => {
   return (
     <div className='TransactionDetail-info'>
       <div className='TransactionDetail-price'>
@@ -12,6 +13,7 @@ export default ({transaction, tags, handleChange}) => {
       <div className='TransactionDetail-category'>
         Category
         <SelectTag
+          disabled={isDonation}
           tags={tags}
           attributes={transaction}
           handleChange={handleChange}
