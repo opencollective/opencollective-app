@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import ProfilePreapproved from './ProfilePreapproved';
+import TableHead from './TableHead';
+import TableRow from './TableRow';
 
 class ProfileFormDefault extends Component {
   render() {
@@ -8,18 +10,32 @@ class ProfileFormDefault extends Component {
       user,
       logoutAndRedirect,
       hasPreapproved,
-      preapprovalDetails
+      preapprovalDetails,
+      groups
     } = this.props;
     const { paypalEmail, email } = user;
 
     return (
       <div className='ProfileForm'>
+        <TableHead value='Personal email' />
+        <TableRow value={email} />
 
-        {item('User email', email)}
-        {item('Paypal receiver email', paypalEmail)}
-        {item('Paypal sender email', preapprovalDetails.senderEmail)}
+        <TableHead value='Paypal email' />
+        <TableRow value={paypalEmail} />
+
+        <TableHead value='Paypal preapproved email' />
+        <TableRow value={preapprovalDetails.senderEmail} />
 
         {hasPreapproved ? <ProfilePreapproved {...this.props} /> : ''}
+
+        <TableHead value='Group Stripe account' />
+        {groups.map(group => {
+          return (
+            <TableRow
+              key={group.id}
+              value={group.stripeManagedAccount.stripeEmail} />
+          );
+        })}
 
         <div className='ProfileForm-buttonContainer'>
           <div
@@ -47,21 +63,6 @@ class ProfileFormDefault extends Component {
   }
 
 }
-
-function item(label, email) {
-  if (!email) return '';
-
-  return (
-    <div>
-      <div className='ProfileForm-label'>
-        {label}
-      </div>
-      <div className='ProfileForm-email'>
-        {email}
-      </div>
-    </div>
-  );
-};
 
 export default ProfileFormDefault;
 

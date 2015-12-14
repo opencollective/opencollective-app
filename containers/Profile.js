@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
+import values from 'lodash/object/values';
 
 import Content from './Content';
 import Header from '../components/Header';
@@ -14,6 +15,7 @@ import validateProfile from '../actions/form/validate_profile';
 import updatePaypalEmail from '../actions/users/update_paypal_email';
 import fetchUser from '../actions/users/fetch_by_id';
 import fetchCards from '../actions/users/fetch_cards';
+import fetchGroups from '../actions/users/fetch_groups';
 import getPreapprovalDetails from '../actions/users/get_preapproval_details';
 import getPreapprovalKey from '../actions/users/get_preapproval_key';
 import notify from '../actions/notification/notify';
@@ -45,8 +47,15 @@ export class Profile extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchUser(this.props.userid);
+    const {
+      userid,
+      fetchUser,
+      fetchGroups
+    } = this.props;
+
+    fetchUser(userid);
     getPreapprovalInfo.call(this);
+    fetchGroups(userid, {stripe: true});
   }
 }
 
@@ -108,11 +117,13 @@ export default connect(mapStateToProps, {
   replaceState,
   getPreapprovalDetails,
   fetchCards,
-  getPreapprovalKey
+  getPreapprovalKey,
+  fetchGroups
 })(Profile);
 
 function mapStateToProps({session, form, notification, users}) {
   const userid = session.user.id;
+  const user = users[userid] || {};
   const card = getPaypalCard(users, userid);
   const preapprovalDetails = users.preapprovalDetails || {};
   const hasPreapproved = !!preapprovalDetails.maxTotalAmountOfAllPayments;
@@ -123,11 +134,12 @@ function mapStateToProps({session, form, notification, users}) {
     card,
     preapprovalDetails,
     form: form.profile,
-    user: users[userid] || {},
+    user,
     isEditMode: form.profile.isEditMode,
     saveInProgress: users.updateInProgress,
     validationError: form.profile.error,
     serverError: users.error,
-    hasPreapproved
+    hasPreapproved,
+    groups: values(user.groups)
   };
 }

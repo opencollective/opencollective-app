@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 
 import Currency from './Currency';
 
@@ -12,13 +11,15 @@ const ProfilePreapproved = ({
     curPaymentsAmount,
     maxTotalAmountOfAllPayments,
   } = preapprovalDetails;
-  const difference = parseFloat(maxTotalAmountOfAllPayments) - parseFloat(curPaymentsAmount);
+
+  const max = parseFloat(maxTotalAmountOfAllPayments);
+  const current = parseFloat(curPaymentsAmount);
 
   return (
    <div className='ProfilePreapproved'>
     <div className='ProfilePreapproved-balance'>
-      Preapproved for <Currency value={maxTotalAmountOfAllPayments} /> (
-      <Currency value={difference} /> remaining)
+      Preapproved for <Currency value={max} /> (
+      <Currency value={max - current} /> remaining)
     </div>
     <div
       className='ProfilePreapproved-reapprove'
@@ -29,5 +30,13 @@ const ProfilePreapproved = ({
   );
 };
 
+ProfilePreapproved.propTypes = {
+  userid: PropTypes.number.isRequired,
+  preapprovalDetails: PropTypes.shape({
+    maxTotalAmountOfAllPayments: PropTypes.string.isRequired,
+    curPaymentsAmount: PropTypes.string.isRequired
+  }),
+  getPreapprovalKey: PropTypes.func.isRequired
+};
 
 export default ProfilePreapproved;

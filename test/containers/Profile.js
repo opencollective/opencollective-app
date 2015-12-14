@@ -24,9 +24,14 @@ describe('Profile container', () => {
       createElement({
         fetchUser: handler,
         resetNotifications: () => {},
+        fetchGroups: () => {},
+        fetchCards: () => Promise.resolve({}),
+        getPreapprovalDetails: () => {},
         notification: {},
         userid: 1,
-        user: {}
+        user: {},
+        preapprovalDetails: {},
+        groups: []
       });
       expect(handler).to.have.been.called();
   });
@@ -36,9 +41,14 @@ describe('Profile container', () => {
       createElement({
         fetchUser: () => {},
         resetNotifications: handler,
+        fetchGroups: () => {},
+        fetchCards: () => Promise.resolve({}),
+        getPreapprovalDetails: () => {},
         notification: {},
         userid: 1,
-        user: {}
+        user: {},
+        preapprovalDetails: {},
+        groups: []
       });
       expect(handler).to.have.been.called();
   });

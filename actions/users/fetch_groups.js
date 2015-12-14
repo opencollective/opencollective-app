@@ -1,3 +1,4 @@
+
 import { get } from '../../lib/api';
 import Schemas from '../../lib/schemas';
 import * as constants from '../../constants/users';
@@ -6,11 +7,17 @@ import * as constants from '../../constants/users';
  * Fetch all the groups from a user
  */
 
-export default (userid) => {
+export default (userid, options={}) => {
+  let include = 'usergroup.role';
+  if (options.stripe) {
+    include += ',stripemanagedaccount'
+  }
+
   return dispatch => {
     dispatch(request(userid));
-    return get(`users/${userid}/groups?include=usergroup.role`, {
-        schema: Schemas.GROUP_ARRAY
+    return get(`users/${userid}/groups`, {
+        schema: Schemas.GROUP_ARRAY,
+        params: { include }
       })
       .then(json => dispatch(success(userid, json)))
       .catch(err => dispatch(failure(err)));
