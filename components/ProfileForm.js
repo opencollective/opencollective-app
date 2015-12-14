@@ -12,41 +12,11 @@ class ProfileForm extends Component {
     );
   }
 
-  form({
-    isEditMode,
-    saveInProgress,
-    user,
-    userid,
-    form,
-    setEditMode,
-    save,
-    cancel,
-    appendProfileForm,
-    logoutAndRedirect,
-    preapprovalDetails,
-    getPreapprovalKey
-  }) {
-    if (isEditMode) {
-      return (
-        <ProfileFormEdit
-          user={user}
-          form={form}
-          append={appendProfileForm}
-          saveInProgress={saveInProgress}
-          cancel={cancel}
-          save={save} />
-      );
+  form(props) {
+    if (props.isEditMode) {
+      return <ProfileFormEdit {...props} />;
     } else {
-      return (
-        <ProfileFormDefault
-          user={user}
-          userid={userid}
-          preapprovalDetails={preapprovalDetails}
-          logoutAndRedirect={logoutAndRedirect}
-          isEditMode={isEditMode}
-          setEditMode={setEditMode}
-          getPreapprovalKey={getPreapprovalKey} />
-      );
+      return <ProfileFormDefault {...props} />;
     }
   }
 }

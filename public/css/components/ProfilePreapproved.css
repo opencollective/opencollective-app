@@ -1,0 +1,16 @@
+.ProfilePreapproved {
+  font-style: italic;
+}
+
+.ProfilePreapproved-balance {
+  padding-top: calc(var(--spacing) / 2);
+}
+
+.ProfilePreapproved-reapprove {
+  color: var(--light-blue);
+  padding-top: calc(var(--spacing) / 2);
+  text-decoration: underline;
+  font-size: calc(var(--spacing) * 0.8);
+  cursor: pointer;
+}
+

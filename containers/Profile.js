@@ -58,7 +58,13 @@ export function getPreapprovalInfo() {
   const { userid, getPreapprovalDetails, fetchCards } = this.props;
 
   fetchCards(userid, { service: 'paypal' })
-  .then(() => getPreapprovalDetails(userid, this.props.card.token));
+  .then(() => {
+    const card = this.props.card;
+
+    if (card && card.token) {
+      getPreapprovalDetails(userid, card.token)
+    }
+  });
 };
 
 export function logoutAndRedirect() {
@@ -109,6 +115,7 @@ function mapStateToProps({session, form, notification, users}) {
   const userid = session.user.id;
   const card = getPaypalCard(users, userid);
   const preapprovalDetails = users.preapprovalDetails || {};
+  const hasPreapproved = !!preapprovalDetails.maxTotalAmountOfAllPayments;
 
   return {
     userid,
@@ -121,5 +128,6 @@ function mapStateToProps({session, form, notification, users}) {
     saveInProgress: users.updateInProgress,
     validationError: form.profile.error,
     serverError: users.error,
+    hasPreapproved
   };
 }
