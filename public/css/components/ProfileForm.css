@@ -4,7 +4,7 @@
 
 .ProfileForm-label {
   font-weight: bold;
-  padding: var(--spacing) 0;
+  padding-bottom: var(--spacing);
 }
 
 .ProfileForm-email {

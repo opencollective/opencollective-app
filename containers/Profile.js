@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
-import values from 'lodash/object/values';
-
 import Content from './Content';
 import Header from '../components/Header';
 import ProfileHeader from '../components/ProfileHeader';
@@ -14,14 +12,9 @@ import validateProfile from '../actions/form/validate_profile';
 
 import updatePaypalEmail from '../actions/users/update_paypal_email';
 import fetchUser from '../actions/users/fetch_by_id';
-import fetchCards from '../actions/users/fetch_cards';
-import fetchGroups from '../actions/users/fetch_groups';
-import getPreapprovalDetails from '../actions/users/get_preapproval_details';
-import getPreapprovalKey from '../actions/users/get_preapproval_key';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import logout from '../actions/session/logout';
-import { getPaypalCard } from '../reducers/users';
 import rejectError from '../lib/reject_error';
 
 // Use named export for unconnected component (for tests)
@@ -47,34 +40,13 @@ export class Profile extends Component {
   }
 
   componentWillMount() {
-    const {
-      userid,
-      fetchUser,
-      fetchGroups
-    } = this.props;
-
-    fetchUser(userid);
-    getPreapprovalInfo.call(this);
-    fetchGroups(userid, {stripe: true});
+    this.props.fetchUser(this.props.userid);
   }
 }
 
 /**
  * Export methods for testing
  */
-
-export function getPreapprovalInfo() {
-  const { userid, getPreapprovalDetails, fetchCards } = this.props;
-
-  return fetchCards(userid, { service: 'paypal' })
-  .then(() => {
-    const card = this.props.card;
-
-    if (card && card.token) {
-      return getPreapprovalDetails(userid, card.token);
-    }
-  });
-};
 
 export function logoutAndRedirect() {
   this.props.logout();
@@ -114,32 +86,20 @@ export default connect(mapStateToProps, {
   fetchUser,
   notify,
   logout,
-  replaceState,
-  getPreapprovalDetails,
-  fetchCards,
-  getPreapprovalKey,
-  fetchGroups
+  replaceState
 })(Profile);
 
 function mapStateToProps({session, form, notification, users}) {
   const userid = session.user.id;
-  const user = users[userid] || {};
-  const card = getPaypalCard(users, userid);
-  const preapprovalDetails = users.preapprovalDetails || {};
-  const hasPreapproved = !!preapprovalDetails.maxTotalAmountOfAllPayments;
 
   return {
     userid,
     notification,
-    card,
-    preapprovalDetails,
     form: form.profile,
-    user,
+    user: users[userid] || {},
     isEditMode: form.profile.isEditMode,
     saveInProgress: users.updateInProgress,
     validationError: form.profile.error,
     serverError: users.error,
-    hasPreapproved,
-    groups: values(user.groups)
   };
 }

@@ -1,40 +1,18 @@
 import React, { Component } from 'react';
-import any from 'lodash/collection/any';
-
-import ProfilePreapproved from './ProfilePreapproved';
-import TableHead from './TableHead';
-import TableRow from './TableRow';
 
 class ProfileFormDefault extends Component {
   render() {
-    const {
-      user,
-      logoutAndRedirect,
-      hasPreapproved,
-      preapprovalDetails,
-      groups
-    } = this.props;
-    const { paypalEmail, email } = user;
+    const { user, logoutAndRedirect } = this.props;
+    const email = user.paypalEmail || user.email;
 
     return (
       <div className='ProfileForm'>
-        <TableHead value='Personal email' />
-        <TableRow value={email} />
-
-        <TableHead value='Paypal email' />
-        <TableRow value={paypalEmail} />
-
-        { preapprovalDetails.senderEmail ? (
-          <div>
-            <TableHead value='Paypal preapproved email' />
-            <TableRow value={preapprovalDetails.senderEmail} />
-          </div>
-          ) : null}
-
-        {hasPreapproved ? <ProfilePreapproved {...this.props} /> : null}
-
-        {this.stripeInfo(groups)}
-
+        <div className='ProfileForm-label'>
+          Paypal Account
+        </div>
+        <div className='ProfileForm-email'>
+          {email}
+        </div>
         <div className='ProfileForm-buttonContainer'>
           <div
             className='Button ProfileForm-button'
@@ -60,30 +38,6 @@ class ProfileFormDefault extends Component {
     setEditMode(!isEditMode);
   }
 
-  stripeInfo(groups) {
-    const hasStripeEmail = any(groups, g => {
-      return g.stripeManagedAccount && g.stripeManagedAccount.stripeEmail;
-    });
-
-    if (hasStripeEmail) {
-      return (
-        <div>
-          <TableHead value='Group Stripe account' />
-          {groups.map(group => {
-            return (
-              <TableRow
-                key={group.id}
-                value={group.stripeManagedAccount.stripeEmail} />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return null;
-    }
-  }
-
 }
 
 export default ProfileFormDefault;
-

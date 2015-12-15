@@ -1,12 +1,8 @@
 import merge from 'lodash/object/merge';
-import values from 'lodash/object/values'
-import find from 'lodash/collection/find'
-
 import * as constants from '../constants/users';
 
 export default function users(state={
-  updateInProgress: false,
-  cards: []
+  updateInProgress: false
 }, action={}) {
   const { groups, transactions, userid, type, cards } = action;
 
@@ -47,28 +43,8 @@ export default function users(state={
       const error = action.error;
       return merge({}, state, { updateInProgress: false, error });
 
-    case constants.GET_PREAPPROVAL_DETAILS_REQUEST:
-      return merge({}, state, { preapprovalDetailsInProgress: true });
-
-    case constants.GET_PREAPPROVAL_DETAILS_SUCCESS:
-      return merge({}, state, {
-        preapprovalDetailsInProgress: false,
-        preapprovalDetails: action.json
-      });
-
-    case constants.GET_PREAPPROVAL_DETAILS_FAILURE:
-      return merge({}, state, {
-        preapprovalDetailsInProgress: false,
-      });
-
     default:
       return state;
   }
 }
 
-export function getPaypalCard(users, id) {
-  const user = users[id] || {};
-  const cards = values(user.cards);
-
-  return find(cards, { service: 'paypal' }) || {};
-};
