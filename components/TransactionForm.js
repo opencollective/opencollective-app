@@ -16,17 +16,14 @@ class TransactionForm extends Component {
   render() {
     const {
       transaction,
-      tags,
-      notification,
-      resetNotifications
+      tags
     } = this.props;
+
     const attributes = transaction.attributes;
 
     return (
       <div className={this.className(this.props)}>
-        <Notification
-          {...notification}
-          resetNotifications={resetNotifications} />
+        <Notification {...this.props} />
         <ImageUpload
           {...this.props}
           url={attributes.link}
@@ -83,14 +80,10 @@ class TransactionForm extends Component {
 
     event.preventDefault();
 
-    this.validate(attributes)
-    .then(() => handleSubmit(attributes, groupid))
-    .catch(message => notify('error', message));
-  }
-
-  validate(attributes) {
     return this.props.validateTransaction(attributes)
-    .then(rejectError.bind(this, 'validationError'));
+    .then(rejectError.bind(this, 'validationError'))
+    .then(() => handleSubmit(attributes, groupid))
+    .catch(error => notify('error', error.message));
   }
 
   handleField(key, value) {

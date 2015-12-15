@@ -2,6 +2,7 @@ import jwtDecode from 'jwt-decode';
 import {
   DECODE_JWT_SUCCESS,
   DECODE_JWT_FAILURE,
+  DECODE_JWT_EMPTY
 } from '../../constants/session';
 
 
@@ -13,7 +14,7 @@ export default () => {
   const accessToken = localStorage.getItem('accessToken');
 
   if (!accessToken) {
-    return failure();
+    return empty();
   }
 
   let json = {};
@@ -29,14 +30,19 @@ export default () => {
 
 function failure() {
   return {
-    type: DECODE_JWT_FAILURE,
-    redirectTo: '/login'
+    type: DECODE_JWT_FAILURE
   };
 }
 
-function success(json) {
+function success(user) {
   return {
     type: DECODE_JWT_SUCCESS,
-    info: json,
+    user
+  };
+}
+
+function empty() {
+  return {
+    type: DECODE_JWT_EMPTY
   };
 }

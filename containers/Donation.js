@@ -29,7 +29,7 @@ export class Donation extends Component {
           title='Add funds'
           backLink={backLink} />
         <Content>
-          {this.notification(this.props)}
+          <Notification {...this.props} />
           <div className='padded'>
             <DonationForm {...this.props} donate={donate.bind(this)}/>
           </div>
@@ -43,13 +43,6 @@ export class Donation extends Component {
     this.props.fetchUser(this.props.userid);
   }
 
-  notification({notification, resetNotifications}) {
-    return (
-      <Notification
-        {...notification}
-        resetNotifications={resetNotifications} />
-    );
-  }
 }
 
 export function donate() {

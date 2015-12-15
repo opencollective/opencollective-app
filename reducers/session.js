@@ -10,7 +10,7 @@ export default function session(state={
 
     case constants.DECODE_JWT_SUCCESS:
       return merge({}, state, {
-        user: action.info
+        user: action.user
       });
 
     case constants.SHOW_POPOVERMENU:

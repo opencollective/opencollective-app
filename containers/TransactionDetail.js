@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-
 import rejectError from '../lib/reject_error';
 
 import payTransaction from '../actions/transactions/pay';
@@ -24,6 +23,7 @@ import TransactionDetailApproval from '../components/TransactionDetailApproval';
 import Notification from '../components/Notification';
 
 import isAdmin from '../lib/is_admin';
+import isDonation from '../lib/is_donation';
 
 class TransactionDetail extends Component {
   render() {
@@ -31,24 +31,17 @@ class TransactionDetail extends Component {
       group,
       transaction,
       isLoading,
-      notification,
-      resetNotifications,
       groupid
     } = this.props;
-
-    const backLink = `/groups/${groupid}/transactions/`;
 
     return (
       <div>
         <Header
           title={group.name}
-          backLink={backLink} />
+          backLink={`/groups/${groupid}/transactions/`} />
         <Content isLoading={isLoading}>
-          <Notification
-            {...notification}
-            resetNotifications={resetNotifications} />
-          <TransactionDetailTitle
-            description={transaction.description} />
+          <Notification {...this.props} />
+          <TransactionDetailTitle {...transaction} />
           <div className='TransactionDetail'>
             <div className='TransactionDetail-image'>
               <img src={transaction.link} />
@@ -111,7 +104,6 @@ class TransactionDetail extends Component {
     pushState(null, `/groups/${group.id}/transactions`)
   }
 }
-
 
 export function approveAndPay() {
   const {
@@ -179,6 +171,7 @@ function mapStateToProps({
     approveInProgress: approveInProgress || payInProgress,
     rejectInProgress,
     isLoading: !transaction.id,
-    showApprovalButtons: isAdmin([group])
+    showApprovalButtons: isAdmin([group]) && !isDonation(transaction),
+    isDonation: isDonation(transaction)
   };
 }

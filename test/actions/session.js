@@ -20,8 +20,8 @@ describe('session actions', () => {
   describe('login', () => {
      it('creates LOGIN_SUCCESS if it successfully logs in', (done) => {
       const email = 'test@gmail.com';
-      const info = { id: 1, email };
-      const accessToken = jwt.encode(info, 'aaa');
+      const user = { id: 1, email };
+      const accessToken = jwt.encode(user, 'aaa');
       const refreshToken = '123';
       const response = {
         access_token: accessToken,
@@ -35,7 +35,7 @@ describe('session actions', () => {
       const expected = [
         { type: constants.LOGIN_REQUEST, email },
         { type: constants.LOGIN_SUCCESS, json: response },
-        { type: constants.DECODE_JWT_SUCCESS, info }
+        { type: constants.DECODE_JWT_SUCCESS, user }
       ];
       const store = mockStore({}, expected, done);
       store.dispatch(login({email}));
@@ -60,14 +60,14 @@ describe('session actions', () => {
 
   describe('decode JWT', () => {
     it('creates DECODE_JWT_SUCCESS if it decodes a JWT', () => {
-      const info = { id: 1 };
-      const accessToken = jwt.encode(info, 'aaa');
+      const user = { id: 1 };
+      const accessToken = jwt.encode(user, 'aaa');
 
       localStorage.setItem('accessToken', accessToken);
 
       expect(decodeJWT()).toEqual({
         type: constants.DECODE_JWT_SUCCESS,
-        info
+        user
       });
     });
 
@@ -76,7 +76,6 @@ describe('session actions', () => {
 
       expect(decodeJWT()).toEqual({
         type: constants.DECODE_JWT_FAILURE,
-        redirectTo: '/login'
       });
     });
 
@@ -85,7 +84,6 @@ describe('session actions', () => {
 
       expect(decodeJWT()).toEqual({
         type: constants.DECODE_JWT_FAILURE,
-        redirectTo: '/login'
       });
     });
   });

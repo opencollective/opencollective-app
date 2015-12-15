@@ -14,7 +14,7 @@ export class DonationMethod extends Component {
       <div className='DonationMethod'>
         <Header title='Add donation method' hasBackButton={true} />
         <Content>
-          {this.notification(this.props)}
+          <Notification {...this.props} />
           <div className='padded'>
            <DonationMethodForm />
           </div>
@@ -26,15 +26,7 @@ export class DonationMethod extends Component {
   componentWillMount() {
     this.props.fetchGroup(this.props.groupid);
   }
-
-  notification({notification, resetNotifications}) {
-    return (
-      <Notification
-        {...notification}
-        resetNotifications={resetNotifications} />
-    );
-  }
-}
+};
 
 export default connect(mapStateToProps, {
   resetNotifications,
