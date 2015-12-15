@@ -19,6 +19,24 @@ npm run dev
 npm run build
 ```
 
+## Deployment
+
+If you want to deploy the app on Heroku, you need to add the remotes:
+
+```
+git remote add heroku-staging https://git.heroku.com/opencollective-staging-app.git
+git remote add heroku-production https://git.heroku.com/opencollective-prod-app.git
+```
+
+Then you can run:
+
+```
+git push heroku-staging master
+git push heroku-staging branch:master
+```
+
+The app will automatically build on Heroku.
+
 ## Test
 
 ```
