@@ -17,6 +17,7 @@ import setDonationCustom from '../actions/form/set_donation_custom';
 import resetNotifications from '../actions/notification/reset';
 import fetchGroup from '../actions/groups/fetch_by_id';
 import fetchUser from '../actions/users/fetch_by_id';
+import fetchCards from '../actions/users/fetch_cards';
 import notify from '../actions/notification/notify';
 
 export class Donation extends Component {
@@ -41,6 +42,7 @@ export class Donation extends Component {
   componentWillMount() {
     this.props.fetchGroup(this.props.groupid);
     this.props.fetchUser(this.props.userid);
+    this.props.fetchCards(this.props.userid);
   }
 
 }
@@ -78,6 +80,7 @@ export function donate() {
 export default connect(mapStateToProps, {
   resetNotifications,
   fetchGroup,
+  fetchCards,
   setDonationCustom,
   fetchUser,
   createTransaction,
