@@ -66,12 +66,12 @@ export class Profile extends Component {
 export function getPreapprovalInfo() {
   const { userid, getPreapprovalDetails, fetchCards } = this.props;
 
-  fetchCards(userid, { service: 'paypal' })
+  return fetchCards(userid, { service: 'paypal' })
   .then(() => {
     const card = this.props.card;
 
     if (card && card.token) {
-      getPreapprovalDetails(userid, card.token)
+      return getPreapprovalDetails(userid, card.token);
     }
   });
 };

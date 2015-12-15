@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import any from 'lodash/collection/any';
 
 import ProfilePreapproved from './ProfilePreapproved';
 import TableHead from './TableHead';
@@ -23,19 +24,16 @@ class ProfileFormDefault extends Component {
         <TableHead value='Paypal email' />
         <TableRow value={paypalEmail} />
 
-        <TableHead value='Paypal preapproved email' />
-        <TableRow value={preapprovalDetails.senderEmail} />
+        { preapprovalDetails.senderEmail ? (
+          <div>
+            <TableHead value='Paypal preapproved email' />
+            <TableRow value={preapprovalDetails.senderEmail} />
+          </div>
+          ) : null}
 
-        {hasPreapproved ? <ProfilePreapproved {...this.props} /> : ''}
+        {hasPreapproved ? <ProfilePreapproved {...this.props} /> : null}
 
-        <TableHead value='Group Stripe account' />
-        {groups.map(group => {
-          return (
-            <TableRow
-              key={group.id}
-              value={group.stripeManagedAccount.stripeEmail} />
-          );
-        })}
+        {this.stripeInfo(groups)}
 
         <div className='ProfileForm-buttonContainer'>
           <div
@@ -60,6 +58,29 @@ class ProfileFormDefault extends Component {
     const { isEditMode, setEditMode } = this.props;
 
     setEditMode(!isEditMode);
+  }
+
+  stripeInfo(groups) {
+    const hasStripeEmail = any(groups, g => {
+      return g.stripeManagedAccount && g.stripeManagedAccount.stripeEmail;
+    });
+
+    if (hasStripeEmail) {
+      return (
+        <div>
+          <TableHead value='Group Stripe account' />
+          {groups.map(group => {
+            return (
+              <TableRow
+                key={group.id}
+                value={group.stripeManagedAccount.stripeEmail} />
+            );
+          })}
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 
 }

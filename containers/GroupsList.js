@@ -98,6 +98,6 @@ function mapStateToProps({users, session, router}) {
     inProgress: users.inProgress,
     query,
     isLoading: !groups,
-    showPaypalReminder: isAdmin(values(groups)) && !hasConfirmedCards
+    showPaypalReminder: isAdmin(values(groups)) && (!hasConfirmedCards || query.preapprovalKey)
   };
 }
