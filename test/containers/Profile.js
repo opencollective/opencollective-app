@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { Profile, save, cancel } from '../../containers/Profile';
+import { Profile, save, cancel, getPreapprovalInfo } from '../../containers/Profile';
 
 const {expect} = chai;
 const {
@@ -19,28 +19,38 @@ chai.use(spies);
 
 describe('Profile container', () => {
 
-  it('should fetch user data on mount', () => {
-      const handler = chai.spy(() => {});
-      createElement({
-        fetchUser: handler,
-        resetNotifications: () => {},
-        notification: {},
-        userid: 1,
-        user: {}
-      });
-      expect(handler).to.have.been.called();
-  });
+  describe('on mount', function () {
+    const fetchUser = chai.spy(() => Promise.resolve({}));
+    const resetNotifications = chai.spy(() => Promise.resolve({}));
+    const getPreapprovalDetails = chai.spy(() => Promise.resolve({}));
+    const fetchCards = chai.spy(() => Promise.resolve({}));
 
-  it('should fetch reset notifications on mount', () => {
-      const handler = chai.spy(() => {});
+    before(() => {
       createElement({
-        fetchUser: () => {},
-        resetNotifications: handler,
+        fetchUser,
+        resetNotifications,
+        getPreapprovalDetails,
+        fetchCards,
+        fetchGroups: () => {},
         notification: {},
         userid: 1,
-        user: {}
+        user: {},
+        preapprovalDetails: {},
+        groups: []
       });
-      expect(handler).to.have.been.called();
+    });
+
+    it('should fetch user data', () => {
+      expect(fetchUser).to.have.been.called();
+    });
+
+    it('should reset the notifications', () => {
+      expect(resetNotifications).to.have.been.called();
+    });
+
+    it('should fetch get the cards', () => {
+      expect(fetchCards).to.have.been.called();
+    });
   });
 
   it('should notify when validateProfile fails on saving', (done) => {
@@ -87,13 +97,47 @@ describe('Profile container', () => {
   it('should setEditMode to false when canceling', () => {
     const setEditMode = chai.spy(() => {});
 
-    const props = {
-      setEditMode
-    };
-
-    cancel.apply({props});
+    cancel.apply({ props: { setEditMode }});
 
     expect(setEditMode).to.have.been.called.with(false);
+  });
+
+  it('should get preapproval details if the card has a token', (done) => {
+    const getPreapprovalDetails = chai.spy((userid, token) => {
+      expect(userid).to.be.equal(1);
+      expect(token).to.be.equal('abc');
+      return Promise.resolve();
+    });
+
+    const props = {
+      userid: 1,
+      getPreapprovalDetails,
+      card: { token: 'abc' },
+      fetchCards: () => Promise.resolve()
+    };
+
+    getPreapprovalInfo.call({props})
+    .then(() => {
+      expect(getPreapprovalDetails).to.have.been.called();
+      done();
+    });
+  });
+
+  it('should NOT get preapproval details if the card does not have a token', (done) => {
+    const getPreapprovalDetails = chai.spy(() => {});
+
+    const props = {
+      userid: 1,
+      getPreapprovalDetails,
+      card: {},
+      fetchCards: () => Promise.resolve()
+    };
+
+    getPreapprovalInfo.call({props})
+    .then(() => {
+      expect(getPreapprovalDetails).to.not.have.been.called();
+      done();
+    });
   });
 
 });

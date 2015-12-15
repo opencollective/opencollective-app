@@ -1,4 +1,5 @@
 import { get } from '../../lib/api';
+import origin from '../../lib/origin';
 import * as constants from '../../constants/users';
 
 /**
@@ -6,8 +7,8 @@ import * as constants from '../../constants/users';
  */
 
 export default (userid, options={}) => {
-  const root = window.location.href;
-  const callback = `${root}?approvalStatus=`;
+  // Redirect to homepage that has will confirmed the preapproval key
+  const callback = `${origin}?approvalStatus=`;
 
   const params = {
     returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
