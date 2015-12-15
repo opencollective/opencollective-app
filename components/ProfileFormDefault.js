@@ -22,7 +22,7 @@ class ProfileFormDefault extends Component {
         <TableRow value={email} />
 
         <TableHead value='Paypal email' />
-        <TableRow value={paypalEmail} />
+        <TableRow value={paypalEmail || 'No email'} />
 
         { preapprovalDetails.senderEmail ? (
           <div>
