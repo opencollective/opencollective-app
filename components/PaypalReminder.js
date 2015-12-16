@@ -7,7 +7,7 @@ class PaypalReminder extends Component {
     const hideButton = status === 'success' || status === 'failure';
 
     return (
-      <div className='PaypalReminder'>
+      <div className='Reminder PaypalReminder'>
         {this.message(status)}
         {hideButton ? null : this.button(this.props)}
       </div>

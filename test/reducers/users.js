@@ -22,11 +22,12 @@ describe('users reducer', () => {
 
     expect(state).toEqual({
       [userid]: {groups},
-      updateInProgress: false
+      updateInProgress: false,
+      cards: []
     });
   });
 
-  it('should add the groups to the user', () => {
+  it('should add the transactions to the user', () => {
     const transactions = {
       1: {amount: 10}
     };
@@ -39,14 +40,16 @@ describe('users reducer', () => {
 
     expect(state).toEqual({
       [userid]: {transactions},
-      updateInProgress: false
+      updateInProgress: false,
+      cards: []
     });
   });
 
   it('should add new users', () => {
     const users = {
       1: {name: 'bob'},
-      updateInProgress: false
+      updateInProgress: false,
+      cards: []
     };
     const state = reducer(undefined, {
       type: constants.FETCH_USER_SUCCESS,
