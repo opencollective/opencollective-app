@@ -5,9 +5,15 @@
 .UsersList-item {
   display: inline-block;
   padding: 0 calc(var(--spacing) / 2);
+  text-align: center;
 }
 
 .UsersList-name {
   padding-top: calc(var(--spacing) / 2);
   font-weight: bold;
+}
+
+.UsersList-amount {
+  padding-top: calc(var(--spacing) / 2);
+  font-size: calc(var(--spacing) * 1.3);
 }

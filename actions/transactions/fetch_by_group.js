@@ -7,12 +7,15 @@ import * as constants from '../../constants/transactions';
  */
 
 export default (groupid, options={}) => {
-  const params = options.per_page ? `?per_page=${options.per_page}` : '';
-
   return dispatch => {
     dispatch(request(groupid));
-    return get(`groups/${groupid}/transactions${params}`, {
-      schema: Schemas.TRANSACTION_ARRAY
+    return get(`groups/${groupid}/transactions`, {
+      schema: Schemas.TRANSACTION_ARRAY,
+      params: {
+        per_page: options.per_page,
+        sort: options.sort,
+        direction: options.direction
+      }
     })
     .then(json => dispatch(success(groupid, json)))
     .catch(error => dispatch(failure(error)));
@@ -35,6 +38,7 @@ function success(groupid, json) {
 }
 
 function failure(error) {
+  console.log(error.stack)
   return {
     type: constants.TRANSACTIONS_FAILURE,
     error,

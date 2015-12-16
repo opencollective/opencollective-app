@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import BodyClassName from 'react-body-classname';
+import take from 'lodash/array/take';
+import extend from 'lodash/object/extend';
 
 import rejectError from '../lib/reject_error';
 import convertToCents from '../lib/convert_to_cents';
 import filterCollection from '../lib/filter_collection';
 import sortByDate from '../lib/sort_by_date';
+import sortByAmount from '../lib/sort_by_amount';
 
 import PublicHeader from '../components/PublicHeader';
 import Notification from '../components/Notification';
@@ -22,10 +25,12 @@ import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
 import fetchGroup from '../actions/groups/fetch_by_id';
 import fetchUsers from '../actions/users/fetch_by_group';
+import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
 import donate from '../actions/groups/donate';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
+import getUniqueValues from '../lib/get_unique_values';
 
 export class PublicGroup extends Component {
   render() {
@@ -36,7 +41,7 @@ export class PublicGroup extends Component {
           <Notification {...this.props} />
           <div className='PublicGroup-container'>
             <PublicGroupHeader {...this.props.group} />
-            <UsersList users={this.props.backers} size='75px' />
+            <UsersList users={this.props.admins} size='75px' />
             <div className='Well PublicGroup-well'>
               <span className='Well-primary'>
                 Available budget
@@ -44,6 +49,10 @@ export class PublicGroup extends Component {
               <span className='Well-right'>
                 <Currency value={this.props.group.balance} />
               </span>
+            </div>
+            <div className='PublicGroup-backers'>
+              <SubTitle text='Our backers' />
+              <UsersList users={this.props.backers} />
             </div>
             <div className='PublicGroup-transactions'>
               <SubTitle text='Latest transactions' />
@@ -61,11 +70,20 @@ export class PublicGroup extends Component {
       fetchGroup,
       groupid,
       fetchTransactions,
-      fetchUsers
+      fetchUsers,
+      fetchUserIfNeeded
     } = this.props;
 
     fetchGroup(groupid);
     fetchTransactions(groupid, { per_page: 5 });
+    fetchTransactions(groupid, {
+      sort: 'amount',
+      direction: 'desc'
+    })
+    .then(({transactions}) => {
+      return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
+    });
+
     fetchUsers(groupid);
   }
 
@@ -109,7 +127,8 @@ export default connect(mapStateToProps, {
   resetNotifications,
   pushState,
   fetchTransactions,
-  fetchUsers
+  fetchUsers,
+  fetchUserIfNeeded
 })(PublicGroup);
 
 function mapStateToProps({
@@ -126,6 +145,15 @@ function mapStateToProps({
   const group = groups[groupid] || { stripeManagedAccount: {} };
   const GroupId = Number(groupid);
 
+  const groupTransactions = filterCollection(transactions, { GroupId });
+  const admins = filterCollection(users, { GroupId });
+  const topDonations = groupTransactions.sort(sortByAmount).filter(t => t.amount > 0)
+  const top5Donations = take(topDonations, 5);
+
+  const backers = top5Donations.map(({UserId, amount}) => {
+    return extend({}, users[UserId], {amount});
+  });
+
   return {
     groupid,
     group,
@@ -136,8 +164,9 @@ function mapStateToProps({
     notification,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
-    transactions: filterCollection(transactions, { GroupId }).sort(sortByDate),
+    transactions: groupTransactions.sort(sortByDate),
     users,
-    backers: filterCollection(users, { GroupId }),
+    backers,
+    admins
   };
 }
