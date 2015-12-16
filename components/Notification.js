@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes} from 'react';
 import Icon from './Icon';
 
 class Notification extends Component {
@@ -29,5 +29,14 @@ class Notification extends Component {
     this.props.resetNotifications();
   }
 };
+
+Notification.propTypes = {
+  resetNotifications: PropTypes.func.isRequired,
+  notification: PropTypes.shape({
+    status: PropTypes.string,
+    message: PropTypes.string
+  })
+};
+
 
 export default Notification;
