@@ -53,3 +53,11 @@
 .PublicGroup .UsersList {
   padding-bottom: var(--spacing);
 }
+
+.PublicGroup-backers {
+  padding-top: var(--spacing);
+}
+
+.PublicGroup-backers .UsersList {
+  text-align: left;
+}
