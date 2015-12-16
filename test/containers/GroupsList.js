@@ -32,7 +32,9 @@ describe('GroupsList container', () => {
       fetchUserGroupsAndTransactions,
       fetchCards,
       groups: [],
-      query: {}
+      query: {},
+      resetNotifications: () => {},
+      notification: {}
     });
 
     expect(fetchUserGroupsAndTransactions).to.have.been.called();
@@ -47,6 +49,7 @@ describe('GroupsList container', () => {
     const confirmPreapprovalKey = chai.spy((userid, preapprovalKey) => {
       expect(userid).to.be.equal(1);
       expect(preapprovalKey).to.be.equal(query.preapprovalKey);
+      return Promise.resolve();
     });
 
     createElement({
@@ -54,6 +57,8 @@ describe('GroupsList container', () => {
       fetchUserGroupsAndTransactions: () => Promise.resolve(),
       fetchCards: () => Promise.resolve(),
       confirmPreapprovalKey,
+      resetNotifications: () => {},
+      notification: {},
       groups: [],
       query
     });
@@ -71,8 +76,10 @@ describe('GroupsList container', () => {
       userid: 1,
       fetchUserGroupsAndTransactions: () => Promise.resolve(),
       fetchCards: () => Promise.resolve(),
-      confirmPreapprovalKey: () => {},
+      confirmPreapprovalKey: () => Promise.resolve(),
       getPreapprovalKeyForUser: () => {},
+      resetNotifications: () => {},
+      notification: {},
       groups: [],
       showPaypalReminder: true,
       query
@@ -90,8 +97,10 @@ describe('GroupsList container', () => {
       userid: 1,
       fetchUserGroupsAndTransactions: () => Promise.resolve(),
       fetchCards: () => Promise.resolve(),
-      confirmPreapprovalKey: () => {},
+      confirmPreapprovalKey: () => Promise.resolve(),
       getPreapprovalKeyForUser: () => {},
+      resetNotifications: () => {},
+      notification: {},
       groups: [],
       showProfileReminder: true,
       query
