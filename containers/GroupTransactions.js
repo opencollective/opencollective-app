@@ -8,7 +8,7 @@ import getUniqueValues from '../lib/get_unique_values';
 
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
-import fetchGroup from '../actions/groups/fetch_by_id';
+import fetchGroups from '../actions/users/fetch_groups';
 import isAdmin from '../lib/is_admin';
 import showPopOverMenu from '../actions/session/show_popovermenu';
 
@@ -59,15 +59,16 @@ class GroupTransactions extends Component {
 
   componentDidMount() {
     const {
-      fetchGroup,
+      fetchGroups,
       fetchTransactions,
       groupid,
+      userid,
       fetchUserIfNeeded,
       showPopOverMenu
     } = this.props;
 
     showPopOverMenu(false);
-    fetchGroup(groupid);
+    fetchGroups(userid);
     fetchTransactions(groupid)
     .then(({transactions}) => {
       return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
@@ -77,21 +78,25 @@ class GroupTransactions extends Component {
 
 export default connect(mapStateToProps, {
   fetchTransactions,
-  fetchGroup,
+  fetchGroups,
   fetchUserIfNeeded,
   showPopOverMenu
 })(GroupTransactions);
 
-function mapStateToProps({transactions, router, groups, users={}, session}) {
+function mapStateToProps({transactions, router, users={}, session}) {
   const groupid = router.params.groupid;
-  const group = groups[groupid] || {};
+  const userid = session.user.id;
+  const user = users[userid] || {};
+  const userGroups = user.groups || {};
+  const group = userGroups[groupid] || {};
   const transactionsArray = values(transactions);
-  const userIsAdmin = isAdmin([group]);
+  const userIsAdmin = isAdmin([userGroups[groupid]]);
   
   return {
     groupid,
     group,
     transactions: filter(transactionsArray, {GroupId: Number(groupid)}).sort(sortByDate),
+    userid,
     users: users,
     isLoading: !group.id,
     hasPopOverMenuOpen: session.hasPopOverMenuOpen,

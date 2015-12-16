@@ -9,7 +9,7 @@ import Content from './Content';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-import fetchGroup from '../actions/groups/fetch_by_id';
+import fetchGroups from '../actions/users/fetch_groups';
 
 class InviteToGroup extends Component {
   render() {
@@ -33,34 +33,38 @@ class InviteToGroup extends Component {
 
   componentDidMount() {
     const {
-      fetchGroup,
+      fetchGroups,
       groupid,
+      userid,
       showPopOverMenu
     } = this.props;
     
     showPopOverMenu(false);
 
-    fetchGroup(groupid)
+    fetchGroups(userid)
     .then((result) => console.log(result));
   }
 
 }
 
 export default connect(mapStateToProps, {
-  fetchGroup,
+  fetchGroups,
   showPopOverMenu
 })(InviteToGroup);
 
-function mapStateToProps({router, session, groups}) {
+function mapStateToProps({router, session, users}) {
   const groupid = router.params.groupid;
-  const group = groups[groupid] || {};
-  const userIsAdmin = isAdmin([group]);
+  const userid = session.user.id;
+  const user = users[userid] || {};
+  const groups = user.groups || {};
+  const userIsAdmin = isAdmin([groups[groupid]]);
   
   return {
     email: session.user.email,
     groupid,
     group: groups[groupid] || {},
     isLoading: !groupid,
+    userid,
     hasPopOverMenuOpen: session.hasPopOverMenuOpen,
     userIsAdmin
   };
