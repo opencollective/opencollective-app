@@ -164,7 +164,7 @@ function mapStateToProps({
     notification,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
-    transactions: groupTransactions.sort(sortByDate),
+    transactions: take(groupTransactions.sort(sortByDate), 5),
     users,
     backers,
     admins
