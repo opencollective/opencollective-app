@@ -36,7 +36,7 @@ class ProfileFormEdit extends Component {
   }
 
   append({target}) {
-    this.props.append({
+    this.props.appendProfileForm({
       paypalEmail: target.value
     });
   }
