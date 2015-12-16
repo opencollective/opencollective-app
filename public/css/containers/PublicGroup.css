@@ -36,3 +36,20 @@
 .PublicGroup .DonationPicker-amount {
   max-width: 100px;
 }
+
+.PublicGroup-transactions {
+  padding: var(--spacing) 0 calc(var(--spacing) * 2) 0;
+}
+
+.PublicGroup-transactions .SubTitle {
+  margin: 0;
+}
+
+.PublicGroup-well {
+  margin: 0 -var(--spacing);
+  border-top: 1px solid var(--gray);
+}
+
+.PublicGroup .UsersList {
+  padding-bottom: var(--spacing);
+}

@@ -1,6 +1,6 @@
 .PublicGroupHeader {
   text-align: center;
-  padding-top: var(--spacing);
+  padding: var(--spacing) 0;
 }
 
 .PublicGroupHeader-name {

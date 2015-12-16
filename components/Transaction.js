@@ -24,7 +24,7 @@ class Transaction extends Component {
     return (
       <div className='Transaction'>
         <Link to={`/groups/${GroupId}/transactions/${id}`}>
-          <Avatar url={user.avatar} />
+          <Avatar url={user && user.avatar} />
           <div className='Transaction-info'>
             <div className='Transaction-created'>
               {createdAt ? moment(createdAt).fromNow() : ''}

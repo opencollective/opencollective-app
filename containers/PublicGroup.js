@@ -5,16 +5,24 @@ import BodyClassName from 'react-body-classname';
 
 import rejectError from '../lib/reject_error';
 import convertToCents from '../lib/convert_to_cents';
+import filterCollection from '../lib/filter_collection';
+import sortByDate from '../lib/sort_by_date';
 
 import PublicHeader from '../components/PublicHeader';
 import Notification from '../components/Notification';
 import PublicGroupForm from '../components/PublicGroupForm';
 import PublicGroupThanks from '../components/PublicGroupThanks';
 import PublicGroupHeader from '../components/PublicGroupHeader';
+import TransactionsList from '../components/TransactionsList';
+import SubTitle from '../components/SubTitle';
+import UsersList from '../components/UsersList';
+import Currency from '../components/Currency';
 
 import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
 import fetchGroup from '../actions/groups/fetch_by_id';
+import fetchUsers from '../actions/users/fetch_by_group';
+import fetchTransactions from '../actions/transactions/fetch_by_group';
 import donate from '../actions/groups/donate';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
@@ -28,12 +36,20 @@ export class PublicGroup extends Component {
           <Notification {...this.props} />
           <div className='PublicGroup-container'>
             <PublicGroupHeader {...this.props.group} />
-            {this.props.showThankYouPage ?
-              <PublicGroupThanks /> :
-              <PublicGroupForm
-                {...this.props}
-                onToken={donateToGroup.bind(this, this.props.amount)} />
-            }
+            <UsersList users={this.props.backers} size='75px' />
+            <div className='Well PublicGroup-well'>
+              <span className='Well-primary'>
+                Available budget
+              </span>
+              <span className='Well-right'>
+                <Currency value={this.props.group.balance} />
+              </span>
+            </div>
+            <div className='PublicGroup-transactions'>
+              <SubTitle text='Latest transactions' />
+              <TransactionsList {...this.props} />
+            </div>
+            {this.form(this.props)}
           </div>
         </div>
       </BodyClassName>
@@ -43,15 +59,24 @@ export class PublicGroup extends Component {
   componentWillMount() {
     const {
       fetchGroup,
-      groupid
+      groupid,
+      fetchTransactions,
+      fetchUsers
     } = this.props;
 
-    fetchGroup(groupid)
-    .then(({error={}}) => {
-      if (error.response && error.response.status === 404) {
-        alert('This group does not exist');
-      }
-    });
+    fetchGroup(groupid);
+    fetchTransactions(groupid, { per_page: 5 });
+    fetchUsers(groupid);
+  }
+
+  form(props) {
+    if (props.showThankYouPage) {
+      return <PublicGroupThanks />;
+    } else {
+      const onToken = donateToGroup.bind(this, props.amount);
+
+      return <PublicGroupForm {...props} onToken={onToken} />
+    }
   }
 }
 
@@ -82,25 +107,37 @@ export default connect(mapStateToProps, {
   donate,
   notify,
   resetNotifications,
-  pushState
+  pushState,
+  fetchTransactions,
+  fetchUsers
 })(PublicGroup);
 
-function mapStateToProps({router, groups, form, notification}) {
+function mapStateToProps({
+  router,
+  groups,
+  form,
+  notification,
+  transactions,
+  users
+}) {
   const groupid = router.params.groupid;
   const status = router.location.query.status;
   const amount = form.donation.attributes.amount || 0;
   const group = groups[groupid] || { stripeManagedAccount: {} };
-  const stripeKey = group.stripeManagedAccount.stripeKey;
+  const GroupId = Number(groupid);
 
   return {
     groupid,
     group,
-    stripeKey,
+    stripeKey: group.stripeManagedAccount.stripeKey,
     amount,
     stripeAmount: convertToCents(amount),
     isCustomMode: form.donation.isCustomMode,
     notification,
     inProgress: groups.donateInProgress,
-    showThankYouPage: status === 'thankyou'
+    showThankYouPage: status === 'thankyou',
+    transactions: filterCollection(transactions, { GroupId }).sort(sortByDate),
+    users,
+    backers: filterCollection(users, { GroupId }),
   };
 }
