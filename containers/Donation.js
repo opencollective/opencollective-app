@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import values from 'lodash/object/values';
 import getUniqueValues from '../lib/get_unique_values';
 
 import rejectError from '../lib/reject_error';
