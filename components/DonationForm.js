@@ -14,21 +14,10 @@ const DonationForm = ({
   isCustomMode,
   setDonationCustom,
   donate,
-  user,
+  userCardsLabels,
   groupid
 }) => {
-  
-  // xdamman: this sucks. 
-  // 1. `user.cards` should be an array and not an object with the cardid as an index
-  // 2. this logic should probably not be here, @arnaudbenard: where should I put this?
-  // 3. we should rename `card.number` to `card.label` (we should never store the entire credit card number)
-  let options = [];
-  for(let id in user.cards) {
-    let card = user.cards[id];
-    options.push(card.service + ' (' + card.number + ')');
-    user.organizationPaypalEmail = card.number;
-  }
-  
+ 
   return (
      <div className='DonationForm'>
       {header(group)}
@@ -51,8 +40,8 @@ const DonationForm = ({
       </div>
 
       <Select
-        options={options}
-        value={options[0]}
+        options={userCardsLabels}
+        value={userCardsLabels[0]}
         handleChange={handleMethod.bind(this)}
         customClass='DonationForm-select' />
 
