@@ -8,6 +8,7 @@ import TransactionDetail from './containers/TransactionDetail';
 import Login from './containers/Login';
 import Profile from './containers/Profile';
 import PublicGroup from './containers/PublicGroup';
+import InviteToGroup from './containers/InviteToGroup';
 
 const routes = {
   component: App,
@@ -21,6 +22,7 @@ const routes = {
     { path: 'groups/:groupid/transactions/new', component: TransactionNew },
     { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail },
     { path: 'public/groups/:groupid', component: PublicGroup },
+    { path: 'groups/:groupid/invite', component: InviteToGroup },
     { path: '*', component: Login }
   ]
 };

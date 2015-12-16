@@ -9,6 +9,7 @@ import getUniqueValues from '../lib/get_unique_values';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
 import fetchGroup from '../actions/groups/fetch_by_id';
+import isAdmin from '../lib/is_admin';
 import showPopOverMenu from '../actions/session/show_popovermenu';
 
 import Content from './Content';
@@ -25,7 +26,8 @@ class GroupTransactions extends Component {
       groupid,
       isLoading,
       hasPopOverMenuOpen,
-      showPopOverMenu
+      showPopOverMenu,
+      userIsAdmin
     } = this.props;
 
     return (
@@ -42,10 +44,7 @@ class GroupTransactions extends Component {
             {this.list(this.props)}
           </div>
         </Content>
-        <Footer
-          groupid={groupid}
-          hasPopOverMenuOpen={hasPopOverMenuOpen}
-          showPopOverMenu={showPopOverMenu} />
+        <Footer {...this.props} />
      </div>
     );
   }
@@ -87,13 +86,15 @@ function mapStateToProps({transactions, router, groups, users={}, session}) {
   const groupid = router.params.groupid;
   const group = groups[groupid] || {};
   const transactionsArray = values(transactions);
-
+  const userIsAdmin = isAdmin([group]);
+  
   return {
     groupid,
     group,
     transactions: filter(transactionsArray, {GroupId: Number(groupid)}).sort(sortByDate),
     users: users,
     isLoading: !group.id,
-    hasPopOverMenuOpen: session.hasPopOverMenuOpen
+    hasPopOverMenuOpen: session.hasPopOverMenuOpen,
+    userIsAdmin
   };
 }

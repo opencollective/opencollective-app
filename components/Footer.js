@@ -18,7 +18,8 @@ class Footer extends Component {
     const {
       groupid,
       hasPopOverMenuOpen,
-      showPopOverMenu
+      showPopOverMenu,
+      userIsAdmin
     } = this.props;
 
     return (
@@ -29,10 +30,7 @@ class Footer extends Component {
           <Icon type='add' />
         </div>
         <div className='Footer-popOverMenu'>
-            <PopOverMenu
-              groupid={groupid}
-              showPopOverMenu={showPopOverMenu}
-              hasPopOverMenuOpen={hasPopOverMenuOpen} />
+            <PopOverMenu {...this.props} />
         </div>
         <div className='Footer-left'>
           <Link to='/profile'>
