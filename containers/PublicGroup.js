@@ -15,7 +15,6 @@ import PublicHeader from '../components/PublicHeader';
 import Notification from '../components/Notification';
 import PublicGroupForm from '../components/PublicGroupForm';
 import PublicGroupThanks from '../components/PublicGroupThanks';
-import PublicGroupHeader from '../components/PublicGroupHeader';
 import TransactionsList from '../components/TransactionsList';
 import SubTitle from '../components/SubTitle';
 import UsersList from '../components/UsersList';
@@ -34,27 +33,40 @@ import getUniqueValues from '../lib/get_unique_values';
 
 export class PublicGroup extends Component {
   render() {
+    const { group } = this.props;
+
     return (
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
+
           <PublicHeader />
           <Notification {...this.props} />
+
           <div className='PublicGroup-container'>
-            <PublicGroupHeader {...this.props.group} />
+
+            <div className='u-center u-py1'>
+              <div className='u-bold u-py1'>{group.name}</div>
+              <div className='u-mb1'>
+                In order to reach our goals, {group.name} needs your help
+              </div>
+            </div>
+
             <UsersList users={this.props.admins} size='75px' />
+
             <div className='Well PublicGroup-well'>
               <span className='Well-primary'>
                 Available budget
               </span>
               <span className='Well-right'>
-                <Currency value={this.props.group.balance} />
+                <Currency value={group.balance} />
               </span>
             </div>
-            <div className='PublicGroup-backers'>
+
+            <div className='u-mt1 PublicGroup-backers'>
               <SubTitle text='Our backers' />
               <UsersList users={this.props.backers} />
             </div>
-            <div className='PublicGroup-transactions'>
+            <div className='u-mt1 u-mb2 PublicGroup-transactions'>
               <SubTitle text='Latest transactions' />
               <TransactionsList {...this.props} />
             </div>
@@ -148,11 +160,9 @@ function mapStateToProps({
   const groupTransactions = filterCollection(transactions, { GroupId });
   const admins = filterCollection(users, { GroupId });
   const topDonations = groupTransactions.sort(sortByAmount).filter(t => t.amount > 0)
-  const top5Donations = take(topDonations, 5);
+  const top5 = take(topDonations, 5);
 
-  const backers = top5Donations.map(({UserId, amount}) => {
-    return extend({}, users[UserId], {amount});
-  });
+  const backers = top5.map(t => extend({}, users[t.UserId], {amount: t.amount}));
 
   return {
     groupid,
