@@ -29,10 +29,6 @@
   max-width: 100px;
 }
 
-.PublicGroup-transactions {
-  padding: var(--spacing) 0 calc(var(--spacing) * 2) 0;
-}
-
 .PublicGroup-transactions .SubTitle {
   margin: 0;
 }
@@ -44,10 +40,6 @@
 
 .PublicGroup .UsersList {
   padding-bottom: var(--spacing);
-}
-
-.PublicGroup-backers {
-  padding-top: var(--spacing);
 }
 
 .PublicGroup-backers .UsersList {
