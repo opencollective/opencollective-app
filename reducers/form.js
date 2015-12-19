@@ -3,18 +3,15 @@ import merge from 'lodash/object/merge';
 import omit from 'lodash/object/omit';
 
 import errorDetail from '../lib/error_detail';
-import tags from '../ui/tags';
 import * as constants from '../constants/form';
 
 /**
  * New transaction form reducer
  */
-
 const transactionInitialState = {
-  defaults: { tags },
   attributes: {
     amount: 0,
-    tags: [tags[0]],
+    tags: [],
     description: '',
     createdAt: new Date()
   },
