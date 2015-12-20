@@ -53,12 +53,12 @@ export class TransactionNew extends Component {
 
 export function createExpense(transaction) {
   const {
-    groupid,
+    group,
     createTransaction
   } = this.props;
 
   // An expense is a negative transaction in the backend
-  return createTransaction(groupid, {...transaction, amount: -transaction.amount })
+  return createTransaction(group.id, {...transaction, amount: -transaction.amount, currency: group.currency })
   .then(rejectError.bind(this, 'requestError'));
 }
 
