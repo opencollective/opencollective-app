@@ -1,15 +1,24 @@
+
+
 @font-face {
   font-family: 'Proxima Nova';
-  src: url('/fonts/Proxima Nova/ProximaNova-Regular.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+  src:url("/fonts/Proxima Nova/regular.eot?#iefix");
+  src:url("/fonts/Proxima Nova/regular.eot?#iefix") format("eot"),
+    url("/fonts/Proxima Nova/regular.woff2") format("woff2"),
+    url("/fonts/Proxima Nova/regular.woff") format("woff"),
+    url("/fonts/Proxima Nova/regular.ttf") format("truetype"),
+    url("/fonts/Proxima Nova/regular.svg#6f8328bd-ad5c-46b6-8210-73f0242ef13d") format("svg");
 }
 
 @font-face {
   font-family: 'Proxima Nova';
-  src: url('/fonts/Proxima Nova/ProximaNova-Bold.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
+  src:url("/fonts/Proxima Nova/regular.eot?#iefix");
+  src:url("/fonts/Proxima Nova/regular.eot?#iefix") format("eot"),
+    url("/fonts/Proxima Nova/regular.woff2") format("woff2"),
+    url("/fonts/Proxima Nova/regular.woff") format("woff"),
+    url("/fonts/Proxima Nova/regular.ttf") format("truetype"),
+    url("/fonts/Proxima Nova/regular.svg#6f8328bd-ad5c-46b6-8210-73f0242ef13d") format("svg");
+  font-weight: 600;
 }
 
 @font-face {
@@ -20,5 +29,29 @@
     url('/fonts/opencollective/opencollective.ttf') format('truetype'),
     url('/fonts/opencollective/opencollective.svg#opencollective') format('svg');
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family:"Proxima Nova";
+  src:url("/fonts/Proxima Nova/italic.eot?#iefix");
+  src:url("/fonts/Proxima Nova/italic.eot?#iefix") format("eot"),
+    url("/fonts/Proxima Nova/italic.woff2") format("woff2"),
+    url("/fonts/Proxima Nova/italic.woff") format("woff"),
+    url("/fonts/Proxima Nova/italic.ttf") format("truetype"),
+    url("/fonts/Proxima Nova/italic.svg#edd9165a-3902-4b98-b7d9-925853b65b82") format("svg");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face{
+  font-family:"Proxima Nova";
+  src:url("/fonts/Proxima Nova/bold.eot?#iefix");
+  src:url("/fonts/Proxima Nova/bold.eot?#iefix") format("eot"),
+    url("/fonts/Proxima Nova/bold.woff2") format("woff2"),
+    url("/fonts/Proxima Nova/bold.woff") format("woff"),
+    url("/fonts/Proxima Nova/bold.ttf") format("truetype"),
+    url("/fonts/Proxima Nova/bold.svg#b39f961b-4c68-4114-8a71-76bfe004cf14") format("svg");
+  font-weight: bold;
   font-style: normal;
 }

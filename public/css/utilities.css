@@ -2,6 +2,18 @@
   margin: var(--spacing);
 }
 
+
+/**
+ * If you need spacing utilities, create them here.
+ * No need to create a specific class for simple spacing.
+ *
+ * Inspired by http://www.basscss.com/docs/white-space/
+ */
+
+/**
+ * fonts
+ */
+
 .u-lightBlue {
   color: var(--light-blue);
 }
@@ -13,3 +25,30 @@
 .u-italic {
   font-style: italic;
 }
+
+.u-center {
+  text-align: center;
+}
+
+/**
+ * white space
+ */
+
+.u-py1 {
+  padding: var(--spacing) 0;
+}
+
+.u-mb1 {
+  margin-bottom: var(--spacing);
+}
+
+.u-mb2 {
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
+.u-mt1 {
+  margin-top: var(--spacing);
+}
+
+
+

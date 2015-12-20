@@ -1,6 +1,7 @@
 import merge from 'lodash/object/merge';
 import values from 'lodash/object/values'
 import find from 'lodash/collection/find'
+import mapValues from 'lodash/object/mapValues'
 
 import * as constants from '../constants/users';
 
@@ -8,7 +9,17 @@ export default function users(state={
   updateInProgress: false,
   cards: []
 }, action={}) {
-  const { groups, transactions, userid, type, cards } = action;
+  const {
+    groups,
+    transactions,
+    userid,
+    groupid,
+    type,
+    cards,
+    error,
+    users
+  } = action;
+  const GroupId = Number(groupid);
 
   switch (type) {
 
@@ -28,7 +39,11 @@ export default function users(state={
       });
 
     case constants.FETCH_USER_SUCCESS:
-      return merge({}, state, action.users);
+      return merge({}, state, users);
+
+    case constants.FETCH_USERS_BY_GROUP_SUCCESS:
+      const usersWithGroup = mapValues(users, obj => merge(obj, { GroupId }));
+      return merge({}, state, usersWithGroup);
 
     case constants.GET_APPROVAL_KEY_FOR_USER_REQUEST:
       return merge({}, state, { inProgress: true });
@@ -44,7 +59,6 @@ export default function users(state={
       return merge({}, state, { updateInProgress: false });
 
     case constants.UPDATE_PAYPAL_EMAIL_FAILURE:
-      const error = action.error;
       return merge({}, state, { updateInProgress: false, error });
 
     case constants.GET_PREAPPROVAL_DETAILS_REQUEST:
@@ -60,6 +74,9 @@ export default function users(state={
       return merge({}, state, {
         preapprovalDetailsInProgress: false,
       });
+
+    case constants.FETCH_USERS_BY_GROUP_FAILURE:
+      return merge({}, state, { error });
 
     default:
       return state;

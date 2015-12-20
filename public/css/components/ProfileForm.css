@@ -21,6 +21,7 @@
   background-color: var(--orange);
   margin-top: calc(var(--spacing) * 2);
   display: inline-block;
+  font-weight: bold;
 }
 
 .ProfileForm-field {
