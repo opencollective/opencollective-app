@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
+import currency from '../lib/currency';
 
 import rejectError from '../lib/reject_error';
 
@@ -16,7 +17,8 @@ class TransactionForm extends Component {
   render() {
     const {
       transaction,
-      tags
+      tags,
+      group
     } = this.props;
 
     const attributes = transaction.attributes;
@@ -38,7 +40,7 @@ class TransactionForm extends Component {
             handleChange={this.handleField.bind(this, 'description')} />
           <Input
             labelText='Amount'
-            placeholder='$ 10.00'
+            placeholder={currency(0, group.currency)}
             hasError={transaction.error.amount}
             handleChange={this.handleField.bind(this, 'amount')} />
           <div className='Input'>

@@ -1,11 +1,8 @@
 import React, { PropTypes } from 'react';
-import Numeral from 'numeral';
+import format_currency from '../lib/currency';
 
-const Currency = ({value}) => {
-  const number = Numeral(value);
-  const formatted = number.format('$ 0,0.00');
-
-  return <span className='Currency'>{formatted}</span>;
+const Currency = ({value = 0, currency}) => {
+  return <span className='Currency'>{format_currency(value, currency)}</span>;
 };
 
 Currency.propTypes = {

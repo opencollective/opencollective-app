@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import Currency from './Currency';
 import Icon from './Icon';
 
-const GroupLink = ({id, name, balance}) => {
+const GroupLink = ({id, name, balance, currency}) => {
   const url = `/groups/${id}/transactions/`;
 
   return (
@@ -14,7 +14,7 @@ const GroupLink = ({id, name, balance}) => {
             {name}
           </span>
           <span className='Well-right'>
-            <Currency value={balance} /> <Icon type='right' />
+            <Currency value={balance} currency={currency} /> <Icon type='right' />
           </span>
         </div>
       </Link>

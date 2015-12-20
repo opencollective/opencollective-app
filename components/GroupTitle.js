@@ -8,7 +8,7 @@ export default ({group, label}) => {
         {!!label ? label : 'Current balance'}
       </span>
       <span className='Well-right'>
-        <Currency value={group.balance} />
+        <Currency value={group.balance} currency={group.currency} />
       </span>
     </div>
   );

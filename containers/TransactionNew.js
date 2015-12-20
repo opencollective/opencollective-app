@@ -4,6 +4,7 @@ import { pushState } from 'redux-router';
 
 import rejectError from '../lib/reject_error';
 
+import fetchGroup from '../actions/groups/fetch_by_id';
 import createTransaction from '../actions/transactions/create';
 import resetTransactionForm from '../actions/form/reset_transaction';
 import appendTransactionForm from '../actions/form/append_transaction';
@@ -31,6 +32,10 @@ export class TransactionNew extends Component {
         </Content>
       </div>
     );
+  }
+
+  componentWillMount() {
+    this.props.fetchGroup(this.props.groupid);
   }
 
   handleSubmit(transaction) {
@@ -65,14 +70,17 @@ export default connect(mapStateToProps, {
   validateTransaction,
   pushState,
   notify,
+  fetchGroup,
   resetNotifications
 })(TransactionNew);
 
-function mapStateToProps({router, form, transactions, notification, images}) {
+function mapStateToProps({router, form, transactions, notification, images, groups}) {
   const transaction = form.transaction;
-
+  const groupid = router.params.groupid;
+  
   return {
-    groupid: router.params.groupid,
+    groupid,
+    group: groups[groupid] || {},
     notification,
     transaction,
     tags: transaction.defaults.tags,
