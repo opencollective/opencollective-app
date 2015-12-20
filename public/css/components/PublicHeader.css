@@ -2,6 +2,9 @@
   background-color: var(--aqua);
   color: white;
   height: var(--public-header-height);
+  position: fixed;
+  z-index: 10;
+  top: 0;
 }
 
 .PublicHeader-signup {
