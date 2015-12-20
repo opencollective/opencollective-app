@@ -23,10 +23,13 @@ describe('Donation container', () => {
   it('should fetch user and group on mount', () => {
     const fetchUser = chai.spy(() => {});
     const fetchGroup = chai.spy(() => {});
+    const fetchCards = chai.spy(() => {});
 
     createElement({
       fetchUser,
       fetchGroup,
+      fetchCards,
+      userCardsLabels: [],
       resetNotifications: () => {},
       notification: {},
       group: {},
