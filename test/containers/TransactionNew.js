@@ -32,6 +32,8 @@ describe('TransactionNew container', () => {
         tags: [],
         resetNotifications: () => {},
         notification: {},
+        fetchGroup: () => {},
+        group: {id: 1, currency: 'USD' },
         resetTransactionForm: handler
       });
       expect(handler).to.have.been.called();
@@ -39,7 +41,7 @@ describe('TransactionNew container', () => {
 
   it('should create an expense an invert the sign', (done) => {
     const props = {
-      groupid: 1,
+      group: {id: 1, currency: 'USD' },
       createTransaction
     };
     const amount = 10;
