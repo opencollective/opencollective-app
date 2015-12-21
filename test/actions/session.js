@@ -51,7 +51,7 @@ describe('session actions', () => {
 
         const expected = [
           { type: constants.LOGIN_REQUEST, email },
-          { type: constants.LOGIN_FAILURE, error: {} }
+          { type: constants.LOGIN_FAILURE, error: new Error('request to http://localhost:3000/api/authenticate failed') }
         ];
         const store = mockStore({}, expected, done);
         store.dispatch(login({email}));

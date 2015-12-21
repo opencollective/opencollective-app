@@ -34,12 +34,18 @@ describe('groups actions', () => {
     it('creates GROUP_ERROR when fetching a group fails', (done) => {
       nock(env.API_ROOT)
         .get('/groups/1')
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
+
+      const error = new Error('request to http://localhost:3000/api/groups/1 failed');
 
       // Improve test with error message
       const expected = [
         { type: constants.GROUP_REQUEST, id: 1 },
-        { type: constants.GROUP_FAILURE, id: 1, error: {}}
+        {
+          type: constants.GROUP_FAILURE,
+          id: 1,
+          error
+        }
       ];
       const store = mockStore({}, expected, done);
       store.dispatch(fetchById(1));
@@ -73,11 +79,11 @@ describe('groups actions', () => {
 
       nock(env.API_ROOT)
         .post('/groups/1/payments/')
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.DONATE_GROUP_REQUEST, id: 1, payment },
-        { type: constants.DONATE_GROUP_FAILURE, error: {}}
+        { type: constants.DONATE_GROUP_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/payments/ failed')}
       ];
 
       const store = mockStore({}, expected, done);

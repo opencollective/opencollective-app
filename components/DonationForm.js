@@ -14,11 +14,10 @@ const DonationForm = ({
   isCustomMode,
   setDonationCustom,
   donate,
-  user,
+  userCardsLabels,
   groupid
 }) => {
-  const options = [`Paypal (${user.paypalEmail})`];
-
+ 
   return (
      <div className='DonationForm'>
       {header(group)}
@@ -41,8 +40,8 @@ const DonationForm = ({
       </div>
 
       <Select
-        options={options}
-        value={options[0]}
+        options={userCardsLabels}
+        value={userCardsLabels[0]}
         handleChange={handleMethod.bind(this)}
         customClass='DonationForm-select' />
 

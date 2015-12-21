@@ -42,11 +42,11 @@ describe('users actions', () => {
       nock(env.API_ROOT)
         .get(`/users/${userid}/paypal/preapproval`)
         .query(true) // match all query params
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid },
-        { type: constants.GET_APPROVAL_KEY_FOR_USER_FAILURE, error: {} }
+        { type: constants.GET_APPROVAL_KEY_FOR_USER_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed') }
       ];
 
       const store = mockStore({}, expected, done);
@@ -80,11 +80,11 @@ describe('users actions', () => {
 
       nock(env.API_ROOT)
         .post(`/users/${userid}/paypal/preapproval/${preapprovalKey}`)
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey },
-        { type: constants.CONFIRM_APPROVAL_KEY_FAILURE, error: {} }
+        { type: constants.CONFIRM_APPROVAL_KEY_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed') }
       ];
 
       const store = mockStore({}, expected, done);
@@ -130,11 +130,11 @@ describe('users actions', () => {
 
       nock(env.API_ROOT)
         .get(`/users/${id}`)
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.FETCH_USER_REQUEST, id: id },
-        { type: constants.FETCH_USER_FAILURE, error: {} }
+        { type: constants.FETCH_USER_FAILURE, error: new Error('request to http://localhost:3000/api/users/1 failed') }
       ];
 
       const store = mockStore({ users: {} }, expected, done);
@@ -174,11 +174,11 @@ describe('users actions', () => {
 
       nock(env.API_ROOT)
         .get(`/users/${userid}/groups`)
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.USER_GROUPS_REQUEST, userid },
-        { type: constants.USER_GROUPS_FAILURE, error: {} }
+        { type: constants.USER_GROUPS_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/groups?include=usergroup.role failed') }
       ];
 
       const store = mockStore({}, expected, done, true);
@@ -224,11 +224,11 @@ describe('users actions', () => {
 
       nock(env.API_ROOT)
         .put(`/users/${userid}/paypalemail`, { paypalEmail })
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.UPDATE_PAYPAL_EMAIL_REQUEST, userid, paypalEmail },
-        { type: constants.UPDATE_PAYPAL_EMAIL_FAILURE, error: {} }
+        { type: constants.UPDATE_PAYPAL_EMAIL_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/paypalemail failed') }
       ];
 
       const store = mockStore({}, expected, done, true);
@@ -267,11 +267,11 @@ describe('users actions', () => {
 
       nock(env.API_ROOT)
         .get(`/users/${userid}/cards`)
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.USER_CARDS_REQUEST, userid },
-        { type: constants.USER_CARDS_FAILURE, error: {} }
+        { type: constants.USER_CARDS_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/cards failed') }
       ];
 
       const store = mockStore({}, expected, done, true);
