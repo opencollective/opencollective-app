@@ -20,7 +20,7 @@ a {
  * hide ugly gray gradient
  */
 select,
-input {
+input:not([type='radio']) {
   -webkit-appearance: none;
 }
 

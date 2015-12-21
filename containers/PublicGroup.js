@@ -4,6 +4,7 @@ import { pushState } from 'redux-router';
 import BodyClassName from 'react-body-classname';
 import take from 'lodash/array/take';
 import extend from 'lodash/object/extend';
+import contains from 'lodash/collection/contains';
 
 import rejectError from '../lib/reject_error';
 import convertToCents from '../lib/convert_to_cents';
@@ -115,7 +116,8 @@ export function donateToGroup(amount, token) {
     groupid,
     notify,
     donate,
-    pushState
+    pushState,
+    interval
   } = this.props;
 
   const payment = {
@@ -123,6 +125,10 @@ export function donateToGroup(amount, token) {
     email: token.email,
     amount
   };
+
+  if (contains(['month', 'year'], interval)) {
+    payment.interval = interval;
+  }
 
   return donate(groupid, payment)
   .then(rejectError.bind(this))
@@ -169,6 +175,7 @@ function mapStateToProps({
     group,
     stripeKey: group.stripeManagedAccount.stripeKey,
     amount,
+    interval: form.donation.attributes.interval,
     stripeAmount: convertToCents(amount),
     isCustomMode: form.donation.isCustomMode,
     notification,

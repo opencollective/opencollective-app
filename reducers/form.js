@@ -120,7 +120,9 @@ function profile(state=profileInitialState, action={}) {
 
 function donation(state={
   isCustomMode: true,
-  attributes: {}
+  attributes: {
+    interval: 'none'
+  }
 }, action={}) {
   switch(action.type) {
     case constants.APPEND_DONATION_FORM:

@@ -45,3 +45,7 @@
 .PublicGroup-backers .UsersList {
   text-align: left;
 }
+
+.PublicGroupForm-radioLabel {
+  padding: 0 calc(var(--spacing) / 2);
+}
