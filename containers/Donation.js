@@ -95,12 +95,9 @@ function mapStateToProps({router, groups, form, session, users, transactions, no
   const groupid = router.params.groupid;
   const userid = session.user.id;
   const currentUser = users[userid];
- 
-  let userCardsLabels = [];
-  if (currentUser) {
-    userCardsLabels = getUniqueValues(currentUser.cards, 'number'); 
-  }
-  
+  const userCardsLabels = currentUser ?
+    getUniqueValues(currentUser.cards, 'number') : [];
+
   return {
     groupid,
     userid,
@@ -111,7 +108,7 @@ function mapStateToProps({router, groups, form, session, users, transactions, no
     description: form.donation.attributes.description,
     amount: form.donation.attributes.amount,
     group: groups[groupid] || {},
-    userCardsLabels: userCardsLabels,
+    userCardsLabels,
     validationError: form.transaction.error,
     serverError: transactions.error
   };
