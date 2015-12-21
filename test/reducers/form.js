@@ -6,10 +6,6 @@ describe('form reducer', () => {
 
   describe('transaction', () => {
 
-    it('default state should have tags', () => {
-      expect(reducer().transaction.defaults.tags).toExist();
-    });
-
     it('should have default attributes', () => {
       const attributes = reducer().transaction.attributes;
       expect(attributes.amount).toEqual(0);
