@@ -52,11 +52,11 @@ describe('transactions actions', () => {
 
       nock(env.API_ROOT)
         .get(`/groups/${groupid}/transactions/${transactionid}`)
-        .replyWithError('Something went wrong!');
+        .replyWithError('');
 
       const expected = [
         { type: constants.TRANSACTION_REQUEST, groupid, transactionid },
-        { type: constants.TRANSACTION_FAILURE, error: {} }
+        { type: constants.TRANSACTION_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions/2 failed') }
       ];
 
       const store = mockStore({}, expected, done);
@@ -97,11 +97,11 @@ describe('transactions actions', () => {
 
       nock(env.API_ROOT)
         .get(`/groups/${groupid}/transactions`)
-        .replyWithError('Oops');
+        .replyWithError('');
 
       const expected = [
         { type: constants.TRANSACTIONS_REQUEST, groupid },
-        { type: constants.TRANSACTIONS_FAILURE, error: {} }
+        { type: constants.TRANSACTIONS_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions failed') }
       ];
 
       const store = mockStore({}, expected, done);

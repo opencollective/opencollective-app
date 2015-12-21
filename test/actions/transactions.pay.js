@@ -41,7 +41,7 @@ describe('transactions pay actions', () => {
 
       const expected = [
         { type: constants.PAY_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: constants.PAY_TRANSACTION_FAILURE, error: {} }
+        { type: constants.PAY_TRANSACTION_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions/2/pay failed') }
       ];
 
       const store = mockStore({}, expected, done);
