@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import format_currency from '../lib/currency';
+import formatCurrency from '../lib/format_currency';
 
-const Currency = ({value = 0, currency}) => {
-  return <span className='Currency'>{format_currency(value, currency)}</span>;
+const Currency = ({value = 0, currency = 'USD'}) => {
+  return <span className='Currency'>{formatCurrency(value, currency)}</span>;
 };
 
 Currency.propTypes = {
