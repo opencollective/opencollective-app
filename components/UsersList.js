@@ -3,7 +3,7 @@ import React from 'react';
 import Avatar from './Avatar';
 import Currency from './Currency';
 
-export default ({users, size}) => {
+export default ({users=[], size}) => {
   return (
     <div className='UsersList'>
       {users.map(user => {

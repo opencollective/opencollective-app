@@ -29,6 +29,8 @@ describe('PublicGroup container', () => {
         fetchGroup: handler,
         groupid: 1,
         resetNotifications: () => {},
+        fetchTransactions: () => Promise.resolve(),
+        fetchUsers: () => {},
         notification: {},
         group: {}
       });
@@ -93,6 +95,8 @@ describe('PublicGroup container', () => {
     };
     const element = createElement({
       fetchGroup: () => Promise.resolve(),
+      fetchTransactions: () => Promise.resolve(),
+      fetchUsers: () => {},
       resetNotifications: () => {},
       groupid: 1,
       group: {},

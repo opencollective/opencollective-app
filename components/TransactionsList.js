@@ -2,7 +2,7 @@ import React from 'react';
 
 import Transaction from './Transaction';
 
-export default ({transactions, users}) => {
+export default ({transactions=[], users}) => {
 
   return (
     <div>
