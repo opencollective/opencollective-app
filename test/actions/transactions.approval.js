@@ -46,7 +46,7 @@ describe('transactions approval actions', () => {
 
       const expected = [
         { type: constants.APPROVE_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: constants.APPROVE_TRANSACTION_FAILURE, error: {} }
+        { type: constants.APPROVE_TRANSACTION_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions/2/approve failed') }
       ];
 
       const store = mockStore({}, expected, done);
@@ -89,7 +89,7 @@ describe('transactions approval actions', () => {
 
       const expected = [
         { type: constants.REJECT_TRANSACTION_REQUEST, groupid, transactionid },
-        { type: constants.REJECT_TRANSACTION_FAILURE, error: {} }
+        { type: constants.REJECT_TRANSACTION_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions/2/approve failed') }
       ];
 
       const store = mockStore({}, expected, done);

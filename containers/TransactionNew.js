@@ -13,6 +13,7 @@ import uploadImage from '../actions/images/upload';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 
+import tags from '../ui/tags';
 import Content from './Content';
 
 import TransactionForm from '../components/TransactionForm';
@@ -83,7 +84,7 @@ function mapStateToProps({router, form, transactions, notification, images, grou
     group: groups[groupid] || {},
     notification,
     transaction,
-    tags: transaction.defaults.tags,
+    tags: tags(groupid),
     isUploading: images.isUploading || false,
     validationError: form.transaction.error,
     requestError: transactions.error

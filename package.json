@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "NODE_CONFIG_DIR=./server/config node server",
-    "dev": "PORT=3000 nf start -f Procfile_dev",
+    "dev": "PORT=3000 nf start -j Procfile_dev",
     "pretest": "npm run hint",
     "test": "NODE_ENV=test mocha",
     "hint": "eslint **/*.js",
@@ -38,7 +38,7 @@
     "ejs": "^2.3.4",
     "envify": "^3.4.0",
     "express": "^4.13.3",
-    "history": "^1.12.3",
+    "history": "1.13.x",
     "isomorphic-fetch": "^2.1.1",
     "joi": "^6.9.1",
     "jwt-decode": "^1.4.0",

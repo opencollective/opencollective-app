@@ -1,10 +1,14 @@
 .DonationPicker-amount {
-  width: 25%;
   display: inline-block;
+}
+
+.DonationPicker-amount:not(:last-child) {
+  margin-right: var(--spacing);
 }
 
 .DonationPicker-amount--selected {
   color: var(--green);
+  font-weight: bold;
 }
 
 .DonationPicker-input .Field {

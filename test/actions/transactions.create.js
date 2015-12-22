@@ -39,11 +39,11 @@ describe('transactions create actions', () => {
 
     nock(env.API_ROOT)
       .post(`/groups/${groupid}/transactions/`)
-      .replyWithError('Something went wrong!');
+      .replyWithError('');
 
     const expected = [
       { type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction },
-      { type: constants.CREATE_TRANSACTION_FAILURE, error: {} }
+      { type: constants.CREATE_TRANSACTION_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions/ failed') }
     ];
 
     const store = mockStore({}, expected, done);

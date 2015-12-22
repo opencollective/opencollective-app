@@ -35,11 +35,11 @@ describe('images actions', () => {
   it('creates UPLOAD_IMAGE_FAILURE when uploading an image fails', (done) => {
     nock(env.API_ROOT)
       .post('/images/')
-      .replyWithError('Fail');
+      .replyWithError('');
 
     const expected = [
       { type: UPLOAD_IMAGE_REQUEST, data: {} },
-      { type: UPLOAD_IMAGE_FAILURE, error: {} }
+      { type: UPLOAD_IMAGE_FAILURE, error: new Error('request to http://localhost:3000/api/images/ failed') }
     ];
     const store = mockStore({}, expected, done);
     store.dispatch(uploadImage({}));

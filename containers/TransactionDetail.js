@@ -14,6 +14,7 @@ import appendTransactionForm from '../actions/form/append_transaction';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 
 import Content from './Content';
+import tags from '../ui/tags';
 
 import Header from '../components/Header';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
@@ -44,7 +45,9 @@ class TransactionDetail extends Component {
           <TransactionDetailTitle {...transaction} />
           <div className='TransactionDetail'>
             <div className='TransactionDetail-image'>
-              <img src={transaction.link} />
+              <a href={transaction.link}>
+                <img src={transaction.link} />
+              </a>
             </div>
             <TransactionDetailInfo
               {...this.props}
@@ -147,7 +150,6 @@ function mapStateToProps({
   router,
   transactions,
   users,
-  form,
   notification,
   session
 }) {
@@ -166,7 +168,7 @@ function mapStateToProps({
     group,
     transaction,
     notification,
-    tags: form.transaction.defaults.tags,
+    tags: tags(groupid),
     user: users[transaction.UserId] || {},
     approveInProgress: approveInProgress || payInProgress,
     rejectInProgress,

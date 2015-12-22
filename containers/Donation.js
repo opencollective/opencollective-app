@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
+import getUniqueValues from '../lib/get_unique_values';
 
 import rejectError from '../lib/reject_error';
 
@@ -17,6 +18,7 @@ import setDonationCustom from '../actions/form/set_donation_custom';
 import resetNotifications from '../actions/notification/reset';
 import fetchGroup from '../actions/groups/fetch_by_id';
 import fetchUser from '../actions/users/fetch_by_id';
+import fetchCards from '../actions/users/fetch_cards';
 import notify from '../actions/notification/notify';
 
 export class Donation extends Component {
@@ -41,6 +43,7 @@ export class Donation extends Component {
   componentWillMount() {
     this.props.fetchGroup(this.props.groupid);
     this.props.fetchUser(this.props.userid);
+    this.props.fetchCards(this.props.userid);
   }
 
 }
@@ -77,9 +80,10 @@ export function donate() {
 
 export default connect(mapStateToProps, {
   resetNotifications,
-  fetchGroup,
-  setDonationCustom,
   fetchUser,
+  fetchGroup,
+  fetchCards,
+  setDonationCustom,
   createTransaction,
   validateTransaction,
   notify,
@@ -90,6 +94,9 @@ export default connect(mapStateToProps, {
 function mapStateToProps({router, groups, form, session, users, transactions, notification}) {
   const groupid = router.params.groupid;
   const userid = session.user.id;
+  const currentUser = users[userid];
+  const userCardsLabels = currentUser ?
+    getUniqueValues(currentUser.cards, 'number') : [];
 
   return {
     groupid,
@@ -102,6 +109,7 @@ function mapStateToProps({router, groups, form, session, users, transactions, no
     isCustomMode: form.donation.isCustomMode,
     description: form.donation.attributes.description,
     amount: form.donation.attributes.amount,
+    userCardsLabels,
     validationError: form.transaction.error,
     serverError: transactions.error
   };
