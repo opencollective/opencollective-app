@@ -52,7 +52,11 @@ class TransactionDetail extends Component {
             <TransactionDetailInfo
               {...this.props}
               handleChange={this.handleTag.bind(this)} />
-            <TransactionDetailComment {...this.props} />
+            {
+              transaction.comment ?
+                <TransactionDetailComment {...this.props} />:
+                null
+            }
             {this.approvalButtons(this.props)}
           </div>
         </Content>
@@ -69,7 +73,9 @@ class TransactionDetail extends Component {
       transactionid
     } = this.props;
 
-    fetchUserGroups(userid); // User groups to get the role as well
+    if (userid) {
+      fetchUserGroups(userid); // User groups to get the role as well
+    }
 
     fetchTransaction(groupid, transactionid)
     .then(() => this.fetchTransactionUser.bind(this));
@@ -160,9 +166,11 @@ function mapStateToProps({
   const group = groups[groupid] || {};
   const { approveInProgress, rejectInProgress, payInProgress } = transactions;
   const transaction = transactions[transactionid] || {};
+  const isPublic = !session.isAuthenticated;
 
   return {
     userid: currentUserId,
+    isPublic,
     groupid,
     transactionid,
     group,
@@ -173,7 +181,7 @@ function mapStateToProps({
     approveInProgress: approveInProgress || payInProgress,
     rejectInProgress,
     isLoading: !transaction.id,
-    showApprovalButtons: isAdmin([group]) && !isDonation(transaction),
+    showApprovalButtons: isAdmin([group]) && !isDonation(transaction) && !isPublic,
     isDonation: isDonation(transaction)
   };
 }

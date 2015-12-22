@@ -3,7 +3,7 @@ import React from 'react';
 import Currency from './Currency';
 import SelectTag from './SelectTag';
 
-export default ({transaction, tags, handleChange, isDonation}) => {
+export default ({transaction, tags, handleChange, isDonation, isPublic}) => {
   return (
     <div className='TransactionDetail-info'>
       <div className='TransactionDetail-price'>
@@ -13,7 +13,7 @@ export default ({transaction, tags, handleChange, isDonation}) => {
       <div className='TransactionDetail-category'>
         Category
         <SelectTag
-          disabled={isDonation}
+          disabled={isDonation || isPublic}
           tags={tags}
           attributes={transaction}
           handleChange={handleChange}

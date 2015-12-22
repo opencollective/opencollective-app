@@ -2,7 +2,8 @@ import merge from 'lodash/object/merge';
 import * as constants from '../constants/session';
 
 export default function session(state={
-  user: {}
+  user: {},
+  isAuthenticated: false
 }, action={
   hasPopOverMenuOpen: false
 }) {
@@ -10,7 +11,14 @@ export default function session(state={
 
     case constants.DECODE_JWT_SUCCESS:
       return merge({}, state, {
-        user: action.user
+        user: action.user,
+        isAuthenticated: true
+      });
+
+    case constants.DECODE_JWT_FAILURE:
+    case constants.DECODE_JWT_EMPTY:
+      return merge({}, state, {
+        isAuthenticated: false
       });
 
     case constants.SHOW_POPOVERMENU:
