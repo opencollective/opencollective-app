@@ -4,6 +4,7 @@ import { pushState } from 'redux-router';
 
 import rejectError from '../lib/reject_error';
 
+import fetchGroup from '../actions/groups/fetch_by_id';
 import createTransaction from '../actions/transactions/create';
 import resetTransactionForm from '../actions/form/reset_transaction';
 import appendTransactionForm from '../actions/form/append_transaction';
@@ -34,6 +35,10 @@ export class TransactionNew extends Component {
     );
   }
 
+  componentWillMount() {
+    this.props.fetchGroup(this.props.groupid);
+  }
+
   handleSubmit(transaction) {
     const { notify, groupid, pushState } = this.props;
 
@@ -49,12 +54,12 @@ export class TransactionNew extends Component {
 
 export function createExpense(transaction) {
   const {
-    groupid,
+    group,
     createTransaction
   } = this.props;
 
   // An expense is a negative transaction in the backend
-  return createTransaction(groupid, {...transaction, amount: -transaction.amount })
+  return createTransaction(group.id, {...transaction, amount: -transaction.amount, currency: group.currency })
   .then(rejectError.bind(this, 'requestError'));
 }
 
@@ -66,15 +71,17 @@ export default connect(mapStateToProps, {
   validateTransaction,
   pushState,
   notify,
+  fetchGroup,
   resetNotifications
 })(TransactionNew);
 
-function mapStateToProps({router, form, transactions, notification, images}) {
+function mapStateToProps({router, form, transactions, notification, images, groups}) {
   const transaction = form.transaction;
   const groupid = router.params.groupid;
-
+  
   return {
-    groupid, 
+    groupid,
+    group: groups[groupid] || {},
     notification,
     transaction,
     tags: tags(groupid),
