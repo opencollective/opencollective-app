@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
+import { Link } from 'react-router';
 import BodyClassName from 'react-body-classname';
 import take from 'lodash/array/take';
 import extend from 'lodash/object/extend';
@@ -67,11 +68,15 @@ export class PublicGroup extends Component {
               <SubTitle text='Our backers' />
               <UsersList users={this.props.backers} />
             </div>
+
+            {this.form(this.props)}
+
             <div className='u-mt1 u-mb2 PublicGroup-transactions'>
-              <SubTitle text='Latest transactions' />
+              <Link to={`/groups/${this.props.groupid}/transactions`}>
+                <SubTitle text='Latest transactions' />
+              </Link>
               <TransactionsList {...this.props} />
             </div>
-            {this.form(this.props)}
           </div>
         </div>
       </BodyClassName>
@@ -181,7 +186,7 @@ function mapStateToProps({
     notification,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
-    transactions: take(groupTransactions.sort(sortByDate), 5),
+    transactions: take(groupTransactions.sort(sortByDate), 3),
     users,
     backers,
     admins

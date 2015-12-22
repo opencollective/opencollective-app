@@ -20,6 +20,7 @@ const routes = {
     { path: 'login', component: Login },
     { path: 'public/groups/:groupid', component: PublicGroup },
     { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail },
+    { path: 'groups/:groupid/transactions', component: GroupTransactions},
 
     // Private routes
     { path: 'profile', component: requireAuthentication(Profile) },
