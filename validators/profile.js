@@ -8,6 +8,8 @@ import validate from '../lib/validate';
 const schema = Joi.object().keys({
   paypalEmail: Joi.string().email().required()
     .label('PayPal account'),
+  link: Joi.string().uri()
+    .label('Photo'),
 });
 
 export default (obj) => validate(obj, schema);

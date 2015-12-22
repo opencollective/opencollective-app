@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import ImageUpload from './ImageUpload';
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
 
@@ -14,6 +15,12 @@ class ProfileFormEdit extends Component {
 
     return (
       <div className='ProfileForm'>
+        <div className='Profile-header'>
+          <ImageUpload
+          {...this.props}
+          url={form.attributes.link}
+          onFinished={this.handleUpload.bind(this)} />
+        </div>
         <div className='ProfileForm-label'>
           Paypal Account
         </div>
@@ -39,6 +46,10 @@ class ProfileFormEdit extends Component {
     this.props.appendProfileForm({
       paypalEmail: target.value
     });
+  }
+
+  handleUpload({url}) {
+    this.props.appendProfileForm({ link: url });
   }
 }
 

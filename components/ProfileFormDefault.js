@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import any from 'lodash/collection/any';
 
+import Avatar from '../components/Avatar';
 import ProfilePreapproved from './ProfilePreapproved';
 import TableHead from './TableHead';
 import TableRow from './TableRow';
@@ -14,10 +15,16 @@ class ProfileFormDefault extends Component {
       preapprovalDetails,
       groups
     } = this.props;
-    const { paypalEmail, email } = user;
+    const { paypalEmail, email, avatar, name } = user;
 
     return (
       <div className='ProfileForm'>
+        <div className='Profile-header'>
+          <Avatar url={avatar} size='110px' />
+          <div className='Profile-name'>
+            {name}
+          </div>
+        </div>
         <TableHead value='Personal email' />
         <TableRow value={email} />
 
