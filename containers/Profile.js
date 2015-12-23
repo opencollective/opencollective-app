@@ -5,7 +5,6 @@ import values from 'lodash/object/values';
 
 import Content from './Content';
 import Header from '../components/Header';
-import ProfileHeader from '../components/ProfileHeader';
 import ProfileForm from '../components/ProfileForm';
 import Notification from '../components/Notification';
 import setEditMode from '../actions/form/set_edit_mode_profile';

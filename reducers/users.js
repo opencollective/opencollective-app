@@ -22,7 +22,6 @@ export default function users(state={
   const GroupId = Number(groupid);
 
   switch (type) {
-
     case constants.USER_GROUPS_SUCCESS:
       return merge({}, state, {
         [userid]: { groups }
@@ -60,6 +59,16 @@ export default function users(state={
 
     case constants.UPDATE_PAYPAL_EMAIL_FAILURE:
       return merge({}, state, { updateInProgress: false, error });
+
+    case constants.UPDATE_AVATAR_REQUEST:
+      return merge({}, state, { updateInProgress: true });
+
+    case constants.UPDATE_AVATAR_SUCCESS:
+      return merge({}, state, { updateInProgress: false });
+
+    case constants.UPDATE_AVATAR_FAILURE:
+      const avatarError = action.error;
+      return merge({}, state, { updateInProgress: false, avatarError });
 
     case constants.GET_PREAPPROVAL_DETAILS_REQUEST:
       return merge({}, state, { preapprovalDetailsInProgress: true });

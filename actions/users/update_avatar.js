@@ -10,7 +10,6 @@ export default (userid, avatar) => {
 
   return dispatch => {
     dispatch(request(userid, avatar));
-    console.log('dispatch: ' + avatar)
     return putJSON(url, { avatar })
       .then(json => dispatch(success(userid, avatar, json)))
       .catch(err => dispatch(failure(err)));
