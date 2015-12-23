@@ -19,7 +19,10 @@
   --footer-height: 72px;
   --image-upload-height: 160px;
   --image-upload-child-height: 100px;
+  --avatar-upload-height: 160px;
+  --avatar-upload-child-height: 100px;
   --max-container-width: 1070px;
+  --blur: 4px;
 }
 
 @custom-media --medium-viewport (min-width: 1070px);

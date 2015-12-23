@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 
-import ImageUpload from './ImageUpload';
+import AvatarUpload from './AvatarUpload';
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
 
 class ProfileFormEdit extends Component {
   render() {
     const {
+      user,
       form,
       save,
       saveInProgress,
       cancel
     } = this.props;
+    const { paypalEmail } = user;
 
     return (
       <div className='ProfileForm'>
         <div className='Profile-header'>
-          <ImageUpload
+          <AvatarUpload
           {...this.props}
           url={form.attributes.link}
           onFinished={this.handleUpload.bind(this)} />
@@ -27,8 +29,8 @@ class ProfileFormEdit extends Component {
         <input
           type='email'
           className='Field ProfileForm-field'
-          placeholder='user@email.com'
-          value={form.attributes.paypalEmail}
+          placeholder= 'user@email.com'
+          value={paypalEmail || form.attributes.paypalEmail}
           onChange={this.append.bind(this)} />
         <div>
           <SaveButton
