@@ -64,6 +64,76 @@ describe('PublicGroup container', () => {
     });
   });
 
+  it('should donate with subscription to the group', (done) => {
+    const token = {
+      id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',
+      email: 'test@gmail.com'
+    };
+    const donate = chai.spy((groupid, payment) => {
+      expect(groupid).to.be.equal(1);
+      expect(payment.interval).to.be.equal('month');
+      expect(payment.stripeToken).to.be.equal(token.id);
+      expect(payment.email).to.be.equal(token.email);
+      expect(payment.amount).to.be.equal(10);
+      return Promise.resolve();
+    });
+    const notify = chai.spy(() => Promise.resolve());
+    const pushState = chai.spy((ctx, url) => {
+      expect(url).to.be.equal('/public/groups/1/?status=thankyou')
+    });
+
+    const props = {
+      groupid: 1,
+      donate,
+      notify,
+      pushState,
+      interval: 'month'
+    };
+
+    donateToGroup.call({props}, 10, token)
+    .then(() => {
+      expect(donate).to.have.been.called();
+      expect(notify).to.not.have.been.called();
+      expect(pushState).to.have.been.called();
+      done();
+    });
+  });
+
+  it('should not donate with subscription to the group if interval is none', (done) => {
+    const token = {
+      id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',
+      email: 'test@gmail.com'
+    };
+    const donate = chai.spy((groupid, payment) => {
+      expect(groupid).to.be.equal(1);
+      expect(payment.interval).to.not.be.ok;
+      expect(payment.stripeToken).to.be.equal(token.id);
+      expect(payment.email).to.be.equal(token.email);
+      expect(payment.amount).to.be.equal(10);
+      return Promise.resolve();
+    });
+    const notify = chai.spy(() => Promise.resolve());
+    const pushState = chai.spy((ctx, url) => {
+      expect(url).to.be.equal('/public/groups/1/?status=thankyou')
+    });
+
+    const props = {
+      groupid: 1,
+      donate,
+      notify,
+      pushState,
+      interval: 'none'
+    };
+
+    donateToGroup.call({props}, 10, token)
+    .then(() => {
+      expect(donate).to.have.been.called();
+      expect(notify).to.not.have.been.called();
+      expect(pushState).to.have.been.called();
+      done();
+    });
+  });
+
   it('should send a notification if the donation fails', (done) => {
     const error = { message: 'Fail' };
     const donate = chai.spy(() => Promise.resolve({ error }));

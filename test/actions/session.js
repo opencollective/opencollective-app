@@ -86,6 +86,14 @@ describe('session actions', () => {
         type: constants.DECODE_JWT_FAILURE,
       });
     });
+
+    it('creates DECODE_JWT_EMPTY if the JWT is empty in LocalStorage', () => {
+      localStorage.clear();
+
+      expect(decodeJWT()).toEqual({
+        type: constants.DECODE_JWT_EMPTY,
+      });
+    });
   });
 
   describe('logout', () => {

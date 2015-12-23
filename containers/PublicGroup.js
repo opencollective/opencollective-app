@@ -182,6 +182,7 @@ function mapStateToProps({
   return {
     groupid,
     group,
+    isPublic: true,
     stripeKey: group.stripeManagedAccount.stripeKey,
     amount,
     interval: form.donation.attributes.interval,

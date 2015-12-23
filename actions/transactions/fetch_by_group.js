@@ -38,7 +38,6 @@ function success(groupid, json) {
 }
 
 function failure(error) {
-  console.log(error.stack)
   return {
     type: constants.TRANSACTIONS_FAILURE,
     error,

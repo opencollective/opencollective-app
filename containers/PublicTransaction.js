@@ -26,13 +26,13 @@ export class PublicTransaction extends Component {
           <PublicHeader />
           <div className='PublicContent'>
             <TransactionDetailTitle {...transaction} />
-              <div className='PublicTransaction-image'>
-                <a href={transaction.link}>
-                  <img src={transaction.link} />
-                </a>
-              </div>
-              <TransactionDetailInfo {...this.props} />
-              {this.comment(this.props)}
+            <div className='PublicTransaction-image'>
+              <a href={transaction.link}>
+                <img src={transaction.link} />
+              </a>
+            </div>
+            <TransactionDetailInfo {...this.props} />
+            {this.comment(this.props)}
           </div>
           <PublicFooter />
         </div>
