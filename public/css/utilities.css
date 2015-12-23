@@ -34,6 +34,14 @@
  * white space
  */
 
+.u-px05 {
+  padding: 0 calc(var(--spacing) / 2);
+}
+
+.u-py05 {
+  padding: calc(var(--spacing) / 2) 0;
+}
+
 .u-py1 {
   padding: var(--spacing) 0;
 }
@@ -54,4 +62,18 @@
   margin-left: var(--spacing);
 }
 
+/**
+ * border
+ */
 
+.u-borderBottom {
+  border-bottom: 1px solid var(--gray);
+}
+
+/**
+ * colors
+ */
+
+.u-darkGray {
+  color: var(--dark-gray);
+}

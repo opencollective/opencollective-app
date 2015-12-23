@@ -73,7 +73,9 @@ export class PublicGroup extends Component {
 
             <div className='u-mt1 u-mb2 PublicGroup-transactions'>
               <Link to={`/groups/${this.props.groupid}/transactions`}>
-                <SubTitle text='Latest transactions' />
+                <div className='u-py05 u-borderBottom u-darkGray u-bold'>
+                  Latest transactions <span className='PublicGroup-tick'>></span>
+                </div>
               </Link>
               <TransactionsList {...this.props} />
             </div>

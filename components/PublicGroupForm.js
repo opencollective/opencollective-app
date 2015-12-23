@@ -2,9 +2,11 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import RadioGroup from 'react-radio-group';
 
-import DonationPicker from '../components/DonationPicker';
-import SubTitle from '../components/SubTitle';
-import AsyncButton from '../components/AsyncButton';
+import formatCurrency from '../lib/format_currency';
+
+import DonationPicker from './DonationPicker';
+import SubTitle from './SubTitle';
+import AsyncButton from './AsyncButton';
 
 const PublicGroupForm = ({
   group,
@@ -29,6 +31,9 @@ const PublicGroupForm = ({
     value: 'none'
   }];
 
+  const intervalHuman = interval === 'none' ? '' : `per ${interval}`;
+  const stripeDescription = `${formatCurrency(amount, 'USD')} ${intervalHuman}`
+
   return (
     <div className='PublicGroupForm'>
       <SubTitle text='Make your donation' />
@@ -48,7 +53,7 @@ const PublicGroupForm = ({
               return (
                 <label>
                   <Radio value={value} key={value} />
-                  <span className='PublicGroupForm-radioLabel'>{label}</span>
+                  <span className='u-px05'>{label}</span>
                 </label>
               );
             })}
@@ -61,8 +66,8 @@ const PublicGroupForm = ({
         stripeKey={stripeKey}
         name={group.name}
         amount={stripeAmount}
-        description={group.description}>
-        <div className='PublicGroup-buttonContainer'>
+        description={stripeDescription}>
+        <div className='u-center'>
           <AsyncButton
             color='green'
             inProgress={inProgress} >

@@ -4,11 +4,16 @@ import Avatar from './Avatar';
 import Currency from './Currency';
 
 export default ({users=[], size}) => {
+  const width = users.length ? (100 / users.length) : 0;
+  const style = {
+    width: `calc(${width}% - 1rem)`
+  };
+
   return (
     <div className='UsersList'>
       {users.map(user => {
         return (
-          <div className='UsersList-item'>
+          <div className='UsersList-item' style={style}>
             <Avatar
               key={user.id}
               url={user.avatar}

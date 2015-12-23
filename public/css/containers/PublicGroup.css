@@ -15,10 +15,6 @@
   }
 }
 
-.PublicGroup-buttonContainer {
-  text-align: center;
-}
-
 .PublicGroup .Button {
   display: inline-block;
   margin-top: var(--spacing);
@@ -48,4 +44,9 @@
 
 .PublicGroupForm-radioLabel {
   padding: 0 calc(var(--spacing) / 2);
+}
+
+.PublicGroup-tick {
+  float: right;
+  font-weight: lighter;
 }

@@ -16,13 +16,13 @@ const routes = {
   childRoutes: [
 
     // Public routes
-    { path: '/', component: requireAuthentication(GroupsList) },
     { path: 'login', component: Login },
     { path: 'public/groups/:groupid', component: PublicGroup },
     { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail },
     { path: 'groups/:groupid/transactions', component: GroupTransactions},
 
     // Private routes
+    { path: '/', component: requireAuthentication(GroupsList) },
     { path: 'profile', component: requireAuthentication(Profile) },
     { path: 'groups/:groupid/transactions', component: requireAuthentication(GroupTransactions)},
     { path: 'groups/:groupid/donation', component: requireAuthentication(Donation)},
