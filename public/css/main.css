@@ -23,6 +23,7 @@
 @import './containers/Profile.css';
 @import './containers/Public.css';
 @import './containers/PublicGroup.css';
+@import './containers/PublicTransactions.css';
 @import './containers/TransactionDetail.css';
 
 /**
@@ -51,6 +52,7 @@
 @import './components/ProfileForm.css';
 @import './components/ProfilePreapproved.css';
 @import './components/PublicGroupThanks.css';
+@import './components/PublicFooter.css';
 @import './components/PublicHeader.css';
 @import './components/Reminder.css';
 @import './components/Select.css';

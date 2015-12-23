@@ -1,15 +1,18 @@
-import App from '../containers/App';
-import GroupsList from '../containers/GroupsList';
-import GroupTransactions from '../containers/GroupTransactions';
-import DonationMethod from '../containers/DonationMethod';
-import Donation from '../containers/Donation';
-import TransactionNew from '../containers/TransactionNew';
-import TransactionDetail from '../containers/TransactionDetail';
-import Login from '../containers/Login';
-import Profile from '../containers/Profile';
-import PublicGroup from '../containers/PublicGroup';
-import { requireAuthentication } from '../components/AuthenticatedComponent';
+import {
+  App,
+  GroupsList,
+  GroupTransactions,
+  DonationMethod,
+  Donation,
+  TransactionNew,
+  TransactionDetail,
+  Login,
+  Profile,
+  PublicGroup,
+  PublicTransactions
+} from '../containers';
 
+import { requireAuthentication } from '../components/AuthenticatedComponent';
 
 const routes = {
   component: App,
@@ -18,6 +21,7 @@ const routes = {
     // Public routes
     { path: 'login', component: Login },
     { path: 'public/groups/:groupid', component: PublicGroup },
+    { path: 'public/groups/:groupid/transactions', component: PublicTransactions },
     { path: 'groups/:groupid/transactions/:transactionid', component: TransactionDetail },
     { path: 'groups/:groupid/transactions', component: GroupTransactions},
 

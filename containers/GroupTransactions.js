@@ -13,7 +13,7 @@ import showPopOverMenu from '../actions/session/show_popovermenu';
 import Content from './Content';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import TransactionList from '../components/TransactionsList';
+import TransactionsList from '../components/TransactionsList';
 import GroupTitle from '../components/GroupTitle';
 import EmptyList from '../components/EmptyList';
 
@@ -51,7 +51,7 @@ class GroupTransactions extends Component {
 
   list({transactions, users}) {
     if (transactions.length > 0) {
-      return <TransactionList transactions={transactions} users={users} />
+      return <TransactionsList transactions={transactions} users={users} />
     } else {
       return <EmptyList />;
     }

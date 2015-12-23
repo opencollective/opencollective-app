@@ -28,3 +28,24 @@ input:not([type='radio']) {
   padding-top: var(--header-height);
   padding-bottom: var(--footer-height);
 }
+
+.PublicContent {
+  background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 85%,rgba(255,255,255,0) 100%);
+  margin:
+    calc(var(--public-header-height) + var(--spacing))
+    var(--spacing)
+    calc(var(--public-footer-height) + var(--spacing))
+    var(--spacing);
+  -webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+  box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+  padding: var(--spacing);
+  border-top: 3px solid var(--gray);
+  position: relative;
+}
+
+@media (--medium-viewport) {
+  .PublicContent {
+    max-width: calc(var(--max-container-width) - var(--spacing) * 2);
+    margin: calc(var(--public-header-height) + var(--spacing)) auto var(--spacing) auto;
+  }
+}

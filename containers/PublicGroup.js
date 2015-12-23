@@ -15,6 +15,7 @@ import sortByAmount from '../lib/sort_by_amount';
 
 import PublicHeader from '../components/PublicHeader';
 import Notification from '../components/Notification';
+import PublicFooter from '../components/PublicFooter';
 import PublicGroupForm from '../components/PublicGroupForm';
 import PublicGroupThanks from '../components/PublicGroupThanks';
 import TransactionsList from '../components/TransactionsList';
@@ -44,7 +45,7 @@ export class PublicGroup extends Component {
           <PublicHeader />
           <Notification {...this.props} />
 
-          <div className='PublicGroup-container'>
+          <div className='PublicContent'>
 
             <div className='u-center u-py1'>
               <div className='u-bold u-py1'>{group.name}</div>
@@ -80,6 +81,7 @@ export class PublicGroup extends Component {
               <TransactionsList {...this.props} />
             </div>
           </div>
+          <PublicFooter />
         </div>
       </BodyClassName>
     );
