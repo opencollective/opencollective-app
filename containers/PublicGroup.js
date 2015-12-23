@@ -73,7 +73,7 @@ export class PublicGroup extends Component {
             {this.form(this.props)}
 
             <div className='u-mt1 u-mb2 PublicGroup-transactions'>
-              <Link to={`/groups/${this.props.groupid}/transactions`}>
+              <Link to={`/public/groups/${this.props.groupid}/transactions`}>
                 <div className='u-py05 u-borderBottom u-darkGray u-bold'>
                   Latest transactions <span className='PublicGroup-tick'>></span>
                 </div>

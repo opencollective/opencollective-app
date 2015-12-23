@@ -121,6 +121,7 @@ class TransactionDetail extends Component {
   }
 }
 
+
 export function approveAndPay() {
   const {
     group,

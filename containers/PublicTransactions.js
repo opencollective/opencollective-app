@@ -18,9 +18,7 @@ import TransactionsList from '../components/TransactionsList';
 export class PublicTransactions extends Component {
   render() {
     const {
-      group,
-      transactions,
-      users
+      group: {name, description, balance}
     } = this.props;
 
     return (
@@ -29,8 +27,8 @@ export class PublicTransactions extends Component {
           <PublicHeader />
           <div className='PublicContent'>
             <div className='u-center u-py1'>
-              <div className='u-bold u-py05'>{group.name}</div>
-              <div className='u-mb1'>{group.description}</div>
+              <div className='u-bold u-py05'>{name}</div>
+              <div className='u-mb1'>{description}</div>
             </div>
 
             <div className='Well PublicTransactions-well'>
@@ -38,11 +36,11 @@ export class PublicTransactions extends Component {
                 Available budget
               </span>
               <span className='Well-right'>
-                <Currency value={group.balance} />
+                <Currency value={balance} />
               </span>
             </div>
 
-            <TransactionsList transactions={transactions} users={users} />
+            <TransactionsList {...this.props} />
           </div>
           <PublicFooter />
         </div>
@@ -87,6 +85,7 @@ function mapStateToProps({
     groupid,
     group,
     users,
+    isPublic: true,
     transactions: filterCollection(transactions, { GroupId }).sort(sortByDate),
   };
 }

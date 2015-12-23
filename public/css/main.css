@@ -23,6 +23,7 @@
 @import './containers/Profile.css';
 @import './containers/Public.css';
 @import './containers/PublicGroup.css';
+@import './containers/PublicTransaction.css';
 @import './containers/PublicTransactions.css';
 @import './containers/TransactionDetail.css';
 
