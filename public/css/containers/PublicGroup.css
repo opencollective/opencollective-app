@@ -1,20 +1,11 @@
 .PublicGroup-container {
-  background: white;
-  margin: var(--spacing);
+  background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 85%,rgba(255,255,255,0) 100%);
+  margin: calc(var(--public-header-height) + var(--spacing)) var(--spacing) 0 var(--spacing);
+  -webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+  box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
   padding: var(--spacing);
   border-top: 3px solid var(--gray);
   position: relative;
-}
-
-.PublicGroup-container:after {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 150px;
-  left: 0;
-  margin-top: var(--spacing);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
 @media (--medium-viewport) {
@@ -31,6 +22,7 @@
 .PublicGroup .Button {
   display: inline-block;
   margin-top: var(--spacing);
+  font-weight: bold;
 }
 
 .PublicGroup .DonationPicker-amount {

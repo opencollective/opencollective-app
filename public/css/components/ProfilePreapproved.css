@@ -1,5 +1,6 @@
 .ProfilePreapproved {
   font-style: italic;
+  font-size: calc(var(--spacing) * 0.92);
 }
 
 .ProfilePreapproved-balance {

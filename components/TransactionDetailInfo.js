@@ -7,7 +7,7 @@ export default ({transaction, tags, handleChange, isDonation}) => {
   return (
     <div className='TransactionDetail-info'>
       <div className='TransactionDetail-price'>
-        <Currency value={transaction.amount} />
+        <Currency value={transaction.amount} currency={transaction.currency} />
       </div>
 
       <div className='TransactionDetail-category'>

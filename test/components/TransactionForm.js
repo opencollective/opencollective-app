@@ -18,6 +18,7 @@ describe('TransactionForm component', () => {
   beforeEach(() => {
     const props = {
       transaction: { attributes: {}, error: {} },
+      group: { currency: 'USD' },
       tags: ['a', 'b'],
       resetTransactionForm,
       resetNotifications: () => {},

@@ -100,14 +100,15 @@ function mapStateToProps({router, groups, form, session, users, transactions, no
 
   return {
     groupid,
+    group: groups[groupid] || {},
     userid,
+    user: users[userid] || {},
     notification,
     form,
     transactions,
     isCustomMode: form.donation.isCustomMode,
     description: form.donation.attributes.description,
     amount: form.donation.attributes.amount,
-    group: groups[groupid] || {},
     userCardsLabels,
     validationError: form.transaction.error,
     serverError: transactions.error
