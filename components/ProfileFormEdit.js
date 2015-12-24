@@ -30,7 +30,7 @@ class ProfileFormEdit extends Component {
           type='email'
           className='Field ProfileForm-field'
           placeholder= 'user@email.com'
-          value={paypalEmail || form.attributes.paypalEmail}
+          value={form.attributes.paypalEmail || paypalEmail}
           onChange={this.append.bind(this)} />
         <div>
           <SaveButton
