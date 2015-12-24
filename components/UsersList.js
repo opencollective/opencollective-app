@@ -3,11 +3,15 @@ import React from 'react';
 import Avatar from './Avatar';
 import Currency from './Currency';
 
-export default ({users=[], size}) => {
-  const width = users.length ? (100 / users.length) : 0;
-  const style = {
-    width: `calc(${width}% - 1rem)`
-  };
+export default ({users=[], size, equalSpace=false}) => {
+  let style = {};
+
+  if (equalSpace) {
+    const width = users.length ? (100 / users.length) : 0;
+    style = {
+      width: `calc(${width}% - 1rem)`
+    };
+  }
 
   return (
     <div className='UsersList'>

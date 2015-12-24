@@ -67,7 +67,7 @@ export class PublicGroup extends Component {
 
             <div className='u-mt1 PublicGroup-backers'>
               <SubTitle text='Our backers' />
-              <UsersList users={this.props.backers} />
+              <UsersList users={this.props.backers} equalSpace={true}/>
             </div>
 
             {this.form(this.props)}
