@@ -6,11 +6,16 @@ import CancelButton from './CancelButton';
 class ProfileFormEdit extends Component {
   render() {
     const {
+      user,
       form,
       save,
       saveInProgress,
       cancel
     } = this.props;
+
+    if (typeof form.attributes.paypalEmail == 'undefined' && user.paypalEmail) {
+      form.attributes.paypalEmail = user.paypalEmail;
+    }
 
     return (
       <div className='ProfileForm'>
