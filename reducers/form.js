@@ -92,6 +92,9 @@ const profileInitialState = {
 function profile(state=profileInitialState, action={}) {
   switch (action.type) {
     case constants.SET_EDIT_MODE_PROFILE:
+      if (!action.isEditMode) {
+        return merge({}, profileInitialState, { isEditMode: action.isEditMode });
+      }
       return merge({}, state, { isEditMode: action.isEditMode });
 
     case constants.APPEND_PROFILE_FORM:
