@@ -8,6 +8,7 @@ import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import getPreapprovalKeyForUser from '../actions/users/get_preapproval_key';
 import confirmPreapprovalKey from '../actions/users/confirm_preapproval_key';
 import fetchCards from '../actions/users/fetch_cards';
+import fetchUser from '../actions/users/fetch_by_id';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 
@@ -61,6 +62,8 @@ export class GroupsList extends Component {
       fetchCards(userid, {
         service: 'paypal'
       });
+
+      fetchUser(userid);
     }
 
     if (query.preapprovalKey && query.approvalStatus === 'success') {
@@ -100,6 +103,7 @@ export default connect(mapStateToProps, {
   confirmPreapprovalKey,
   fetchCards,
   notify,
+  fetchUser,
   resetNotifications
 })(GroupsList);
 
