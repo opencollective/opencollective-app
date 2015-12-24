@@ -49,6 +49,7 @@ export class GroupsList extends Component {
       fetchUserIfNeeded,
       confirmPreapprovalKey,
       fetchCards,
+      fetchUser,
       query,
       notify
     } = this.props;
