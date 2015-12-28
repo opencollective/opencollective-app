@@ -99,8 +99,14 @@ export function save() {
 
   return validateProfile(form.attributes)
   .then(rejectError.bind(this, 'validationError'))
-  .then(() => updatePaypalEmail(user.id, form.attributes.paypalEmail))
-  .then(() => updateAvatar(user.id, form.attributes.link))
+  .then(() => {
+    if (form.attributes.paypalEmail) {
+      updatePaypalEmail(user.id, form.attributes.paypalEmail)
+    }
+    if (form.attributes.link) {
+      updateAvatar(user.id, form.attributes.link)
+    }
+  })
   .then(rejectError.bind(this, 'serverError'))
   .then(() => fetchUser(user.id)) // refresh email after saving
   .then(() => setEditMode(false))
