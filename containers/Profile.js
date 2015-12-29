@@ -101,10 +101,12 @@ export function save() {
   .then(rejectError.bind(this, 'validationError'))
   .then(() => {
     if (form.attributes.paypalEmail) {
-      updatePaypalEmail(user.id, form.attributes.paypalEmail)
+      return updatePaypalEmail(user.id, form.attributes.paypalEmail)
     }
+  })
+  .then(() => {
     if (form.attributes.link) {
-      updateAvatar(user.id, form.attributes.link)
+      return updateAvatar(user.id, form.attributes.link)
     }
   })
   .then(rejectError.bind(this, 'serverError'))
