@@ -22,6 +22,22 @@ export default function(groupid) {
         'Other Program Expense'
       ];
       break;
+    case 6:
+      tags = [
+        'Admin',
+        'Autre',
+        'Communication',
+        'Déplacement',
+        'Marketing',
+        'NDD',
+        'Outils',
+        'PI',
+        'Papeterie',
+        'Représentation',
+        'Serveur',
+        'Transport'
+      ];
+      break;
     default: 
       tags = [
         'Communications',
