@@ -10,6 +10,7 @@ import fetchTransaction from '../actions/transactions/fetch_by_id';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import fetchUserGroups from '../actions/users/fetch_groups';
+import fetchGroup from '../actions/groups/fetch_by_id';
 import appendTransactionForm from '../actions/form/append_transaction';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 
@@ -32,14 +33,17 @@ class TransactionDetail extends Component {
       group,
       transaction,
       isLoading,
-      groupid
+      groupid,
+      isPublic
     } = this.props;
+
+    const backLink = (isPublic ?  '/public' : '') + `/groups/${groupid}/transactions/`;
 
     return (
       <div>
         <Header
           title={group.name}
-          backLink={`/groups/${groupid}/transactions/`} />
+          backLink={backLink} />
         <Content isLoading={isLoading}>
           <Notification {...this.props} />
           <TransactionDetailTitle {...transaction} />
@@ -52,7 +56,11 @@ class TransactionDetail extends Component {
             <TransactionDetailInfo
               {...this.props}
               handleChange={this.handleTag.bind(this)} />
-            <TransactionDetailComment {...this.props} />
+            {
+              transaction.comment ?
+                <TransactionDetailComment {...this.props} />:
+                null
+            }
             {this.approvalButtons(this.props)}
           </div>
         </Content>
@@ -64,12 +72,17 @@ class TransactionDetail extends Component {
     const {
       fetchTransaction,
       fetchUserGroups,
+      fetchGroup,
       groupid,
       userid,
       transactionid
     } = this.props;
 
-    fetchUserGroups(userid); // User groups to get the role as well
+    if (userid) {
+      fetchUserGroups(userid); // User groups to get the role as well
+    }
+
+    fetchGroup(groupid);
 
     fetchTransaction(groupid, transactionid)
     .then(() => this.fetchTransactionUser.bind(this));
@@ -108,6 +121,7 @@ class TransactionDetail extends Component {
   }
 }
 
+
 export function approveAndPay() {
   const {
     group,
@@ -138,6 +152,7 @@ export default connect(mapStateToProps, {
   approveTransaction,
   rejectTransaction,
   fetchUserGroups,
+  fetchGroup,
   appendTransactionForm,
   pushState,
   fetchUserIfNeeded,
@@ -151,18 +166,22 @@ function mapStateToProps({
   transactions,
   users,
   notification,
-  session
+  session,
+  groups
 }) {
   const { transactionid, groupid } = router.params;
   const currentUserId = session.user.id;
   const currentUser = users[currentUserId] || {};
-  const groups = currentUser.groups || {};
   const group = groups[groupid] || {};
+  const userGroups = currentUser.groups || {};
+  const userGroup = userGroups[groupid] || {};
   const { approveInProgress, rejectInProgress, payInProgress } = transactions;
   const transaction = transactions[transactionid] || {};
+  const isPublic = !session.isAuthenticated;
 
   return {
     userid: currentUserId,
+    isPublic,
     groupid,
     transactionid,
     group,
@@ -173,7 +192,7 @@ function mapStateToProps({
     approveInProgress: approveInProgress || payInProgress,
     rejectInProgress,
     isLoading: !transaction.id,
-    showApprovalButtons: isAdmin([group]) && !isDonation(transaction),
+    showApprovalButtons: isAdmin([userGroup]) && !isDonation(transaction) && !isPublic,
     isDonation: isDonation(transaction)
   };
 }

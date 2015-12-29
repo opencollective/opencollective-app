@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import values from 'lodash/object/values';
-import filter from 'lodash/collection/filter';
 import sortByDate from '../lib/sort_by_date';
 import getUniqueValues from '../lib/get_unique_values';
+import filterCollection from '../lib/filter_collection';
 
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
@@ -14,7 +13,7 @@ import showPopOverMenu from '../actions/session/show_popovermenu';
 import Content from './Content';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import TransactionList from '../components/TransactionsList';
+import TransactionsList from '../components/TransactionsList';
 import GroupTitle from '../components/GroupTitle';
 import EmptyList from '../components/EmptyList';
 
@@ -52,7 +51,7 @@ class GroupTransactions extends Component {
 
   list({transactions, users}) {
     if (transactions.length > 0) {
-      return <TransactionList transactions={transactions} users={users} />
+      return <TransactionsList transactions={transactions} users={users} />
     } else {
       return <EmptyList />;
     }
@@ -86,13 +85,13 @@ export default connect(mapStateToProps, {
 function mapStateToProps({transactions, router, groups, users={}, session}) {
   const groupid = router.params.groupid;
   const group = groups[groupid] || {};
-  const transactionsArray = values(transactions);
+  const GroupId = Number(groupid);
 
   return {
     groupid,
     group,
-    transactions: filter(transactionsArray, {GroupId: Number(groupid)}).sort(sortByDate),
-    users: users,
+    transactions: filterCollection(transactions, { GroupId }).sort(sortByDate),
+    users,
     isLoading: !group.id,
     hasPopOverMenuOpen: session.hasPopOverMenuOpen
   };

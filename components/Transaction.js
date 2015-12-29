@@ -18,14 +18,16 @@ class Transaction extends Component {
       id,
       GroupId,
       createdAt,
-      user
+      user,
+      isPublic
     } = this.props;
     const hideStatus = isDonation(this.props);
+    const prefix = isPublic ? '/public' : '';
 
     return (
       <div className='Transaction'>
-        <Link to={`/groups/${GroupId}/transactions/${id}`}>
-          <Avatar url={user.avatar} />
+        <Link to={`${prefix}/groups/${GroupId}/transactions/${id}`}>
+          <Avatar url={user && user.avatar} />
           <div className='Transaction-info'>
             <div className='Transaction-created'>
               {createdAt ? moment(createdAt).fromNow() : ''}

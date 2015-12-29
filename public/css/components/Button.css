@@ -7,6 +7,7 @@
   text-transform: uppercase;
   padding: calc(var(--spacing) * 0.75) var(--spacing);
   text-align: center;
+  cursor: pointer;
 }
 
 .Button span,

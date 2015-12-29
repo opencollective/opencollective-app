@@ -34,14 +34,15 @@ class Login extends Component {
     const {
       attributes,
       replaceState,
-      notify
+      notify,
+      redirectRoute
     } = this.props;
 
     event.preventDefault();
 
     this.validate(attributes)
     .then(() => this.login(attributes))
-    .then(() => replaceState(null, '/'))
+    .then(() => replaceState(null, redirectRoute))
     .catch(({message}) => notify('error', message));
   }
 
@@ -78,10 +79,11 @@ export default connect(mapStateToProps, {
   resetNotifications
 })(Login);
 
-function mapStateToProps(state) {
+function mapStateToProps({form, notification, router}) {
   return {
-    attributes: state.form.login.attributes,
-    notification: state.notification,
-    error: state.form.login.error
+    attributes: form.login.attributes,
+    notification: notification,
+    error: form.login.error,
+    redirectRoute: router.location.query.next || '/'
   };
 }
