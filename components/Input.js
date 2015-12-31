@@ -6,8 +6,9 @@ const Input = ({
   type,
   hasError,
   placeholder,
-  max,
+  maxLength,
   handleChange,
+  value,
   customClass
 }) => {
   const className = classnames({
@@ -22,8 +23,9 @@ const Input = ({
       <input
         className='Field'
         type={type}
-        max={max}
+        maxLength={maxLength}
         placeholder={placeholder || labelText}
+        value={value}
         onChange={(e) => handleChange(e.target.value) } />
     </div>
   );

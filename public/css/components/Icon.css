@@ -54,3 +54,7 @@
   content: "g";
 }
 
+.Icon--gear:before {
+  content: "m";
+}
+
