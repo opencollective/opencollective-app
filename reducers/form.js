@@ -119,6 +119,38 @@ function profile(state=profileInitialState, action={}) {
 }
 
 /**
+ * Group settings form reducer
+ */
+
+const groupSettingsInitialState = {
+  attributes: {},
+  error: {}
+};
+
+function groupSettings(state=groupSettingsInitialState, action={}) {
+  switch (action.type) {
+    case constants.APPEND_GROUP_SETTINGS_FORM:
+      return merge({}, state, { attributes: action.attributes });
+
+    case constants.VALIDATE_GROUP_SETTING_ATTRIBUTE_CHANGE_REQUEST:
+      return merge({}, omit(state, 'error'), { error: {} });
+
+    case constants.VALIDATE_GROUP_SETTING_ATTRIBUTE_CHANGE_FAILURE:
+      const { path, message } = errorDetail(action);
+
+      return merge({}, state, {
+        error: {
+          [path]: true,
+          message
+        }
+      });
+
+    default:
+      return state;
+  }
+}
+
+/**
  * Donation form
  */
 
@@ -147,5 +179,6 @@ export default combineReducers({
   transaction,
   login,
   profile,
-  donation
+  donation,
+  groupSettings
 });
