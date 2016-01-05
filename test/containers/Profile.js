@@ -84,14 +84,15 @@ describe('Profile container', () => {
       setEditMode,
       updatePaypalEmail,
       user: { id: 1 },
-      form: { attributes: {} }
+      form: { attributes: {paypalEmail: 'test@gmail.com'} }
     };
 
+
     save.apply({props})
-    .then(() => {
-      expect(updatePaypalEmail).to.have.been.called.with(1);
-      done();
-    });
+      .then(() => {
+        expect(updatePaypalEmail).to.have.been.called.with(1);
+        done();
+      });
   });
 
   it('should setEditMode to false when canceling', () => {

@@ -32,6 +32,7 @@
  */
 
 @import './components/Avatar.css';
+@import './components/AvatarUpload.css';
 @import './components/BackButton.css';
 @import './components/Button.css';
 @import './components/DonationForm.css';

@@ -5,7 +5,6 @@ import values from 'lodash/object/values';
 
 import Content from './Content';
 import Header from '../components/Header';
-import ProfileHeader from '../components/ProfileHeader';
 import ProfileForm from '../components/ProfileForm';
 import Notification from '../components/Notification';
 import setEditMode from '../actions/form/set_edit_mode_profile';
@@ -13,9 +12,11 @@ import appendProfileForm from '../actions/form/append_profile';
 import validateProfile from '../actions/form/validate_profile';
 
 import updatePaypalEmail from '../actions/users/update_paypal_email';
+import updateAvatar from '../actions/users/update_avatar';
 import fetchUser from '../actions/users/fetch_by_id';
 import fetchCards from '../actions/users/fetch_cards';
 import fetchGroups from '../actions/users/fetch_groups';
+import uploadImage from '../actions/images/upload';
 import getPreapprovalDetails from '../actions/users/get_preapproval_details';
 import getPreapprovalKey from '../actions/users/get_preapproval_key';
 import notify from '../actions/notification/notify';
@@ -34,7 +35,6 @@ export class Profile extends Component {
         <Content>
           <Notification {...this.props} />
           <div className='padded'>
-            <ProfileHeader {...this.props.user} />
             <ProfileForm
               {...this.props}
               logoutAndRedirect={logoutAndRedirect.bind(this)}
@@ -89,6 +89,7 @@ export function save() {
   const {
     user,
     updatePaypalEmail,
+    updateAvatar,
     form,
     validateProfile,
     notify,
@@ -98,7 +99,16 @@ export function save() {
 
   return validateProfile(form.attributes)
   .then(rejectError.bind(this, 'validationError'))
-  .then(() => updatePaypalEmail(user.id, form.attributes.paypalEmail))
+  .then(() => {
+    if (form.attributes.paypalEmail) {
+      return updatePaypalEmail(user.id, form.attributes.paypalEmail)
+    }
+  })
+  .then(() => {
+    if (form.attributes.link) {
+      return updateAvatar(user.id, form.attributes.link)
+    }
+  })
   .then(rejectError.bind(this, 'serverError'))
   .then(() => fetchUser(user.id)) // refresh email after saving
   .then(() => setEditMode(false))
@@ -108,6 +118,7 @@ export function save() {
 export default connect(mapStateToProps, {
   setEditMode,
   updatePaypalEmail,
+  updateAvatar,
   appendProfileForm,
   validateProfile,
   resetNotifications,
@@ -118,10 +129,11 @@ export default connect(mapStateToProps, {
   getPreapprovalDetails,
   fetchCards,
   getPreapprovalKey,
-  fetchGroups
+  fetchGroups,
+  uploadImage,
 })(Profile);
 
-function mapStateToProps({session, form, notification, users}) {
+function mapStateToProps({session, form, notification, users, images}) {
   const userid = session.user.id;
   const user = users[userid] || {};
   const card = getPaypalCard(users, userid);
@@ -140,6 +152,7 @@ function mapStateToProps({session, form, notification, users}) {
     validationError: form.profile.error,
     serverError: users.error,
     hasPreapproved,
+    isUploading: images.isUploading || false,
     groups: values(user.groups)
   };
 }

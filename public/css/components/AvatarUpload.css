@@ -1,0 +1,26 @@
+.AvatarUpload {
+  padding: var(--spacing);
+  height: var(--avatar-upload-height);
+  margin-bottom: var(--spacing);
+  background-color: var(--light-gray);
+  text-transform: uppercase;
+  text-align: center;
+  color: #CDD0D4;
+}
+
+.AvatarUpload-content {
+  height: var(--avatar-upload-child-height);
+  /* simple way to center vertically */
+  margin-top: calc((var(--avatar-upload-height) - var(--avatar-upload-child-height)) / 2);
+}
+
+.AvatarUpload-input {
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.AvatarUpload-img {
+  border-radius: 50%;
+  margin: auto;
+}
