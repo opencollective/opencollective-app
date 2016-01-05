@@ -29,10 +29,10 @@ const routes = {
     { path: '/', component: requireAuthentication(GroupsList) },
     { path: 'profile', component: requireAuthentication(Profile) },
     { path: 'groups/:groupid/transactions', component: requireAuthentication(GroupTransactions)},
+    { path: 'groups/:groupid/transactions/new', component: requireAuthentication(TransactionNew) },
     { path: 'groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
     { path: 'groups/:groupid/donation', component: requireAuthentication(Donation)},
     { path: 'groups/:groupid/donation/method', component: requireAuthentication(DonationMethod)},
-    { path: 'groups/:groupid/transactions/new', component: requireAuthentication(TransactionNew) },
 
     // Wildcard route
     { path: '*', component: Login }
