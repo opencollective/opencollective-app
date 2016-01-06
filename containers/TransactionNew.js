@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
-import rejectError from '../lib/reject_error';
-
 import fetchGroup from '../actions/groups/fetch_by_id';
 import createTransaction from '../actions/transactions/create';
 import resetTransactionForm from '../actions/form/reset_transaction';
@@ -29,7 +27,7 @@ export class TransactionNew extends Component {
         <Content>
           <TransactionForm
             {...this.props}
-            handleSubmit={this.handleSubmit.bind(this)} />
+            handleSubmit={createExpense.bind(this)} />
         </Content>
       </div>
     );
@@ -38,30 +36,33 @@ export class TransactionNew extends Component {
   componentWillMount() {
     this.props.fetchGroup(this.props.groupid);
   }
-
-  handleSubmit(transaction) {
-    const { notify, groupid, pushState } = this.props;
-
-    return createExpense.call(this, transaction)
-    .then(() => pushState(null, `/groups/${groupid}/transactions`))
-    .catch(error => notify('error', error.message));
-  }
 };
 
-/**
- * Export methods for testing
- */
-
-export function createExpense(transaction) {
+export function createExpense() {
   const {
+    notify,
+    groupid,
+    pushState,
+    createTransaction,
     group,
-    createTransaction
+    validateTransaction,
+    transaction
   } = this.props;
+  const attributes = transaction.attributes;
 
-  // An expense is a negative transaction in the backend
-  return createTransaction(group.id, {...transaction, amount: -transaction.amount, currency: group.currency })
-  .then(rejectError.bind(this, 'requestError'));
-}
+  return validateTransaction(attributes)
+  .then(() => {
+    const newTransaction = {
+      ...attributes,
+      amount: -attributes.amount,
+      currency: group.currency
+    };
+
+    return createTransaction(group.id, newTransaction);
+  })
+  .then(() => pushState(null, `/groups/${groupid}/transactions`))
+  .catch(error => notify('error', error.message));
+};
 
 export default connect(mapStateToProps, {
   createTransaction,
@@ -75,18 +76,16 @@ export default connect(mapStateToProps, {
   resetNotifications
 })(TransactionNew);
 
-function mapStateToProps({router, form, transactions, notification, images, groups}) {
+function mapStateToProps({router, form, notification, images, groups}) {
   const transaction = form.transaction;
   const groupid = router.params.groupid;
-  
+
   return {
     groupid,
     group: groups[groupid] || {},
     notification,
     transaction,
     tags: tags(groupid),
-    isUploading: images.isUploading || false,
-    validationError: form.transaction.error,
-    requestError: transactions.error
+    isUploading: images.isUploading || false
   };
 }

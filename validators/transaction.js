@@ -1,6 +1,9 @@
 import Joi from 'joi';
+import pluck from 'lodash/collection/pluck';
+
 import dates from '../lib/dates';
 import validate from '../lib/validate';
+import paymentMethods from '../ui/payment_methods';
 
 /**
  * New transaction schema
@@ -22,6 +25,8 @@ const schema = Joi.object().keys({
   tags: Joi.array().items(Joi.string()).required()
     .label('Type'),
   approved: Joi.boolean(),
+  paymentMethod: Joi.string().valid(pluck(paymentMethods, 'value'))
+    .label('Payment method'),
 });
 
 export default (obj) => validate(obj, schema);

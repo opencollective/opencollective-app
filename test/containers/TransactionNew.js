@@ -40,13 +40,17 @@ describe('TransactionNew container', () => {
   });
 
   it('should create an expense an invert the sign', (done) => {
+    const amount = 10;
     const props = {
       group: {id: 1, currency: 'USD' },
+      transaction: {
+        attributes: {amount}
+      },
+      validateTransaction: () => Promise.resolve(),
       createTransaction
     };
-    const amount = 10;
 
-    createExpense.call({props}, {amount});
+    createExpense.call({props}, {});
 
     function createTransaction(groupid, transaction) {
       expect(transaction.amount).to.be.equal(-amount);

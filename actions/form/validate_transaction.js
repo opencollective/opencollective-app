@@ -11,7 +11,10 @@ export default (newTransaction) => {
 
     return transactionIsValid(newTransaction)
     .then(transaction => dispatch(success(transaction)))
-    .catch(error => dispatch(failure(error)));
+    .catch(error => {
+      dispatch(failure(error));
+      throw new Error(error.details[0].message);
+    });
   };
 };
 

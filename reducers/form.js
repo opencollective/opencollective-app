@@ -13,6 +13,7 @@ const transactionInitialState = {
     amount: 0,
     tags: [],
     description: '',
+    paymentMethod: 'paypal',
     createdAt: new Date()
   },
   error: {}

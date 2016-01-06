@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
+import isString from 'lodash/lang/isString';
+import isObject from 'lodash/lang/isObject';
 
 const Select = ({options=[], value, handleChange, customClass, disabled}) => {
   const className = classnames({
@@ -14,8 +16,12 @@ const Select = ({options=[], value, handleChange, customClass, disabled}) => {
         className={className}
         value={value}
         onChange={(event) => handleChange(event.target.value)} >
-        {options.map(value => {
-          return <option value={value} key={value}>{value}</option>
+        {options.map(opt => {
+          if (isString(opt)) {
+            return <option value={opt} key={opt}>{opt}</option>
+          } else if (isObject(opt)) {
+            return <option value={opt.value} key={opt.value}>{opt.label}</option>
+          }
         })}
       </select>
     </div>

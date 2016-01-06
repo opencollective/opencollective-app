@@ -46,6 +46,10 @@
   padding: var(--spacing) 0;
 }
 
+.u-mb05 {
+  margin-bottom: calc(var(--spacing) / 2);
+}
+
 .u-mb1 {
   margin-bottom: var(--spacing);
 }
