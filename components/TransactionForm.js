@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
+
 import formatCurrency from '../lib/format_currency';
 
-import rejectError from '../lib/reject_error';
+import paymentMethods from '../ui/payment_methods';
 
 import ImageUpload from './ImageUpload';
 import Input from './Input';
 import SelectTag from './SelectTag';
+import Select from './Select';
 import Notification from './Notification';
 import SubmitButton from './SubmitButton';
 import DatePicker from './DatePicker';
@@ -18,18 +20,26 @@ class TransactionForm extends Component {
     const {
       transaction,
       tags,
-      group
+      group,
+      appendTransactionForm,
+      isUploading
     } = this.props;
 
     const attributes = transaction.attributes;
 
+    const className = classnames({
+      'TransactionForm': true,
+      'TransactionForm--isUploading': isUploading,
+      'js-form': true, // for testing
+    });
+
     return (
-      <div className={this.className(this.props)}>
+      <div className={className}>
         <Notification {...this.props} />
         <ImageUpload
           {...this.props}
           url={attributes.link}
-          onFinished={this.handleUpload.bind(this)} />
+          onFinished={({url: link}) => appendTransactionForm({link})} />
         <form
           name='transaction'
           className='TransactionForm-form'
@@ -37,25 +47,33 @@ class TransactionForm extends Component {
           <Input
             labelText='Title'
             hasError={transaction.error.description}
-            handleChange={this.handleField.bind(this, 'description')} />
+            handleChange={description => appendTransactionForm({description})} />
           <Input
             labelText='Amount'
             placeholder={formatCurrency(0, group.currency)}
             hasError={transaction.error.amount}
-            handleChange={this.handleField.bind(this, 'amount')} />
+            handleChange={amount => appendTransactionForm({amount})} />
           <div className='Input'>
             <label className='Label'>Date:</label>
             <DatePicker
               selected={moment(attributes.createdAt)}
               maxDate={moment()}
-              handleChange={this.handleField.bind(this, 'createdAt')} />
+              handleChange={createdAt => appendTransactionForm({createdAt})} />
           </div>
-          <div className='Input'>
+          <div className='Input u-mb05'>
             <label className='Label'>Type:</label>
             <SelectTag
               attributes={attributes}
               tags={tags}
-              handleChange={this.handleTag.bind(this)} />
+              handleChange={tag => appendTransactionForm({tags: [tag]})} />
+          </div>
+
+          <div className='Input'>
+            <label className='Label'>Payment method:</label>
+            <Select
+              options={paymentMethods}
+              value={attributes.paymentMethod}
+              handleChange={paymentMethod => appendTransactionForm({paymentMethod})} />
           </div>
           <SubmitButton />
         </form>
@@ -63,45 +81,9 @@ class TransactionForm extends Component {
     );
   }
 
-  className({isUploading}) {
-    return classnames({
-      'TransactionForm': true,
-      'TransactionForm--isUploading': isUploading,
-      'js-form': true, // for testing
-    });
-  }
-
   handleSubmit(event) {
-    const {
-      groupid,
-      transaction,
-      notify,
-      handleSubmit
-    } = this.props;
-    const attributes = transaction.attributes;
-
     event.preventDefault();
-
-    return this.props.validateTransaction(attributes)
-    .then(rejectError.bind(this, 'validationError'))
-    .then(() => handleSubmit(attributes, groupid))
-    .catch(error => notify('error', error.message));
-  }
-
-  handleField(key, value) {
-    this.props.appendTransactionForm({
-      [key]: value
-    });
-  }
-
-  handleTag(value) {
-    this.props.appendTransactionForm({
-      tags: [value]
-    });
-  }
-
-  handleUpload({url}) {
-    this.props.appendTransactionForm({ link: url });
+    this.props.handleSubmit();
   }
 
   componentDidMount() {
