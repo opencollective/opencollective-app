@@ -16,7 +16,6 @@ const ProfilePhoto = ({url, size, spinner}) => {
     backgroundImage: 'url(' + backgroundImage + ')',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    position: 'absolute',
   };
 
   return (

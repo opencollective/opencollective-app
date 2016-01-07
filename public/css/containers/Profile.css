@@ -1,10 +1,16 @@
 .Profile-header {
   padding-top: var(--spacing);
   text-align: center;
+  overflow: auto;
+  clear:both;
 }
 
 .Profile-name {
   font-weight: bold;
   text-transform: uppercase;
   padding-top: calc(var(--spacing) / 2);
+}
+
+.Profile-header .ProfilePhoto {
+	overflow: auto;
 }
