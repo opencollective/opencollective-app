@@ -6,7 +6,7 @@ import isDonation from '../lib/is_donation';
 
 import Currency from './Currency';
 import TransactionStatus from './TransactionStatus';
-import Avatar from './Avatar';
+import ProfilePhoto from './ProfilePhoto';
 
 
 class Transaction extends Component {
@@ -27,7 +27,7 @@ class Transaction extends Component {
     return (
       <div className='Transaction'>
         <Link to={`${prefix}/groups/${GroupId}/transactions/${id}`}>
-          <Avatar url={user && user.avatar} />
+          <ProfilePhoto url={user && user.avatar} />
           <div className='Transaction-info'>
             <div className='Transaction-created'>
               {createdAt ? moment(createdAt).fromNow() : ''}

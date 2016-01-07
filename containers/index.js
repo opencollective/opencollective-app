@@ -10,6 +10,7 @@ import Profile from './Profile';
 import PublicGroup from './PublicGroup';
 import PublicTransactions from './PublicTransactions';
 import PublicTransaction from './PublicTransaction';
+import GroupSettings from './GroupSettings';
 
 export {
   App,
@@ -23,5 +24,6 @@ export {
   Profile,
   PublicGroup,
   PublicTransactions,
-  PublicTransaction
+  PublicTransaction,
+  GroupSettings
 };

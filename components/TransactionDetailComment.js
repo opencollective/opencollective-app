@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import Avatar from './Avatar';
+import ProfilePhoto from './ProfilePhoto';
 
 export default ({transaction, user}) => {
   const fullName = user.first_name ? `${user.first_name} ${user.last_name}` : '';
@@ -9,7 +9,7 @@ export default ({transaction, user}) => {
   return (
     <div className='TransactionComment'>
       <div className='TransactionComment-header'>
-        <Avatar url={user.avatar} />
+        <ProfilePhoto url={user.avatar} />
         <div className='TransactionComment-date'>
           {date}
         </div>

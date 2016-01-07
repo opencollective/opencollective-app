@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Avatar from './Avatar';
+import ProfilePhoto from './ProfilePhoto';
 import Currency from './Currency';
 
 export default ({users=[], size, equalSpace=false}) => {
@@ -18,7 +18,7 @@ export default ({users=[], size, equalSpace=false}) => {
       {users.map(user => {
         return (
           <div className='UsersList-item' style={style}>
-            <Avatar
+            <ProfilePhoto
               key={user.id}
               url={user.avatar}
               size={size} />

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 class ImageUpload extends Component {
   render() {
-    const { url, isUploading } = this.props;
+    const { url, isUploading, tag } = this.props;
     const isUploaded = url && url.length > 0;
     const className = classnames({
       ImageUpload: true,
@@ -61,13 +61,13 @@ class ImageUpload extends Component {
   }
 
   handleChange() {
-    const { onFinished, uploadImage } = this.props;
+    const { onFinished, uploadImage, tag } = this.props;
     const file = ReactDOM.findDOMNode(this.refs.file).files[0];
 
     const formData = new FormData();
     formData.append('file', file);
 
-    uploadImage(formData)
+    uploadImage(formData, tag)
     .then(res => onFinished(res.response));
   }
 
@@ -83,7 +83,12 @@ ImageUpload.propTypes = {
   onFinished: PropTypes.func.isRequired,
   uploadImage: PropTypes.func.isRequired,
   isUploading: PropTypes.bool.isRequired,
-  url: PropTypes.string
+  url: PropTypes.string,
+  tag: PropTypes.string
+};
+
+ImageUpload.defaultProps = {
+  tag: ''
 };
 
 export default ImageUpload;

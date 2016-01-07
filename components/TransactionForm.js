@@ -34,15 +34,19 @@ class TransactionForm extends Component {
           name='transaction'
           className='TransactionForm-form'
           onSubmit={this.handleSubmit.bind(this)} >
-          <Input
-            labelText='Title'
-            hasError={transaction.error.description}
-            handleChange={this.handleField.bind(this, 'description')} />
-          <Input
-            labelText='Amount'
-            placeholder={formatCurrency(0, group.currency)}
-            hasError={transaction.error.amount}
-            handleChange={this.handleField.bind(this, 'amount')} />
+          <div>
+            <span className='Label'>Title: </span>
+            <Input
+              hasError={transaction.error.description}
+              handleChange={this.handleField.bind(this, 'description')} />
+          </div>
+          <div>
+            <span className='Label'>Amount: </span>
+            <Input
+              placeholder={formatCurrency(0, group.currency)}
+              hasError={transaction.error.amount}
+              handleChange={this.handleField.bind(this, 'amount')} />
+          </div>
           <div className='Input'>
             <label className='Label'>Date:</label>
             <DatePicker

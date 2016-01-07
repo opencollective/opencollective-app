@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import AvatarUpload from './AvatarUpload';
+import ProfilePhotoUpload from './ProfilePhotoUpload';
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
 
@@ -18,9 +18,10 @@ class ProfileFormEdit extends Component {
     return (
       <div className='ProfileForm'>
         <div className='Profile-header'>
-          <AvatarUpload
+          <ProfilePhotoUpload
           {...this.props}
-          url={form.attributes.link}
+          newUrl={form.attributes.link}
+          currentUrl={user.avatar}
           onFinished={this.handleUpload.bind(this)} />
         </div>
         <div className='ProfileForm-label'>
