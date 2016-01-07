@@ -23,8 +23,7 @@ export class GroupSettings extends Component {
   render() {
     const {
         form,
-        isUploadingLogo,
-        isUploadingImage,
+        isUploadingLogo
     } = this.props;
 
     return (
@@ -133,7 +132,6 @@ function mapStateToProps({groups, router, form, notification, images}){
         form1: form,
         notification,
         isUploadingLogo: (images.isUploading && images.tag==='logo') || false,
-        isUploadingImage: (images.isUploading && images.tag==='image') || false,
         form: form.groupSettings,
     }
 }
