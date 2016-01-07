@@ -20,6 +20,8 @@ const routes = {
   childRoutes: [
     { path: 'login', component: Login },
 
+    { path: 'yeoman', component: PublicGroup },
+
     // Public routes (web)
     { path: 'public/groups/:groupid', component: PublicGroup },
     { path: 'public/groups/:groupid/transactions', component: PublicTransactions },
