@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const Avatar = ({backgroundUrl, size, foregroundUrl, spinner}) => {
+const ProfilePhoto = ({backgroundUrl, size, foregroundUrl, spinner}) => {
 
   const defaultSize = '55px';
 
@@ -34,14 +34,14 @@ const Avatar = ({backgroundUrl, size, foregroundUrl, spinner}) => {
   };
 
   if (foregroundUrl || spinner) {
-    var cssClass = 'Avatar blur-on';
+    var cssClass = 'ProfilePhoto blur-on';
   }
   else {
-    var cssClass = 'Avatar'
+    var cssClass = 'ProfilePhoto'
   }
 
   return (
-    <div className='Avatar' style={outerDivStyle}>
+    <div className='ProfilePhoto' style={outerDivStyle}>
       <div className={cssClass} style={divStyle} />
       {foregroundUrl ? <img src={foregroundUrl} style={imgStyle} /> : null }
       {spinner ? <div className='spinner-loader center-element'/> : null }
@@ -49,11 +49,11 @@ const Avatar = ({backgroundUrl, size, foregroundUrl, spinner}) => {
     );
 }
 
-Avatar.propTypes = {
+ProfilePhoto.propTypes = {
   backgroundUrl: PropTypes.string,
   size: PropTypes.string,
   foregroundUrl: PropTypes.string,
   spinner: PropTypes.string
 };
 
-export default Avatar;
+export default ProfilePhoto;

@@ -26,7 +26,6 @@
   font-style: italic;
 }
 
-<<<<<<< HEAD
 .u-center {
   text-align: center;
 }
@@ -82,9 +81,6 @@
 .u-darkGray {
   color: var(--dark-gray);
 }
-=======
-=======
->>>>>>> profile editing ability with new AvatarUpload component
 .center-element {
 	position: relative;
 	top: 35%;

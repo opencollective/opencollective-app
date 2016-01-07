@@ -26,7 +26,7 @@
   padding-bottom: calc(var(--spacing) / 4);
 }
 
-.TransactionComment .Avatar {
+.TransactionComment .ProfilePhoto {
   float: left;
 }
 
