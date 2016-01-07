@@ -4,7 +4,7 @@ import Input from './Input';
 class LoginForm extends Component {
 
   render() {
-    const { handleField, handleSubmit, error } = this.props;
+    const { handleField, handleSubmit, error, attributes } = this.props;
 
     return (
       <form
@@ -15,11 +15,13 @@ class LoginForm extends Component {
           type='email'
           hasError={error.email}
           placeholder='email@example.com'
+          value={attributes.email}
           handleChange={handleField.bind(this, 'email')} />
         <Input
           type='password'
           hasError={error.password}
           placeholder='******'
+          value={attributes.password}
           handleChange={handleField.bind(this, 'password')} />
         <button
           type='submit'
