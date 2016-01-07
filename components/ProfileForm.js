@@ -5,18 +5,10 @@ import ProfileFormEdit from './ProfileFormEdit';
 
 class ProfileForm extends Component {
   render() {
-    return (
-      <div className='ProfileForm'>
-        {this.form(this.props)}
-      </div>
-    );
-  }
-
-  form(props) {
-    if (props.isEditMode) {
-      return <ProfileFormEdit {...props} />;
+     if (this.props.isEditMode) {
+      return <ProfileFormEdit {...this.props} />;
     } else {
-      return <ProfileFormDefault {...props} />;
+      return <ProfileFormDefault {...this.props} />;
     }
   }
 }

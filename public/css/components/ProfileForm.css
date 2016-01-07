@@ -5,6 +5,7 @@
 .ProfileForm-label {
   font-weight: bold;
   padding: var(--spacing) 0;
+  clear: both;
 }
 
 .ProfileForm-email {
@@ -36,3 +37,8 @@
   cursor: pointer;
   display: inline-block;
 }
+
+.ProfileForm .ProfilePhoto {
+  margin: auto;
+}
+
