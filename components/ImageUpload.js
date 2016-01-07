@@ -1,22 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import classnames from 'classnames';
+import isFunction from 'lodash/lang/isFunction';
 
 class ImageUpload extends Component {
   render() {
-    const { url, isUploading, tag } = this.props;
-    const isUploaded = url && url.length > 0;
-    const className = classnames({
-      ImageUpload: true,
-      'ImageUpload--isUploaded': isUploaded,
-      'ImageUpload--isUploading': isUploading
-    })
+    const {newUrl, isUploading, customClassName } = this.props;
+    const isUploaded = newUrl && newUrl.length > 0;
 
     return (
-      <div className={className} onClick={this.clickInput.bind(this, isUploaded)}>
-        <div className='ImageUpload-content'>
-          { this.content({isUploading, isUploaded, url}) }
-        </div>
+      <div className={customClassName || 'ImageUpload'} onClick={this.clickInput.bind(this, isUploading)}>
+        { this.content({...this.props, isUploaded}) }
         <span>
           <input type='file' name='file' ref='file' className='ImageUpload-input' onChange={this.handleChange.bind(this)} />
         </span>
@@ -24,40 +17,28 @@ class ImageUpload extends Component {
     );
   }
 
-  content({isUploaded, isUploading, url}) {
+  content({isUploaded, isUploading, uploading, uploaded, emptyState}) {
     if (isUploading) {
-      return this.uploading();
+      return isFunction(uploading) ? uploading() : (
+        <span>
+          <img src='/images/uploading.png'  className='ImageUpload-img' />
+          <div>Uploading...</div>
+        </span>
+      );
     } else if (isUploaded) {
-      return this.uploaded(url);
+      return isFunction(uploaded) ? uploaded() : (
+        <span>
+          <img className='ImageUpload-img' src={url} />
+        </span>
+      );
     } else {
-      return this.emptyState();
+      return isFunction(emptyState) ? emptyState() : (
+        <div>
+          <img src='/images/camera.png' className='ImageUpload-img' />
+          <div> Upload photo</div>
+        </div>
+      );
     }
-  }
-
-  emptyState() {
-    return (
-      <div>
-        <img src='/images/camera.png' className='ImageUpload-img' />
-        <div> Upload photo</div>
-      </div>
-    );
-  }
-
-  uploaded(url) {
-    return (
-      <span>
-        <img className='ImageUpload-img' src={url} />
-      </span>
-    );
-  }
-
-  uploading() {
-    return (
-      <span>
-        <img src='/images/uploading.png'  className='ImageUpload-img' />
-        <div>Uploading...</div>
-      </span>
-    );
   }
 
   handleChange() {
@@ -71,8 +52,8 @@ class ImageUpload extends Component {
     .then(res => onFinished(res.response));
   }
 
-  clickInput(isUploaded) {
-    if (!isUploaded) {
+  clickInput(isUploading) {
+    if (!isUploading) {
       ReactDOM.findDOMNode(this.refs.file).click();
     }
   }
@@ -83,12 +64,7 @@ ImageUpload.propTypes = {
   onFinished: PropTypes.func.isRequired,
   uploadImage: PropTypes.func.isRequired,
   isUploading: PropTypes.bool.isRequired,
-  url: PropTypes.string,
-  tag: PropTypes.string
-};
-
-ImageUpload.defaultProps = {
-  tag: ''
+  newUrl: PropTypes.string
 };
 
 export default ImageUpload;
