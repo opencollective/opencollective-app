@@ -9,7 +9,6 @@ import Header from '../components/Header'
 import Notification from '../components/Notification';
 import Input from '../components/Input';
 import TextArea from '../components/TextArea';
-import ImageUpload from '../components/ImageUpload';
 import ProfilePhotoUpload from '../components/ProfilePhotoUpload';
 
 import resetNotifications from '../actions/notification/reset';
@@ -27,6 +26,7 @@ export class GroupSettings extends Component {
         isUploadingLogo,
         isUploadingImage,
     } = this.props;
+
     return (
       <div className='GroupSettings'>
         <Header title='Collective Info' hasBackButton={true} />
@@ -44,12 +44,11 @@ export class GroupSettings extends Component {
               </div>
               <ProfilePhotoUpload
                 {...this.props}
-                newUrl={form.attributes.logo}
                 currentUrl={this.props.group.logo}
+                newUrl={form.attributes.logo}
                 tag='logo'
                 isUploading={isUploadingLogo}
-                  onFinished={({url}) => this.handleChange('logo', url)} />
-
+                onFinished={({url}) => this.handleChange('logo', url)} />
             </div>
 
             <div className='Label'> Description: </div>

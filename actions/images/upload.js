@@ -30,7 +30,7 @@ function success(json, tag) {
   };
 }
 
-function failure(error) {
+function failure(error, tag) {
   return {
     type: constants.UPLOAD_IMAGE_FAILURE,
     error: error,
