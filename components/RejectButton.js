@@ -5,13 +5,14 @@ import Icon from './Icon';
 // Leave non shallow until proper way of testing them
 class RejectButton extends Component {
   render() {
-    const {rejectTransaction, inProgress} = this.props;
+    const {rejectTransaction, inProgress, disabled} = this.props;
 
     return (
       <div>
         <AsyncButton
           customClass='Button--reject'
           inProgress={inProgress}
+          disabled={disabled}
           onClick={rejectTransaction.bind(this)}>
           <Icon type='rejected' /> Reject
         </AsyncButton>

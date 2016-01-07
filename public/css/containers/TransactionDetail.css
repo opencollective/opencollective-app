@@ -4,6 +4,7 @@
 
 .TransactionDetail-image {
   float: left;
+  padding-right: var(--spacing);
 }
 
 .TransactionDetail-image img {
@@ -13,19 +14,23 @@
 
 .TransactionDetail-info {
   float: left;
-  padding-left: var(--spacing);
   padding-bottom: calc(var(--spacing) * 2);
-  width: calc(100% - 55px - 3rem);
+  width: calc(100% - 55px - 4rem);
   box-sizing: border-box;
+}
+
+.TransactionDetail--noImage .TransactionDetail-info{
+  float: none;
+  padding-bottom: calc(var(--spacing) * 2);
+  width: 100%;
 }
 
 .TransactionDetail-price {
   font-size: calc(var(--spacing) * 2);
 }
 
-.TransactionDetail-controls {
+.TransactionDetail-paymentMethod {
   clear: both;
-  padding-top: calc(var(--spacing) * 2);
 }
 
 .TransactionDetail-vat {
@@ -43,4 +48,16 @@
   margin-top: calc(var(--spacing) / 2);
   display: block;
   width: 100%;
+}
+
+.TransactionDetail-paymentMethod .SelectContainer {
+  width: 100%;
+}
+
+.TransactionDetail-status {
+  text-align: center;
+  padding: var(--spacing) 0;
+  border-top: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
+  clear: both;
 }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import rejectError from '../lib/reject_error';
+import classnames from 'classnames';
 
 import payTransaction from '../actions/transactions/pay';
+import updateTransaction from '../actions/transactions/update';
 import approveTransaction from '../actions/transactions/approve';
 import rejectTransaction from '../actions/transactions/reject';
 import fetchTransaction from '../actions/transactions/fetch_by_id';
@@ -15,27 +16,52 @@ import appendTransactionForm from '../actions/form/append_transaction';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 
 import Content from './Content';
+
 import tags from '../ui/tags';
+import paymentMethods from '../ui/payment_methods';
 
 import Header from '../components/Header';
-import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
-import TransactionDetailApproval from '../components/TransactionDetailApproval';
+import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import Notification from '../components/Notification';
+import ApproveButton from '../components/ApproveButton';
+import RejectButton from '../components/RejectButton';
+import Select from '../components/Select';
+import TransactionStatus from '../components/TransactionStatus';
 
 import isAdmin from '../lib/is_admin';
-import isDonation from '../lib/is_donation';
+import transactionIsDonation from '../lib/is_donation';
 
 class TransactionDetail extends Component {
   render() {
     const {
+      groupid,
+      transactionid,
+
       group,
       transaction,
+
+      isPublic,
+      isManual,
+      isExpense,
       isLoading,
-      groupid,
-      isPublic
+      isAdmin,
+      isReimbursed,
+      isRejected,
+
+      approveInProgress,
+      rejectInProgress,
+      updateInProgress,
+      payInProgress,
+
+      updateTransaction
     } = this.props;
+
+    const className = classnames({
+      TransactionDetail: true,
+      'TransactionDetail--noImage': !transaction.link
+    });
 
     const backLink = (isPublic ?  '/public' : '') + `/groups/${groupid}/transactions/`;
 
@@ -46,22 +72,56 @@ class TransactionDetail extends Component {
           backLink={backLink} />
         <Content isLoading={isLoading}>
           <Notification {...this.props} />
+
           <TransactionDetailTitle {...transaction} />
-          <div className='TransactionDetail'>
-            <div className='TransactionDetail-image'>
-              <a href={transaction.link}>
-                <img src={transaction.link} />
-              </a>
-            </div>
+
+          <div className={className}>
+
+            {/* Receipt */}
+            {transaction.link && (
+              <div className='TransactionDetail-image'>
+                <a href={transaction.link}>
+                  <img src={transaction.link} />
+                </a>
+              </div>
+            )}
+
             <TransactionDetailInfo
               {...this.props}
-              handleChange={this.handleTag.bind(this)} />
-            {
-              transaction.comment ?
-                <TransactionDetailComment {...this.props} />:
-                null
-            }
-            {this.approvalButtons(this.props)}
+              handleChange={tag => updateTransaction(groupid, transactionid, {tags: [tag]})} />
+
+            {transaction.comment && (
+              <TransactionDetailComment {...this.props} />
+            )}
+
+            <div className='TransactionDetail-status'>
+              <TransactionStatus {...transaction} />
+            </div>
+
+            {!isReimbursed && isAdmin && isExpense && !isRejected && (
+              <div>
+                <div className='TransactionDetail-paymentMethod'>
+                  <div className='u-bold u-py1'>Payment method</div>
+                  <Select
+                    disabled={!!transaction.reimbursedAt}
+                    options={paymentMethods}
+                    value={transaction.paymentMethod}
+                    handleChange={paymentMethod => updateTransaction(groupid, transactionid, {paymentMethod})} />
+                </div>
+                <div className='u-mt2'>
+                  <ApproveButton
+                    disabled={updateInProgress}
+                    isManual={isManual}
+                    approved={transaction.approved}
+                    approveTransaction={approve.bind(this)}
+                    inProgress={approveInProgress || payInProgress} />
+                  <RejectButton
+                    disabled={updateInProgress}
+                    rejectTransaction={reject.bind(this)}
+                    inProgress={rejectInProgress} />
+                </div>
+              </div>
+            )}
           </div>
         </Content>
       </div>
@@ -73,6 +133,7 @@ class TransactionDetail extends Component {
       fetchTransaction,
       fetchUserGroups,
       fetchGroup,
+      fetchUserIfNeeded,
       groupid,
       userid,
       transactionid
@@ -85,44 +146,19 @@ class TransactionDetail extends Component {
     fetchGroup(groupid);
 
     fetchTransaction(groupid, transactionid)
-    .then(() => this.fetchTransactionUser.bind(this));
-  }
-
-  approvalButtons({showApprovalButtons}) {
-    if (showApprovalButtons) {
-      return (
-        <TransactionDetailApproval
-          {...this.props}
-          approveTransaction={approveAndPay.bind(this)}
-          rejectTransaction={reject.bind(this)} />
-      );
-    }
-  }
-
-  fetchTransactionUser() {
-    const { fetchUserIfNeeded, transaction } = this.props;
-
-    if (transaction.UserId) {
-      fetchUserIfNeeded(transaction.UserId);
-    }
-  }
-
-  handleTag(value) {
-    this.props.appendTransactionForm({
-      tags: [value]
+    .then(() => {
+      if (this.props.transaction.UserId) { // for the comment section
+        fetchUserIfNeeded(this.props.transaction.UserId);
+      }
     });
   }
 
-
   nextPage() {
-    const { group, pushState } = this.props;
-
-    pushState(null, `/groups/${group.id}/transactions`)
+    this.props.pushState(null, `/groups/${this.props.groupid}/transactions`);
   }
 }
 
-
-export function approveAndPay() {
+export function approve() {
   const {
     group,
     transaction,
@@ -132,19 +168,19 @@ export function approveAndPay() {
   } = this.props;
 
   approveTransaction(group.id, transaction.id)
-  .then(rejectError)
   .then(() => payTransaction(group.id, transaction.id))
-  .then(rejectError)
+  .then(() => notify('success', 'Successfully approved transaction'))
   .then(() => this.nextPage())
   .catch(({message}) => notify('error', message));
 };
 
 export function reject() {
-  const { group, transaction, rejectTransaction } = this.props;
+  const { group, transaction, rejectTransaction, notify } = this.props;
 
   rejectTransaction(group.id, transaction.id)
-  .then(rejectError)
-  .then(() => this.nextPage());
+  .then(() => notify('success', 'Successfully rejected transaction'))
+  .then(() => this.nextPage())
+  .catch(({message}) => notify('error', message));
 };
 
 export default connect(mapStateToProps, {
@@ -158,7 +194,8 @@ export default connect(mapStateToProps, {
   fetchUserIfNeeded,
   payTransaction,
   notify,
-  resetNotifications
+  resetNotifications,
+  updateTransaction
 })(TransactionDetail);
 
 function mapStateToProps({
@@ -170,29 +207,41 @@ function mapStateToProps({
   groups
 }) {
   const { transactionid, groupid } = router.params;
-  const currentUserId = session.user.id;
-  const currentUser = users[currentUserId] || {};
+  const userid = session.user.id;
+
+  const user = users[userid] || {};
   const group = groups[groupid] || {};
-  const userGroups = currentUser.groups || {};
-  const userGroup = userGroups[groupid] || {};
-  const { approveInProgress, rejectInProgress, payInProgress } = transactions;
   const transaction = transactions[transactionid] || {};
-  const isPublic = !session.isAuthenticated;
+
+  const userGroups = user.groups || {};
+  const userIsAdmin = isAdmin([userGroups[groupid]]) ;
+
+  const isDonation = transactionIsDonation(transaction) ;
+  const isExpense = !isDonation;
+  const isManual = transaction.paymentMethod === 'manual';
 
   return {
-    userid: currentUserId,
-    isPublic,
     groupid,
     transactionid,
+    userid,
+
     group,
     transaction,
     notification,
     tags: tags(groupid),
-    user: users[transaction.UserId] || {},
-    approveInProgress: approveInProgress || payInProgress,
-    rejectInProgress,
+    commenter: users[transaction.UserId] || {},
+
+    isDonation,
+    isExpense,
+    isManual,
+    isAdmin: userIsAdmin,
     isLoading: !transaction.id,
-    showApprovalButtons: isAdmin([userGroup]) && !isDonation(transaction) && !isPublic,
-    isDonation: isDonation(transaction)
+    isRejected: transaction.approvedAt && !transaction.approved,
+    isReimbursed: !!transaction.reimbursedAt,
+
+    approveInProgress: transactions.approveInProgress,
+    payInProgress: transactions.payInProgress,
+    rejectInProgress: transactions.rejectInProgress,
+    updateInProgress: transaction.updateInProgress
   };
 }

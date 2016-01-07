@@ -12,7 +12,10 @@ export default (groupid, transactionid) => {
     dispatch(request(groupid, transactionid));
     return postJSON(url, {approved: true})
       .then(json => dispatch(success(groupid, transactionid, json)))
-      .catch(error => dispatch(failure(error)));
+      .catch(error => {
+        dispatch(failure(error));
+        throw new Error(error.message);
+      });
   };
 };
 

@@ -6,7 +6,8 @@ import * as constants from '../constants/transactions';
 const defaults = {
   approveInProgress: false,
   rejectInProgress: false,
-  payInProgress: false
+  payInProgress: false,
+  updateInProgress: false
 };
 
 export default function transactions(state=defaults, action={}) {
@@ -18,9 +19,11 @@ export default function transactions(state=defaults, action={}) {
     case constants.TRANSACTIONS_SUCCESS:
     case constants.TRANSACTION_SUCCESS:
     case constants.CREATE_TRANSACTION_SUCCESS:
+    case constants.UPDATE_TRANSACTION_SUCCESS:
       return merge({}, state, action.transactions);
 
     case constants.CREATE_TRANSACTION_FAILURE:
+    case constants.UPDATE_TRANSACTION_FAILURE:
       const error = action.error;
       return merge({}, state, { error });
 
@@ -44,6 +47,13 @@ export default function transactions(state=defaults, action={}) {
     case constants.PAY_TRANSACTION_SUCCESS:
     case constants.PAY_TRANSACTION_FAILURE:
       return merge({}, state, { payInProgress: false });
+
+    case constants.UPDATE_TRANSACTION_REQUEST:
+      return merge({}, state, { updateInProgress: true });
+
+    case constants.UPDATE_TRANSACTION_SUCCESS:
+    case constants.UPDATE_TRANSACTION_FAILURE:
+      return merge({}, state, { updateInProgress: false });
 
     default:
       return state;
