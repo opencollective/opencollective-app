@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import { Link } from 'react-router';
 import BodyClassName from 'react-body-classname';
 import take from 'lodash/array/take';
 import contains from 'lodash/collection/contains';
 
-import rejectError from '../lib/reject_error';
 import convertToCents from '../lib/convert_to_cents';
 import filterCollection from '../lib/filter_collection';
 import sortByDate from '../lib/sort_by_date';
@@ -18,11 +16,12 @@ import Notification from '../components/Notification';
 import PublicFooter from '../components/PublicFooter';
 import PublicGroupForm from '../components/PublicGroupForm';
 import PublicGroupThanks from '../components/PublicGroupThanks';
-import TransactionsList from '../components/TransactionsList';
+import TransactionItem from '../components/TransactionItem';
 import YoutubeVideo from '../components/YoutubeVideo';
-import Avatar from '../components/Avatar';
+import ProfilePhoto from '../components/ProfilePhoto';
 import Metric from '../components/Metric';
 import UsersList from '../components/UsersList';
+import ShareIcon from '../components/ShareIcon';
 
 import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
@@ -42,9 +41,11 @@ export class PublicGroup extends Component {
       showThankYouPage,
       amount,
       backers,
-      topDonations,
-      donations,
-      expenses
+      donation,
+      donationUser,
+      expense,
+      shareUrl,
+      expenseUser
     } = this.props;
 
     return (
@@ -58,7 +59,7 @@ export class PublicGroup extends Component {
 
             <div className='u-py2 u-center'>
               <img src='/images/LogoLargeTransparent.png' className='PublicGroup-logo' />
-              <div className='u-mb1'>
+              <div className='PublicGroup-motto'>
                 In order to reach our goals, {group.name} needs your help
               </div>
             </div>
@@ -68,6 +69,11 @@ export class PublicGroup extends Component {
                 <YoutubeVideo id='Z6ih1aKeETk' />
               </div>
               <div className='PublicGroup-metricContainer'>
+                <Metric label='Share'>
+                  <ShareIcon type='twitter' url={shareUrl} />
+                  <ShareIcon type='facebook' url={shareUrl} />
+                  <ShareIcon type='mail' url={shareUrl} />
+                </Metric>
                 <Metric
                   label='Funds Raised'
                   value={formatCurrency(group.donationTotal, group.currency)} />
@@ -83,7 +89,9 @@ export class PublicGroup extends Component {
             <div className='PublicGroup-title'>Our collective</div>
             <div className='PublicGroup-quote'>
               <div className='PublicGroup-quoteUser'>
-                <Avatar />
+                <ProfilePhoto
+                  hasBorder={true}
+                  size='75px' />
                 <span className='PublicGroup-quoteName'>
                   <b>Dayra</b> <br/>
                   Women Who Code <br/>
@@ -96,24 +104,25 @@ export class PublicGroup extends Component {
             </div>
 
             <div className='PublicGroup-title'>Supporter Showcase</div>
-            <UsersList users={backers} />
+            <UsersList users={backers} size='111px'/>
 
             <div className='u-mb2'>
               <div className='PublicGroup-expenses'>
                 <div className='PublicGroup-title'>Expenses</div>
-                <TransactionsList {...this.props} transactions={expenses} />
+                <TransactionItem transaction={expense} user={expenseUser} />
               </div>
               <div className='PublicGroup-donations'>
                 <div className='PublicGroup-title'>Raised</div>
-                <TransactionsList {...this.props} transactions={donations}/>
+                <TransactionItem transaction={donation} user={donationUser} />
               </div>
             </div>
 
             <div id='support'></div>
-            {showThankYouPage ?
-              <PublicGroupThanks /> : (
+            {
+              showThankYouPage ?
+              <PublicGroupThanks /> :
               <PublicGroupForm {...this.props} onToken={donateToGroup.bind(this, amount)} />
-            )}
+            }
 
           </div>
           <PublicFooter />
@@ -138,14 +147,16 @@ export class PublicGroup extends Component {
       sort: 'amount',
       direction: 'asc'
     })
-    .then(({transactions}) => transactions.map(fetchUserIfNeeded));
+    .then(({transactions}) => getUniqueValues(transactions, 'UserId'))
+    .then(t => t.map(fetchUserIfNeeded));
 
     fetchTransactions(groupid, {
       per_page: 1,
       sort: 'amount',
       direction: 'desc'
     })
-    .then(({transactions}) => transactions.map(fetchUserIfNeeded));
+    .then(({transactions}) => getUniqueValues(transactions, 'UserId'))
+    .then(t => t.map(fetchUserIfNeeded));
 
     fetchUsers(groupid);
   }
@@ -171,9 +182,8 @@ export function donateToGroup(amount, token) {
   }
 
   return donate(groupid, payment)
-  .then(rejectError.bind(this))
   .then(() => pushState(null, `/public/groups/${groupid}/?status=thankyou`))
-  .catch(error => notify('error', error.message));
+  .catch(({message}) => notify('error', message));
 }
 
 export default connect(mapStateToProps, {
@@ -210,8 +220,11 @@ function mapStateToProps({
 
   const backers = top5.map(t => users[t.UserId]).filter(t => !!t);
 
-  const donations = groupTransactions.filter(({amount}) => amount > 0);
-  const expenses = groupTransactions.filter(({amount}) => amount < 0);
+  const donation = groupTransactions.find(({amount}) => amount > 0) || {};
+  const donationUser = users[donation.UserId];
+
+  const expense = groupTransactions.find(({amount}) => amount < 0) || {};
+  const expenseUser = users[expense.UserId];
 
   return {
     groupid,
@@ -229,7 +242,10 @@ function mapStateToProps({
     users,
     backers,
     admins,
-    donations,
-    expenses
+    donation,
+    donationUser,
+    expense,
+    expenseUser,
+    shareUrl: window.location.href
   };
 }

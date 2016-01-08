@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default ({label, value}) => (
+export default ({label, value, children}) => (
   <div className='Metric'>
     <div className='Metric-value'>
-      {value}
+      {children || value}
     </div>
     <div className='Metric-label'>{label}</div>
   </div>

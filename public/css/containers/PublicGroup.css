@@ -7,7 +7,6 @@
   display: inline-block;
   vertical-align: top;
   margin-left: var(--spacing);
-  width: calc(25% - var(--spacing));
 }
 
 .PublicGroup-title {
@@ -17,13 +16,13 @@
   margin-bottom: calc(var(--spacing) * 2);
 }
 
-.PublicGroup-quoteUser .Avatar,
+.PublicGroup-quoteUser .ProfilePhoto,
 .PublicGroup-quoteName {
   display: inline-block;
 }
 
 .PublicGroup-quoteUser {
-  width: 200px;
+  width: 230px;
   display: inline-block;
   vertical-align: top;
 }
@@ -34,18 +33,25 @@
   font-size: 0.9rem;
 }
 
+.PublicGroup-quote {
+}
+
 .PublicGroup-quoteText {
   font-style: italic;
   display: inline-block;
-  width: calc(100% - 200px - 2rem);
-  margin-left: calc(var(--spacing) * 2);
+  width: calc(100% - 230px);
+  padding-left: calc(var(--spacing) * 2);
+  box-sizing: border-box;
+  line-height: 24px;
 }
 
 .PublicGroup-expenses,
 .PublicGroup-donations {
   width: 50%;
+  padding-right: var(--spacing);
   display: inline-block;
   vertical-align: top;
+  box-sizing: border-box;
 }
 
 .PublicGroup .Button {
@@ -76,4 +82,14 @@
 
 .PublicGroup .Transaction {
   border-bottom: none;
+}
+
+.PublicGroup .ShareIcon {
+  padding-right: calc(var(--spacing) / 2);
+}
+
+.PublicGroup-motto {
+  font-size: 1.5rem;
+  max-width: 850px;
+  margin: 0 auto var(--spacing) auto;
 }

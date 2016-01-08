@@ -38,6 +38,7 @@ const PublicGroupForm = ({
     <div className='PublicGroupForm'>
       <SubTitle text='Make your donation' />
       <DonationPicker
+        value={amount}
         setDonationAmount={amount => appendDonationForm({amount})}
         selected={amount}
         isCustomMode={isCustomMode}

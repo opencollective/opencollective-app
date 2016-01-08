@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const ProfilePhoto = ({url, size, spinner}) => {
+const ProfilePhoto = ({url, size, spinner, hasBorder=false}) => {
 
   const defaultSize = '55px';
 
@@ -10,7 +10,13 @@ const ProfilePhoto = ({url, size, spinner}) => {
     var backgroundImage = '/images/default_avatar.svg';
   }
 
+  const border = hasBorder ? {
+    border: '3px solid white',
+    'box-shadow': '0px 0px 0px 1px #7FADF2'
+  } : {};
+
   const divStyle = {
+    ...border,
     width: size || defaultSize,
     height: size || defaultSize,
     backgroundImage: 'url(' + backgroundImage + ')',
@@ -19,10 +25,11 @@ const ProfilePhoto = ({url, size, spinner}) => {
   };
 
   return (
+
     <div className='ProfilePhoto' style={divStyle}>
       {spinner ? <div className='spinner-loader center-element'/> : null }
     </div>
-    );
+  );
 }
 
 ProfilePhoto.propTypes = {

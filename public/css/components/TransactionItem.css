@@ -1,0 +1,30 @@
+.TransactionItem {
+
+}
+
+.TransactionItem .ProfilePhoto {
+  float: left;
+}
+
+.TransactionItem-info {
+  float: left;
+  width: calc(100% - 86px - 1rem);
+  padding-left: var(--spacing);
+}
+
+.TransactionItem-created {
+  float: right;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.TransactionItem-status {
+  float: left;
+  font-size: 0.9rem;
+}
+
+.TransactionItem-description {
+  clear: both;
+  padding: calc(var(--spacing) / 2) 0;
+  font-weight: bold;
+}

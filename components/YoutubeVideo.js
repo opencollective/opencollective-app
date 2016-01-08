@@ -10,7 +10,7 @@ export default ({
       width={width}
       height={height}
       src={`https://www.youtube.com/embed/${id}`}
-      frameborder='0'
+      frameBorder='0'
       allowfullscreen>
     </iframe>
   </div>
