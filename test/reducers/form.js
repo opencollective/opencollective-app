@@ -8,7 +8,7 @@ describe('form reducer', () => {
 
     it('should have default attributes', () => {
       const attributes = reducer().transaction.attributes;
-      expect(attributes.amount).toEqual(0);
+      expect(attributes.amount).toEqual(undefined);
       expect(attributes.tags).toExist();
       expect(attributes.description).toEqual('');
     });
@@ -25,7 +25,7 @@ describe('form reducer', () => {
       const newState = reducer(state, {
         type: constants.RESET_TRANSACTION_FORM
       });
-      expect(newState.transaction.attributes.amount).toEqual(0);
+      expect(newState.transaction.attributes.amount).toEqual(undefined);
     });
 
     it('should append new attributes to the form', () => {
