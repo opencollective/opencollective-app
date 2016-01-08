@@ -1,8 +1,8 @@
-.Avatar {
+.ProfilePhoto {
   border-radius: 50%;
-  margin: auto;
 }
 
+/*
 .blur-on {
     -webkit-filter: blur(var(--blur));
     -moz-filter: blur(var(--blur));
@@ -24,3 +24,4 @@
     -ms-filter    : blur(0px) !important;
     filter        : blur(0px) !important;
 }
+*/

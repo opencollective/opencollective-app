@@ -35,3 +35,12 @@
   position: relative;
   cursor: pointer;
 }
+
+.Header-groupSettingsButton {
+  font-size: 20px;
+  float: right;
+  padding-top: 20px;
+  z-index: 20;
+  position: relative;
+  cursor: pointer;
+}

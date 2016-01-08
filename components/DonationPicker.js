@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Currency from './Currency';
 import Input from './Input';
 
-export default ({selected, isCustomMode, setDonationCustom, setDonationAmount}) => {
+export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value}) => {
   const values = [5, 50, 100, 'custom'];
 
   return (
@@ -19,14 +19,15 @@ export default ({selected, isCustomMode, setDonationCustom, setDonationAmount}) 
           </span>
         );
       })}
-      {isCustomMode ? input({setDonationAmount}) : null}
+      {isCustomMode && input({setDonationAmount, value})}
     </div>
   );
 };
 
-function input({setDonationAmount}) {
+function input({setDonationAmount, value}) {
   return (
     <Input
+      value={value}
       placeholder='Enter your custom amount'
       customClass='DonationPicker-input'
       handleChange={(val) => setDonationAmount(val)} />

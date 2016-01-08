@@ -1,4 +1,3 @@
-import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';
@@ -25,8 +24,8 @@ describe('images actions', () => {
       .reply(200, image);
 
     const expected = [
-      { type: UPLOAD_IMAGE_REQUEST, data: {} },
-      { type: UPLOAD_IMAGE_SUCCESS, response: image }
+      { type: UPLOAD_IMAGE_REQUEST, data: {}, tag: undefined },
+      { type: UPLOAD_IMAGE_SUCCESS, response: image, tag: undefined }
     ];
     const store = mockStore({}, expected, done);
     store.dispatch(uploadImage({}));
@@ -38,8 +37,8 @@ describe('images actions', () => {
       .replyWithError('');
 
     const expected = [
-      { type: UPLOAD_IMAGE_REQUEST, data: {} },
-      { type: UPLOAD_IMAGE_FAILURE, error: new Error('request to http://localhost:3000/api/images/ failed') }
+      { type: UPLOAD_IMAGE_REQUEST, data: {}, tag: undefined },
+      { type: UPLOAD_IMAGE_FAILURE, error: new Error('request to http://localhost:3000/api/images/ failed'), tag: undefined }
     ];
     const store = mockStore({}, expected, done);
     store.dispatch(uploadImage({}));

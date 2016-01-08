@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import any from 'lodash/collection/any';
 
-import Avatar from '../components/Avatar';
+import ProfilePhoto from '../components/ProfilePhoto';
 import ProfilePreapproved from './ProfilePreapproved';
 import TableHead from './TableHead';
 import TableRow from './TableRow';
@@ -20,7 +20,7 @@ class ProfileFormDefault extends Component {
     return (
       <div className='ProfileForm'>
         <div className='Profile-header'>
-          <Avatar backgroundUrl={avatar} size='110px' />
+          <ProfilePhoto url={avatar} size='110px' />
           <div className='Profile-name'>
             {name}
           </div>
