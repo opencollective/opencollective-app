@@ -12,7 +12,7 @@ const ProfilePhoto = ({url, size, spinner, hasBorder=false}) => {
 
   const border = hasBorder ? {
     border: '3px solid white',
-    'box-shadow': '0px 0px 0px 1px #7FADF2'
+    boxShadow: '0px 0px 0px 1px #7FADF2'
   } : {};
 
   const divStyle = {

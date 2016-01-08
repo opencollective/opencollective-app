@@ -1,5 +1,6 @@
 .TransactionItem {
-
+  clear: both;
+  padding-top: var(--spacing);
 }
 
 .TransactionItem .ProfilePhoto {

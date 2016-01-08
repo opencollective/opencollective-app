@@ -18,7 +18,7 @@ export default ({transaction, user}) => (
           {transaction.createdAt && moment(transaction.createdAt).fromNow()}
         </span>
         <span className='TransactionItem-status'>
-          {transaction.amount < 0 && <TransactionStatus {...transaction} />}
+          {<TransactionStatus {...transaction} />}
         </span>
       </div>
 

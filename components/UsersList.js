@@ -6,9 +6,8 @@ export default ({users=[], size}) => (
   <div className='UsersList'>
     {users.map(({id, avatar, name}) => {
       return (
-        <div className='UsersList-item'>
+        <div className='UsersList-item' key={id}>
           <ProfilePhoto
-            key={id}
             url={avatar}
             size={size}
             hasBorder={true} />

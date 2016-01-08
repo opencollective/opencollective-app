@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Icon from './Icon';
 
-const TransactionStatus = ({approved, approvedAt}) => {
+const TransactionStatus = ({approved, approvedAt, amount}) => {
   let status = 'Pending';
   let iconType = 'pending';
 
@@ -11,6 +11,9 @@ const TransactionStatus = ({approved, approvedAt}) => {
   } else if (approvedAt && !approved) {
     status = 'Rejected';
     iconType = 'rejected';
+  } else if (amount > 0) {
+    status = 'Added';
+    iconType = 'approved';
   }
 
   return (

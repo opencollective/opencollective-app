@@ -4,7 +4,7 @@
 
 .UsersList-item {
   display: inline-block;
-  padding: 0 calc(var(--spacing) / 2);
+  padding-right: var(--spacing);
   text-align: center;
 }
 
