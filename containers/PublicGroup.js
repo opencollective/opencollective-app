@@ -60,7 +60,7 @@ export class PublicGroup extends Component {
             <div className='u-py2 u-center'>
               <img src={group.logo} className='PublicGroup-logo' />
               <div className='PublicGroup-motto'>
-                In order to reach our goals, {group.name} needs your help
+                {group.description}
               </div>
             </div>
 
