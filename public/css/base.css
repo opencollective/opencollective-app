@@ -38,7 +38,7 @@ input:not([type='radio']) {
     var(--spacing);
   -webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
   box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
-  padding: var(--spacing);
+  padding: calc(var(--spacing) * 2);
   border-top: 3px solid var(--gray);
   position: relative;
 }

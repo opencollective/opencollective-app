@@ -1,3 +1,52 @@
+.PublicGroup-video {
+  width: 75%;
+  display: inline-block;
+}
+
+.PublicGroup-metricContainer {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: var(--spacing);
+  width: calc(25% - var(--spacing));
+}
+
+.PublicGroup-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: calc(var(--spacing) * 2);
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
+.PublicGroup-quoteUser .Avatar,
+.PublicGroup-quoteName {
+  display: inline-block;
+}
+
+.PublicGroup-quoteUser {
+  width: 200px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.PublicGroup-quoteName {
+  padding-left: calc(var(--spacing) / 2);
+  vertical-align: top;
+  font-size: 0.9rem;
+}
+
+.PublicGroup-quoteText {
+  font-style: italic;
+  display: inline-block;
+  width: calc(100% - 200px - 2rem);
+  margin-left: calc(var(--spacing) * 2);
+}
+
+.PublicGroup-expenses,
+.PublicGroup-donations {
+  width: 50%;
+  display: inline-block;
+  vertical-align: top;
+}
 
 .PublicGroup .Button {
   display: inline-block;
@@ -7,15 +56,6 @@
 
 .PublicGroup .DonationPicker-amount {
   max-width: 100px;
-}
-
-.PublicGroup-transactions .SubTitle {
-  margin: 0;
-}
-
-.PublicGroup-well {
-  margin: 0 -var(--spacing);
-  border-top: 1px solid var(--gray);
 }
 
 .PublicGroup .UsersList {
@@ -30,7 +70,10 @@
   padding: 0 calc(var(--spacing) / 2);
 }
 
-.PublicGroup-tick {
-  float: right;
-  font-weight: lighter;
+.PublicGroup-logo {
+  max-width: 400px;
+}
+
+.PublicGroup .Transaction {
+  border-bottom: none;
 }

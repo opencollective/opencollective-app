@@ -25,10 +25,6 @@ export default ({users=[], size, equalSpace=false}) => {
               <div className='UsersList-name'>
                 {user.name}
               </div>
-              { user.amount ?
-                <div className='UsersList-amount'><Currency value={user.amount}/></div> :
-                null
-              }
             </div>
           );
       })}

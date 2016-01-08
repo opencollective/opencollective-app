@@ -46,6 +46,10 @@
   padding: var(--spacing) 0;
 }
 
+.u-py2 {
+  padding: calc(var(--spacing) * 2) 0;
+}
+
 .u-mb05 {
   margin-bottom: calc(var(--spacing) / 2);
 }
@@ -60,6 +64,10 @@
 
 .u-mt1 {
   margin-top: var(--spacing);
+}
+
+.u-mt2 {
+  margin-top: calc(var(--spacing) * 2);
 }
 
 .u-ml1 {
