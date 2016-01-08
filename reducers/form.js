@@ -10,7 +10,6 @@ import * as constants from '../constants/form';
  */
 const transactionInitialState = {
   attributes: {
-    amount: 0,
     tags: [],
     description: '',
     paymentMethod: 'paypal',
@@ -167,7 +166,7 @@ function donation(state={
       return merge({}, state, {
         isCustomMode: action.isCustomMode,
         attributes: {
-          amount: 0
+          amount: ''
         }
       });
     default:

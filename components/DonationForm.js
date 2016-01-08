@@ -15,9 +15,10 @@ const DonationForm = ({
   setDonationCustom,
   donate,
   userCardsLabels,
-  groupid
+  groupid,
+  form
 }) => {
- 
+
   return (
      <div className='DonationForm'>
       {header(group)}
@@ -27,6 +28,7 @@ const DonationForm = ({
       <DonationPicker
         setDonationAmount={(amount) => appendDonationForm({amount})}
         selected={amount}
+        value={form.donation.attributes.amount}
         isCustomMode={isCustomMode}
         setDonationCustom={setDonationCustom} />
 
@@ -52,6 +54,7 @@ const DonationForm = ({
       <Input
         placeholder='Description'
         customClass='Input--fullwidth'
+        value={form.donation.attributes.description}
         handleChange={(description) => appendDonationForm({description})} />
 
       <div className='DonationForm-buttonContainer'>

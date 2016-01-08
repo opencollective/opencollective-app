@@ -31,13 +31,14 @@ export class GroupSettings extends Component {
         <Header title='Collective Info' hasBackButton={true} />
         <Content>
           <Notification {...this.props} />
-          <div className='padded GroupSettings'>
+          <div className='padded'>
             <div>
               <div className='leftColumn'>
                 <div className='Label'> Name: </div>
                 <Input
                   type = 'text'
                   placeholder = 'Group name'
+                  customClass=''
                   value={form.attributes.name}
                   handleChange= {this.handleChange.bind(this, 'name')}/>
               </div>
@@ -55,6 +56,7 @@ export class GroupSettings extends Component {
               placeholder = 'Short description'
               rows='3'
               value={form.attributes.description}
+              customClass='test1'
               handleChange= {this.handleChange.bind(this, 'description')}/>
 
             <div className='Label'> Details: </div>
@@ -62,6 +64,7 @@ export class GroupSettings extends Component {
               placeholder = 'Detailed description'
               rows='5'
               value={form.attributes.longDescription}
+              customClass='test2'
               handleChange= {this.handleChange.bind(this, 'longDescription')}/>
 
             <div className='Label'> Expense Policy: </div>

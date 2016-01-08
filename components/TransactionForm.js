@@ -48,6 +48,7 @@ class TransactionForm extends Component {
             <span className='Label'>Title: </span>
             <Input
               hasError={transaction.error.description}
+              value={transaction.attributes.description}
               handleChange={description => appendTransactionForm({description})} />
           </div>
           <div>
@@ -55,6 +56,7 @@ class TransactionForm extends Component {
             <Input
               placeholder={formatCurrency(0, group.currency)}
               hasError={transaction.error.amount}
+              value={transaction.attributes.amount}
               handleChange={amount => appendTransactionForm({amount})} />
           </div>
           <div className='Input'>
