@@ -15,11 +15,29 @@ import SubmitButton from './SubmitButton';
 import DatePicker from './DatePicker';
 
 class TransactionForm extends Component {
+  
+  vatInput() {
+    const { vats, appendTransactionForm } = this.props;
+    let vatInput = ''
+    if (vats.length > 0) { 
+      vatInput = (
+        <div>
+          <span className='Label'>VAT: </span>
+          <Select
+            options={vats}
+            value={vats[0].value}
+            handleChange={vat => appendTransactionForm({vat})} />
+        </div>
+      );
+    }
+    return vatInput;
+  }
 
   render() {
     const {
       transaction,
       tags,
+      vats,
       group,
       appendTransactionForm,
       isUploading
@@ -32,7 +50,7 @@ class TransactionForm extends Component {
       'TransactionForm--isUploading': isUploading,
       'js-form': true, // for testing
     });
-
+    
     return (
       <div className={className}>
         <Notification {...this.props} />
@@ -59,6 +77,7 @@ class TransactionForm extends Component {
               value={transaction.attributes.amount}
               handleChange={amount => appendTransactionForm({amount})} />
           </div>
+          {this.vatInput()}
           <div className='Input'>
             <label className='Label'>Date:</label>
             <DatePicker
@@ -67,7 +86,7 @@ class TransactionForm extends Component {
               handleChange={createdAt => appendTransactionForm({createdAt})} />
           </div>
           <div className='Input u-mb05'>
-            <label className='Label'>Type:</label>
+            <label className='Label'>Category:</label>
             <SelectTag
               attributes={attributes}
               tags={tags}
@@ -75,7 +94,7 @@ class TransactionForm extends Component {
           </div>
 
           <div className='Input'>
-            <label className='Label'>Payment method:</label>
+            <label className='Label'>Method:</label>
             <Select
               options={paymentMethods}
               value={attributes.paymentMethod}
@@ -93,7 +112,19 @@ class TransactionForm extends Component {
   }
 
   componentDidMount() {
-    this.props.resetTransactionForm();
+    const { 
+      vats,
+      tags,
+      resetTransactionForm,
+      appendTransactionForm
+    } = this.props;
+
+    resetTransactionForm();
+    
+    appendTransactionForm({tags: [tags[0]]});
+    
+    if(vats.length > 0)
+      appendTransactionForm({vat:vats[0].value});
   }
 }
 
