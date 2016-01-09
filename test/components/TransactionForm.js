@@ -14,6 +14,7 @@ chai.use(spies);
 describe('TransactionForm component', () => {
   const noop = () => {};
   let resetTransactionForm = chai.spy(noop);
+  let appendTransactionForm = chai.spy(noop);
 
   beforeEach(() => {
     const props = {
@@ -21,6 +22,7 @@ describe('TransactionForm component', () => {
       group: { currency: 'USD' },
       tags: ['a', 'b'],
       resetTransactionForm,
+      appendTransactionForm,
       resetNotifications: () => {},
       notification: {}
     };

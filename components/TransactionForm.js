@@ -18,18 +18,19 @@ class TransactionForm extends Component {
   
   vatInput() {
     const { vats, appendTransactionForm } = this.props;
-    let vatInput = ''
-    if (vats.length > 0) { 
-      vatInput = (
-        <div>
-          <span className='Label'>VAT: </span>
-          <Select
-            options={vats}
-            value={vats[0].value}
-            handleChange={vat => appendTransactionForm({vat})} />
-        </div>
-      );
-    }
+    
+    if (!vats || vats.length == 0) return;
+    
+    let vatInput = (
+      <div>
+        <span className='Label'>VAT: </span>
+        <Select
+          options={vats}
+          value={vats[0].value}
+          handleChange={vat => appendTransactionForm({vat})} />
+      </div>
+    );
+
     return vatInput;
   }
 
@@ -37,7 +38,6 @@ class TransactionForm extends Component {
     const {
       transaction,
       tags,
-      vats,
       group,
       appendTransactionForm,
       isUploading
@@ -123,7 +123,7 @@ class TransactionForm extends Component {
     
     appendTransactionForm({tags: [tags[0]]});
     
-    if(vats.length > 0)
+    if(vats && vats.length > 0)
       appendTransactionForm({vat:vats[0].value});
   }
 }
