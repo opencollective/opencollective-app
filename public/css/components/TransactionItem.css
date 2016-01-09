@@ -1,6 +1,8 @@
 .TransactionItem {
   clear: both;
-  padding-top: var(--spacing);
+  display: inline-block;
+  width: 100%;
+  padding-bottom: var(--spacing);
 }
 
 .TransactionItem .ProfilePhoto {
@@ -11,6 +13,10 @@
   float: left;
   width: calc(100% - 86px - 1rem);
   padding-left: var(--spacing);
+}
+
+.TransactionItem-meta {
+  font-weight: 14px;
 }
 
 .TransactionItem-created {
@@ -26,6 +32,13 @@
 
 .TransactionItem-description {
   clear: both;
-  padding: calc(var(--spacing) / 2) 0;
   font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 1.25rem;
+}
+
+.TransactionItem-amount {
+  font-size: 1.25rem;
 }

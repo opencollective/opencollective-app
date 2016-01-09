@@ -11,6 +11,7 @@
 .UsersList-name {
   padding-top: calc(var(--spacing) / 2);
   font-weight: bold;
+  font-size: 1.25rem;
 }
 
 .UsersList-amount {

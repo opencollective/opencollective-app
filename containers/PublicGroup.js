@@ -80,7 +80,7 @@ export class PublicGroup extends Component {
                 <Metric
                   label='Supporters'
                   value={group.backersCount} />
-                <a className='Button Button--green' href='#support'>
+                <a className='Button Button--green PublicGroup-support' href='#support'>
                   Support us
                 </a>
               </div>
