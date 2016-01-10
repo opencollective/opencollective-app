@@ -34,8 +34,8 @@ class ImageUpload extends Component {
     } else {
       return isFunction(emptyState) ? emptyState() : (
         <div>
-          <img src='/images/camera.png' className='ImageUpload-img' />
-          <div> Upload photo</div>
+          <img src='/images/uploading.png' className='ImageUpload-img' />
+          <div> Upload receipt</div>
         </div>
       );
     }

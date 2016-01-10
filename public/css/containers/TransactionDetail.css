@@ -28,6 +28,11 @@
   padding-top: calc(var(--spacing) * 2);
 }
 
+.TransactionDetail-vat {
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
 .TransactionDetail-category {
   text-transform: uppercase;
   font-size: 0.8rem;

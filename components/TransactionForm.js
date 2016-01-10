@@ -10,6 +10,7 @@ import ImageUpload from './ImageUpload';
 import Input from './Input';
 import SelectTag from './SelectTag';
 import Select from './Select';
+import TextArea from './TextArea';
 import Notification from './Notification';
 import SubmitButton from './SubmitButton';
 import DatePicker from './DatePicker';
@@ -17,15 +18,22 @@ import DatePicker from './DatePicker';
 class TransactionForm extends Component {
   
   vatInput() {
-    const { vats, appendTransactionForm } = this.props;
+    const { 
+      enableVAT, 
+      transaction, 
+      group,
+      appendTransactionForm 
+    } = this.props;
     
-    if (!vats || vats.length == 0) return;
+    if (!enableVAT) return;
     
     let vatInput = (
       <div>
         <span className='Label'>VAT: </span>
-        <Select
-          options={vats}
+        <Input 
+          placeholder={formatCurrency(0, group.currency)}
+          hasError={transaction.error.vat}
+          value={transaction.attributes.vat}
           handleChange={vat => appendTransactionForm({vat})} />
       </div>
     );
@@ -99,6 +107,15 @@ class TransactionForm extends Component {
               value={attributes.paymentMethod}
               handleChange={paymentMethod => appendTransactionForm({paymentMethod})} />
           </div>
+
+          <div className='Input textarea'>
+            <label className='Label'>Note:</label>
+            <TextArea 
+              placeholder='Optional'
+              value={attributes.comment}
+              handleChange={comment => appendTransactionForm({comment})} />
+          </div>
+
           <SubmitButton />
         </form>
       </div>
@@ -112,7 +129,6 @@ class TransactionForm extends Component {
 
   componentDidMount() {
     const { 
-      vats,
       tags,
       resetTransactionForm,
       appendTransactionForm
@@ -122,8 +138,6 @@ class TransactionForm extends Component {
     
     appendTransactionForm({tags: [tags[0]]});
     
-    if(vats && vats.length > 0)
-      appendTransactionForm({vat:vats[0].value});
   }
 }
 

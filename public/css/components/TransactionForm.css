@@ -39,6 +39,10 @@
   width: calc(60% + calc(var(--spacing)*2)); /* input padding */
 }
 
+.TransactionForm .textarea label {
+  vertical-align: top;
+}
+
 @keyframes loadingAnimation {
   0%   { opacity:1; }
   50%  { opacity:0.5; }

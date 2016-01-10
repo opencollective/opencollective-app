@@ -16,7 +16,7 @@ const schema = Joi.object().keys({
     .label('Title'),
   amount: Joi.number().precision(2).min(0).required()
     .label('Amount'),
-  vat: Joi.number().precision(3).min(0).max(1)
+  vat: Joi.number().precision(2).min(0)
     .label('VAT'),
   createdAt: Joi.date().max(dates().tomorrow).required()
     .raw() // doesn't convert date into Date object
@@ -29,6 +29,8 @@ const schema = Joi.object().keys({
   approved: Joi.boolean(),
   paymentMethod: Joi.string().valid(pluck(paymentMethods, 'value'))
     .label('Payment method'),
+  comment: Joi.string()
+    .label('Comment'),
 });
 
 export default (obj) => validate(obj, schema);

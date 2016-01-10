@@ -88,7 +88,7 @@ function mapStateToProps({router, form, notification, images, groups}) {
     notification,
     transaction,
     tags: tags(groupid),
-    vats: vats(groupid),
+    enableVAT: vats(groupid),
     isUploading: images.isUploading || false
   };
 }
