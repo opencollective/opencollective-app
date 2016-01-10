@@ -26,7 +26,6 @@ class TransactionForm extends Component {
         <span className='Label'>VAT: </span>
         <Select
           options={vats}
-          value={vats[0].value}
           handleChange={vat => appendTransactionForm({vat})} />
       </div>
     );

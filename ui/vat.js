@@ -10,7 +10,7 @@ export default function(groupid) {
   switch (groupid) {
     // Women Who Code
     case 1:
-    case 3:
+    case 5:
     case 4:
       vat = [
         {label: '5.5%', value: '0.055'},
