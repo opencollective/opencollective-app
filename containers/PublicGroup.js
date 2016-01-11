@@ -166,7 +166,10 @@ function mapStateToProps({
   transactions,
   users
 }) {
-  const groupid = router.params.groupid;
+  // Major hack!
+  const isYeoman = contains(router.location.pathname, 'yeoman');
+  const groupid = isYeoman ? '8' : router.params.groupid;
+
   const status = router.location.query.status;
   const amount = form.donation.attributes.amount || 0;
   const group = groups[groupid] || { stripeManagedAccount: {} };
