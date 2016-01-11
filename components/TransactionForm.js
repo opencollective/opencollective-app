@@ -10,11 +10,36 @@ import ImageUpload from './ImageUpload';
 import Input from './Input';
 import SelectTag from './SelectTag';
 import Select from './Select';
+import TextArea from './TextArea';
 import Notification from './Notification';
 import SubmitButton from './SubmitButton';
 import DatePicker from './DatePicker';
 
 class TransactionForm extends Component {
+  
+  vatInput() {
+    const { 
+      enableVAT, 
+      transaction, 
+      group,
+      appendTransactionForm 
+    } = this.props;
+    
+    if (!enableVAT) return;
+    
+    let vatInput = (
+      <div>
+        <span className='Label'>VAT: </span>
+        <Input 
+          placeholder={formatCurrency(0, group.currency)}
+          hasError={transaction.error.vat}
+          value={transaction.attributes.vat}
+          handleChange={vat => appendTransactionForm({vat})} />
+      </div>
+    );
+
+    return vatInput;
+  }
 
   render() {
     const {
@@ -22,7 +47,8 @@ class TransactionForm extends Component {
       tags,
       group,
       appendTransactionForm,
-      isUploading
+      isUploading,
+      enableVAT
     } = this.props;
 
     const attributes = transaction.attributes;
@@ -32,7 +58,12 @@ class TransactionForm extends Component {
       'TransactionForm--isUploading': isUploading,
       'js-form': true, // for testing
     });
-
+    
+    let amountPlaceholder = formatCurrency(0, group.currency);
+    if (enableVAT) {
+      amountPlaceholder += ' (including VAT)';
+    }
+    
     return (
       <div className={className}>
         <Notification {...this.props} />
@@ -54,11 +85,12 @@ class TransactionForm extends Component {
           <div>
             <span className='Label'>Amount: </span>
             <Input
-              placeholder={formatCurrency(0, group.currency)}
+              placeholder={amountPlaceholder}
               hasError={transaction.error.amount}
               value={transaction.attributes.amount}
               handleChange={amount => appendTransactionForm({amount})} />
           </div>
+          {this.vatInput()}
           <div className='Input'>
             <label className='Label'>Date:</label>
             <DatePicker
@@ -67,7 +99,7 @@ class TransactionForm extends Component {
               handleChange={createdAt => appendTransactionForm({createdAt})} />
           </div>
           <div className='Input u-mb05'>
-            <label className='Label'>Type:</label>
+            <label className='Label'>Category:</label>
             <SelectTag
               attributes={attributes}
               tags={tags}
@@ -75,12 +107,21 @@ class TransactionForm extends Component {
           </div>
 
           <div className='Input'>
-            <label className='Label'>Payment method:</label>
+            <label className='Label'>Method:</label>
             <Select
               options={paymentMethods}
               value={attributes.paymentMethod}
               handleChange={paymentMethod => appendTransactionForm({paymentMethod})} />
           </div>
+
+          <div className='Input textarea'>
+            <label className='Label'>Note:</label>
+            <TextArea 
+              placeholder='Optional'
+              value={attributes.comment}
+              handleChange={comment => appendTransactionForm({comment})} />
+          </div>
+
           <SubmitButton />
         </form>
       </div>
@@ -93,7 +134,15 @@ class TransactionForm extends Component {
   }
 
   componentDidMount() {
-    this.props.resetTransactionForm();
+    const { 
+      tags,
+      resetTransactionForm,
+      appendTransactionForm,
+    } = this.props;
+
+    resetTransactionForm();
+    appendTransactionForm({tags: [tags[0]]});
+    
   }
 }
 

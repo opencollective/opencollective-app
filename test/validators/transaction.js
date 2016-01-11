@@ -16,6 +16,7 @@ describe('validator transaction', () => {
     const transaction = {
       description: 'Expense',
       amount: 10,
+      vat: 10.13,
       createdAt: Date.now(),
       tags: ['Computer']
     };

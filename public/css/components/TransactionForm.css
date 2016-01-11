@@ -20,7 +20,8 @@
 }
 
 .TransactionForm-form .Label {
-  padding-right: var(--spacing);
+  /* margin-right: var(--spacing); */
+  margin-right: 0.94rem; /* avoid wrapping of the label `Category` on iphone 4-5 */
 }
 
 .TransactionForm-form div {
@@ -37,6 +38,11 @@
 
 .TransactionForm-form .SelectContainer {
   width: calc(60% + calc(var(--spacing)*2)); /* input padding */
+}
+
+.TransactionForm .textarea label {
+  vertical-align: top;
+  display: inline-block;
 }
 
 @keyframes loadingAnimation {

@@ -12,6 +12,8 @@ import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 
 import tags from '../ui/tags';
+import vats from '../ui/vat';
+
 import Content from './Content';
 
 import TransactionForm from '../components/TransactionForm';
@@ -86,6 +88,7 @@ function mapStateToProps({router, form, notification, images, groups}) {
     notification,
     transaction,
     tags: tags(groupid),
+    enableVAT: vats(groupid),
     isUploading: images.isUploading || false
   };
 }

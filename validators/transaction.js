@@ -14,8 +14,10 @@ const schema = Joi.object().keys({
     .label('Photo'),
   description: Joi.string().required()
     .label('Title'),
-  amount: Joi.number().precision(2).greater(0).required()
+  amount: Joi.number().precision(2).min(0).required()
     .label('Amount'),
+  vat: Joi.number().precision(2).min(0)
+    .label('VAT'),
   createdAt: Joi.date().max(dates().tomorrow).required()
     .raw() // doesn't convert date into Date object
     .label('Date'),
@@ -23,10 +25,12 @@ const schema = Joi.object().keys({
     .raw() // doesn't convert date into Date object
     .label('Date'),
   tags: Joi.array().items(Joi.string()).required()
-    .label('Type'),
+    .label('Category'),
   approved: Joi.boolean(),
   paymentMethod: Joi.string().valid(pluck(paymentMethods, 'value'))
     .label('Payment method'),
+  comment: Joi.string()
+    .label('Comment'),
 });
 
 export default (obj) => validate(obj, schema);
