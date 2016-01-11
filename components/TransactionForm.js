@@ -47,7 +47,8 @@ class TransactionForm extends Component {
       tags,
       group,
       appendTransactionForm,
-      isUploading
+      isUploading,
+      enableVAT
     } = this.props;
 
     const attributes = transaction.attributes;
@@ -57,6 +58,11 @@ class TransactionForm extends Component {
       'TransactionForm--isUploading': isUploading,
       'js-form': true, // for testing
     });
+    
+    let amountPlaceholder = formatCurrency(0, group.currency);
+    if (enableVAT) {
+      amountPlaceholder += ' (including VAT)';
+    }
     
     return (
       <div className={className}>
@@ -79,7 +85,7 @@ class TransactionForm extends Component {
           <div>
             <span className='Label'>Amount: </span>
             <Input
-              placeholder={formatCurrency(0, group.currency)}
+              placeholder={amountPlaceholder}
               hasError={transaction.error.amount}
               value={transaction.attributes.amount}
               handleChange={amount => appendTransactionForm({amount})} />
@@ -131,11 +137,10 @@ class TransactionForm extends Component {
     const { 
       tags,
       resetTransactionForm,
-      appendTransactionForm
+      appendTransactionForm,
     } = this.props;
 
     resetTransactionForm();
-    
     appendTransactionForm({tags: [tags[0]]});
     
   }

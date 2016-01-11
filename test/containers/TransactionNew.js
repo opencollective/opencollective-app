@@ -34,6 +34,7 @@ describe('TransactionNew container', () => {
         notification: {},
         fetchGroup: () => {},
         group: {id: 1, currency: 'USD' },
+        appendTransactionForm: handler,
         resetTransactionForm: handler
       });
       expect(handler).to.have.been.called();
