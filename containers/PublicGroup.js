@@ -84,7 +84,7 @@ export class PublicGroup extends Component {
               </div>
             </div>
 
-            <div className='PublicGroup-title'>Our collective</div>
+            <div className='PublicGroup-title Subtitle'>Our collective</div>
             <div className='PublicGroup-quote'>
               <div className='PublicGroup-quoteUser'>
                 <ProfilePhoto
@@ -101,12 +101,12 @@ export class PublicGroup extends Component {
               </div>
             </div>
 
-            <div className='PublicGroup-title'>Supporter Showcase</div>
+            <div className='PublicGroup-title Subtitle'>Supporter Showcase</div>
             <UsersList users={backers} size='111px'/>
 
             <div className='u-mb2'>
               <div className='PublicGroup-expenses'>
-                <div className='PublicGroup-title'>Expenses</div>
+                <div className='PublicGroup-title Subtitle'>Expenses</div>
                 {(expenses.length === 0) && (
                   <span>
                     <span className='PublicGroup-expenseIcon'>
@@ -123,7 +123,7 @@ export class PublicGroup extends Component {
                                             user={users[expense.UserId]} />)}
               </div>
               <div className='PublicGroup-donations'>
-                <div className='PublicGroup-title'>Raised</div>
+                <div className='PublicGroup-title Subtitle'>Raised</div>
                 {(donations.length === 0) && (
                   <span>
                     <span className='PublicGroup-donationIcon'>

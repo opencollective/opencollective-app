@@ -1,6 +1,6 @@
 .SubTitle {
-  font-weight: bold;
-  border-bottom: 1px solid var(--gray);
-  padding-bottom: calc(var(--spacing) / 2);
-  margin-bottom: var(--spacing);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: calc(var(--spacing) * 2);
+  margin-bottom: calc(var(--spacing) * 2);
 }

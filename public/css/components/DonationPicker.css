@@ -1,5 +1,6 @@
 .DonationPicker-amount {
   display: inline-block;
+  font-size: 20px;
 }
 
 .DonationPicker-amount:not(:last-child) {
@@ -15,6 +16,26 @@
   margin-top: var(--spacing);
   width: 100%;
   box-sizing: border-box;
+  font-style: italic;
+  font-size: 1.25rem;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  border: 0 none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  margin-top: .5rem;
+  min-width: 50%;
+  box-sizing: border-box;
+  border-radius: 2px;
+  -webkit-transition: all 230ms ease-in;
+  transition: all 230ms ease-in;
+  border: 1px solid transparent; 
+}
+
+input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-placeholder {  
+  font-style: italic;
+  color: --light-gray;
+  font-family: "Proxima Nova";
 }
 
 .DonationPicker-currency {
