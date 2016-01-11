@@ -58,3 +58,30 @@
   content: "m";
 }
 
+.Icon--mail:before {
+  content: "q";
+}
+
+.Icon--link:before {
+  content: "r";
+}
+
+.Icon--facebook:before {
+  content: "s";
+}
+
+.Icon--expense:before {
+  content: "t";
+}
+
+.Icon--embed:before {
+  content: "u";
+}
+
+.Icon--twitter:before {
+  content: "v";
+}
+
+.Icon--revenue:before {
+  content: "w";
+}

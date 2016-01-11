@@ -1,8 +1,8 @@
 {
   "name": "open-collective-mobile-app",
   "engines": {
-    "node": "0.12.6",
-    "npm": "2.11.2"
+    "node": "5.1.0",
+    "npm": "3.3.12"
   },
   "browserify": {
     "transform": [
@@ -38,7 +38,7 @@
     "ejs": "^2.3.4",
     "envify": "^3.4.0",
     "express": "^4.13.3",
-    "history": "1.13.x",
+    "history": "^1.17.0",
     "isomorphic-fetch": "^2.1.1",
     "joi": "^6.9.1",
     "jwt-decode": "^1.4.0",
@@ -56,7 +56,7 @@
     "react-onclickoutside": "^4.5.0",
     "react-radio-group": "^2.2.0",
     "react-redux": "^3.1.0",
-    "react-router": "^1.0.0-rc3",
+    "react-router": "^1.0.2",
     "react-stripe-checkout": "^1.7.2",
     "redux": "^3.0.2",
     "redux-logger": "^2.0.0",

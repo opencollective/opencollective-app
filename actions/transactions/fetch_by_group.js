@@ -11,11 +11,7 @@ export default (groupid, options={}) => {
     dispatch(request(groupid));
     return get(`groups/${groupid}/transactions`, {
       schema: Schemas.TRANSACTION_ARRAY,
-      params: {
-        per_page: options.per_page,
-        sort: options.sort,
-        direction: options.direction
-      }
+      params: options.params || {}
     })
     .then(json => dispatch(success(groupid, json)))
     .catch(error => dispatch(failure(error)));

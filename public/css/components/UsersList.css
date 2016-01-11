@@ -1,16 +1,17 @@
 .UsersList {
-  text-align: center;
+
 }
 
 .UsersList-item {
   display: inline-block;
-  padding: 0 calc(var(--spacing) / 2);
+  padding-right: var(--spacing);
   text-align: center;
 }
 
 .UsersList-name {
   padding-top: calc(var(--spacing) / 2);
   font-weight: bold;
+  font-size: 1.25rem;
 }
 
 .UsersList-amount {

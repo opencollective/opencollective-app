@@ -38,6 +38,7 @@ const PublicGroupForm = ({
     <div className='PublicGroupForm'>
       <SubTitle text='Make your donation' />
       <DonationPicker
+        value={amount}
         setDonationAmount={amount => appendDonationForm({amount})}
         selected={amount}
         isCustomMode={isCustomMode}
@@ -51,7 +52,7 @@ const PublicGroupForm = ({
           <div>
             {intervals.map(({label, value}) => {
               return (
-                <label>
+                <label key={value}>
                   <Radio value={value} key={value} />
                   <span className='u-px05'>{label}</span>
                 </label>

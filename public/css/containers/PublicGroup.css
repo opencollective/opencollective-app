@@ -1,21 +1,67 @@
+.PublicGroup-video {
+  width: 70%;
+  display: inline-block;
+}
+
+.PublicGroup-metricContainer {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: calc(var(--spacing) * 1.25);
+  width: 30%;
+  box-sizing: border-box;
+}
+
+.PublicGroup-title {
+  font-size: 1.9rem;
+  margin-top: calc(var(--spacing) * 2);
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
+.PublicGroup-quoteUser .ProfilePhoto,
+.PublicGroup-quoteName {
+  display: inline-block;
+}
+
+.PublicGroup-quoteUser {
+  width: 30%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.PublicGroup-quoteName {
+  padding-left: var(--spacing);
+  vertical-align: top;
+  font-size: 1.25rem;
+}
+
+.PublicGroup-quoteText {
+  font-style: italic;
+  display: inline-block;
+  width: 70%;
+  padding-left: calc(var(--spacing) * 2);
+  box-sizing: border-box;
+  line-height: 24px;
+}
+
+.PublicGroup-expenses,
+.PublicGroup-donations {
+  width: 50%;
+  padding-right: calc(var(--spacing) * 4);
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+}
 
 .PublicGroup .Button {
   display: inline-block;
   margin-top: var(--spacing);
   font-weight: bold;
+  padding: 1rem 1.5rem;
+  font-size: 1.3rem;
 }
 
 .PublicGroup .DonationPicker-amount {
   max-width: 100px;
-}
-
-.PublicGroup-transactions .SubTitle {
-  margin: 0;
-}
-
-.PublicGroup-well {
-  margin: 0 -var(--spacing);
-  border-top: 1px solid var(--gray);
 }
 
 .PublicGroup .UsersList {
@@ -30,7 +76,33 @@
   padding: 0 calc(var(--spacing) / 2);
 }
 
-.PublicGroup-tick {
-  float: right;
-  font-weight: lighter;
+.PublicGroup-logo {
+  max-width: 300px;
+}
+
+.PublicGroup .Transaction {
+  border-bottom: none;
+}
+
+.PublicGroup .ShareIcon {
+  padding-right: calc(var(--spacing) / 2);
+}
+
+.PublicGroup-motto {
+  font-size: 1.5rem;
+  max-width: 850px;
+  margin: 0 auto var(--spacing) auto;
+}
+
+.PublicGroup-donationIcon,
+.PublicGroup-expenseIcon {
+  font-size: 35px;
+  padding: var(--spacing)
+}
+
+.PublicGroup-emptyDonation,
+.PublicGroup-emptyExpense {
+  vertical-align: top;
+  line-height: 35px;
+  font-style: italic;
 }

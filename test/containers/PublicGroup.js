@@ -32,7 +32,10 @@ describe('PublicGroup container', () => {
         fetchTransactions: () => Promise.resolve(),
         fetchUsers: () => {},
         notification: {},
-        group: {}
+        group: {},
+        admin: {},
+        expenses: [],
+        donations: []
       });
       expect(handler).to.have.been.called();
   });
@@ -170,7 +173,10 @@ describe('PublicGroup container', () => {
       resetNotifications: () => {},
       groupid: 1,
       group: {},
-      notification
+      notification,
+      admin: {},
+      expenses: [],
+      donations: []
     }, 'Notification');
 
     expect(element.className).to.contain(notification.status);
