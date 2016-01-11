@@ -2,8 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import ProfilePhoto from './ProfilePhoto';
 
-export default ({transaction, commenter}) => {
-  const fullName = commenter.first_name ? `${commenter.first_name} ${commenter.last_name}` : '';
+export default ({transaction, user}) => {
   const date = moment(transaction.createdAt).format('MMMM Do YYYY, h:mm a');
 
   return (
@@ -14,7 +13,7 @@ export default ({transaction, commenter}) => {
           {date}
         </div>
         <div className='TransactionComment-fullName'>
-          {fullName}
+          {user.name}
         </div>
       </div>
       <div className='TransactionComment-comment'>
