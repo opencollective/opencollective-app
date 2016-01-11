@@ -8,10 +8,7 @@ export default function(groupid) {
 
   let vat = false;
   switch (groupid) {
-    // Women Who Code
-    case 1:
-    case 5:
-    case 4:
+    case 6: // LaPrimaire.org
       vat = true;
       break;
 
