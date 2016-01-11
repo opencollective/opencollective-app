@@ -142,11 +142,11 @@ function mapStateToProps({session, form, notification, users, images}) {
 
   return {
     userid,
+    user,
     notification,
     card,
     preapprovalDetails,
     form: form.profile,
-    user,
     isEditMode: form.profile.isEditMode,
     saveInProgress: users.updateInProgress,
     validationError: form.profile.error,

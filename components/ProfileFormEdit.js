@@ -15,6 +15,10 @@ class ProfileFormEdit extends Component {
     } = this.props;
     const { paypalEmail } = user;
 
+    if (typeof form.attributes.paypalEmail == 'undefined' && user.paypalEmail) {
+      form.attributes.paypalEmail = user.paypalEmail;
+    }
+
     return (
       <div className='ProfileForm'>
         <div className='Profile-header'>
