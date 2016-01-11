@@ -27,12 +27,10 @@ import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
 import fetchGroup from '../actions/groups/fetch_by_id';
 import fetchUsers from '../actions/users/fetch_by_group';
-import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
 import donate from '../actions/groups/donate';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
-import getUniqueValues from '../lib/get_unique_values';
 
 export class PublicGroup extends Component {
   render() {
@@ -162,8 +160,7 @@ export class PublicGroup extends Component {
       fetchGroup,
       groupid,
       fetchTransactions,
-      fetchUsers,
-      fetchUserIfNeeded
+      fetchUsers
     } = this.props;
 
     fetchGroup(groupid);
@@ -173,18 +170,14 @@ export class PublicGroup extends Component {
       sort: 'createdAt',
       direction: 'desc',
       donation: true
-    })
-    .then(({transactions}) => getUniqueValues(transactions, 'UserId'))
-    .then(t => t.map(fetchUserIfNeeded));
+    });
 
     fetchTransactions(groupid, {
       per_page: 2,
       sort: 'createdAt',
       direction: 'desc',
       expense: true
-    })
-    .then(({transactions}) => getUniqueValues(transactions, 'UserId'))
-    .then(t => t.map(fetchUserIfNeeded));
+    });
 
     fetchUsers(groupid);
   }
@@ -223,8 +216,7 @@ export default connect(mapStateToProps, {
   resetNotifications,
   pushState,
   fetchTransactions,
-  fetchUsers,
-  fetchUserIfNeeded
+  fetchUsers
 })(PublicGroup);
 
 function mapStateToProps({
