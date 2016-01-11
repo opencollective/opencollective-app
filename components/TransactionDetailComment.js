@@ -2,14 +2,14 @@ import React from 'react';
 import moment from 'moment';
 import ProfilePhoto from './ProfilePhoto';
 
-export default ({transaction, user}) => {
-  const fullName = user.first_name ? `${user.first_name} ${user.last_name}` : '';
+export default ({transaction, commenter}) => {
+  const fullName = commenter.first_name ? `${commenter.first_name} ${commenter.last_name}` : '';
   const date = moment(transaction.createdAt).format('MMMM Do YYYY, h:mm a');
 
   return (
     <div className='TransactionComment'>
       <div className='TransactionComment-header'>
-        <ProfilePhoto url={user.avatar} />
+        <ProfilePhoto url={commenter.avatar} />
         <div className='TransactionComment-date'>
           {date}
         </div>
