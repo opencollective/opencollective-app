@@ -55,7 +55,6 @@ label:not(:last-child) {
 /** Add all the magic for the radio buttons **/
 input[type="radio"] {
   -webkit-appearance: none;
-  -moz-appearance: none;
   height: 1.4rem;
   width: 1.4rem;
   border-radius: 50%;
@@ -113,7 +112,7 @@ input[type="radio"]:disabled {
 
 input[type="radio"]:checked {
   background: white;
-  border: 1px solid #F9FAFA; 
+  border: 1px solid var(--gray); 
 }
 
 input[type="radio"]:checked:after {
@@ -184,5 +183,49 @@ input[type="text"]:hover::-webkit-input-placeholder {
       auto
       calc(var(--public-footer-height) + var(--spacing))
       auto;
+  }
+}
+
+@media (--mobile-portrait) {
+  .PublicGroup .PublicContent {
+    padding: 1rem;
+    max-width: calc(var(--public-header-height) + var(--spacing))      auto  0  auto;
+  }
+  .PublicGroup-summary .PublicGroup-video, .PublicGroup-summary .PublicGroup-metricContainer{
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .PublicGroup-summary .PublicGroup-metricContainer {
+    padding-left: 0;
+  }
+
+  .PublicGroup-metricContainer .Metric {
+    font-size: 1rem;
+    min-width: 50%;
+    display: inline-block;
+  }
+  .PublicGroup-metricContainer .Button {
+    /* TODO: Either kill yourself of find a workaround */
+    display: block !important;
+  }
+  .PublicContent .PublicGroup-expenses, .PublicContent .PublicGroup-donations {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom:3rem;
+  } 
+  .DonationPicker-amount .Currency {
+    font-size: 1rem;
+  }
+  label:not(:last-child) {
+    margin-right: 1rem;
+  }
+  label span {
+    font-size: 1rem;
+  }
+  .PublicFooter .PublicFooter-menu {
+    line-height: 30px;
+  }
+  .PublicFooter img {
+    max-height: 30px;
   }
 }
