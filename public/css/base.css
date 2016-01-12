@@ -16,14 +16,6 @@ a {
   text-decoration: none;
 }
 
-/**
- * hide ugly gray gradient
- */
-select,
-input:not([type='radio']) {
-  -webkit-appearance: none;
-}
-
 .Content {
   padding-top: var(--header-height);
   padding-bottom: var(--footer-height);
@@ -43,13 +35,141 @@ input:not([type='radio']) {
   position: relative;
 }
 
-@media (--medium-viewport) {
-  .PublicContent {
-    max-width: calc(var(--max-container-width) - var(--spacing) * 2);
-    margin:
-      calc(var(--public-header-height) + var(--spacing))
-      auto
-      calc(var(--public-footer-height) + var(--spacing))
-      auto;
-  }
+/** forms **/
+
+/**
+ * hide ugly gray gradient
+ */
+select, input {
+  -webkit-appearance: none;
+}
+
+label span {
+  margin-top: 3px;
+  font-size: 1.25rem;
+}
+label:not(:last-child) {
+  margin-right: 2.5rem;
+}
+
+/** Add all the magic for the radio buttons **/
+input[type="radio"] {
+  -webkit-appearance: none;
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 50%;
+  position: relative;
+  border: 1px solid var(--gray); 
+}
+
+input[type="radio"]::after {
+  content: "";
+  position: absolute;
+  background: var(--light-blue);
+  width: .65rem;
+  height: .65rem;
+  border-radius: 50%;
+  left: 5px;
+  top: 5px;
+  -webkit-transition: all 230ms ease-in;
+  transition: all 230ms ease-in; 
+}
+
+input[type="radio"] {
+  background: white;
+  border: 1px solid var(--gray);
+}
+
+input[type="radio"]::after {
+  opacity: 0;
+  -webkit-transform: scale(1.25); 
+}
+
+input[type="radio"]:hover {
+  background: #F9FAFA;
+  box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2);
+  -webkit-box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2); 
+}
+
+input[type="radio"]:focus{
+  outline: none;
+  box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2);
+  -webkit-box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2); 
+}
+
+input[type="radio"]:active {
+  background: white;
+  border: 1px solid var(--light-blue);
+  box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2);
+  -webkit-box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2); 
+}
+
+input[type="radio"]:disabled {
+  box-shadow: none;
+  background: #F9FAFA;
+  border: 1px solid var(--gray); 
+}
+
+input[type="radio"]:checked {
+  background: white;
+  border: 1px solid var(--gray); 
+}
+
+input[type="radio"]:checked:after {
+  opacity: 1;
+  -webkit-transform: scale(1); 
+}
+
+input[type="radio"]:checked:hover {
+  background: white;
+  border: 1px solid var(--light-blue);
+  box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2);
+  -webkit-box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2); 
+}
+
+input[type="radio"]:checked:focus{
+  border: 1px solid var(--gray); 
+}
+
+input[type="radio"]:checked:active {
+  background: white;
+  border: 1px solid var(--light-blue);
+  box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2);
+  -webkit-box-shadow: 0 1px 1px rgba(147, 157, 163, 0.3) inset, 0 0 0 2px rgba(0, 140, 221, 0.2); 
+}
+
+input[type="radio"]:checked:disabled {
+  opacity: 0.3;
+  box-shadow: none;
+  background: var(--gray);
+  border: 1px solid var(--gray); 
+}
+
+input[type="text"], textarea {
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    border: 0 none;
+    font-size: 1.2rem;
+    padding: 1rem;
+    margin-top: .5rem;
+    min-width: 50%;
+    border: 1px solid transparent;
+}
+
+input[type="text"]:disabled {
+  background-color: var(--gray);
+}
+
+input[type="text"]:focus {
+  border: 1px solid var(--light-blue);
+  outline: 0;
+}
+
+input[type="text"]:hover {
+  color: var(--light-blue);
+  border: 1px solid var(--light-blue);
+}
+
+input[type="text"]:hover::-webkit-input-placeholder {
+  color: var(--light-blue);
 }

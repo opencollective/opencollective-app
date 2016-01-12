@@ -17,7 +17,6 @@ import PublicGroupForm from '../components/PublicGroupForm';
 import PublicGroupThanks from '../components/PublicGroupThanks';
 import TransactionItem from '../components/TransactionItem';
 import YoutubeVideo from '../components/YoutubeVideo';
-import ProfilePhoto from '../components/ProfilePhoto';
 import Metric from '../components/Metric';
 import UsersList from '../components/UsersList';
 import ShareIcon from '../components/ShareIcon';
@@ -33,6 +32,24 @@ import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 
 export class PublicGroup extends Component {
+  
+    GroupVideoOrImage(group) {
+    if(group.video) {
+      return (
+        <div className='PublicGroup-video'>
+          <YoutubeVideo id={group.video} />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className='PublicGroup-image'>
+          <img src={group.image} />
+        </div>
+      );
+    }
+  }
+  
   render() {
     const {
       group,
@@ -43,9 +60,13 @@ export class PublicGroup extends Component {
       expenses,
       shareUrl,
       users,
-      admin
+      members
     } = this.props;
 
+    const logoStyle = {
+      backgroundImage: 'url(' + group.logo + ')'
+    };
+    
     return (
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
@@ -56,16 +77,15 @@ export class PublicGroup extends Component {
           <div className='PublicContent'>
 
             <div className='u-py2 u-center'>
-              <img src={group.logo} className='PublicGroup-logo' />
+              <div className='GroupLogo' style={logoStyle}>
+              </div>
               <div className='PublicGroup-motto'>
                 {group.description}
               </div>
             </div>
 
             <div className='PublicGroup-summary'>
-              <div className='PublicGroup-video'>
-                <YoutubeVideo id={group.video} />
-              </div>
+              {this.GroupVideoOrImage(group)}
               <div className='PublicGroup-metricContainer'>
                 <Metric label='Share'>
                   <ShareIcon type='twitter' url={shareUrl} />
@@ -76,46 +96,39 @@ export class PublicGroup extends Component {
                   label='Funds Raised'
                   value={formatCurrency(group.donationTotal, group.currency)} />
                 <Metric
-                  label='Supporters'
+                  label='Backers'
                   value={group.backersCount} />
                 <a className='Button Button--green PublicGroup-support' href='#support'>
-                  Support us
+                  Back us
                 </a>
               </div>
             </div>
 
-            <div className='PublicGroup-title'>Our collective</div>
+            <div className='PublicGroup-title Subtitle'>Our collective</div>
             <div className='PublicGroup-quote'>
-              <div className='PublicGroup-quoteUser'>
-                <ProfilePhoto
-                  hasBorder={true}
-                  url={admin.avatar}
-                  size='75px' />
-                <span className='PublicGroup-quoteName'>
-                  <b>{admin.name}</b> <br/>
-                  {admin.description}
-                </span>
+              <div className='PublicGroup-members'>
+                <UsersList users={members} size='75px'/>
               </div>
               <div className='PublicGroup-quoteText'>
                 {group.longDescription}
               </div>
             </div>
 
-            <div className='PublicGroup-title'>Supporter Showcase</div>
+            <div className='PublicGroup-title Subtitle'>Backers</div>
             <UsersList users={backers} size='111px'/>
 
             <div className='u-mb2'>
               <div className='PublicGroup-expenses'>
-                <div className='PublicGroup-title'>Expenses</div>
+                <div className='PublicGroup-title Subtitle'>Expenses</div>
                 {(expenses.length === 0) && (
-                  <span>
-                    <span className='PublicGroup-expenseIcon'>
+                <div className='PublicGroup-emptyState'>
+                    <div className='PublicGroup-expenseIcon'>
                       <Icon type='expense' />
-                    </span>
-                    <span className='PublicGroup-emptyExpense'>
-                      Transactions added to the collective will be displayed here
-                    </span>
-                  </span>
+                    </div>
+                    <label>    
+                      All your approved expenses will show up here
+                    </label>
+                  </div>
                 )}
                 {expenses.map(expense => <TransactionItem
                                             key={expense.id}
@@ -123,16 +136,16 @@ export class PublicGroup extends Component {
                                             user={users[expense.UserId]} />)}
               </div>
               <div className='PublicGroup-donations'>
-                <div className='PublicGroup-title'>Raised</div>
+                <div className='PublicGroup-title Subtitle'>Revenue</div>
                 {(donations.length === 0) && (
-                  <span>
-                    <span className='PublicGroup-donationIcon'>
-                      <Icon type='user' />
-                    </span>
-                    <span className='PublicGroup-emptyDonation'>
-                      All your latest member activity will show up here
-                    </span>
-                  </span>
+                  <div className='PublicGroup-emptyState'>
+                    <div className='PublicGroup-donationIcon'>
+                      <Icon type='revenue' />
+                    </div>
+                    <label>
+                      All your latest donations will show up here
+                    </label>
+                  </div>
                 )}
                 {donations.map(donation => <TransactionItem
                                               key={donation.id}
@@ -235,13 +248,16 @@ function mapStateToProps({
   const group = groups[groupid] || { stripeManagedAccount: {} };
   const GroupId = Number(groupid);
 
-  const admins = filterCollection(users, { GroupId });
+  const hosts = filterCollection(users, { role: 'admin' });
+  const members = filterCollection(users, { role: 'writer' });
+  const backers = filterCollection(users, { role: 'viewer' });
+
   const groupTransactions = filterCollection(transactions, { GroupId });
 
   const donations = groupTransactions.filter(({amount}) => amount > 0);
   const expenses = groupTransactions.filter(({amount}) => amount < 0);
 
-  const backers = donations.map(t => users[t.UserId]).filter(t => !!t);
+  // const backers = donations.map(t => users[t.UserId]).filter(t => !!t);
 
   return {
     groupid,
@@ -249,13 +265,14 @@ function mapStateToProps({
     notification,
     users,
     backers: uniq(backers, 'id'),
-    admin: admins[0] || {},
+    host: hosts[0] || {},
+    members,
     donations: take(donations, 2),
     expenses: take(expenses, 2),
     interval: form.donation.attributes.interval,
     amount: form.donation.attributes.amount,
     stripeAmount: convertToCents(form.donation.attributes.amount),
-    stripeKey: group.stripeManagedAccount.stripeKey,
+    stripeKey: '', // group.stripeManagedAccount.stripeKey, // Waiting for fix for Stripe
     isCustomMode: form.donation.isCustomMode,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
