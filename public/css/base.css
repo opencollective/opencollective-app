@@ -55,7 +55,6 @@ label:not(:last-child) {
 /** Add all the magic for the radio buttons **/
 input[type="radio"] {
   -webkit-appearance: none;
-  -moz-appearance: none;
   height: 1.4rem;
   width: 1.4rem;
   border-radius: 50%;
@@ -113,7 +112,7 @@ input[type="radio"]:disabled {
 
 input[type="radio"]:checked {
   background: white;
-  border: 1px solid #F9FAFA; 
+  border: 1px solid var(--gray); 
 }
 
 input[type="radio"]:checked:after {
