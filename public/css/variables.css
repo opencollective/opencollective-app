@@ -25,5 +25,3 @@
 
 @custom-media --large-viewport (min-width: 1070px);
 @custom-media --small-viewport (max-width: 600px);
-
-@custom-media --mobile-portrait (max-device-width: 480px);
