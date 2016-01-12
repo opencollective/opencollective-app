@@ -146,6 +146,35 @@ input[type="radio"]:checked:disabled {
   border: 1px solid #DDE1E4; 
 }
 
+input[type="text"], textarea {
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    border: 0 none;
+    font-size: 1.2rem;
+    padding: 1rem;
+    margin-top: .5rem;
+    min-width: 50%;
+    border: 1px solid transparent;
+}
+
+input[type="text"]:disabled {
+  background-color: var(--gray);
+}
+
+input[type="text"]:focus {
+  border: 1px solid var(--light-blue);
+  outline: 0;
+}
+
+input[type="text"]:hover {
+  color: var(--light-blue);
+  border: 1px solid var(--light-blue);
+}
+
+input[type="text"]:hover::-webkit-input-placeholder {
+  color: var(--light-blue);
+}
+
 
 @media (--medium-viewport) {
   .PublicContent {
