@@ -88,9 +88,9 @@ export class PublicGroup extends Component {
               {this.GroupVideoOrImage(group)}
               <div className='PublicGroup-metricContainer'>
                 <Metric label='Share'>
-                  <ShareIcon type='twitter' url={shareUrl} />
-                  <ShareIcon type='facebook' url={shareUrl} />
-                  <ShareIcon type='mail' url={shareUrl} />
+                  <ShareIcon type='twitter' url={shareUrl} name={group.name} description={group.description} />
+                  <ShareIcon type='facebook' url={shareUrl} name={group.name} description={group.description} />
+                  <ShareIcon type='mail' url={shareUrl} name={group.name} description={group.description} />
                 </Metric>
                 <Metric
                   label='Funds Raised'
