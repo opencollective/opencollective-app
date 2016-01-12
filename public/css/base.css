@@ -174,15 +174,3 @@ input[type="text"]:hover {
 input[type="text"]:hover::-webkit-input-placeholder {
   color: var(--light-blue);
 }
-
-
-@media (--medium-viewport) {
-  .PublicContent {
-    max-width: calc(var(--max-container-width) - var(--spacing) * 2);
-    margin:
-      calc(var(--public-header-height) + var(--spacing))
-      auto
-      calc(var(--public-footer-height) + var(--spacing))
-      auto;
-  }
-}

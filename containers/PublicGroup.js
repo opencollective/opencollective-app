@@ -50,8 +50,7 @@ export class PublicGroup extends Component {
       );
     }
   }
-
-
+  
   render() {
     const {
       group,
@@ -62,7 +61,8 @@ export class PublicGroup extends Component {
       expenses,
       shareUrl,
       users,
-      admin
+      host,
+      members
     } = this.props;
 
     const logoStyle = {
@@ -108,15 +108,8 @@ export class PublicGroup extends Component {
 
             <div className='PublicGroup-title Subtitle'>Our collective</div>
             <div className='PublicGroup-quote'>
-              <div className='PublicGroup-quoteUser'>
-                <ProfilePhoto
-                  hasBorder={true}
-                  url={admin.avatar}
-                  size='75px' />
-                <span className='PublicGroup-quoteName'>
-                  <b>{admin.name}</b> <br/>
-                  {admin.description}
-                </span>
+              <div className='PublicGroup-members'>
+                <UsersList users={members} size='75px'/>
               </div>
               <div className='PublicGroup-quoteText'>
                 {group.longDescription}
@@ -130,13 +123,13 @@ export class PublicGroup extends Component {
               <div className='PublicGroup-expenses'>
                 <div className='PublicGroup-title Subtitle'>Expenses</div>
                 {(expenses.length === 0) && (
-                  <div>
+                <div className='PublicGroup-emptyState'>
                     <div className='PublicGroup-expenseIcon'>
                       <Icon type='expense' />
                     </div>
-                    <div className='PublicGroup-emptyExpense'>
-                      Transactions added to the collective will be displayed here
-                    </div>
+                    <label>    
+                      All your approved expenses will show up here
+                    </label>
                   </div>
                 )}
                 {expenses.map(expense => <TransactionItem
@@ -147,13 +140,13 @@ export class PublicGroup extends Component {
               <div className='PublicGroup-donations'>
                 <div className='PublicGroup-title Subtitle'>Revenue</div>
                 {(donations.length === 0) && (
-                  <div>
+                  <div className='PublicGroup-emptyState'>
                     <div className='PublicGroup-donationIcon'>
                       <Icon type='revenue' />
                     </div>
-                    <div className='PublicGroup-emptyDonation'>
-                      All your latest member activity will show up here
-                    </div>
+                    <label>
+                      All your latest donations will show up here
+                    </label>
                   </div>
                 )}
                 {donations.map(donation => <TransactionItem
@@ -257,13 +250,16 @@ function mapStateToProps({
   const group = groups[groupid] || { stripeManagedAccount: {} };
   const GroupId = Number(groupid);
 
-  const admins = filterCollection(users, { GroupId });
+  const hosts = filterCollection(users, { role: 'admin' });
+  const members = filterCollection(users, { role: 'writer' });
+  const backers = filterCollection(users, { role: 'viewer' });
+
   const groupTransactions = filterCollection(transactions, { GroupId });
 
   const donations = groupTransactions.filter(({amount}) => amount > 0);
   const expenses = groupTransactions.filter(({amount}) => amount < 0);
 
-  const backers = donations.map(t => users[t.UserId]).filter(t => !!t);
+  // const backers = donations.map(t => users[t.UserId]).filter(t => !!t);
 
   return {
     groupid,
@@ -271,13 +267,14 @@ function mapStateToProps({
     notification,
     users,
     backers: uniq(backers, 'id'),
-    admin: admins[0] || {},
+    host: hosts[0] || {},
+    members,
     donations: take(donations, 2),
     expenses: take(expenses, 2),
     interval: form.donation.attributes.interval,
     amount: form.donation.attributes.amount,
     stripeAmount: convertToCents(form.donation.attributes.amount),
-    stripeKey: null, // group.stripeManagedAccount.stripeKey, // Waiting for fix for Stripe
+    stripeKey: '', // group.stripeManagedAccount.stripeKey, // Waiting for fix for Stripe
     isCustomMode: form.donation.isCustomMode,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
