@@ -22,10 +22,20 @@
     padding-left: 0;
   }
 
+  .PublicHeader-tagLine .Tagline {
+    font-size: .8rem;
+  }
+
   .PublicGroup-metricContainer .Metric {
     font-size: 1rem;
     min-width: 50%;
     display: inline-block;
+  }
+  .Metric .Metric-value {
+    font-size: 1.5rem;
+  }
+  .Metric .Metric-label {
+    font-size: .8rem;
   }
   .PublicGroup .Button {
     /* TODO: Either kill yourself of find a workaround */
