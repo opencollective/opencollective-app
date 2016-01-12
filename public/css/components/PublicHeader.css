@@ -20,3 +20,13 @@
   line-height: var(--public-header-height);
   margin-left: var(--spacing);
 }
+
+.PublicHeader-tagLine .OC-Icon {
+  float: left;
+  margin-top: 2px;
+}
+
+.PublicHeader-tagLine .Tagline {
+  margin-left: 25px;
+  margin-top: 0px;
+}
