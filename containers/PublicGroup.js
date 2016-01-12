@@ -17,7 +17,6 @@ import PublicGroupForm from '../components/PublicGroupForm';
 import PublicGroupThanks from '../components/PublicGroupThanks';
 import TransactionItem from '../components/TransactionItem';
 import YoutubeVideo from '../components/YoutubeVideo';
-import ProfilePhoto from '../components/ProfilePhoto';
 import Metric from '../components/Metric';
 import UsersList from '../components/UsersList';
 import ShareIcon from '../components/ShareIcon';
@@ -61,7 +60,6 @@ export class PublicGroup extends Component {
       expenses,
       shareUrl,
       users,
-      host,
       members
     } = this.props;
 
