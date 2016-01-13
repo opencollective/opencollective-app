@@ -55,7 +55,11 @@ export class GroupsList extends Component {
     } = this.props;
 
     if (userid) {
-      fetchUserGroupsAndTransactions(userid)
+      fetchUserGroupsAndTransactions(userid, {
+        params: {
+          pending: true
+        }
+      })
       .then(({transactions}) => {
         return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
       });

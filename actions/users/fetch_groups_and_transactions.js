@@ -10,14 +10,14 @@ import * as constants from '../../constants/users';
  * that type of data fetching, we will leave it here for the prototype
  */
 
-export default (userid) => {
+export default (userid, options={}) => {
   return dispatch => {
     dispatch(request(userid));
 
     return dispatch(fetchGroups(userid))
     .then(({groups}) => {
       const ids = keys(groups);
-      return Promise.all(ids.map(id => dispatch(transactions(id))));
+      return Promise.all(ids.map(id => dispatch(transactions(id, options))));
     })
     .then((json) => {
       const merged = merge.apply(null, json) || {};
