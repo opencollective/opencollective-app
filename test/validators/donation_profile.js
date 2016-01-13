@@ -48,6 +48,42 @@ describe('validator profile after public donation', () => {
     });
   });
 
+  it('should work if website is string with length 0', (done) => {
+    const profile = {
+      website: '',
+      twitterHandle: 'asood123',
+    }
+    validate(profile)
+    .then(value => {
+      expect(value).toEqual(profile);
+      done();
+    });
+  });
+
+  it('should work if name is string with length 0', (done) => {
+    const profile = {
+      name: '',
+      twitterHandle: 'asood123',
+    }
+    validate(profile)
+    .then(value => {
+      expect(value).toEqual(profile);
+      done();
+    });
+  });
+
+  it('should work if twitterHandle is string with length 0', (done) => {
+    const profile = {
+      name: 'john doe',
+      twitterHandle: '',
+    }
+    validate(profile)
+    .then(value => {
+      expect(value).toEqual(profile);
+      done();
+    });
+  });
+
   // check if all are entered.
   it('should work if all three are there', (done) => {
     const profile = {
