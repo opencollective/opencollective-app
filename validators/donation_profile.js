@@ -9,15 +9,15 @@ const schema = Joi.alternatives().try(
     Joi.object().keys({
       name: Joi.string().required()
         .label('Name'),
-      website: Joi.string().uri()
+      website: Joi.string().uri().allow('')
         .label('Website'),
-      twitterHandle: Joi.string()
+      twitterHandle: Joi.string().allow('')
         .label('Twitter username')
     }),
     Joi.object().keys({
-      name: Joi.string()
+      name: Joi.string().allow('')
         .label('Name'),
-      website: Joi.string().uri()
+      website: Joi.string().uri().allow('')
         .label('Website'),
       twitterHandle: Joi.string().required()
         .label('Twitter username')
