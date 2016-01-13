@@ -262,7 +262,7 @@ function mapStateToProps({
   const groupid = isYeoman ? '8' : router.params.groupid;
 
   const status = router.location.query.status;
-  const group = groups[groupid] || { stripeManagedAccount: {} };
+  const group = groups[groupid] || { stripeAccount: {} };
   const GroupId = Number(groupid);
 
   const hosts = filterCollection(users, { role: 'admin' });
