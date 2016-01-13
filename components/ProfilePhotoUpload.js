@@ -4,9 +4,8 @@ import ProfilePhoto from './ProfilePhoto';
 
 export default (props) => {
   const states = {
-    emptyState: () => <ProfilePhoto url={props.currentUrl} size='110px' />,
-    uploading: () => <ProfilePhoto url={props.currentUrl} size='110px' spinner='yes'/>,
-    uploaded: () => <ProfilePhoto url={props.newUrl} size='110px' />
+    template: () => <ProfilePhoto url={props.value} size='110px' />,
+    uploading: () => <ProfilePhoto url={props.value} size='110px' spinner='yes'/>
   };
 
   return <ImageUpload {...props} {...states} customClassName='ProfilePhotoUpload'/>;

@@ -22,8 +22,7 @@ import uploadImage from '../actions/images/upload';
 export class GroupSettings extends Component {
   render() {
     const {
-        form,
-        isUploadingLogo
+        form
     } = this.props;
 
     return (
@@ -44,10 +43,7 @@ export class GroupSettings extends Component {
               </div>
               <ProfilePhotoUpload
                 {...this.props}
-                currentUrl={this.props.group.logo}
-                newUrl={form.attributes.logo}
-                tag='logo'
-                isUploading={isUploadingLogo}
+                value={form.attributes.logo || this.props.group.logo}
                 onFinished={({url}) => this.handleChange('logo', url)} />
             </div>
 
@@ -126,7 +122,7 @@ export default connect(mapStateToProps, {
     uploadImage,
 })(GroupSettings)
 
-function mapStateToProps({groups, router, form, notification, images}){
+function mapStateToProps({groups, router, form, notification}){
     const groupid = router.params.groupid;
     const group = groups[groupid] || {};
     return {
@@ -134,7 +130,6 @@ function mapStateToProps({groups, router, form, notification, images}){
         group,
         form1: form,
         notification,
-        isUploadingLogo: (images.isUploading && images.tag==='logo') || false,
         form: form.groupSettings,
     }
 }
