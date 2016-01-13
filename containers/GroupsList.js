@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
 import values from 'lodash/object/values';
 import any from 'lodash/collection/any';
 
@@ -81,8 +82,11 @@ export function reminder({
   query,
   userid,
   showPaypalReminder,
-  showProfileReminder
+  showProfileReminder,
+  groups,
+  pushState
 }) {
+  
   if (showPaypalReminder) {
     return (
       <PaypalReminder
@@ -94,6 +98,12 @@ export function reminder({
     return (
       <ProfileReminder />
     );
+  } else {
+    // If the logged in user has only access to one collective,
+    // we skip the list of collectives view and we go straight to the collective view
+    if (groups && Object.keys(groups).length == 1) {
+      pushState(null, `/groups/${values(groups)[0].id}/transactions`)
+    }
   }
 }
 
@@ -105,7 +115,8 @@ export default connect(mapStateToProps, {
   fetchCards,
   notify,
   fetchUser,
-  resetNotifications
+  resetNotifications,
+  pushState
 })(GroupsList);
 
 export function mapStateToProps({users, session, router, notification}) {
