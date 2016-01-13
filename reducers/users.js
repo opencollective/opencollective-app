@@ -95,7 +95,6 @@ export default function users(state={
       });
 
     case DONATE_GROUP_SUCCESS:
-      console.log('action is: ', action);
       return merge({}, state, {
         user: action.json.user
       });

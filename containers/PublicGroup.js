@@ -74,6 +74,15 @@ export class PublicGroup extends Component {
       backgroundImage: 'url(' + group.logo + ')'
     };
 
+    var donationSection;
+    if (showThankYouPage) {
+      donationSection = <PublicGroupThanks />;
+    } else if (showUserForm) {
+      donationSection = <PublicGroupSignup {...this.props} />
+    } else {
+      donationSection = <PublicGroupForm {...this.props} onToken={donateToGroup.bind(this, amount)} />
+    }
+
     return (
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
@@ -162,13 +171,7 @@ export class PublicGroup extends Component {
             </div>
 
             <div id='support'></div>
-            {
-              showThankYouPage ?
-                <PublicGroupThanks /> :
-                showUserForm ?
-                  <PublicGroupSignup {...this.props} /> :
-                  <PublicGroupForm {...this.props} onToken={donateToGroup.bind(this, amount)} />
-            }
+            {donationSection}
 
           </div>
           <PublicFooter />
@@ -286,7 +289,7 @@ function mapStateToProps({
     interval: form.donation.attributes.interval,
     amount: form.donation.attributes.amount,
     stripeAmount: convertToCents(form.donation.attributes.amount),
-    stripeKey: group.stripeManagedAccount.stripeKey, // Waiting for fix for Stripe
+    stripeKey: '', // group.stripeManagedAccount.stripeKey, // Waiting for fix for Stripe
     isCustomMode: form.donation.isCustomMode,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',

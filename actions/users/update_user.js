@@ -14,7 +14,7 @@ export default (userid, attributes) => {
       .then(json => dispatch(success(userid, attributes, json)))
       .catch(err => {
         dispatch(failure(err));
-        throw new Error(error.details[0].message);
+        throw new Error(error.message);
       });
   };
 };

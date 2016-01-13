@@ -13,7 +13,7 @@ export default (newProfile) => {
     .then(profile => dispatch(success(profile)))
     .catch(error => {
       dispatch(failure(error));
-      throw new Error(error.details[0].message);
+      throw new Error(error.message);
     });
   };
 };

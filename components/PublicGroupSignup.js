@@ -19,7 +19,6 @@ export class PublicGroupSignup extends Component {
         <Input
           type = 'text'
           placeholder = 'Name'
-          customClass=''
           value={profileForm.attributes.name}
           handleChange= {this.handleChange.bind(this, 'name')}/>
 
@@ -27,7 +26,6 @@ export class PublicGroupSignup extends Component {
         <Input
           type = 'text'
           placeholder = 'Website'
-          customClass=''
           value={profileForm.attributes.website}
           handleChange= {this.handleChange.bind(this, 'website')}/>
 
@@ -35,7 +33,6 @@ export class PublicGroupSignup extends Component {
         <Input
           type = 'text'
           placeholder = 'twitterUser'
-          customClass=''
           value={profileForm.attributes.twitterHandle}
           handleChange= {this.handleChange.bind(this, 'twitterHandle')}/>
         <div>
@@ -64,11 +61,13 @@ export function save() {
       validateDonationProfile,
       notify,
       pushState,
-      groupid
+      groupid,
+      hideAdditionalUserInfoForm
     } = this.props;
 
     return validateDonationProfile(profileForm.attributes)
     .then(() => updateUser(users.user.id, profileForm.attributes))
+    .then(() => hideAdditionalUserInfoForm())
     .then(() => pushState(null, `/public/groups/${groupid}/?status=thankyou`))
     .catch(({message}) => notify('error', message));
   };
