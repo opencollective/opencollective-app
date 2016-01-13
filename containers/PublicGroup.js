@@ -289,7 +289,7 @@ function mapStateToProps({
     interval: form.donation.attributes.interval,
     amount: form.donation.attributes.amount,
     stripeAmount: convertToCents(form.donation.attributes.amount),
-    stripeKey: '', // group.stripeManagedAccount.stripeKey, // Waiting for fix for Stripe
+    stripeKey: group.stripeAccount.stripePublishableKey,
     isCustomMode: form.donation.isCustomMode,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
