@@ -4,6 +4,7 @@ import find from 'lodash/collection/find'
 import mapValues from 'lodash/object/mapValues'
 
 import * as constants from '../constants/users';
+import {DONATE_GROUP_SUCCESS} from'../constants/groups';
 
 export default function users(state={
   updateInProgress: false,
@@ -51,24 +52,20 @@ export default function users(state={
     case constants.GET_APPROVAL_KEY_FOR_USER_FAILURE:
       return merge({}, state, { inProgress: false });
 
-    case constants.UPDATE_PAYPAL_EMAIL_REQUEST:
-      return merge({}, state, { updateInProgress: true });
-
-    case constants.UPDATE_PAYPAL_EMAIL_SUCCESS:
-      return merge({}, state, { updateInProgress: false });
-
-    case constants.UPDATE_PAYPAL_EMAIL_FAILURE:
-      return merge({}, state, { updateInProgress: false, error });
-
     case constants.UPDATE_AVATAR_REQUEST:
+    case constants.UPDATE_PAYPAL_EMAIL_REQUEST:
+    case constants.UPDATE_USER_REQUEST:
       return merge({}, state, { updateInProgress: true });
 
     case constants.UPDATE_AVATAR_SUCCESS:
+    case constants.UPDATE_PAYPAL_EMAIL_SUCCESS:
+    case constants.UPDATE_USER_SUCCESS:
       return merge({}, state, { updateInProgress: false });
 
     case constants.UPDATE_AVATAR_FAILURE:
-      const avatarError = action.error;
-      return merge({}, state, { updateInProgress: false, avatarError });
+    case constants.UPDATE_PAYPAL_EMAIL_FAILURE:
+    case constants.UPDATE_USER_FAILURE:
+      return merge({}, state, { updateInProgress: false, error });
 
     case constants.GET_PREAPPROVAL_DETAILS_REQUEST:
       return merge({}, state, { preapprovalDetailsInProgress: true });
@@ -86,6 +83,22 @@ export default function users(state={
 
     case constants.FETCH_USERS_BY_GROUP_FAILURE:
       return merge({}, state, { error });
+
+    case constants.SHOW_ADDITIONAL_USER_INFO_FORM:
+      return merge({}, state, {
+        showUserForm: true,
+      });
+
+    case constants.HIDE_ADDITIONAL_USER_INFO_FORM:
+      return merge({}, state, {
+        showUserForm: false,
+      });
+
+    case DONATE_GROUP_SUCCESS:
+      console.log('action is: ', action);
+      return merge({}, state, {
+        user: action.json.user
+      });
 
     default:
       return state;

@@ -59,13 +59,14 @@ describe('groups actions', () => {
         stripeToken: 'tok_123'
       };
 
+      const json = payment;
       nock(env.API_ROOT)
         .post('/groups/1/payments/')
         .reply(200, payment);
 
       const expected = [
         { type: constants.DONATE_GROUP_REQUEST, id: 1, payment },
-        { type: constants.DONATE_GROUP_SUCCESS, id: 1, payment }
+        { type: constants.DONATE_GROUP_SUCCESS, id: 1, json }
       ];
       const store = mockStore({}, expected, done);
       store.dispatch(donate(1, payment));
