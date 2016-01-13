@@ -21,6 +21,7 @@ import Metric from '../components/Metric';
 import UsersList from '../components/UsersList';
 import ShareIcon from '../components/ShareIcon';
 import Icon from '../components/Icon';
+import PublicGroupSignup from '../components/PublicGroupSignup';
 
 import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
@@ -30,9 +31,14 @@ import fetchTransactions from '../actions/transactions/fetch_by_group';
 import donate from '../actions/groups/donate';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
+import showAdditionalUserInfoForm from '../actions/users/show_additional_user_info_form';
+import hideAdditionalUserInfoForm from '../actions/users/hide_additional_user_info_form';
+import appendProfileForm from '../actions/form/append_profile';
+import updateUser from '../actions/users/update_user';
+import validateDonationProfile from '../actions/form/validate_donation_profile';
 
 export class PublicGroup extends Component {
-  
+
     GroupVideoOrImage(group) {
     if(group.video) {
       return (
@@ -49,7 +55,7 @@ export class PublicGroup extends Component {
       );
     }
   }
-  
+
   render() {
     const {
       group,
@@ -60,13 +66,23 @@ export class PublicGroup extends Component {
       expenses,
       shareUrl,
       users,
-      members
+      members,
+      showUserForm
     } = this.props;
 
     const logoStyle = {
       backgroundImage: 'url(' + group.logo + ')'
     };
-    
+
+    var donationSection;
+    if (showThankYouPage) {
+      donationSection = <PublicGroupThanks />;
+    } else if (showUserForm) {
+      donationSection = <PublicGroupSignup {...this.props} />
+    } else {
+      donationSection = <PublicGroupForm {...this.props} onToken={donateToGroup.bind(this, amount)} />
+    }
+
     return (
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
@@ -125,7 +141,7 @@ export class PublicGroup extends Component {
                     <div className='PublicGroup-expenseIcon'>
                       <Icon type='expense' />
                     </div>
-                    <label>    
+                    <label>
                       All your approved expenses will show up here
                     </label>
                   </div>
@@ -155,11 +171,7 @@ export class PublicGroup extends Component {
             </div>
 
             <div id='support'></div>
-            {
-              showThankYouPage ?
-              <PublicGroupThanks /> :
-              <PublicGroupForm {...this.props} onToken={donateToGroup.bind(this, amount)} />
-            }
+            {donationSection}
 
           </div>
           <PublicFooter />
@@ -201,8 +213,8 @@ export function donateToGroup(amount, token) {
     groupid,
     notify,
     donate,
-    pushState,
-    interval
+    interval,
+    showAdditionalUserInfoForm
   } = this.props;
 
   const payment = {
@@ -216,8 +228,8 @@ export function donateToGroup(amount, token) {
   }
 
   return donate(groupid, payment)
-  .then(() => pushState(null, `/public/groups/${groupid}/?status=thankyou`))
-  .catch(({message}) => notify('error', message));
+  .then(() => showAdditionalUserInfoForm())
+  .catch((err) => notify('error', err.message));
 }
 
 export default connect(mapStateToProps, {
@@ -229,7 +241,12 @@ export default connect(mapStateToProps, {
   resetNotifications,
   pushState,
   fetchTransactions,
-  fetchUsers
+  fetchUsers,
+  showAdditionalUserInfoForm,
+  hideAdditionalUserInfoForm,
+  appendProfileForm,
+  updateUser,
+  validateDonationProfile
 })(PublicGroup);
 
 function mapStateToProps({
@@ -276,6 +293,9 @@ function mapStateToProps({
     isCustomMode: form.donation.isCustomMode,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
-    shareUrl: window.location.href
+    shareUrl: window.location.href,
+    profileForm: form.profile,
+    showUserForm: users.showUserForm || false,
+    saveInProgress: users.updateInProgress
   };
 }

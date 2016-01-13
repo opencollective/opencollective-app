@@ -1,5 +1,4 @@
 var express = require('express');
-var bodyParser = require('body-parser');
 var request = require('request');
 var _ = require('lodash');
 var config = require('config');
@@ -18,24 +17,14 @@ var app = express();
 
 app.use(function(req, res, next) {
   var suffix = req.url.replace('/api/', '');
-  req.apiUrl = url(suffix);
+  // This is a hack to append api_key.
+  // TODO: find a better way to do this
+  if (_.contains(suffix, '?')) {
+    req.apiUrl = url(suffix) + '&api_key=' + config.apiKey;
+  } else {
+    req.apiUrl = url(suffix) + '?api_key=' + config.apiKey;
+  }
   next();
-});
-
-/**
- * Authenticate is a separate route because it's the only one that needs the
- * api key. I haven't found a way to append data to body in a stream way.
- */
-
-app.post('/api/authenticate', bodyParser.json(), function(req, res) {
-  var body = _.extend({}, req.body, { api_key: config.apiKey });
-
-  request({
-    method: 'POST',
-    url: req.apiUrl,
-    json: true,
-    body: body
-  }).pipe(res);
 });
 
 /**

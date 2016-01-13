@@ -102,9 +102,11 @@ function profile(state=profileInitialState, action={}) {
       return merge({}, state, { attributes: action.attributes });
 
     case constants.VALIDATE_PROFILE_REQUEST:
+    case constants.VALIDATE_DONATION_PROFILE_REQUEST:
       return merge({}, omit(state, 'error'), { error: {} });
 
     case constants.VALIDATE_PROFILE_FAILURE:
+    case constants.VALIDATE_DONATION_PROFILE_FAILURE:
       const { path, message } = errorDetail(action);
 
       return merge({}, state, {

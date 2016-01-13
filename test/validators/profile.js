@@ -79,5 +79,5 @@ describe('validator profile', () => {
       done();
     });
   });
-
 });
+

@@ -27,12 +27,11 @@ function request(id, payment) {
   };
 }
 
-function success(id, payment) {
-
+function success(id, json) {
   return {
     type: constants.DONATE_GROUP_SUCCESS,
     id,
-    payment
+    json
   };
 }
 

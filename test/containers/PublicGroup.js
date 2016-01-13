@@ -5,8 +5,12 @@ import spies from 'chai-spies';
 
 import {
   PublicGroup,
-  donateToGroup
+  donateToGroup,
 } from '../../containers/PublicGroup';
+
+import {
+  save
+} from '../../components/PublicGroupSignup';
 
 const {expect} = chai;
 const {
@@ -43,15 +47,13 @@ describe('PublicGroup container', () => {
   it('should donate to the group', (done) => {
     const donate = chai.spy(() => Promise.resolve());
     const notify = chai.spy(() => Promise.resolve());
-    const pushState = chai.spy((ctx, url) => {
-      expect(url).to.be.equal('/public/groups/1/?status=thankyou')
-    });
+    const showAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
 
     const props = {
       groupid: 1,
       donate,
       notify,
-      pushState
+      showAdditionalUserInfoForm,
     };
     const token = {
       id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',
@@ -62,7 +64,7 @@ describe('PublicGroup container', () => {
     .then(() => {
       expect(donate).to.have.been.called();
       expect(notify).to.not.have.been.called();
-      expect(pushState).to.have.been.called();
+      expect(showAdditionalUserInfoForm).to.have.been.called();
       done();
     });
   });
@@ -81,15 +83,14 @@ describe('PublicGroup container', () => {
       return Promise.resolve();
     });
     const notify = chai.spy(() => Promise.resolve());
-    const pushState = chai.spy((ctx, url) => {
-      expect(url).to.be.equal('/public/groups/1/?status=thankyou')
-    });
+    const showAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
+
 
     const props = {
       groupid: 1,
       donate,
       notify,
-      pushState,
+      showAdditionalUserInfoForm,
       interval: 'month'
     };
 
@@ -97,7 +98,7 @@ describe('PublicGroup container', () => {
     .then(() => {
       expect(donate).to.have.been.called();
       expect(notify).to.not.have.been.called();
-      expect(pushState).to.have.been.called();
+      expect(showAdditionalUserInfoForm).to.have.been.called();
       done();
     });
   });
@@ -116,15 +117,13 @@ describe('PublicGroup container', () => {
       return Promise.resolve();
     });
     const notify = chai.spy(() => Promise.resolve());
-    const pushState = chai.spy((ctx, url) => {
-      expect(url).to.be.equal('/public/groups/1/?status=thankyou')
-    });
+    const showAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
 
     const props = {
       groupid: 1,
       donate,
       notify,
-      pushState,
+      showAdditionalUserInfoForm,
       interval: 'none'
     };
 
@@ -132,9 +131,46 @@ describe('PublicGroup container', () => {
     .then(() => {
       expect(donate).to.have.been.called();
       expect(notify).to.not.have.been.called();
-      expect(pushState).to.have.been.called();
+      expect(showAdditionalUserInfoForm).to.have.been.called();
       done();
     });
+  });
+
+  it('should save the user info', (done) => {
+    const validateDonationProfile = chai.spy(() => Promise.resolve());
+    const notify = chai.spy(() => Promise.resolve());
+    const updateUser = chai.spy(() => Promise.resolve());
+    const hideAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
+    const pushState = chai.spy((ctx, url) => {
+      expect(url).to.be.equal('/public/groups/1/?status=thankyou')
+    });
+
+    const profileForm = {
+      attributes: {
+        name: 'john doe',
+        website: 'http://www.opencollective.com',
+        twitterHandle: 'asood123'
+      }
+    }
+    const props = {
+      users: {user: {id: 1}},
+      groupid: 1,
+      profileForm,
+      validateDonationProfile,
+      updateUser,
+      hideAdditionalUserInfoForm,
+      pushState,
+      notify
+    }
+    save.call({props})
+    .then(() => {
+      expect(validateDonationProfile).to.have.been.called();
+      expect(notify).to.not.have.been.called();
+      expect(updateUser).to.have.been.called();
+      expect(hideAdditionalUserInfoForm).to.have.been.called();
+      expect(pushState).to.have.been.called();
+      done();
+    })
   });
 
   it('should send a notification if the donation fails', (done) => {
