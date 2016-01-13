@@ -16,7 +16,7 @@ const schema = Joi.object().keys({
     .label('Title'),
   amount: Joi.number().precision(2).min(0).required()
     .label('Amount'),
-  vat: Joi.number().precision(2).min(0)
+  vat: Joi.number().precision(2).min(0).allow(null)
     .label('VAT'),
   createdAt: Joi.date().max(dates().tomorrow).required()
     .raw() // doesn't convert date into Date object
