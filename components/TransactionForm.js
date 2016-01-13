@@ -69,7 +69,7 @@ class TransactionForm extends Component {
         <Notification {...this.props} />
         <ImageUpload
           {...this.props}
-          url={attributes.link}
+          value={attributes.link}
           onFinished={({url: link}) => appendTransactionForm({link})} />
         <form
           name='transaction'

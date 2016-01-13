@@ -1,5 +1,4 @@
 .ImageUpload {
-  padding: var(--spacing);
   height: var(--image-upload-height);
   margin-bottom: var(--spacing);
   background-color: var(--light-gray);
@@ -8,10 +7,21 @@
   color: #CDD0D4;
 }
 
+.ImageUpload div {
+  padding: var(--spacing);
+}
+
 .ImageUpload-content {
   height: var(--image-upload-child-height);
   /* simple way to center vertically */
   margin-top: calc((var(--image-upload-height) - var(--image-upload-child-height)) / 2);
+}
+
+.ImageUpload label {
+  display: block;
+  width: 190px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .ImageUpload-input {
@@ -20,27 +30,18 @@
   width: 0;
 }
 
-.ImageUpload-img {
+.ImageUpload .placeholder img {
   width: auto;
   height: 5rem;
-  padding-top: var(--spacing);
 }
 
-.ImageUpload--isUploading .ImageUpload-content {
-  margin-top: 0;
-}
-
-.ImageUpload--isUploaded {
+.ImageUpload .imagePreview {
+  width: auto;
   padding: 0;
-  /* compensate for the padding to be same height */
-  height: calc(var(--image-upload-height) + var(--spacing) * 2);
-}
-
-.ImageUpload--isUploaded .ImageUpload-content {
-  margin-top: 0;
   height: 100%;
 }
 
-.ImageUpload--isUploaded .ImageUpload-img {
+.ImageUpload .imagePreview img {
+  width: auto;
   height: 100%;
 }

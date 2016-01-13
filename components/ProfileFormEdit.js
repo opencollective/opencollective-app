@@ -20,8 +20,7 @@ class ProfileFormEdit extends Component {
         <div className='Profile-header'>
           <ProfilePhotoUpload
           {...this.props}
-          newUrl={form.attributes.link}
-          currentUrl={user.avatar}
+          value={form.attributes.link || user.avatar}
           onFinished={this.handleUpload.bind(this)} />
         </div>
         <div className='ProfileForm-label'>
