@@ -86,7 +86,7 @@ export function reminder({
   groups,
   pushState
 }) {
-  
+
   if (showPaypalReminder) {
     return (
       <PaypalReminder
@@ -101,7 +101,7 @@ export function reminder({
   } else {
     // If the logged in user has only access to one collective,
     // we skip the list of collectives view and we go straight to the collective view
-    if (groups && Object.keys(groups).length == 1) {
+    if (groups && Object.keys(groups).length === 1) {
       pushState(null, `/groups/${values(groups)[0].id}/transactions`)
     }
   }
