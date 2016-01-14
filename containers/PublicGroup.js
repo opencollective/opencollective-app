@@ -10,6 +10,7 @@ import convertToCents from '../lib/convert_to_cents';
 import filterCollection from '../lib/filter_collection';
 import formatCurrency from '../lib/format_currency';
 
+import roles from '../constants/roles';
 import PublicHeader from '../components/PublicHeader';
 import Notification from '../components/Notification';
 import PublicFooter from '../components/PublicFooter';
@@ -265,9 +266,9 @@ function mapStateToProps({
   const group = groups[groupid] || { stripeAccount: {} };
   const GroupId = Number(groupid);
 
-  const hosts = filterCollection(users, { role: 'admin' });
-  const members = filterCollection(users, { role: 'writer' });
-  const backers = filterCollection(users, { role: 'viewer' });
+  const hosts = filterCollection(users, { role: roles.HOST });
+  const members = filterCollection(users, { role: roles.MEMBER });
+  const backers = filterCollection(users, { role: roles.BACKER });
 
   const groupTransactions = filterCollection(transactions, { GroupId });
 
