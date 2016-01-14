@@ -16,12 +16,12 @@ export default ({type, url, name, description}) => {
 
   const w = 650;
   const h = 450;
-  let left = (screen.width/2)-(w/2);
-  let top = (screen.height/2)-(h/2);
+  const left = (screen.width / 2) - (w / 2);
+  const top = (screen.height / 2) - (h / 2);
 
   return (
     <span
-      onClick={() => window.open(link[type], 'ShareWindow', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left)}
+      onClick={() => window.open(link[type], 'ShareWindow', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`)}
       className='ShareIcon'>
       <Icon type={type} />
     </span>
