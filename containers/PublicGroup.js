@@ -43,7 +43,7 @@ export class PublicGroup extends Component {
     if(group.video) {
       return (
         <div className='PublicGroup-video'>
-          <YoutubeVideo id={group.video} />
+          <YoutubeVideo video={group.video} />
         </div>
       );
     }
@@ -110,7 +110,7 @@ export class PublicGroup extends Component {
                 </Metric>
                 <Metric
                   label='Funds Raised'
-                  value={formatCurrency(group.donationTotal, group.currency)} />
+                  value={formatCurrency(group.donationTotal, group.currency, 0)} />
                 <Metric
                   label='Backers'
                   value={group.backersCount} />
