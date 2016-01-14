@@ -24,6 +24,8 @@ import Header from '../components/Header';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
+import ReceiptPreview from '../components/ReceiptPreview';
+
 import Notification from '../components/Notification';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
@@ -80,9 +82,10 @@ class TransactionDetail extends Component {
             {/* Receipt */}
             {transaction.link && (
               <div className='TransactionDetail-image'>
-                <a href={transaction.link}>
-                  <img src={transaction.link} />
-                </a>
+                <ReceiptPreview
+                  src={transaction.link}
+                  href={transaction.link} 
+                />
               </div>
             )}
 
