@@ -6,7 +6,7 @@ import Input from './Input';
 import RadioGroup from 'react-radio-group';
 
 export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value, interval}) => {
-  const values = [5, 50, 100, 'custom'];
+  const values = [5, 10, 50, 100, 'custom'];
   const intervals = [{
     label: 'Monthly',
     value: 'month'

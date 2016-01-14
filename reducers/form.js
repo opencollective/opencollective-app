@@ -157,8 +157,9 @@ function groupSettings(state=groupSettingsInitialState, action={}) {
  */
 
 function donation(state={
-  isCustomMode: true,
+  isCustomMode: false,
   attributes: {
+    amount: 10,
     interval: 'none'
   }
 }, action={}) {
