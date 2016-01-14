@@ -2,6 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
+import roles from '../../constants/roles';
 
 import {
   GroupsList,
@@ -116,7 +117,7 @@ describe('GroupsList container', () => {
   it('sets userIsHost to true if user is host in group', () => {
     const users = {
       1: {
-        groups: { 1: { role: 'host'} },
+        groups: { 1: { role: roles.HOST} },
         transactions: {}
       }
     };
@@ -132,7 +133,7 @@ describe('GroupsList container', () => {
   it('sets userIsHost to false if user is not host in group', () => {
     const users = {
       1: {
-        groups: { 1: { role: 'backer'} },
+        groups: { 1: { role: roles.BACKER} },
         transactions: {}
       }
     };
@@ -183,7 +184,7 @@ describe('GroupsList container', () => {
     const users = {
       1: {
         cards: {},
-        groups: { 1: { role: 'host'} },
+        groups: { 1: { role: roles.HOST} },
         transactions: {}
       }
     };
@@ -201,7 +202,7 @@ describe('GroupsList container', () => {
     const users = {
       1: {
         cards: {},
-        groups: { 1: { role: 'backer'} },
+        groups: { 1: { role: roles.BACKER} },
         transactions: {}
       }
     };
