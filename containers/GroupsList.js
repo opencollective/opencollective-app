@@ -22,7 +22,7 @@ import Notification from '../components/Notification';
 
 import nestTransactionsInGroups from '../lib/nest_transactions_in_groups';
 import getUniqueValues from '../lib/get_unique_values';
-import isAdmin from '../lib/is_admin';
+import isHost from '../lib/is_host';
 import rejectError from '../lib/reject_error';
 
 export class GroupsList extends Component {
@@ -131,7 +131,7 @@ export function mapStateToProps({users, session, router, notification}) {
   const query = router.location.query;
   const userCards = values(currentUser.cards);
   const hasConfirmedCards = any(userCards, (c) => !!c.confirmedAt);
-  const userIsAdmin = isAdmin(values(groups));
+  const userIsHost = isHost(values(groups));
 
   return {
     groups: nestTransactionsInGroups(groups, transactions),
@@ -142,9 +142,9 @@ export function mapStateToProps({users, session, router, notification}) {
     inProgress: users.inProgress,
     query,
     isLoading: !groups,
-    showPaypalReminder: userIsAdmin && (!hasConfirmedCards || query.preapprovalKey),
-    showProfileReminder: !userIsAdmin && !currentUser.paypalEmail,
-    userIsAdmin, // for testing
+    showPaypalReminder: userIsHost && (!hasConfirmedCards || query.preapprovalKey),
+    showProfileReminder: !userIsHost && !currentUser.paypalEmail,
+    userIsHost, // for testing
     hasConfirmedCards // for testing
   };
 }

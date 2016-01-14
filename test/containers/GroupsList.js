@@ -113,10 +113,10 @@ describe('GroupsList container', () => {
     expect(element.innerHTML).to.contain('profile page');
   });
 
-  it('sets userIsAdmin to true if user is admin in group', () => {
+  it('sets userIsHost to true if user is host in group', () => {
     const users = {
       1: {
-        groups: { 1: { role: 'admin'} },
+        groups: { 1: { role: 'host'} },
         transactions: {}
       }
     };
@@ -126,13 +126,13 @@ describe('GroupsList container', () => {
       router: { location: { query: {} } }
     });
 
-    expect(state.userIsAdmin).to.be.equal(true);
+    expect(state.userIsHost).to.be.equal(true);
   });
 
-  it('sets userIsAdmin to false if user is not admin in group', () => {
+  it('sets userIsHost to false if user is not host in group', () => {
     const users = {
       1: {
-        groups: { 1: { role: 'viewer'} },
+        groups: { 1: { role: 'backer'} },
         transactions: {}
       }
     };
@@ -142,7 +142,7 @@ describe('GroupsList container', () => {
       router: { location: { query: {} } }
     });
 
-    expect(state.userIsAdmin).to.be.equal(false);
+    expect(state.userIsHost).to.be.equal(false);
   });
 
   it('sets hasConfirmedCards to true if user has confirmed cards', () => {
@@ -179,11 +179,11 @@ describe('GroupsList container', () => {
     expect(state.hasConfirmedCards).to.be.equal(false);
   });
 
-  it('sets showPaypalReminder to true if user has no confirmed cards and is not admin', () => {
+  it('sets showPaypalReminder to true if user has no confirmed cards and is not host', () => {
     const users = {
       1: {
         cards: {},
-        groups: { 1: { role: 'admin'} },
+        groups: { 1: { role: 'host'} },
         transactions: {}
       }
     };
@@ -197,11 +197,11 @@ describe('GroupsList container', () => {
     expect(state.showProfileReminder).to.be.equal(false);
   });
 
-  it('sets showProfileReminder to false if is not admin and has no paypal email', () => {
+  it('sets showProfileReminder to false if is not host and has no paypal email', () => {
     const users = {
       1: {
         cards: {},
-        groups: { 1: { role: 'viewer'} },
+        groups: { 1: { role: 'backer'} },
         transactions: {}
       }
     };

@@ -37,7 +37,7 @@ describe('PublicGroup container', () => {
         fetchUsers: () => {},
         notification: {},
         group: {},
-        admin: {},
+        host: {},
         expenses: [],
         donations: []
       });

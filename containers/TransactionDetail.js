@@ -32,7 +32,7 @@ import RejectButton from '../components/RejectButton';
 import Select from '../components/Select';
 import TransactionStatus from '../components/TransactionStatus';
 
-import isAdmin from '../lib/is_admin';
+import isHost from '../lib/is_host';
 import transactionIsDonation from '../lib/is_donation';
 
 class TransactionDetail extends Component {
@@ -48,7 +48,7 @@ class TransactionDetail extends Component {
       isManual,
       isExpense,
       isLoading,
-      isAdmin,
+      isHost,
       isReimbursed,
       isRejected,
 
@@ -101,7 +101,7 @@ class TransactionDetail extends Component {
               <TransactionStatus {...transaction} />
             </div>
 
-            {!isReimbursed && isAdmin && isExpense && !isRejected && (
+            {!isReimbursed && isHost && isExpense && !isRejected && (
               <div>
                 <div className='TransactionDetail-paymentMethod'>
                   <div className='u-bold u-py1'>Payment method</div>
@@ -217,7 +217,7 @@ function mapStateToProps({
   const transaction = transactions[transactionid] || {};
 
   const userGroups = user.groups || {};
-  const userIsAdmin = isAdmin([userGroups[groupid]]) ;
+  const userIsHost = isHost([userGroups[groupid]]) ;
 
   const isDonation = transactionIsDonation(transaction) ;
   const isExpense = !isDonation;
@@ -237,7 +237,7 @@ function mapStateToProps({
     isDonation,
     isExpense,
     isManual,
-    isAdmin: userIsAdmin,
+    isHost: userIsHost,
     isLoading: !transaction.id,
     isRejected: transaction.approvedAt && !transaction.approved,
     isReimbursed: !!transaction.reimbursedAt,

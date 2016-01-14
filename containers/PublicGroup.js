@@ -265,9 +265,9 @@ function mapStateToProps({
   const group = groups[groupid] || { stripeAccount: {} };
   const GroupId = Number(groupid);
 
-  const hosts = filterCollection(users, { role: 'admin' });
-  const members = filterCollection(users, { role: 'writer' });
-  const backers = filterCollection(users, { role: 'viewer' });
+  const hosts = filterCollection(users, { role: 'host' });
+  const members = filterCollection(users, { role: 'member' });
+  const backers = filterCollection(users, { role: 'backer' });
 
   const groupTransactions = filterCollection(transactions, { GroupId });
 
