@@ -4,14 +4,14 @@
     margin:
       calc(var(--public-header-height) + var(--spacing))
       auto
-      calc(var(--public-footer-height) + var(--spacing))
+      0
       auto;
   }
 }
 
 @media (--small-viewport) {
   .PublicGroup .PublicContent {
-    padding: 1rem;
+    padding: 1rem 1rem 5rem 1rem;
     max-width: calc(var(--public-header-height) + var(--spacing)) auto 0 auto;
   }
   .PublicGroup-video, .PublicGroup-image, .PublicGroup-metricContainer{
@@ -22,10 +22,20 @@
     padding-left: 0;
   }
 
+  .PublicHeader-tagLine .Tagline {
+    font-size: .8rem;
+  }
+
   .PublicGroup-metricContainer .Metric {
     font-size: 1rem;
     min-width: 50%;
     display: inline-block;
+  }
+  .Metric .Metric-value {
+    font-size: 1.5rem;
+  }
+  .Metric .Metric-label {
+    font-size: .8rem;
   }
   .PublicGroup .Button {
     /* TODO: Either kill yourself of find a workaround */
@@ -34,6 +44,10 @@
   .PublicGroup-members {
     width: 100%;
     margin: 0 auto;
+  }
+  .DonationPicker {
+    display: flex;
+    justify-content: space-between;
   }
   .PublicGroup-members .UsersList {
     display: flex;
@@ -49,7 +63,7 @@
     padding-right: 0;
     margin-bottom:3rem;
   } 
-  .DonationPicker-amount .Currency {
+  .DonationPicker-amount {
     font-size: 1rem;
   }
   label:not(:last-child) {
