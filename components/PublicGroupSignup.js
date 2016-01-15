@@ -8,7 +8,8 @@ export class PublicGroupSignup extends Component {
   render() {
     const {
       profileForm,
-      saveInProgress
+      saveInProgress,
+      users
     } = this.props;
 
     return (
@@ -19,21 +20,21 @@ export class PublicGroupSignup extends Component {
         <Input
           type = 'text'
           placeholder = 'Name'
-          value={profileForm.attributes.name}
+          value={profileForm.attributes.name || users.newUser.name}
           handleChange= {this.handleChange.bind(this, 'name')}/>
 
         <div className='Label'> URL: </div>
         <Input
           type = 'text'
           placeholder = 'Website'
-          value={profileForm.attributes.website}
+          value={profileForm.attributes.website || users.newUser.website}
           handleChange= {this.handleChange.bind(this, 'website')}/>
 
         <div className='Label'> Twitter: </div>
         <Input
           type = 'text'
           placeholder = 'twitterUser'
-          value={profileForm.attributes.twitterHandle}
+          value={profileForm.attributes.twitterHandle || users.newUser.twitterHandle}
           handleChange= {this.handleChange.bind(this, 'twitterHandle')}/>
         <div>
           <SaveButton
@@ -62,12 +63,14 @@ export function save() {
       notify,
       pushState,
       groupid,
-      hideAdditionalUserInfoForm
+      hideAdditionalUserInfoForm,
+      fetchUsers
     } = this.props;
 
     return validateDonationProfile(profileForm.attributes)
-    .then(() => updateUser(users.user.id, profileForm.attributes))
+    .then(() => updateUser(users.newUser.id, profileForm.attributes))
     .then(() => hideAdditionalUserInfoForm())
+    .then(() => fetchUsers(groupid))
     .then(() => pushState(null, `/public/groups/${groupid}/?status=thankyou`))
     .catch(({message}) => notify('error', message));
   };
