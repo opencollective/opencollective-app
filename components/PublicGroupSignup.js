@@ -8,7 +8,8 @@ export class PublicGroupSignup extends Component {
   render() {
     const {
       profileForm,
-      saveInProgress
+      saveInProgress,
+      users
     } = this.props;
 
     return (
@@ -19,21 +20,21 @@ export class PublicGroupSignup extends Component {
         <Input
           type = 'text'
           placeholder = 'Name'
-          value={profileForm.attributes.name}
+          value={profileForm.attributes.name || users.user.name}
           handleChange= {this.handleChange.bind(this, 'name')}/>
 
         <div className='Label'> URL: </div>
         <Input
           type = 'text'
           placeholder = 'Website'
-          value={profileForm.attributes.website}
+          value={profileForm.attributes.website || users.user.website}
           handleChange= {this.handleChange.bind(this, 'website')}/>
 
         <div className='Label'> Twitter: </div>
         <Input
           type = 'text'
           placeholder = 'twitterUser'
-          value={profileForm.attributes.twitterHandle}
+          value={profileForm.attributes.twitterHandle || users.user.twitterHandle}
           handleChange= {this.handleChange.bind(this, 'twitterHandle')}/>
         <div>
           <SaveButton
