@@ -140,6 +140,7 @@ describe('PublicGroup container', () => {
     const validateDonationProfile = chai.spy(() => Promise.resolve());
     const notify = chai.spy(() => Promise.resolve());
     const updateUser = chai.spy(() => Promise.resolve());
+    const fetchUsers = chai.spy(() => Promise.resolve());
     const hideAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
     const pushState = chai.spy((ctx, url) => {
       expect(url).to.be.equal('/public/groups/1/?status=thankyou')
@@ -160,7 +161,8 @@ describe('PublicGroup container', () => {
       updateUser,
       hideAdditionalUserInfoForm,
       pushState,
-      notify
+      notify,
+      fetchUsers
     }
     save.call({props})
     .then(() => {
