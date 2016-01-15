@@ -18,13 +18,13 @@ a {
 }
 
 .Content {
-  padding-top: var(--header-height);
+  padding-top: var(--topbar-height);
   padding-bottom: var(--footer-height);
 }
 
 .PublicContent {
   background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 85%,rgba(255,255,255,0) 100%);
-  margin: calc(var(--public-header-height) + var(--spacing)) var(--spacing)
+  margin: calc(var(--public-topbar-height) + var(--spacing)) var(--spacing)
     0
     var(--spacing);
   -webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
@@ -46,15 +46,6 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
  */
 select, input {
   -webkit-appearance: none;
-}
-label input, label span {
-  float: left;
-}
-
-label {
-  font-size: 1.25rem;
-  margin-right: 4rem;
-  float: left;
 }
 
 /** Add all the magic for the radio buttons **/

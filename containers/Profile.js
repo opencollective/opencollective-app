@@ -4,7 +4,7 @@ import { replaceState } from 'redux-router';
 import values from 'lodash/object/values';
 
 import Content from './Content';
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 import ProfileForm from '../components/ProfileForm';
 import Notification from '../components/Notification';
 import setEditMode from '../actions/form/set_edit_mode_profile';
@@ -31,7 +31,7 @@ export class Profile extends Component {
   render() {
     return (
       <div className='Profile'>
-        <Header title='Profile' hasBackButton={true} />
+        <TopBar title='Profile' hasBackButton={true} />
         <Content>
           <Notification {...this.props} />
           <div className='padded'>

@@ -5,7 +5,7 @@ import debounce from 'lodash/function/debounce';
 import rejectError from '../lib/reject_error';
 
 import Content from './Content';
-import Header from '../components/Header'
+import TopBar from '../components/TopBar'
 import Notification from '../components/Notification';
 import Input from '../components/Input';
 import TextArea from '../components/TextArea';
@@ -27,35 +27,32 @@ export class GroupSettings extends Component {
 
     return (
       <div className='GroupSettings'>
-        <Header title='Collective Info' hasBackButton={true} />
+        <TopBar title='Collective Info' hasBackButton={true} />
         <Content>
           <Notification {...this.props} />
           <div className='padded'>
-            <div>
-              <div className='leftColumn'>
-                <div className='Label'> Name: </div>
-                <Input
-                  type = 'text'
-                  placeholder = 'Group name'
-                  customClass=''
-                  value={form.attributes.name}
-                  handleChange= {this.handleChange.bind(this, 'name')}/>
-              </div>
-              <ProfilePhotoUpload
-                {...this.props}
-                value={form.attributes.logo || this.props.group.logo}
-                onFinished={({url}) => this.handleChange('logo', url)} />
-            </div>
+            <ProfilePhotoUpload
+              {...this.props}
+              value={form.attributes.logo || this.props.group.logo}
+              onFinished={({url}) => this.handleChange('logo', url)} />
 
-            <div className='Label'> Description: </div>
+            <div className='Label'> Name: </div>
+            <Input
+              type = 'text'
+              placeholder = 'Group name'
+              customClass=''
+              value={form.attributes.name}
+              handleChange= {this.handleChange.bind(this, 'name')}/>
+
+            <div className='Label'> Short description: </div>
             <TextArea
-              placeholder = 'Short description'
+              placeholder = 'Short description (in 140 characters or less)'
               rows='3'
               value={form.attributes.description}
               customClass='test1'
               handleChange= {this.handleChange.bind(this, 'description')}/>
 
-            <div className='Label'> Details: </div>
+            <div className='Label'> Long description: </div>
             <TextArea
               placeholder = 'Detailed description'
               rows='5'
@@ -65,7 +62,7 @@ export class GroupSettings extends Component {
 
             <div className='Label'> Expense Policy: </div>
             <TextArea
-              placeholder = 'Enter your expense policy'
+              placeholder = 'Optional -- specify what can be expensed by the members of the collective'
               rows='3'
               value={form.attributes.expensePolicy}
               handleChange= {this.handleChange.bind(this, 'expensePolicy')}/>

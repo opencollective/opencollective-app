@@ -20,13 +20,14 @@ const PublicGroupForm = ({
 }) => {
   
   const intervalHuman = interval === 'none' ? '' : `per ${interval}`;
-  const stripeDescription = `${formatCurrency(amount, 'USD')} ${intervalHuman}`
+  const stripeDescription = `${formatCurrency(amount, group.currency)} ${intervalHuman}`
 
   return (
     <div className='PublicGroupForm'>
-      <SubTitle text='Make your donation' />
+      <h2>Make your donation</h2>
       <DonationPicker
         value={amount}
+        currency={group.currency}
         interval={interval}
         setDonationAmount={amount => appendDonationForm({amount})}
         selected={amount}

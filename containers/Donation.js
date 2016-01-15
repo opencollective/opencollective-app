@@ -7,7 +7,7 @@ import rejectError from '../lib/reject_error';
 
 import Content from './Content';
 
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 import Notification from '../components/Notification';
 import DonationForm from '../components/DonationForm';
 
@@ -27,7 +27,7 @@ export class Donation extends Component {
 
     return (
       <div className='Donation'>
-        <Header
+        <TopBar
           title='Add funds'
           backLink={backLink} />
         <Content>

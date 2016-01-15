@@ -8,7 +8,7 @@ import resetLoginForm from '../actions/form/reset_login';
 import appendLoginForm from '../actions/form/append_login';
 import validateLogin from '../actions/form/validate_login';
 import Content from './Content';
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 import Notification from '../components/Notification';
 import LoginHeader from '../components/LoginHeader';
 import LoginForm from '../components/LoginForm';
@@ -17,7 +17,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <Header title='Sign in' />
+        <TopBar title='Sign in' />
         <Content>
           <Notification {...this.props} />
           <LoginHeader />

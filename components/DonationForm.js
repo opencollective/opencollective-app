@@ -29,6 +29,7 @@ const DonationForm = ({
         setDonationAmount={(amount) => appendDonationForm({amount})}
         selected={amount}
         value={amount}
+        currency={group.currency}
         isCustomMode={isCustomMode}
         setDonationCustom={setDonationCustom} />
 

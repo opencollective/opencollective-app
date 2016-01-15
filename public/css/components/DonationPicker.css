@@ -2,11 +2,16 @@
   list-style: none;
   padding: 5px;
   overflow: hidden;
-  margin: 0.5rem 0;
+  margin: 1rem 0;
+}
+
+.DonationPicker label {
+  font-size: 1.25rem;
+  margin-right: 4rem;
+  float: left;
 }
 
 .DonationPicker .DonationPicker-frequency {
-  margin-top: 0px;
 }
 
 .DonationPicker li, .DonationPicker label {
@@ -23,8 +28,9 @@
   font-weight: bold;
 }
 
-.DonationPicker-amount {
-  flex: 0 0 auto;
+.DonationPicker-presets .DonationPicker-amount label {
+  font-size: 1.2rem;
+  margin-right: 1.5rem;
 }
 
 .DonationPicker-amount--selected {

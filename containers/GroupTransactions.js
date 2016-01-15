@@ -11,7 +11,7 @@ import fetchGroup from '../actions/groups/fetch_by_id';
 import showPopOverMenu from '../actions/session/show_popovermenu';
 
 import Content from './Content';
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 import Footer from '../components/Footer';
 import TransactionsList from '../components/TransactionsList';
 import GroupTitle from '../components/GroupTitle';
@@ -30,7 +30,7 @@ class GroupTransactions extends Component {
     const url = `/groups/${groupid}/settings/`;
     return (
       <div className='GroupTransactions'>
-        <Header
+        <TopBar
           title={group.name}
           backLink='/'
           groupSettingsLink={url} />

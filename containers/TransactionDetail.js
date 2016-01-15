@@ -20,7 +20,7 @@ import Content from './Content';
 import tags from '../ui/tags';
 import paymentMethods from '../ui/payment_methods';
 
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
@@ -69,7 +69,7 @@ class TransactionDetail extends Component {
 
     return (
       <div>
-        <Header
+        <TopBar
           title={group.name}
           backLink={backLink} />
         <Content isLoading={isLoading}>

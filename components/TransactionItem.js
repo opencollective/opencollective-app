@@ -8,7 +8,6 @@ import TransactionStatus from './TransactionStatus';
 export default ({transaction, user}) => (
   <div className='TransactionItem'>
     <ProfilePhoto
-      size='75px'
       hasBorder={true}
       url={user && user.avatar} />
 
