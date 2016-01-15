@@ -63,6 +63,7 @@ export function save() {
       notify,
       pushState,
       groupid,
+      slug,
       hideAdditionalUserInfoForm,
       fetchUsers
     } = this.props;
@@ -71,7 +72,7 @@ export function save() {
     .then(() => updateUser(users.newUser.id, profileForm.attributes))
     .then(() => hideAdditionalUserInfoForm())
     .then(() => fetchUsers(groupid))
-    .then(() => pushState(null, `/public/groups/${groupid}/?status=thankyou`))
+    .then(() => pushState(null, `/${slug}?status=thankyou`))
     .catch(({message}) => notify('error', message));
   };
 
