@@ -37,6 +37,11 @@
   .Metric .Metric-label {
     font-size: .8rem;
   }
+  .PublicGroup label {
+    font-size: .9rem;
+    margin-right: 1.5rem;
+    line-height: 1.5rem;
+  }
   .PublicGroup .Button {
     /* TODO: Either kill yourself of find a workaround */
     display: block !important;
@@ -45,12 +50,8 @@
     width: 100%;
     margin: 0 auto;
   }
-  .DonationPicker {
-    display: flex;
-    justify-content: space-between;
-  }
   .PublicGroup-members .UsersList {
-    display: flex;
+    display: inline-table;
     width: 90%;
     margin: 0 auto;
     justify-content: space-between;
@@ -63,14 +64,11 @@
     padding-right: 0;
     margin-bottom:3rem;
   } 
-  .DonationPicker-amount {
-    font-size: 1rem;
+  .DonationPicker label {
+    font-size: 0.9rem;
   }
-  label:not(:last-child) {
+  .DonationPicker label:not(:last-child) {
     margin-right: 1rem;
-  }
-  label span {
-    font-size: 1rem;
   }
   .PublicFooter .PublicFooter-menu {
     line-height: 30px;

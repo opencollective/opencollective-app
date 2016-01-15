@@ -1,7 +1,30 @@
+.DonationPicker ul {
+  list-style: none;
+  padding: 5px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.DonationPicker .DonationPicker-frequency {
+  margin-top: 0px;
+}
+
+.DonationPicker li, .DonationPicker label {
+  float: left;
+  cursor: pointer; 
+}
+
+.DonationPicker-frequency {
+  /*clear: both;*/
+}
+
+.DonationPicker h2 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .DonationPicker-amount {
   flex: 0 0 auto;
-  font-size: 20px;
-  cursor: pointer;
 }
 
 .DonationPicker-amount--selected {

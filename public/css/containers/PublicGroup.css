@@ -16,6 +16,7 @@
 }
 
 .PublicGroup-title {
+  clear: left;
   font-size: 1.5rem;
   font-weight: 600;
   margin-top: calc(var(--spacing) * 2);
@@ -66,10 +67,6 @@
   font-weight: bold;
   padding: 1rem 1.5rem;
   font-size: 1.3rem;
-}
-
-.PublicGroup .DonationPicker-amount {
-  max-width: 100px;
 }
 
 .PublicGroup .UsersList {
