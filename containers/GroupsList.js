@@ -151,7 +151,7 @@ export function mapStateToProps({users, session, router, notification}) {
     showProfileReminder: !userIsHost && !currentUser.paypalEmail,
     userIsHost, // for testing
     hasConfirmedCards, // for testing
-    showStripeReminder: !currentUser.stripeAccount || hasFinishedStripeAuth,
+    showStripeReminder: userIsHost && (!currentUser.stripeAccount || hasFinishedStripeAuth),
     hasFinishedStripeAuth
   };
 }

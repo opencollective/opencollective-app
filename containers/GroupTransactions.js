@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import sortByDate from '../lib/sort_by_date';
 import getUniqueValues from '../lib/get_unique_values';
 import filterCollection from '../lib/filter_collection';
+import isHost from '../lib/is_host';
 
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
 import fetchGroup from '../actions/groups/fetch_by_id';
+import fetchGroups from '../actions/users/fetch_groups';
 import showPopOverMenu from '../actions/session/show_popovermenu';
 
 import Content from './Content';
@@ -44,9 +46,10 @@ class GroupTransactions extends Component {
           </div>
         </Content>
         <Footer
+          {...this.props}
           groupid={groupid}
           hasPopOverMenuOpen={hasPopOverMenuOpen}
-          showPopOverMenu={showPopOverMenu} />
+          showPopOverMenu={showPopOverMenu}/>
      </div>
     );
   }
@@ -62,7 +65,9 @@ class GroupTransactions extends Component {
   componentDidMount() {
     const {
       fetchGroup,
+      fetchGroups,
       fetchTransactions,
+      userid,
       groupid,
       fetchUserIfNeeded,
       showPopOverMenu
@@ -70,6 +75,7 @@ class GroupTransactions extends Component {
 
     showPopOverMenu(false);
     fetchGroup(groupid);
+    fetchGroups(userid);
     fetchTransactions(groupid)
     .then(({transactions}) => {
       return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
@@ -80,19 +86,25 @@ class GroupTransactions extends Component {
 export default connect(mapStateToProps, {
   fetchTransactions,
   fetchGroup,
+  fetchGroups,
   fetchUserIfNeeded,
   showPopOverMenu
 })(GroupTransactions);
 
-function mapStateToProps({transactions, router, groups, users={}, session}) {
+export function mapStateToProps({transactions, router, groups, users={}, session}) {
   const groupid = router.params.groupid;
   const group = groups[groupid] || {};
   const GroupId = Number(groupid);
+  const userid = session.user.id
+
+  const userGroup = users && users[userid] && users[userid].groups && users[userid].groups[GroupId]
 
   return {
+    userid,
     groupid,
     group,
     transactions: filterCollection(transactions, { GroupId }).sort(sortByDate),
+    isHost:  isHost([userGroup]),
     users,
     isLoading: !group.id,
     hasPopOverMenuOpen: session.hasPopOverMenuOpen

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 
-const PopOverMenu = ({showPopOverMenu, groupid, hasPopOverMenuOpen}) => {
+const PopOverMenu = ({showPopOverMenu, groupid, hasPopOverMenuOpen, showAddFunds}) => {
   const className = classnames({
     'PopOverMenu': true,
     'PopOverMenu--open': hasPopOverMenuOpen
@@ -11,11 +11,14 @@ const PopOverMenu = ({showPopOverMenu, groupid, hasPopOverMenuOpen}) => {
   return (
     <div className={className}>
       <div className='PopOverMenu-group'>
+      {showAddFunds ?
         <div className='PopOverMenu-item'>
           <Link to={`/groups/${groupid}/donation/`}>
             Add funds
           </Link>
         </div>
+        : null
+      }
         <div className='PopOverMenu-item'>
           <Link to={`/groups/${groupid}/transactions/new`}>
             Add expense

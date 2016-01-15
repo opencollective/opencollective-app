@@ -92,7 +92,8 @@ describe('GroupsList container', () => {
     expect(element.innerHTML).to.contain('success');
   });
 
-  it('shows the paypal reminder if showProfileReminder is true', () => {
+
+  it('shows the profile paypal reminder if showProfileReminder is true', () => {
     const query = {
       preapprovalKey: 'abc',
       approvalStatus: 'success'
@@ -113,6 +114,25 @@ describe('GroupsList container', () => {
 
     expect(element.innerHTML).to.contain('profile page');
   });
+
+  it('shows the stripe reminder if showStripeReminder is true', () => {
+    const element = createElement({
+      userid: 1,
+      fetchUserGroupsAndTransactions: () => Promise.resolve(),
+      fetchCards: () => Promise.resolve(),
+      confirmPreapprovalKey: () => Promise.resolve(),
+      getPreapprovalKeyForUser: () => {},
+      fetchUser: () => {},
+      resetNotifications: () => {},
+      notification: {},
+      groups: [],
+      showStripeReminder: true,
+      query: {}
+    }, 'Reminder');
+
+    expect(element.innerHTML).to.contain('Please connect your Stripe account to receive donations');
+  });
+
 
   it('sets userIsHost to true if user is host in group', () => {
     const users = {
@@ -214,5 +234,39 @@ describe('GroupsList container', () => {
 
     expect(state.showProfileReminder).to.be.equal(true);
     expect(state.showPaypalReminder).to.be.equal(false);
+  });
+
+  it('sets showStripeReminder to false if is not host', () => {
+    const users = {
+      1: {
+        cards: {},
+        groups: { 1: { role: roles.BACKER} },
+        transactions: {}
+      }
+    };
+    const state = mapStateToProps({
+      users,
+      session: { user: { id: 1 }},
+      router: { location: { query: {} } }
+    });
+
+    expect(state.showStripeReminder).to.be.equal(false);
+  });
+
+  it('sets showStripeReminder to true if it is a host and doesn\'t have a stripe account', () => {
+    const users = {
+      1: {
+        cards: {},
+        groups: { 1: { role: roles.HOST} },
+        transactions: {}
+      }
+    };
+    const state = mapStateToProps({
+      users,
+      session: { user: { id: 1 }},
+      router: { location: { query: {} } }
+    });
+
+    expect(state.showStripeReminder).to.be.equal(true);
   });
 });
