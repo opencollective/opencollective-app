@@ -2,7 +2,7 @@ import React from 'react';
 
 import ProfilePhoto from './ProfilePhoto';
 
-export default ({users=[], size}) => (
+export default ({users=[]}) => (
   <div className='UsersList'>
     {users.map(({id, avatar, name}) => {
       return (

@@ -3,7 +3,6 @@ import StripeCheckout from 'react-stripe-checkout';
 import formatCurrency from '../lib/format_currency';
 
 import DonationPicker from './DonationPicker';
-import SubTitle from './SubTitle';
 import AsyncButton from './AsyncButton';
 
 const PublicGroupForm = ({
