@@ -1,31 +1,34 @@
-var express = require('express');
-var request = require('request');
-var _ = require('lodash');
-var config = require('config');
+const express = require('express');
+const request = require('request');
+const morgan = require('morgan');
+const path = require('path');
+const _ = require('lodash');
+const config = require('config');
 
-var url = require('./helpers/url');
+const apiUrl = url => {
+  const withoutParams = config.apiUrl + (url.replace('/api/', ''));
+  const hasParams = _.contains(url, '?');
+
+  return withoutParams + (hasParams ? '&' : '?') + `api_key=${config.apiKey}`;
+};
 
 /**
  * Express app
  */
 
-var app = express();
+const app = express();
 
 /**
- * Create real api url
+ * Log
  */
 
-app.use(function(req, res, next) {
-  var suffix = req.url.replace('/api/', '');
-  // This is a hack to append api_key.
-  // TODO: find a better way to do this
-  if (_.contains(suffix, '?')) {
-    req.apiUrl = url(suffix) + '&api_key=' + config.apiKey;
-  } else {
-    req.apiUrl = url(suffix) + '?api_key=' + config.apiKey;
-  }
-  next();
-});
+app.use(morgan('dev'));
+
+/**
+ * Static folder
+ */
+
+app.use('/static', express.static(path.join(__dirname, '../static')));
 
 /**
  * Pipe the requests before the middlewares, the piping will only work with raw
@@ -33,15 +36,11 @@ app.use(function(req, res, next) {
  * More infos: https://github.com/request/request/issues/1664#issuecomment-117721025
  */
 
-app.all('/api/*', function(req, res) {
-  req.pipe(request(req.apiUrl)).pipe(res);
+app.all('/api/*', (req, res) => {
+  req
+    .pipe(request(apiUrl(req.url)))
+    .pipe(res);
 });
-
-/**
- * Static folder
- */
-
-app.use(express.static('public'));
 
 /**
  * Ejs template engine
@@ -55,8 +54,27 @@ app.set('view engine', 'ejs');
  * Serve the SPA
  */
 
-app.all('*', function(req, res) {
-  res.render('index', {});
+app.get('/app/*', (req, res) => {
+  res.render('index');
+});
+
+/**
+ * Server public page
+ */
+
+app.get('/:slug', (req, res) => {
+  request
+    .get({
+      url: apiUrl(`groups/${req.params.slug}/`),
+      json: true
+    }, (err, response, group) => {
+
+      if (response.statusCode === 404) {
+        res.render('404');
+      } else {
+        res.render('index', { group });
+      }
+    });
 });
 
 /**
@@ -65,6 +83,6 @@ app.all('*', function(req, res) {
 
 app.set('port', process.env.PORT || 3000);
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
   console.log('Express server listening on port ' + app.get('port'));
 });

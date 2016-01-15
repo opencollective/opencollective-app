@@ -4,7 +4,7 @@ export default () => {
   return (
     <div className='EmptyList'>
       <div className='EmptyList-icon'>
-        <img src='/images/receipt.png' />
+        <img src='/static/images/receipt.png' />
       </div>
       <div>
         <div className='EmptyList-title'>Submit your first expense</div>

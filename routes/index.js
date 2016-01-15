@@ -21,12 +21,10 @@ const routes = {
   childRoutes: [
     { path: 'app/login', component: Login },
 
-    { path: 'app/yeoman', component: PublicGroup },
-
     // Public routes (web)
-    { path: 'app/public/groups/:groupid', component: PublicGroup },
-    { path: 'app/public/groups/:groupid/transactions', component: PublicTransactions },
-    { path: 'app/public/groups/:groupid/transactions/:transactionid', component: PublicTransaction },
+    { path: 'public/groups/:groupid', component: PublicGroup },
+    { path: 'public/groups/:groupid/transactions', component: PublicTransactions },
+    { path: 'public/groups/:groupid/transactions/:transactionid', component: PublicTransaction },
 
     // Private routes (app)
     { path: 'app/', component: requireAuthentication(GroupsList) },
@@ -37,6 +35,8 @@ const routes = {
     { path: 'app/groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
     { path: 'app/groups/:groupid/donation', component: requireAuthentication(Donation)},
     { path: 'app/groups/:groupid/donation/method', component: requireAuthentication(DonationMethod)},
+
+    { path: ':slug', component: PublicGroup },
 
     // Wildcard route
     { path: '*', component: Login }

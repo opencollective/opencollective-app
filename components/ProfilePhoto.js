@@ -5,7 +5,7 @@ const ProfilePhoto = ({url, spinner, hasBorder=false}) => {
   if (url) {
     var backgroundImage = url;
   } else {
-    var backgroundImage = '/images/default_avatar.svg';
+    var backgroundImage = '/static/images/default_avatar.svg';
   }
 
   const border = hasBorder ? {
