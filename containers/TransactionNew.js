@@ -17,13 +17,13 @@ import vats from '../ui/vat';
 import Content from './Content';
 
 import TransactionForm from '../components/TransactionForm';
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 
 export class TransactionNew extends Component {
   render() {
     return (
       <div>
-        <Header
+        <TopBar
           title='Submit Expense'
           backLink={`/groups/${this.props.groupid}/transactions/`} />
         <Content>

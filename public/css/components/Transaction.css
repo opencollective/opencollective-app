@@ -29,6 +29,8 @@
 
 .Transaction .ProfilePhoto {
   float: left;
+  width: 3rem;
+  height: 3rem;
 }
 
 .Transaction-info {

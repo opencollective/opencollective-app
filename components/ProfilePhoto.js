@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const ProfilePhoto = ({url, size, spinner, hasBorder=false}) => {
-
-  const defaultSize = '55px';
+const ProfilePhoto = ({url, spinner, hasBorder=false}) => {
 
   if (url) {
     var backgroundImage = url;
@@ -17,8 +15,6 @@ const ProfilePhoto = ({url, size, spinner, hasBorder=false}) => {
 
   const divStyle = {
     ...border,
-    width: size || defaultSize,
-    height: size || defaultSize,
     backgroundImage: 'url(' + backgroundImage + ')',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -34,7 +30,6 @@ const ProfilePhoto = ({url, size, spinner, hasBorder=false}) => {
 
 ProfilePhoto.propTypes = {
   url: PropTypes.string,
-  size: PropTypes.string,
   spinner: PropTypes.string
 };
 

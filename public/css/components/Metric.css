@@ -1,6 +1,6 @@
 .Metric {
   text-align: left;
-  margin-bottom: calc(var(--spacing) * 2);
+  margin-bottom: calc(var(--spacing));
 }
 
 .Metric-value {

@@ -9,7 +9,6 @@ export default ({users=[], size}) => (
         <div className='UsersList-item' key={id}>
           <ProfilePhoto
             url={avatar}
-            size={size}
             hasBorder={true} />
           <div className='UsersList-name'>{name}</div>
         </div>

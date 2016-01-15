@@ -2,7 +2,7 @@
   .PublicContent {
     max-width: calc(var(--max-container-width) - var(--spacing) * 2);
     margin:
-      calc(var(--public-header-height) + var(--spacing))
+      calc(var(--public-topbar-height) + var(--spacing))
       auto
       0
       auto;
@@ -16,24 +16,26 @@
   
   .PublicGroup .PublicContent {
     padding: 1rem 1rem 5rem 1rem;
-    max-width: calc(var(--public-header-height) + var(--spacing)) auto 0 auto;
+    max-width: calc(var(--public-topbar-height) + var(--spacing)) auto 0 auto;
   }
-  .PublicGroup-video, .PublicGroup-image, .PublicGroup-metricContainer{
+  .PublicTopBar-tagLine .Tagline {
+    font-size: .8rem;
+  }
+  .PublicGroup-video, .PublicGroup-image, .PublicGroup-summary {
     width: 100%;
-    margin-bottom: 1rem;
+    margin: 0.5rem 0;
   }
-  .PublicGroup-metricContainer {
+  
+  .PublicGroup-summary {
     padding-left: 0;
   }
 
-  .PublicHeader-tagLine .Tagline {
-    font-size: .8rem;
+  .PublicGroup-metricContainer {
+    display: flex;
   }
-
   .PublicGroup-metricContainer .Metric {
+    flex: 1;
     font-size: 1rem;
-    min-width: 50%;
-    display: inline-block;
   }
   .Metric .Metric-value {
     font-size: 1.5rem;
@@ -47,6 +49,7 @@
     line-height: 1.5rem;
   }
   .PublicGroup .Button {
+    margin-top: 0.5rem;
     /* TODO: Either kill yourself of find a workaround */
     display: block !important;
   }
@@ -66,8 +69,12 @@
   .PublicContent .PublicGroup-expenses, .PublicContent .PublicGroup-donations {
     width: 100%;
     padding-right: 0;
-    margin-bottom:3rem;
+    margin-bottom:1.5rem;
   } 
+  .PublicGroup .TransactionItem .ProfilePhoto {
+    width: 3rem;
+    height: 3rem;
+  }
   .DonationPicker label {
     font-size: 0.9rem;
   }
