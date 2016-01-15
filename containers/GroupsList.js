@@ -90,8 +90,6 @@ export function reminder({
   showPaypalReminder,
   showProfileReminder,
   showStripeReminder,
-  groups,
-  pushState,
   authorizeStripe,
   hasFinishedStripeAuth
 }) {
