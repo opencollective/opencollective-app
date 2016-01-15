@@ -23,7 +23,7 @@ import notify from '../actions/notification/notify';
 
 export class Donation extends Component {
   render() {
-    const backLink = `/groups/${this.props.groupid}/transactions/`;
+    const backLink = `/app/groups/${this.props.groupid}/transactions/`;
 
     return (
       <div className='Donation'>

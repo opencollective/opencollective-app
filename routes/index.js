@@ -19,9 +19,7 @@ import { requireAuthentication } from '../components/AuthenticatedComponent';
 const routes = {
   component: App,
   childRoutes: [
-    { path: 'login', component: Login },
-
-    { path: 'yeoman', component: PublicGroup },
+    { path: 'app/login', component: Login },
 
     // Public routes (web)
     { path: 'public/groups/:groupid', component: PublicGroup },
@@ -29,14 +27,16 @@ const routes = {
     { path: 'public/groups/:groupid/transactions/:transactionid', component: PublicTransaction },
 
     // Private routes (app)
-    { path: '/', component: requireAuthentication(GroupsList) },
-    { path: 'profile', component: requireAuthentication(Profile) },
-    { path: 'groups/:groupid/settings', component:requireAuthentication(GroupSettings)},
-    { path: 'groups/:groupid/transactions', component: requireAuthentication(GroupTransactions)},
-    { path: 'groups/:groupid/transactions/new', component: requireAuthentication(TransactionNew) },
-    { path: 'groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
-    { path: 'groups/:groupid/donation', component: requireAuthentication(Donation)},
-    { path: 'groups/:groupid/donation/method', component: requireAuthentication(DonationMethod)},
+    { path: 'app/', component: requireAuthentication(GroupsList) },
+    { path: 'app/profile', component: requireAuthentication(Profile) },
+    { path: 'app/groups/:groupid/settings', component:requireAuthentication(GroupSettings)},
+    { path: 'app/groups/:groupid/transactions', component: requireAuthentication(GroupTransactions)},
+    { path: 'app/groups/:groupid/transactions/new', component: requireAuthentication(TransactionNew) },
+    { path: 'app/groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
+    { path: 'app/groups/:groupid/donation', component: requireAuthentication(Donation)},
+    { path: 'app/groups/:groupid/donation/method', component: requireAuthentication(DonationMethod)},
+
+    { path: ':slug', component: PublicGroup },
 
     // Wildcard route
     { path: '*', component: Login }

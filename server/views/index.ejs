@@ -2,11 +2,24 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/build.css">
+
+    <meta property="og:url" content="<%= group.publicUrl %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="<%= group.name %>" />
+    <meta property="og:description" content="<%= group.description %>" />
+    <meta property="og:image" content="<%= group.logo %>" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@<%= group.twitterHandle %>" />
+    <meta name="twitter:title" content="<%= group.name %>" />
+    <meta name="twitter:description" content="<%= group.description %>" />
+    <meta name="twitter:image" content="<%= group.logo %>" />
+
+    <link rel="stylesheet" type="text/css" href="/static/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/static/build.css">
   </head>
   <body>
     <div id="content"></div>
-    <script src="/bundle.js"></script>
+    <script src="/static/bundle.js"></script>
   </body>
 </html>

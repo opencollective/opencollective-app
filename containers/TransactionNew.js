@@ -25,7 +25,7 @@ export class TransactionNew extends Component {
       <div>
         <TopBar
           title='Submit Expense'
-          backLink={`/groups/${this.props.groupid}/transactions/`} />
+          backLink={`/app/groups/${this.props.groupid}/transactions/`} />
         <Content>
           <TransactionForm
             {...this.props}

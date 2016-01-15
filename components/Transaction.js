@@ -22,7 +22,7 @@ class Transaction extends Component {
       isPublic
     } = this.props;
     const hideStatus = isDonation(this.props);
-    const prefix = isPublic ? '/public' : '';
+    const prefix = isPublic ? '/public' : '/app';
 
     return (
       <div className='Transaction'>

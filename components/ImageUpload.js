@@ -35,12 +35,12 @@ class ImageUpload extends Component {
     const uploadingTemplate = isFunction(uploading) ? uploading : defaultTemplate;
 
     let className='placeholder';
-    let imgsrc = '/images/uploading.png';
+    let imgsrc = '/static/images/uploading.png';
     let label = 'Upload receipt (photo or PDF)';
 
     if (value) {
       if(value.match(/\.pdf$/)) {
-        imgsrc = '/images/mime-pdf.png';
+        imgsrc = '/static/images/mime-pdf.png';
         label = file.name;
       }
       else {

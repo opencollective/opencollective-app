@@ -5,6 +5,7 @@ import BodyClassName from 'react-body-classname';
 import take from 'lodash/array/take';
 import contains from 'lodash/collection/contains';
 import uniq from 'lodash/array/uniq';
+import values from 'lodash/object/values';
 
 import convertToCents from '../lib/convert_to_cents';
 import filterCollection from '../lib/filter_collection';
@@ -71,9 +72,9 @@ export class PublicGroup extends Component {
       showUserForm
     } = this.props;
 
-    const logoStyle = {
+    const logoStyle = group.logo ? {
       backgroundImage: 'url(' + group.logo + ')'
-    };
+    } : {};
 
     var donationSection;
     if (showThankYouPage) {
@@ -188,28 +189,28 @@ export class PublicGroup extends Component {
   componentWillMount() {
     const {
       fetchGroup,
-      groupid,
+      slug,
       fetchTransactions,
       fetchUsers
     } = this.props;
 
-    fetchGroup(groupid);
+    fetchGroup(slug);
 
-    fetchTransactions(groupid, {
+    fetchTransactions(slug, {
       per_page: 2,
       sort: 'createdAt',
       direction: 'desc',
       donation: true
     });
 
-    fetchTransactions(groupid, {
+    fetchTransactions(slug, {
       per_page: 2,
       sort: 'createdAt',
       direction: 'desc',
       expense: true
     });
 
-    fetchUsers(groupid);
+    fetchUsers(slug);
   }
 }
 
@@ -263,12 +264,11 @@ function mapStateToProps({
   users
 }) {
   // Major hack!
-  const isYeoman = contains(router.location.pathname, 'yeoman');
-  const groupid = isYeoman ? '8' : router.params.groupid;
-
+  const groupid = 1;
+  const slug = router.params.slug;
   const status = router.location.query.status;
-  const group = groups[groupid] || { stripeAccount: {} };
-  const GroupId = Number(groupid);
+  const group = values(groups).find(g => g.slug === slug) || { stripeAccount: {} };
+  const GroupId = Number(group.id);
 
   const hosts = filterCollection(users, { role: roles.HOST });
   const members = filterCollection(users, { role: roles.MEMBER });
@@ -279,10 +279,9 @@ function mapStateToProps({
   const donations = groupTransactions.filter(({amount}) => amount > 0);
   const expenses = groupTransactions.filter(({amount}) => amount < 0);
 
-  // const backers = donations.map(t => users[t.UserId]).filter(t => !!t);
-
   return {
     groupid,
+    slug,
     group,
     notification,
     users,

@@ -36,7 +36,7 @@ const DonationForm = ({
       <div className='DonationForm-bold'>
         Your payment method
         <Link
-          to={`/groups/${groupid}/donation/method`}
+          to={`/app/groups/${groupid}/donation/method`}
           className='DonationForm-addNew'>
           Add new
         </Link>
