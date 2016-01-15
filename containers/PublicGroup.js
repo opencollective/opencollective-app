@@ -125,7 +125,7 @@ export class PublicGroup extends Component {
             <div className='PublicGroup-quote'>
               <h2>Our collective</h2>
               <div className='PublicGroup-members'>
-                <UsersList users={members} size='75px'/>
+                <UsersList users={members} />
               </div>
               <div className='PublicGroup-quoteText'>
                 {group.longDescription}
@@ -134,7 +134,7 @@ export class PublicGroup extends Component {
 
             <div className='PublicGroup-backers'>
               <h2>Backers</h2>
-              <UsersList users={backers} size='111px'/>
+              <UsersList users={backers} />
             </div>
             
             <div className='PublicGroup-transactions'>
