@@ -7,17 +7,12 @@ import * as constants from '../../constants/users';
  * Fetch all the groups from a user
  */
 
-export default (userid, options={}) => {
-  let include = 'usergroup.role';
-  if (options.stripe) {
-    include += ',stripemanagedaccount'
-  }
-
+export default (userid) => {
   return dispatch => {
     dispatch(request(userid));
     return get(`users/${userid}/groups`, {
         schema: Schemas.GROUP_ARRAY,
-        params: { include }
+        params: { include: 'usergroup.role' }
       })
       .then(json => dispatch(success(userid, json)))
       .catch(err => dispatch(failure(err)));

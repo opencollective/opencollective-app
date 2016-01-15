@@ -12,12 +12,14 @@ import fetchCards from '../actions/users/fetch_cards';
 import fetchUser from '../actions/users/fetch_by_id';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
+import authorizeStripe from '../actions/users/authorize_stripe';
 
 import Content from './Content';
 import Header from '../components/Header';
 import Group from '../components/Group';
 import PaypalReminder from '../components/PaypalReminder';
 import ProfileReminder from '../components/ProfileReminder';
+import StripeReminder from '../components/StripeReminder';
 import Notification from '../components/Notification';
 
 import nestTransactionsInGroups from '../lib/nest_transactions_in_groups';
@@ -87,9 +89,20 @@ export function reminder({
   userid,
   showPaypalReminder,
   showProfileReminder,
+  showStripeReminder,
   groups,
-  pushState
+  pushState,
+  authorizeStripe,
+  hasFinishedStripeAuth
 }) {
+
+  if (showStripeReminder) {
+    return (
+      <StripeReminder
+        authorizeStripe={authorizeStripe}
+        isSuccessful={hasFinishedStripeAuth} />
+    );
+  }
 
   if (showPaypalReminder) {
     return (
@@ -120,7 +133,8 @@ export default connect(mapStateToProps, {
   notify,
   fetchUser,
   resetNotifications,
-  pushState
+  pushState,
+  authorizeStripe
 })(GroupsList);
 
 export function mapStateToProps({users, session, router, notification}) {
@@ -132,6 +146,7 @@ export function mapStateToProps({users, session, router, notification}) {
   const userCards = values(currentUser.cards);
   const hasConfirmedCards = any(userCards, (c) => !!c.confirmedAt);
   const userIsHost = isHost(values(groups));
+  const hasFinishedStripeAuth = query.stripeStatus === 'success';
 
   return {
     groups: nestTransactionsInGroups(groups, transactions),
@@ -145,6 +160,8 @@ export function mapStateToProps({users, session, router, notification}) {
     showPaypalReminder: userIsHost && (!hasConfirmedCards || query.preapprovalKey),
     showProfileReminder: !userIsHost && !currentUser.paypalEmail,
     userIsHost, // for testing
-    hasConfirmedCards // for testing
+    hasConfirmedCards, // for testing
+    showStripeReminder: !currentUser.stripeAccount || hasFinishedStripeAuth,
+    hasFinishedStripeAuth
   };
 }
