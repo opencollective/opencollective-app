@@ -63,12 +63,14 @@ export function save() {
       notify,
       pushState,
       groupid,
-      hideAdditionalUserInfoForm
+      hideAdditionalUserInfoForm,
+      fetchUsers
     } = this.props;
 
     return validateDonationProfile(profileForm.attributes)
     .then(() => updateUser(users.user.id, profileForm.attributes))
     .then(() => hideAdditionalUserInfoForm())
+    .then(() => fetchUsers(groupid))
     .then(() => pushState(null, `/public/groups/${groupid}/?status=thankyou`))
     .catch(({message}) => notify('error', message));
   };
