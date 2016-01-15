@@ -278,10 +278,6 @@ function mapStateToProps({
   const donations = groupTransactions.filter(({amount}) => amount > 0);
   const expenses = groupTransactions.filter(({amount}) => amount < 0);
 
-  if(groups) {
-    debugger;
-  }
-
   // const backers = donations.map(t => users[t.UserId]).filter(t => !!t);
 
   return {
