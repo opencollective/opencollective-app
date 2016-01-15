@@ -30,5 +30,5 @@ build/Release
 node_modules
 
 # Build
-public/bundle.js
-public/build.css
+static/bundle.js
+static/build.css
