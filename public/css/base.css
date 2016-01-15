@@ -50,9 +50,10 @@ label input, label span {
   float: left;
 }
 
-label span {
+label {
   font-size: 1.25rem;
   margin-right: 4rem;
+  float: left;
 }
 
 /** Add all the magic for the radio buttons **/
@@ -65,6 +66,7 @@ input[type="radio"] {
   border: 1px solid var(--gray); 
   background: white;
   float: left;
+  margin-right: 10px;
 }
 
 input[type="radio"]::after {

@@ -3,23 +3,58 @@ import classnames from 'classnames';
 
 import Currency from './Currency';
 import Input from './Input';
+import RadioGroup from 'react-radio-group';
 
-export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value}) => {
+export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value, interval}) => {
   const values = [5, 50, 100, 'custom'];
+  const intervals = [{
+    label: 'Monthly',
+    value: 'month'
+  }, {
+    label: 'Yearly',
+    value: 'year'
+  }, {
+    label: 'One time',
+    value: 'none'
+  }];
 
   return (
     <div className='DonationPicker'>
-      {values.map((value) => {
-        return (
-          <span
-            className={className(selected, value, isCustomMode)}
-            key={value}
-            onClick={() => handleClick({value, setDonationCustom, setDonationAmount})}>
-            {value === 'custom' ? 'Custom' : <Currency value={value} />}
-          </span>
-        );
-      })}
-      {isCustomMode && input({setDonationAmount, value})}
+      <ul className='DonationPicker-presets'>
+        {values.map((value) => {
+          return (
+            <li
+              className={className(selected, value, isCustomMode)}
+              key={value}
+              onClick={() => handleClick({value, setDonationCustom, setDonationAmount})}>
+              <label>{value === 'custom' ? 'Custom' : <Currency value={value} />}</label>
+            </li>
+          );
+        })}
+      </ul>
+      <div>
+        {isCustomMode && input({setDonationAmount, value})}
+      </div>
+      <h2>Donation frequency</h2>
+      <RadioGroup
+        name='interval'
+        selectedValue={interval}
+        onChange={interval => appendDonationForm({interval})}>
+        {Radio => (
+          <ul className='DonationPicker-frequency'>
+            {intervals.map(({label, value}) => {
+              return (
+                <li key={value}>
+                  <label>
+                    <Radio value={value} key={value} />
+                    {label}
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </RadioGroup>
     </div>
   );
 };
