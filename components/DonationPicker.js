@@ -7,7 +7,7 @@ import RadioGroup from 'react-radio-group';
 import formatCurrency from '../lib/format_currency';
 
 export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value, currency, interval}) => {
-  const values = [5, 50, 100, 'custom'];
+  const values = [5, 10, 50, 100, 'custom'];
   const intervals = [{
     label: 'Monthly',
     value: 'month'
@@ -63,7 +63,7 @@ function input({setDonationAmount, value, currency}) {
   return (
     <Input
       value={value}
-      placeholder={formatCurrency(10, currency, 0)}
+      placeholder={formatCurrency(25, currency, 0)}
       customClass='DonationPicker-input'
       handleChange={(val) => setDonationAmount(val)} />
   );
