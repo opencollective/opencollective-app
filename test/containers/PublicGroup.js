@@ -143,7 +143,7 @@ describe('PublicGroup container', () => {
     const fetchUsers = chai.spy(() => Promise.resolve());
     const hideAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
     const pushState = chai.spy((ctx, url) => {
-      expect(url).to.be.equal('/public/groups/1/?status=thankyou')
+      expect(url).to.be.equal('/groupslug?status=thankyou')
     });
 
     const profileForm = {
@@ -162,6 +162,7 @@ describe('PublicGroup container', () => {
       hideAdditionalUserInfoForm,
       pushState,
       notify,
+      slug: 'groupslug',
       fetchUsers
     }
     save.call({props})
