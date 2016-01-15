@@ -102,9 +102,7 @@ export function reminder({
         authorizeStripe={authorizeStripe}
         isSuccessful={hasFinishedStripeAuth} />
     );
-  }
-
-  if (showPaypalReminder) {
+  } else if (showPaypalReminder) {
     return (
       <PaypalReminder
         getPreapprovalKey={getPreapprovalKeyForUser.bind(this, userid)}
