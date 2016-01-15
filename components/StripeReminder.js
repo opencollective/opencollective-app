@@ -10,16 +10,28 @@ class StripeReminder extends Component {
   }
 
   render() {
+    const { isSuccessful } = this.props;
 
-     return (
+    return (
       <div className='Reminder'>
-        Please connect your Stripe account to receive donations <br/>
-        <AsyncButton
-          customClass='Button--stripe'
-          inProgress={this.state.inProgress}
-          onClick={this.handleClick.bind(this)}>
-          Authenticate with Stripe
-        </AsyncButton>
+        {isSuccessful && (
+          <div>
+            Your Stripe account is now connected.
+          </div>
+        )}
+        {!isSuccessful && (
+          <div>
+            Please connect your Stripe account to receive donations
+          </div>
+        )}
+        {!isSuccessful && (
+          <AsyncButton
+            customClass='Button--stripe'
+            inProgress={this.state.inProgress}
+            onClick={this.handleClick.bind(this)}>
+            Authenticate with Stripe
+          </AsyncButton>
+        )}
       </div>
     );
   }
@@ -27,9 +39,7 @@ class StripeReminder extends Component {
   handleClick() {
     this.setState({inProgress: true});
 
-    this.props.authorizeStripe()
-    .then(() => this.setState({inProgress: false}))
-    .catch(() => this.setState({inProgress: false}));
+    this.props.authorizeStripe();
   }
 }
 

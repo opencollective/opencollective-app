@@ -6,13 +6,11 @@ import * as constants from '../../constants/users';
  */
 
 export default () => {
-  window.location
   return dispatch => {
     dispatch(request());
     return get('stripe/authorize')
       .then(json => {
         dispatch(success(json));
-        console.log('json', json);
         window.location = json.redirectUrl;
       })
       .catch(err => {

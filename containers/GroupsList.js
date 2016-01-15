@@ -92,11 +92,16 @@ export function reminder({
   showStripeReminder,
   groups,
   pushState,
-  authorizeStripe
+  authorizeStripe,
+  hasFinishedStripeAuth
 }) {
 
   if (showStripeReminder) {
-    return <StripeReminder authorizeStripe={authorizeStripe} />
+    return (
+      <StripeReminder
+        authorizeStripe={authorizeStripe}
+        isSuccessful={hasFinishedStripeAuth} />
+    );
   }
 
   if (showPaypalReminder) {
@@ -141,6 +146,8 @@ export function mapStateToProps({users, session, router, notification}) {
   const userCards = values(currentUser.cards);
   const hasConfirmedCards = any(userCards, (c) => !!c.confirmedAt);
   const userIsHost = isHost(values(groups));
+  const hasFinishedStripeAuth = query.stripeStatus === 'success';
+
   return {
     groups: nestTransactionsInGroups(groups, transactions),
     userid,
@@ -154,6 +161,7 @@ export function mapStateToProps({users, session, router, notification}) {
     showProfileReminder: !userIsHost && !currentUser.paypalEmail,
     userIsHost, // for testing
     hasConfirmedCards, // for testing
-    showStripeReminder: !currentUser.stripeAccount
+    showStripeReminder: !currentUser.stripeAccount || hasFinishedStripeAuth,
+    hasFinishedStripeAuth
   };
 }
