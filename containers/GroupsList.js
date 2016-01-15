@@ -113,12 +113,6 @@ export function reminder({
     return (
       <ProfileReminder />
     );
-  } else {
-    // If the logged in user has only access to one collective,
-    // we skip the list of collectives view and we go straight to the collective view
-    if (groups && Object.keys(groups).length === 1) {
-      pushState(null, `/groups/${values(groups)[0].id}/transactions`)
-    }
   }
 }
 
