@@ -69,8 +69,13 @@
   float: left;
 }
 
-.Button--paypal {
+.Button--paypal,
+.Button--stripe {
   background-color: #298ED8;
+}
+
+.Button--stripe {
+  margin-top: calc(var(--spacing)/2);
 }
 
 .Button--inProgress,
