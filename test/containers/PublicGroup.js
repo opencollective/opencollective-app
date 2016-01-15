@@ -154,7 +154,7 @@ describe('PublicGroup container', () => {
       }
     }
     const props = {
-      users: {user: {id: 1}},
+      users: {newUser: {id: 1}},
       groupid: 1,
       profileForm,
       validateDonationProfile,

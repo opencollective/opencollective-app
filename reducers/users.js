@@ -96,7 +96,7 @@ export default function users(state={
 
     case DONATE_GROUP_SUCCESS:
       return merge({}, state, {
-        user: action.json.user
+        newUser: action.json.user
       });
 
     default:

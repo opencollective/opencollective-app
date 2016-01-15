@@ -102,7 +102,7 @@ export class PublicGroup extends Component {
             </div>
 
             {this.GroupVideoOrImage(group)}
-            
+
             <div className='PublicGroup-summary'>
               <div className='PublicGroup-metricContainer'>
                 <Metric
@@ -136,7 +136,7 @@ export class PublicGroup extends Component {
               <h2>Backers</h2>
               <UsersList users={backers} />
             </div>
-            
+
             <div className='PublicGroup-transactions'>
               <div className='PublicGroup-expenses'>
                 <h2>Expenses</h2>
@@ -155,7 +155,7 @@ export class PublicGroup extends Component {
                                             transaction={expense}
                                             user={users[expense.UserId]} />)}
               </div>
-              
+
               <div className='PublicGroup-donations'>
                 <h2>Revenue</h2>
                 {(donations.length === 0) && (
