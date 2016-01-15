@@ -4,7 +4,7 @@ import Currency from './Currency';
 import Icon from './Icon';
 
 const GroupLink = ({id, name, balance, currency}) => {
-  const url = `/groups/${id}/transactions/`;
+  const url = `/app/groups/${id}/transactions/`;
 
   return (
     <div className='GroupLink'>

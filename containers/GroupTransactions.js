@@ -29,12 +29,12 @@ class GroupTransactions extends Component {
       showPopOverMenu
     } = this.props;
 
-    const url = `/groups/${groupid}/settings/`;
+    const url = `/app/groups/${groupid}/settings/`;
     return (
       <div className='GroupTransactions'>
         <TopBar
           title={group.name}
-          backLink='/'
+          backLink='/app/'
           groupSettingsLink={url} />
         <Content
           isLoading={isLoading}

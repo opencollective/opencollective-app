@@ -37,7 +37,7 @@ class Footer extends Component {
               showAddFunds={isHost} />
         </div>
         <div className='Footer-left'>
-          <Link to='/profile'>
+          <Link to='/app/profile'>
             <div className='Footer-userIcon'></div>
           </Link>
         </div>

@@ -65,7 +65,7 @@ class TransactionDetail extends Component {
       'TransactionDetail--noImage': !transaction.link
     });
 
-    const backLink = (isPublic ?  '/public' : '') + `/groups/${groupid}/transactions/`;
+    const backLink = (isPublic ?  '/public' : '/app') + `/groups/${groupid}/transactions/`;
 
     return (
       <div>
@@ -84,7 +84,7 @@ class TransactionDetail extends Component {
               <div className='TransactionDetail-image'>
                 <ReceiptPreview
                   src={transaction.link}
-                  href={transaction.link} 
+                  href={transaction.link}
                 />
               </div>
             )}
