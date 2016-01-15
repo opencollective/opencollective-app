@@ -15,7 +15,7 @@ import resetNotifications from '../actions/notification/reset';
 import authorizeStripe from '../actions/users/authorize_stripe';
 
 import Content from './Content';
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 import Group from '../components/Group';
 import PaypalReminder from '../components/PaypalReminder';
 import ProfileReminder from '../components/ProfileReminder';
@@ -33,7 +33,7 @@ export class GroupsList extends Component {
 
     return (
       <div className='GroupsList'>
-        <Header title='My collectives' hasBackButton={false} />
+        <TopBar title='My collectives' hasBackButton={false} />
         <Content isLoading={isLoading}>
           <Notification {...this.props} />
           {reminder.call(this, this.props)}

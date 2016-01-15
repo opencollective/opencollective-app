@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  font-size: 16px; /* 1 rem = 16px */
 }
 
 body {
@@ -17,13 +18,13 @@ a {
 }
 
 .Content {
-  padding-top: var(--header-height);
+  padding-top: var(--topbar-height);
   padding-bottom: var(--footer-height);
 }
 
 .PublicContent {
   background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 85%,rgba(255,255,255,0) 100%);
-  margin: calc(var(--public-header-height) + var(--spacing)) var(--spacing)
+  margin: calc(var(--public-topbar-height) + var(--spacing)) var(--spacing)
     0
     var(--spacing);
   -webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
@@ -46,15 +47,6 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
 select, input {
   -webkit-appearance: none;
 }
-label input, label span {
-  float: left;
-}
-
-label {
-  font-size: 1.25rem;
-  margin-right: 4rem;
-  float: left;
-}
 
 /** Add all the magic for the radio buttons **/
 input[type="radio"] {
@@ -66,7 +58,7 @@ input[type="radio"] {
   border: 1px solid var(--gray); 
   background: white;
   float: left;
-  margin-right: 10px;
+  margin-right: 0.5rem;
 }
 
 input[type="radio"]::after {
@@ -75,11 +67,11 @@ input[type="radio"]::after {
   background: var(--light-blue);
   opacity: 0;
   -webkit-transform: scale(1.25); 
-  width: .65rem;
-  height: .65rem;
+  width: .8rem;
+  height: .8rem;
   border-radius: 50%;
-  left: 5px;
-  top: 5px;
+  left: 0.25rem;
+  top: 0.25rem;
   -webkit-transition: all 230ms ease-in;
   transition: all 230ms ease-in; 
 }

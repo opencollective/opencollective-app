@@ -11,7 +11,7 @@ import filterCollection from '../lib/filter_collection';
 import formatCurrency from '../lib/format_currency';
 
 import roles from '../constants/roles';
-import PublicHeader from '../components/PublicHeader';
+import PublicTopBar from '../components/PublicTopBar';
 import Notification from '../components/Notification';
 import PublicFooter from '../components/PublicFooter';
 import PublicGroupForm from '../components/PublicGroupForm';
@@ -88,55 +88,58 @@ export class PublicGroup extends Component {
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
 
-          <PublicHeader />
+          <PublicTopBar />
           <Notification {...this.props} />
 
           <div className='PublicContent'>
 
-            <div className='u-py2 u-center'>
-              <div className='GroupLogo' style={logoStyle}>
+            <div className='PublicGroupHeader'>
+              <div className='PublicGroupHeader-logo' style={logoStyle}>
               </div>
-              <div className='PublicGroup-motto'>
+              <div className='PublicGroupHeader-description'>
                 {group.description}
               </div>
             </div>
 
+            {this.GroupVideoOrImage(group)}
+            
             <div className='PublicGroup-summary'>
-              {this.GroupVideoOrImage(group)}
               <div className='PublicGroup-metricContainer'>
-                <Metric label='Share'>
-                  <ShareIcon type='twitter' url={shareUrl} name={group.name} description={group.description} />
-                  <ShareIcon type='facebook' url={shareUrl} name={group.name} description={group.description} />
-                  <ShareIcon type='mail' url={shareUrl} name={group.name} description={group.description} />
-                </Metric>
                 <Metric
                   label='Funds Raised'
                   value={formatCurrency(group.donationTotal, group.currency, 0)} />
                 <Metric
                   label='Backers'
                   value={group.backersCount} />
-                <a className='Button Button--green PublicGroup-support' href='#support'>
-                  Back us
-                </a>
+                <Metric label='Share'>
+                  <ShareIcon type='twitter' url={shareUrl} name={group.name} description={group.description} />
+                  <ShareIcon type='facebook' url={shareUrl} name={group.name} description={group.description} />
+                  <ShareIcon type='mail' url={shareUrl} name={group.name} description={group.description} />
+                </Metric>
               </div>
+              <a className='Button Button--green PublicGroup-support' href='#support'>
+                Back us
+              </a>
             </div>
 
-            <div className='PublicGroup-title Subtitle'>Our collective</div>
             <div className='PublicGroup-quote'>
+              <h2>Our collective</h2>
               <div className='PublicGroup-members'>
-                <UsersList users={members} size='75px'/>
+                <UsersList users={members} />
               </div>
               <div className='PublicGroup-quoteText'>
                 {group.longDescription}
               </div>
             </div>
 
-            <div className='PublicGroup-title Subtitle'>Backers</div>
-            <UsersList users={backers} size='111px'/>
-
-            <div className='u-mb2'>
+            <div className='PublicGroup-backers'>
+              <h2>Backers</h2>
+              <UsersList users={backers} />
+            </div>
+            
+            <div className='PublicGroup-transactions'>
               <div className='PublicGroup-expenses'>
-                <div className='PublicGroup-title Subtitle'>Expenses</div>
+                <h2>Expenses</h2>
                 {(expenses.length === 0) && (
                 <div className='PublicGroup-emptyState'>
                     <div className='PublicGroup-expenseIcon'>
@@ -152,8 +155,9 @@ export class PublicGroup extends Component {
                                             transaction={expense}
                                             user={users[expense.UserId]} />)}
               </div>
+              
               <div className='PublicGroup-donations'>
-                <div className='PublicGroup-title Subtitle'>Revenue</div>
+                <h2>Revenue</h2>
                 {(donations.length === 0) && (
                   <div className='PublicGroup-emptyState'>
                     <div className='PublicGroup-donationIcon'>

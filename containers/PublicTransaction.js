@@ -8,7 +8,7 @@ import fetchGroup from '../actions/groups/fetch_by_id';
 
 import tags from '../ui/tags';
 
-import PublicHeader from '../components/PublicHeader';
+import PublicTopBar from '../components/PublicTopBar';
 import PublicFooter from '../components/PublicFooter';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import TransactionDetailComment from '../components/TransactionDetailComment';
@@ -23,7 +23,7 @@ export class PublicTransaction extends Component {
     return (
       <BodyClassName className='Public'>
         <div className='PublicTransaction'>
-          <PublicHeader />
+          <PublicTopBar />
           <div className='PublicContent'>
             <TransactionDetailTitle {...transaction} />
             <div className='PublicTransaction-image'>

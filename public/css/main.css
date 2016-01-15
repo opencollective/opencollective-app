@@ -43,7 +43,7 @@
 @import './components/GroupSettings.css';
 @import './components/GroupSettingsButton.css';
 @import './components/GroupTransactions.css';
-@import './components/Header.css';
+@import './components/TopBar.css';
 @import './components/Icon.css';
 @import './components/ImageUpload.css';
 @import './components/Input.css';
@@ -58,7 +58,7 @@
 @import './components/ProfilePreapproved.css';
 @import './components/PublicGroupThanks.css';
 @import './components/PublicFooter.css';
-@import './components/PublicHeader.css';
+@import './components/PublicTopBar.css';
 @import './components/Reminder.css';
 @import './components/Select.css';
 @import './components/ShareIcon.css';

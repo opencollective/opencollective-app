@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Content from './Content';
-import Header from '../components/Header';
+import TopBar from '../components/TopBar';
 import Notification from '../components/Notification';
 import DonationMethodForm from '../components/DonationMethodForm';
 
@@ -12,7 +12,7 @@ export class DonationMethod extends Component {
   render() {
     return (
       <div className='DonationMethod'>
-        <Header title='Add donation method' hasBackButton={true} />
+        <TopBar title='Add donation method' hasBackButton={true} />
         <Content>
           <Notification {...this.props} />
           <div className='padded'>

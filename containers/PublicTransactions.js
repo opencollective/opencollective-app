@@ -10,7 +10,7 @@ import sortByDate from '../lib/sort_by_date';
 import getUniqueValues from '../lib/get_unique_values';
 import filterCollection from '../lib/filter_collection';
 
-import PublicHeader from '../components/PublicHeader';
+import PublicTopBar from '../components/PublicTopBar';
 import Currency from '../components/Currency';
 import PublicFooter from '../components/PublicFooter';
 import TransactionsList from '../components/TransactionsList';
@@ -24,7 +24,7 @@ export class PublicTransactions extends Component {
     return (
       <BodyClassName className='Public'>
         <div className='PublicTransactions'>
-          <PublicHeader />
+          <PublicTopBar />
           <div className='PublicContent'>
             <div className='u-center u-py1'>
               <div className='u-bold u-py05'>{name}</div>

@@ -4,8 +4,9 @@ import classnames from 'classnames';
 import Currency from './Currency';
 import Input from './Input';
 import RadioGroup from 'react-radio-group';
+import formatCurrency from '../lib/format_currency';
 
-export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value, interval}) => {
+export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value, interval, currency}) => {
   const values = [5, 10, 50, 100, 'custom'];
   const intervals = [{
     label: 'Monthly',
@@ -27,15 +28,14 @@ export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, v
               className={className(selected, value, isCustomMode)}
               key={value}
               onClick={() => handleClick({value, setDonationCustom, setDonationAmount})}>
-              <label>{value === 'custom' ? 'Custom' : <Currency value={value} />}</label>
+              <label>{value === 'custom' ? 'Custom' : <Currency value={value} currency={currency} precision={0} />}</label>
             </li>
           );
         })}
       </ul>
       <div>
-        {isCustomMode && input({setDonationAmount, value})}
+        {isCustomMode && input({setDonationAmount, value, currency})}
       </div>
-      <h2>Donation frequency</h2>
       <RadioGroup
         name='interval'
         selectedValue={interval}
@@ -59,11 +59,11 @@ export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, v
   );
 };
 
-function input({setDonationAmount, value}) {
+function input({setDonationAmount, value, currency}) {
   return (
     <Input
       value={value}
-      placeholder='Enter your custom amount'
+      placeholder={formatCurrency(10, currency, 0)}
       customClass='DonationPicker-input'
       handleChange={(val) => setDonationAmount(val)} />
   );

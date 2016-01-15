@@ -2,30 +2,30 @@ import React, { PropTypes } from 'react';
 import BackButton from './BackButton';
 import GroupSettingsButton from './GroupSettingsButton';
 
-const Header = ({hasBackButton, title, backLink, groupSettingsLink}) => {
+const TopBar = ({hasBackButton, title, backLink, groupSettingsLink}) => {
   return (
-    <div className='Header'>
-      <span className='Header-backButton'>
+    <div className='TopBar'>
+      <span className='TopBar-backButton'>
         {hasBackButton || backLink ? <BackButton backLink={backLink}/> : null}
       </span>
-      <div className='Header-title'>{title}</div>
-      <span className='Header-groupSettingsButton'>
+      <div className='TopBar-title'>{title}</div>
+      <span className='TopBar-groupSettingsButton'>
         {groupSettingsLink ? <GroupSettingsButton groupSettingsLink={groupSettingsLink}/> : null }
       </span>
     </div>
   );
 }
 
-Header.propTypes = {
+TopBar.propTypes = {
   hasBackButton: PropTypes.bool,
   title: PropTypes.string.isRequired,
   backLink: PropTypes.string
 };
 
-Header.defaultProps = {
+TopBar.defaultProps = {
   hasBackButton: false,
   title: ''
 };
 
-export default Header;
+export default TopBar;
 

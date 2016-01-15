@@ -15,7 +15,7 @@
 .TransactionDetail-info {
   float: left;
   padding-bottom: calc(var(--spacing) * 2);
-  width: calc(100% - 55px - 4rem);
+  width: calc(100% - 60px - 4rem);
   box-sizing: border-box;
 }
 

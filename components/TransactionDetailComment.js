@@ -7,17 +7,17 @@ export default ({transaction, commenter}) => {
 
   return (
     <div className='TransactionComment'>
-      <div className='TransactionComment-header'>
-        <ProfilePhoto url={commenter.avatar} />
+      <ProfilePhoto url={commenter.avatar} />
+      <div className='TransactionComment-content'>
         <div className='TransactionComment-date'>
           {date}
         </div>
         <div className='TransactionComment-fullName'>
           {commenter.name}
         </div>
-      </div>
-      <div className='TransactionComment-comment'>
-        {transaction.comment}
+        <div className='TransactionComment-comment'>
+          {transaction.comment}
+        </div>
       </div>
     </div>
   );

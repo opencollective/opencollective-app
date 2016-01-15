@@ -13,8 +13,8 @@
   --yellow: #fffbe1;
   --gold: #cfa236;
   --spacing: 1rem;
-  --header-height: 62px;
-  --public-header-height: 60px;
+  --topbar-height: 62px;
+  --public-topbar-height: 60px;
   --public-footer-height: 90px;
   --footer-height: 72px;
   --image-upload-height: 160px;

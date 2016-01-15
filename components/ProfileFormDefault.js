@@ -20,7 +20,7 @@ class ProfileFormDefault extends Component {
     return (
       <div className='ProfileForm'>
         <div className='Profile-header'>
-          <ProfilePhoto url={avatar} size='110px' />
+          <ProfilePhoto url={avatar} />
           <div className='Profile-name'>
             {name}
           </div>
