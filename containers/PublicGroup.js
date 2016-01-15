@@ -96,7 +96,7 @@ export class PublicGroup extends Component {
             <div className='u-py2 u-center'>
               <div className='GroupLogo' style={logoStyle}>
               </div>
-              <div className='PublicGroup-motto'>
+              <div className='PublicGroup-description'>
                 {group.description}
               </div>
             </div>
@@ -121,8 +121,8 @@ export class PublicGroup extends Component {
               </div>
             </div>
 
-            <div className='PublicGroup-title Subtitle'>Our collective</div>
             <div className='PublicGroup-quote'>
+              <h2>Our collective</h2>
               <div className='PublicGroup-members'>
                 <UsersList users={members} size='75px'/>
               </div>
@@ -131,12 +131,14 @@ export class PublicGroup extends Component {
               </div>
             </div>
 
-            <div className='PublicGroup-title Subtitle'>Backers</div>
-            <UsersList users={backers} size='111px'/>
-
-            <div className='u-mb2'>
+            <div className='PublicGroup-backers'>
+              <h2>Backers</h2>
+              <UsersList users={backers} size='111px'/>
+            </div>
+            
+            <div className='PublicGroup-transactions'>
               <div className='PublicGroup-expenses'>
-                <div className='PublicGroup-title Subtitle'>Expenses</div>
+                <h2>Expenses</h2>
                 {(expenses.length === 0) && (
                 <div className='PublicGroup-emptyState'>
                     <div className='PublicGroup-expenseIcon'>
@@ -152,8 +154,9 @@ export class PublicGroup extends Component {
                                             transaction={expense}
                                             user={users[expense.UserId]} />)}
               </div>
+              
               <div className='PublicGroup-donations'>
-                <div className='PublicGroup-title Subtitle'>Revenue</div>
+                <h2>Revenue</h2>
                 {(donations.length === 0) && (
                   <div className='PublicGroup-emptyState'>
                     <div className='PublicGroup-donationIcon'>
@@ -274,6 +277,10 @@ function mapStateToProps({
 
   const donations = groupTransactions.filter(({amount}) => amount > 0);
   const expenses = groupTransactions.filter(({amount}) => amount < 0);
+
+  if(groups) {
+    debugger;
+  }
 
   // const backers = donations.map(t => users[t.UserId]).filter(t => !!t);
 

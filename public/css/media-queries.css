@@ -10,6 +10,10 @@
 }
 
 @media (--small-viewport) {
+  html {
+    font-size: 14px; /* 1 rem = 14px; */
+  }
+  
   .PublicGroup .PublicContent {
     padding: 1rem 1rem 5rem 1rem;
     max-width: calc(var(--public-header-height) + var(--spacing)) auto 0 auto;
@@ -39,7 +43,7 @@
   }
   .PublicGroup label {
     font-size: .9rem;
-    margin-right: 1.5rem;
+    margin-right: 1rem;
     line-height: 1.5rem;
   }
   .PublicGroup .Button {
