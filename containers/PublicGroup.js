@@ -263,8 +263,6 @@ function mapStateToProps({
   transactions,
   users
 }) {
-  // Major hack!
-  const groupid = 1;
   const slug = router.params.slug;
   const status = router.location.query.status;
   const group = values(groups).find(g => g.slug === slug) || { stripeAccount: {} };
@@ -280,7 +278,7 @@ function mapStateToProps({
   const expenses = groupTransactions.filter(({amount}) => amount < 0);
 
   return {
-    groupid,
+    groupid: group.id,
     slug,
     group,
     notification,
