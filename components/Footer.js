@@ -18,21 +18,23 @@ class Footer extends Component {
     const {
       groupid,
       hasPopOverMenuOpen,
-      showPopOverMenu
+      showPopOverMenu,
+      isHost,
     } = this.props;
 
     return (
       <div className='Footer'>
         <div
           className='Footer-addButton'
-          onClick={() => showPopOverMenu(true)}>
+          onClick={() => showPopOverMenu(true)} >
           <Icon type='add' />
         </div>
         <div className='Footer-popOverMenu'>
             <PopOverMenu
               groupid={groupid}
               showPopOverMenu={showPopOverMenu}
-              hasPopOverMenuOpen={hasPopOverMenuOpen} />
+              hasPopOverMenuOpen={hasPopOverMenuOpen}
+              showAddFunds={isHost} />
         </div>
         <div className='Footer-left'>
           <Link to='/profile'>
