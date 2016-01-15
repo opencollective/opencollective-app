@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  font-size: 16px; /* 1 rem = 16px */
 }
 
 body {
@@ -66,7 +67,7 @@ input[type="radio"] {
   border: 1px solid var(--gray); 
   background: white;
   float: left;
-  margin-right: 10px;
+  margin-right: 0.5rem;
 }
 
 input[type="radio"]::after {
@@ -75,11 +76,11 @@ input[type="radio"]::after {
   background: var(--light-blue);
   opacity: 0;
   -webkit-transform: scale(1.25); 
-  width: .65rem;
-  height: .65rem;
+  width: .8rem;
+  height: .8rem;
   border-radius: 50%;
-  left: 5px;
-  top: 5px;
+  left: 0.25rem;
+  top: 0.25rem;
   -webkit-transition: all 230ms ease-in;
   transition: all 230ms ease-in; 
 }

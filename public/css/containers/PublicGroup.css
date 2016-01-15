@@ -15,7 +15,7 @@
   box-sizing: border-box;
 }
 
-.PublicGroup-title {
+.PublicGroup h2 {
   clear: left;
   font-size: 1.5rem;
   font-weight: 600;
@@ -26,6 +26,10 @@
 .PublicGroup-members {
   float: left;
   margin-right: 20px;
+}
+
+.PublicGroup-backers {
+  clear: both;  
 }
 
 .PublicGroup-quoteUser .ProfilePhoto,
@@ -50,6 +54,10 @@
   padding-left: calc(var(--spacing) * 2);
   box-sizing: border-box;
   line-height: 24px;
+}
+
+.PublicGroup-transactions {
+  clear: both;
 }
 
 .PublicGroup-expenses,
@@ -103,7 +111,7 @@
   padding-right: calc(var(--spacing) / 2);
 }
 
-.PublicGroup-motto {
+.PublicGroup-description {
   font-size: 1.5rem;
   max-width: 850px;
   margin: 0 auto var(--spacing) auto;
