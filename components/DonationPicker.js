@@ -6,7 +6,7 @@ import Input from './Input';
 import RadioGroup from 'react-radio-group';
 import formatCurrency from '../lib/format_currency';
 
-export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value, interval}) => {
+export default ({selected, isCustomMode, setDonationCustom, setDonationAmount, value, interval, currency}) => {
   const values = [5, 10, 50, 100, 'custom'];
   const intervals = [{
     label: 'Monthly',
