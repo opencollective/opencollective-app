@@ -59,7 +59,7 @@ app.set('view engine', 'ejs');
  * Serve the SPA
  */
 
-app.get('/app/*', (req, res) => {
+app.get(/^\/app(\/.*)?$/, (req, res) => {
 
   const meta = {
     url: 'https://opencollective.com',
@@ -67,8 +67,11 @@ app.get('/app/*', (req, res) => {
     description: 'OpenCollective lets you crowdfund your association and manage its budget transparently',
     image: '/static/images/LogoLargeTransparent.png',
     twitter: '@OpenCollect',
-  }
-  res.render('index', { meta });
+  };
+  const options = {
+    showGA: false
+  };
+  return res.render('index', { meta, options });
 });
 
 /**
@@ -93,11 +96,10 @@ app.get('/:slug', (req, res) => {
           image: group.logo,
           twitter: '@'+group.twitterHandle,
         }
-        res.render('index', {
-          group,
-          showGA: process.env.NODE_ENV === 'production',
-          meta
-        });
+        const options = {
+          showGA: process.env.NODE_ENV === 'production'
+        }
+        res.render('index', { meta, options });
       }
     });
 });
