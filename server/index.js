@@ -1,4 +1,5 @@
 const express = require('express');
+const favicon = require('serve-favicon');
 const request = require('request');
 const morgan = require('morgan');
 const path = require('path');
@@ -19,9 +20,13 @@ const apiUrl = url => {
 const app = express();
 
 /**
+ * Favicon
+ */
+app.use(favicon(__dirname + '/../static/images/favicon.ico.png'));
+
+/**
  * Log
  */
-
 app.use(morgan('dev'));
 
 /**
@@ -55,7 +60,15 @@ app.set('view engine', 'ejs');
  */
 
 app.get('/app/*', (req, res) => {
-  res.render('index');
+
+  const meta = {
+    url: 'https://opencollective.com',
+    title: 'OpenCollective - create and fund your collective transparently',
+    description: 'OpenCollective lets you crowdfund your association and manage its budget transparently',
+    image: '/static/images/LogoLargeTransparent.png',
+    twitter: '@OpenCollect',
+  }
+  res.render('index', { meta });
 });
 
 /**
@@ -68,15 +81,22 @@ app.get('/:slug', (req, res) => {
       url: apiUrl(`groups/${req.params.slug}/`),
       json: true
     }, (err, response, group) => {
-
       if (response.statusCode === 404) {
         res.render('404', {
           showGA: process.env.NODE_ENV === 'production'
         });
       } else {
+        const meta = {
+          url: group.publicUrl,
+          title: group.name,
+          description: group.description,
+          image: group.logo,
+          twitter: '@'+group.twitterHandle,
+        }
         res.render('index', {
           group,
-          showGA: process.env.NODE_ENV === 'production'
+          showGA: process.env.NODE_ENV === 'production',
+          meta
         });
       }
     });
