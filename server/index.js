@@ -70,9 +70,14 @@ app.get('/:slug', (req, res) => {
     }, (err, response, group) => {
 
       if (response.statusCode === 404) {
-        res.render('404');
+        res.render('404', {
+          showGA: process.env.NODE_ENV === 'production'
+        });
       } else {
-        res.render('index', { group });
+        res.render('index', {
+          group,
+          showGA: process.env.NODE_ENV === 'production'
+        });
       }
     });
 });
