@@ -78,7 +78,7 @@ export function getPreapprovalInfo() {
 
 export function logoutAndRedirect() {
   this.props.logout();
-  this.props.replaceState(null, '/login');
+  this.props.replaceState(null, '/app/login');
 };
 
 export function cancel() {
