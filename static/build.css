@@ -360,6 +360,19 @@ input[type="text"]:hover::-webkit-input-placeholder {
 }
 
 /* End of spinner loader */
+#content-404 {
+  margin: 7% auto;
+  max-width: 400px;
+  font-size: 18px;
+}
+
+#content-404 img{
+  width: 100%;
+}
+
+#content-404 p{
+  margin-left: 13px;
+}
 
 /**
  * Vendors
@@ -633,7 +646,7 @@ input[type="text"]:hover::-webkit-input-placeholder {
 }
 .PublicGroup-video, .PublicGroup-image {
   width: 70%;
-  display: inline-block;
+  float: left;
 }
 
 .PublicGroup-image img {
@@ -2164,14 +2177,17 @@ input[type="text"]:hover::-webkit-input-placeholder {
   padding-right: 16px;
   padding-right: 1rem;
   text-align: center;
+  height: 112px;
+  height: 7rem;
+  vertical-align: top;
 }
 
 .UsersList-name {
   padding-top: 8px;
   padding-top: 0.5rem;
   font-weight: bold;
-  font-size: 20px;
-  font-size: 1.25rem;
+  font-size: 16px;
+  font-size: 1rem;
 }
 
 .UsersList-amount {
