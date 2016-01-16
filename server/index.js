@@ -82,7 +82,9 @@ app.get('/:slug', (req, res) => {
       json: true
     }, (err, response, group) => {
       if (response.statusCode === 404) {
-        res.render('404');
+        res.render('404', {
+          showGA: process.env.NODE_ENV === 'production'
+        });
       } else {
         const meta = {
           url: group.publicUrl,
@@ -91,7 +93,11 @@ app.get('/:slug', (req, res) => {
           image: group.logo,
           twitter: '@'+group.twitterHandle,
         }
-        res.render('index', { meta });
+        res.render('index', {
+          group,
+          showGA: process.env.NODE_ENV === 'production',
+          meta
+        });
       }
     });
 });
