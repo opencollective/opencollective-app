@@ -27,6 +27,7 @@ const routes = {
     { path: 'public/groups/:groupid/transactions/:transactionid', component: PublicTransaction },
 
     // Private routes (app)
+    { path: 'app', component: requireAuthentication(GroupsList) },
     { path: 'app/', component: requireAuthentication(GroupsList) },
     { path: 'app/profile', component: requireAuthentication(Profile) },
     { path: 'app/groups/:groupid/settings', component:requireAuthentication(GroupSettings)},

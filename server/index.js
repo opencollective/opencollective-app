@@ -79,15 +79,16 @@ app.get(/^\/app(\/.*)?$/, (req, res) => {
  */
 
 app.get('/:slug', (req, res) => {
+  const options = {
+    showGA: process.env.NODE_ENV === 'production'
+  }
   request
     .get({
       url: apiUrl(`groups/${req.params.slug}/`),
       json: true
     }, (err, response, group) => {
-      if (response.statusCode === 404) {
-        res.render('404', {
-          showGA: process.env.NODE_ENV === 'production'
-        });
+      if (response.statusCode !== 200) {
+        res.render('404', { options }); 
       } else {
         const meta = {
           url: group.publicUrl,
@@ -95,9 +96,6 @@ app.get('/:slug', (req, res) => {
           description: group.description,
           image: group.logo,
           twitter: '@'+group.twitterHandle,
-        }
-        const options = {
-          showGA: process.env.NODE_ENV === 'production'
         }
         res.render('index', { meta, options });
       }
