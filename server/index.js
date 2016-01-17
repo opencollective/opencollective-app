@@ -1,4 +1,5 @@
 const express = require('express');
+const serverStatus = require('express-server-status');
 const favicon = require('serve-favicon');
 const request = require('request');
 const morgan = require('morgan');
@@ -16,8 +17,12 @@ const apiUrl = url => {
 /**
  * Express app
  */
-
 const app = express();
+
+/**
+ * Server status
+ */
+app.use('/status', serverStatus(app));
 
 /**
  * Favicon
