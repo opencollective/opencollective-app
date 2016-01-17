@@ -157,7 +157,7 @@ class TransactionDetail extends Component {
   }
 
   nextPage() {
-    this.props.pushState(null, `/groups/${this.props.groupid}/transactions`);
+    this.props.pushState(null, `/app/groups/${this.props.groupid}/transactions`);
   }
 }
 

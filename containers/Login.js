@@ -84,6 +84,6 @@ function mapStateToProps({form, notification, router}) {
     attributes: form.login.attributes,
     notification: notification,
     error: form.login.error,
-    redirectRoute: router.location.query.next || '/'
+    redirectRoute: router.location.query.next || '/app/'
   };
 }

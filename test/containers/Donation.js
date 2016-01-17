@@ -114,7 +114,7 @@ describe('Donation container', () => {
 
     function pushState(ctx, url) {
       expect(url)
-        .to.be.equal(`/groups/${props.groupid}/transactions`);
+        .to.be.equal(`/app/groups/${props.groupid}/transactions`);
       return Promise.resolve(done());
     }
 

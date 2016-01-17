@@ -62,7 +62,7 @@ export function createExpense() {
 
     return createTransaction(group.id, newTransaction);
   })
-  .then(() => pushState(null, `/groups/${groupid}/transactions`))
+  .then(() => pushState(null, `/app/groups/${groupid}/transactions`))
   .catch(error => notify('error', error.message));
 };
 

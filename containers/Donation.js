@@ -74,7 +74,7 @@ export function donate() {
   .then(rejectError.bind(this, 'validationError'))
   .then(() => createTransaction(groupid, transaction))
   .then(rejectError.bind(this, 'serverError'))
-  .then(() => pushState(null, `/groups/${groupid}/transactions`))
+  .then(() => pushState(null, `/app/groups/${groupid}/transactions`))
   .catch(error => notify('error', error.message));
 }
 
