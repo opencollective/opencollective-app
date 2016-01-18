@@ -24,6 +24,7 @@ import Metric from '../components/Metric';
 import UsersList from '../components/UsersList';
 import ShareIcon from '../components/ShareIcon';
 import Icon from '../components/Icon';
+import DisplayUrl from '../components/DisplayUrl';
 import PublicGroupSignup from '../components/PublicGroupSignup';
 import Markdown from '../components/Markdown';
 
@@ -98,8 +99,8 @@ export class PublicGroup extends Component {
           <div className='PublicContent'>
 
             <div className='PublicGroupHeader'>
-              <div className='PublicGroupHeader-logo' style={logoStyle}>
-              </div>
+              <div className='PublicGroupHeader-logo' style={logoStyle} />
+              <div className='PublicGroupHeader-website'><DisplayUrl url={group.website} /></div>
               <div className='PublicGroupHeader-description'>
                 {group.description}
               </div>

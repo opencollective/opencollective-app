@@ -1,5 +1,5 @@
 .PublicTopBar {
-  background-color: var(--aqua);
+  background-color: var(--light-blue);
   color: white;
   height: var(--public-topbar-height);
   position: fixed;

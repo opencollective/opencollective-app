@@ -21,7 +21,6 @@ const ProfilePhoto = ({url, spinner, hasBorder=false}) => {
   };
 
   return (
-
     <div className='ProfilePhoto' style={divStyle}>
       {spinner ? <div className='spinner-loader center-element'/> : null }
     </div>
