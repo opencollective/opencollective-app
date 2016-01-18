@@ -13,6 +13,7 @@ import validateProfile from '../actions/form/validate_profile';
 
 import updatePaypalEmail from '../actions/users/update_paypal_email';
 import updateAvatar from '../actions/users/update_avatar';
+import updatePassword from '../actions/users/update_password';
 import fetchUser from '../actions/users/fetch_by_id';
 import fetchCards from '../actions/users/fetch_cards';
 import fetchGroups from '../actions/users/fetch_groups';
@@ -62,6 +63,17 @@ export class Profile extends Component {
  * Export methods for testing
  */
 
+export function resetPassword(userid, password, passwordConfirmation) {
+  const { updatePassword, notify } = this.props;
+
+  if (password !== passwordConfirmation) {
+    throw new Error('Passwords are not matching');
+  }
+
+  return updatePassword(userid, password, passwordConfirmation)
+  .then(() => notify('success', 'Reset password successful'));
+};
+
 export function getPreapprovalInfo() {
   const { userid, getPreapprovalDetails, fetchCards } = this.props;
 
@@ -96,15 +108,22 @@ export function save() {
     fetchUser
   } = this.props;
 
+  const { paypalEmail, link, password, passwordConfirmation } = form.attributes;
+
   return validateProfile(form.attributes)
   .then(() => {
-    if (form.attributes.paypalEmail) {
-      return updatePaypalEmail(user.id, form.attributes.paypalEmail)
+    if (paypalEmail) {
+      return updatePaypalEmail(user.id, paypalEmail)
     }
   })
   .then(() => {
-    if (form.attributes.link) {
-      return updateAvatar(user.id, form.attributes.link)
+    if (link) {
+      return updateAvatar(user.id, link)
+    }
+  })
+  .then(() => {
+    if (password && passwordConfirmation) {
+      return resetPassword.call(this, user.id, password, passwordConfirmation);
     }
   })
   .then(() => fetchUser(user.id)) // refresh email after saving
@@ -128,6 +147,7 @@ export default connect(mapStateToProps, {
   getPreapprovalKey,
   fetchGroups,
   uploadImage,
+  updatePassword
 })(Profile);
 
 function mapStateToProps({session, form, notification, users, images}) {
