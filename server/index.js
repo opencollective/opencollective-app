@@ -44,7 +44,7 @@ app.use('/static', express.static(path.join(__dirname, '../static')));
  * /robots.txt 
  */
 const robotstxt = fs.readFileSync(path.join(__dirname, '../static/robots.txt'), 'utf-8');
-app.get('/robots.txt', function(req, res) { res.send(robotstxt); });
+app.get('/robots.txt', (req, res) => res.send(robotstxt));
 
 /**
  * Pipe the requests before the middlewares, the piping will only work with raw
