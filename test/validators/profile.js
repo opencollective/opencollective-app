@@ -48,32 +48,11 @@ describe('validator profile', () => {
     });
   });
 
-  // Check if only one is entered, it should still work.
-
-  it('should work if only the link is in payload and no paypalEmail', (done) => {
-    const profile = {
-      link: 'http://opencollective.com/static/images/icon.svg',
-    };
-    validate(profile)
-    .then(value => {
-      expect(value).toEqual(profile);
-      done();
-    });
-  });
-
-  it('should work if only the paypalEmail is in payload and no link', (done) => {
-    const profile = {
-      paypalEmail: 'test@gmail.com',
-    }
-    validate(profile)
-    .then(value => {
-      expect(value).toEqual(profile);
-      done();
-    });
-  });
-
-  it('should throw an error if neither is sent', (done) => {
-    validate({})
+  it('should throw an error if the passwords don\'t match', (done) => {
+    validate({
+      password: 'password',
+      passwordConfirmation: 'password123'
+    })
     .catch(error => {
       expect(error.name).toEqual('ValidationError');
       done();

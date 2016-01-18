@@ -8,8 +8,7 @@ import {DONATE_GROUP_SUCCESS} from'../constants/groups';
 
 export default function users(state={
   updateInProgress: false,
-  cards: [],
-  newUser: {}
+  cards: []
 }, action={}) {
   const {
     groups,
