@@ -12,7 +12,10 @@ export default (userid, avatar) => {
     dispatch(request(userid, avatar));
     return putJSON(url, { avatar })
       .then(json => dispatch(success(userid, avatar, json)))
-      .catch(err => dispatch(failure(err)));
+      .catch(err => {
+        dispatch(failure(err));
+        throw new Error(err.message);
+      });
   };
 };
 

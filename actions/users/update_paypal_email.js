@@ -12,7 +12,10 @@ export default (userid, paypalEmail) => {
     dispatch(request(userid, paypalEmail));
     return putJSON(url, { paypalEmail })
       .then(json => dispatch(success(userid, paypalEmail, json)))
-      .catch(err => dispatch(failure(err)));
+      .catch(err => {
+        dispatch(failure(err))
+        throw new Error(err.message);
+      });
   };
 };
 
