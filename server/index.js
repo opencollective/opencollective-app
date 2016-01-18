@@ -37,7 +37,6 @@ app.use(morgan('dev'));
 /**
  * Static folder
  */
-
 app.use('/static', express.static(path.join(__dirname, '../static')));
 
 /**
@@ -55,7 +54,6 @@ app.all('/api/*', (req, res) => {
 /**
  * Ejs template engine
  */
-
 app.set('views', __dirname + '/views');
 app.set('view cache', config.viewCache);
 app.set('view engine', 'ejs');
@@ -97,9 +95,9 @@ app.get('/:slug', (req, res) => {
       } else {
         const meta = {
           url: group.publicUrl,
-          title: group.name,
-          description: group.description,
-          image: group.logo,
+          title: 'Join ' + group.name + '\'s open collective',
+          description: group.name + ' is collecting funds to continue their activities. Chip in!',
+          image: group.image || group.logo,
           twitter: '@'+group.twitterHandle,
         }
         res.render('index', { meta, options });
