@@ -104,7 +104,13 @@
   border-radius: 50%;
   text-align:center;
   background-size: contain;
-  margin: 0 auto 30px;
+  margin: 0 auto 0.5rem;
+}
+
+.PublicGroupHeader-website {
+  color: var(--light-blue);
+  font-size: 1rem;
+  text-align: center;
 }
 
 .PublicGroupHeader-description {
