@@ -15,9 +15,9 @@ const PublicGroupForm = ({
   inProgress,
   frequency
 }) => {
-  
-  const frequencyHuman = frequency === 'one-time' ? '' : `per ${frequency.replace('ly','')}`;
-  
+
+  const frequencyHuman = frequency === 'one-time' ? '' : `per ${frequency}`;
+
   const stripeDescription = `${formatCurrency(amount, group.currency)} ${frequencyHuman}`
 
   return (
