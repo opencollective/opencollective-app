@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import BodyClassName from 'react-body-classname';
@@ -24,6 +25,7 @@ import UsersList from '../components/UsersList';
 import ShareIcon from '../components/ShareIcon';
 import Icon from '../components/Icon';
 import PublicGroupSignup from '../components/PublicGroupSignup';
+import Markdown from '../components/Markdown';
 
 import appendDonationForm from '../actions/form/append_donation';
 import setDonationCustom from '../actions/form/set_donation_custom';
@@ -39,9 +41,10 @@ import appendProfileForm from '../actions/form/append_profile';
 import updateUser from '../actions/users/update_user';
 import validateDonationProfile from '../actions/form/validate_donation_profile';
 
+
 export class PublicGroup extends Component {
 
-    GroupVideoOrImage(group) {
+  GroupVideoOrImage(group) {
     if(group.video) {
       return (
         <div className='PublicGroup-video'>
@@ -128,9 +131,7 @@ export class PublicGroup extends Component {
               <div className='PublicGroup-members'>
                 <UsersList users={members} />
               </div>
-              <div className='PublicGroup-quoteText'>
-                {group.longDescription}
-              </div>
+              <Markdown className='PublicGroup-quoteText' value={group.longDescription} />
             </div>
 
             <div className='PublicGroup-backers'>
