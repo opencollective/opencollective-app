@@ -39,7 +39,8 @@ describe('PublicGroup container', () => {
         group: {},
         host: {},
         expenses: [],
-        donations: []
+        donations: [],
+        frequency: 'one-time'
       });
       expect(handler).to.have.been.called();
   });
@@ -76,7 +77,7 @@ describe('PublicGroup container', () => {
     };
     const donate = chai.spy((groupid, payment) => {
       expect(groupid).to.be.equal(1);
-      expect(payment.interval).to.be.equal('month');
+      expect(payment.interval).to.be.equal('monthly');
       expect(payment.stripeToken).to.be.equal(token.id);
       expect(payment.email).to.be.equal(token.email);
       expect(payment.amount).to.be.equal(10);
@@ -91,7 +92,7 @@ describe('PublicGroup container', () => {
       donate,
       notify,
       showAdditionalUserInfoForm,
-      interval: 'month'
+      frequency: 'monthly'
     };
 
     donateToGroup.call({props}, 10, token)
@@ -103,14 +104,14 @@ describe('PublicGroup container', () => {
     });
   });
 
-  it('should not donate with subscription to the group if interval is none', (done) => {
+  it('should not donate with subscription to the group if frequency is none', (done) => {
     const token = {
       id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',
       email: 'test@gmail.com'
     };
     const donate = chai.spy((groupid, payment) => {
       expect(groupid).to.be.equal(1);
-      expect(payment.interval).to.not.be.ok;
+      expect(payment.frequency).to.not.be.ok;
       expect(payment.stripeToken).to.be.equal(token.id);
       expect(payment.email).to.be.equal(token.email);
       expect(payment.amount).to.be.equal(10);
@@ -124,7 +125,7 @@ describe('PublicGroup container', () => {
       donate,
       notify,
       showAdditionalUserInfoForm,
-      interval: 'none'
+      frequency: 'one-time'
     };
 
     donateToGroup.call({props}, 10, token)
@@ -215,6 +216,7 @@ describe('PublicGroup container', () => {
       notification,
       admin: {},
       expenses: [],
+      frequency: 'one-time',
       donations: []
     }, 'Notification');
 

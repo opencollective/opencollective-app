@@ -28,9 +28,9 @@
   font-weight: bold;
 }
 
-.DonationPicker-presets .DonationPicker-amount label {
+.DonationPicker-amount label {
   font-size: 1.2rem;
-  margin-right: 1.5rem;
+  margin-right: 3rem;
 }
 
 .DonationPicker-amount--selected {

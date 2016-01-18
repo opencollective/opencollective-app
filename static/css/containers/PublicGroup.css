@@ -139,3 +139,9 @@
   flex-direction: row;
   align-items: center;
 }
+
+@media(--small-viewport) {
+  .PublicGroup .DonationPicker label {
+    margin-right: 1.4rem;
+  }
+}

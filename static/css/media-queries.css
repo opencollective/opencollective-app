@@ -9,7 +9,7 @@
   }
 }
 
-@media (--small-viewport) {
+@media (--medium-viewport) {
   html {
     font-size: 14px; /* 1 rem = 14px; */
   }
@@ -76,10 +76,8 @@
     height: 3rem;
   }
   .DonationPicker label {
-    font-size: 0.9rem;
-  }
-  .DonationPicker label:not(:last-child) {
-    margin-right: 1rem;
+    font-size: 1.2rem;
+    margin-right: 2rem;
   }
   .PublicFooter .PublicFooter-menu {
     line-height: 30px;
@@ -87,4 +85,15 @@
   .PublicFooter img {
     max-height: 30px;
   }
+}
+
+@media (--small-viewport) {
+  html {
+    font-size: 12px; /* 1 rem = 14px; */
+  }
+  
+  .DonationPicker label {
+    margin-right: 2rem;
+  }
+
 }

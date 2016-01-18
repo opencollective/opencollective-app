@@ -33,6 +33,7 @@ describe('Donation container', () => {
       resetNotifications: () => {},
       notification: {},
       group: {},
+      form: { donation: {} },
       user: {}
     });
 
@@ -47,6 +48,7 @@ describe('Donation container', () => {
       validateTransaction: validateTransaction,
       groupid: 1,
       amount: 1,
+      form: { donation: {} },
       group: {name},
       user: {email},
     };
@@ -68,6 +70,7 @@ describe('Donation container', () => {
       group: {},
       user: {},
       validateTransaction: () => Promise.resolve(),
+      form: { donation: {} },
       notify: notify
     };
 
@@ -89,6 +92,7 @@ describe('Donation container', () => {
       user: {},
       validateTransaction: () => Promise.resolve(),
       createTransaction: () => Promise.resolve(),
+      form: { donation: {} },
       notify: notify
     };
 
@@ -109,6 +113,7 @@ describe('Donation container', () => {
       groupid: 1,
       amount: 1,
       group: {},
+      form: { donation: {} },
       user: {},
     };
 
