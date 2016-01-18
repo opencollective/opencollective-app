@@ -77,7 +77,7 @@ describe('PublicGroup container', () => {
     };
     const donate = chai.spy((groupid, payment) => {
       expect(groupid).to.be.equal(1);
-      expect(payment.interval).to.be.equal('monthly');
+      expect(payment.interval).to.be.equal('month');
       expect(payment.stripeToken).to.be.equal(token.id);
       expect(payment.email).to.be.equal(token.email);
       expect(payment.amount).to.be.equal(10);
@@ -92,7 +92,7 @@ describe('PublicGroup container', () => {
       donate,
       notify,
       showAdditionalUserInfoForm,
-      frequency: 'monthly'
+      frequency: 'month'
     };
 
     donateToGroup.call({props}, 10, token)

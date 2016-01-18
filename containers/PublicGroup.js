@@ -230,7 +230,7 @@ export function donateToGroup(amount, token) {
     amount
   };
 
-  if (contains(['monthly', 'yearly'], frequency)) {
+  if (contains(['month', 'year'], frequency)) {
     payment.interval = frequency;
   }
 
