@@ -297,8 +297,7 @@ function mapStateToProps({
     showThankYouPage: status === 'thankyou',
     shareUrl: window.location.href,
     profileForm: form.profile,
-    // showUserForm: users.showUserForm || false,
-    showUserForm: true,
+    showUserForm: users.showUserForm || false,
     saveInProgress: users.updateInProgress
   };
 }
