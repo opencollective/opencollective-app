@@ -43,7 +43,7 @@
 }
 
 .Footer-userIcon {
-  background: url(/images/user.svg) no-repeat top left;
+  background: url(/static/images/user.svg) no-repeat top left;
   background-size: contain;
   height: 30px;
   width: 30px;
