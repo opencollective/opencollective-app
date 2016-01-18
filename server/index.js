@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const serverStatus = require('express-server-status');
 const favicon = require('serve-favicon');
@@ -38,6 +39,12 @@ app.use(morgan('dev'));
  * Static folder
  */
 app.use('/static', express.static(path.join(__dirname, '../static')));
+
+/**
+ * /robots.txt 
+ */
+const robotstxt = fs.readFileSync(path.join(__dirname, '../static/robots.txt'), 'utf-8');
+app.get('/robots.txt', (req, res) => res.send(robotstxt));
 
 /**
  * Pipe the requests before the middlewares, the piping will only work with raw
