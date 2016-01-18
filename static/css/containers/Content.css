@@ -11,7 +11,7 @@
 }
 
 .Content-loadingIcon {
-  content: url(/images/icons/oc-icon.svg);
+  content: url(/static/images/icons/oc-icon.svg);
   width: 30px;
   height: 30px;
   background-size: 30px 30px;

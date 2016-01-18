@@ -5,7 +5,7 @@ describe('validator profile', () => {
   it('should resolve the promise when the data is valid', (done) => {
     const profile = {
       paypalEmail: 'test@gmail.com',
-      link: 'http://opencollective.com/assets/icon.svg',
+      link: 'http://opencollective.com/static/images/icon.svg',
     };
 
     validate(profile)
@@ -52,7 +52,7 @@ describe('validator profile', () => {
 
   it('should work if only the link is in payload and no paypalEmail', (done) => {
     const profile = {
-      link: 'http://opencollective.com/assets/icon.svg',
+      link: 'http://opencollective.com/static/images/icon.svg',
     };
     validate(profile)
     .then(value => {
