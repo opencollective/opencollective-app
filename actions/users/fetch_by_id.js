@@ -7,7 +7,10 @@ export default (id) => {
     dispatch(request(id));
     return get(`users/${id}`, { schema: Schemas.USER })
       .then(json => dispatch(success(id, json)))
-      .catch(err => dispatch(failure(err)));
+      .catch(err => {
+        dispatch(failure(err));
+        throw new Error(err.message);
+      });
   };
 };
 

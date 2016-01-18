@@ -23,7 +23,6 @@ import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import logout from '../actions/session/logout';
 import { getPaypalCard } from '../reducers/users';
-import rejectError from '../lib/reject_error';
 
 // Use named export for unconnected component (for tests)
 // http://rackt.org/redux/docs/recipes/WritingTests.html
@@ -98,7 +97,6 @@ export function save() {
   } = this.props;
 
   return validateProfile(form.attributes)
-  .then(rejectError.bind(this, 'validationError'))
   .then(() => {
     if (form.attributes.paypalEmail) {
       return updatePaypalEmail(user.id, form.attributes.paypalEmail)
@@ -109,7 +107,6 @@ export function save() {
       return updateAvatar(user.id, form.attributes.link)
     }
   })
-  .then(rejectError.bind(this, 'serverError'))
   .then(() => fetchUser(user.id)) // refresh email after saving
   .then(() => setEditMode(false))
   .catch(({message}) => notify('error', message));
@@ -149,8 +146,6 @@ function mapStateToProps({session, form, notification, users, images}) {
     user,
     isEditMode: form.profile.isEditMode,
     saveInProgress: users.updateInProgress,
-    validationError: form.profile.error,
-    serverError: users.error,
     hasPreapproved,
     isUploading: images.isUploading || false,
     groups: values(user.groups)
