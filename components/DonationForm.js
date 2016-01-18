@@ -10,14 +10,14 @@ import Select from './Select';
 const DonationForm = ({
   group,
   appendDonationForm,
-  amount,
-  isCustomMode,
-  setDonationCustom,
+  form,
   donate,
   userCardsLabels,
   groupid,
   description
 }) => {
+
+  const attributes = form.donation.attributes || {};
 
   return (
      <div className='DonationForm'>
@@ -26,12 +26,10 @@ const DonationForm = ({
       <SubTitle text='Make your donation' />
 
       <DonationPicker
-        setDonationAmount={(amount) => appendDonationForm({amount})}
-        selected={amount}
-        value={amount}
-        currency={group.currency}
-        isCustomMode={isCustomMode}
-        setDonationCustom={setDonationCustom} />
+        onChange={({amount, frequency}) => appendDonationForm({amount, frequency})}
+        value={(attributes.amount == null) ? 100 : attributes.amount}
+        frequency={attributes.frequency || 'one-time'}
+        currency={group.currency} />
 
       <div className='DonationForm-bold'>
         Your payment method

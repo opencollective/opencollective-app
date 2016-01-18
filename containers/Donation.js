@@ -14,7 +14,6 @@ import DonationForm from '../components/DonationForm';
 import validateTransaction from '../actions/form/validate_transaction';
 import createTransaction from '../actions/transactions/create';
 import appendDonationForm from '../actions/form/append_donation';
-import setDonationCustom from '../actions/form/set_donation_custom';
 import resetNotifications from '../actions/notification/reset';
 import fetchGroup from '../actions/groups/fetch_by_id';
 import fetchUser from '../actions/users/fetch_by_id';
@@ -33,7 +32,7 @@ export class Donation extends Component {
         <Content>
           <Notification {...this.props} />
           <div className='padded'>
-            <DonationForm {...this.props} donate={donate.bind(this)}/>
+            <DonationForm {...this.props} donate={donate.bind(this)} value={100} />
           </div>
         </Content>
       </div>
@@ -83,7 +82,6 @@ export default connect(mapStateToProps, {
   fetchUser,
   fetchGroup,
   fetchCards,
-  setDonationCustom,
   createTransaction,
   validateTransaction,
   notify,

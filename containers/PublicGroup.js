@@ -29,7 +29,6 @@ import PublicGroupSignup from '../components/PublicGroupSignup';
 import Markdown from '../components/Markdown';
 
 import appendDonationForm from '../actions/form/append_donation';
-import setDonationCustom from '../actions/form/set_donation_custom';
 import fetchGroup from '../actions/groups/fetch_by_id';
 import fetchUsers from '../actions/users/fetch_by_group';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
@@ -221,7 +220,7 @@ export function donateToGroup(amount, token) {
     groupid,
     notify,
     donate,
-    interval,
+    frequency,
     showAdditionalUserInfoForm
   } = this.props;
 
@@ -231,8 +230,8 @@ export function donateToGroup(amount, token) {
     amount
   };
 
-  if (contains(['month', 'year'], interval)) {
-    payment.interval = interval;
+  if (contains(['monthly', 'yearly'], frequency)) {
+    payment.interval = frequency;
   }
 
   return donate(groupid, payment)
@@ -243,7 +242,6 @@ export function donateToGroup(amount, token) {
 export default connect(mapStateToProps, {
   fetchGroup,
   appendDonationForm,
-  setDonationCustom,
   donate,
   notify,
   resetNotifications,
@@ -290,11 +288,10 @@ function mapStateToProps({
     members,
     donations: take(donations, 2),
     expenses: take(expenses, 2),
-    interval: form.donation.attributes.interval,
-    amount: form.donation.attributes.amount,
+    amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
+    frequency: form.donation.attributes.frequency || 'one-time',
     stripeAmount: convertToCents(form.donation.attributes.amount),
     stripeKey: group.stripeAccount && group.stripeAccount.stripePublishableKey,
-    isCustomMode: form.donation.isCustomMode,
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
     shareUrl: window.location.href,

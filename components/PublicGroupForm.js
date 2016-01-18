@@ -8,18 +8,17 @@ import AsyncButton from './AsyncButton';
 const PublicGroupForm = ({
   group,
   amount,
-  isCustomMode,
-  setDonationCustom,
   appendDonationForm,
   onToken,
   stripeKey,
   stripeAmount,
   inProgress,
-  interval
+  frequency
 }) => {
   
-  const intervalHuman = interval === 'none' ? '' : `per ${interval}`;
-  const stripeDescription = `${formatCurrency(amount, group.currency)} ${intervalHuman}`
+  const frequencyHuman = frequency === 'one-time' ? '' : `per ${frequency.replace('ly','')}`;
+  
+  const stripeDescription = `${formatCurrency(amount, group.currency)} ${frequencyHuman}`
 
   return (
     <div className='PublicGroupForm'>
@@ -27,11 +26,9 @@ const PublicGroupForm = ({
       <DonationPicker
         value={amount}
         currency={group.currency}
-        interval={interval}
-        setDonationAmount={amount => appendDonationForm({amount})}
-        selected={amount}
-        isCustomMode={isCustomMode}
-        setDonationCustom={setDonationCustom} />
+        frequency={frequency}
+        onChange={({amount, frequency}) => appendDonationForm({amount, frequency})}
+        />
 
       <StripeCheckout
         token={onToken}

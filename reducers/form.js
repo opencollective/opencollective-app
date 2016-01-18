@@ -157,22 +157,14 @@ function groupSettings(state=groupSettingsInitialState, action={}) {
  */
 
 function donation(state={
-  isCustomMode: false,
   attributes: {
-    amount: 10,
-    interval: 'none'
+    amount: null,
+    frequency: null
   }
 }, action={}) {
   switch(action.type) {
     case constants.APPEND_DONATION_FORM:
       return merge({}, state, { attributes: action.attributes });
-    case constants.SET_DONATION_CUSTOM:
-      return merge({}, state, {
-        isCustomMode: action.isCustomMode,
-        attributes: {
-          amount: ''
-        }
-      });
     default:
       return state;
   }
