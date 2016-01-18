@@ -9,10 +9,10 @@ export default ({value, currency, frequency, onChange}) => {
   const presetAmounts = [5, 10, 50, 100, 'custom'];
   const frequencies = [{
     label: 'Monthly',
-    value: 'monthly'
+    value: 'month'
   }, {
     label: 'Yearly',
-    value: 'yearly'
+    value: 'year'
   }, {
     label: 'One time',
     value: 'one-time'
@@ -30,9 +30,9 @@ export default ({value, currency, frequency, onChange}) => {
   function presetListItem(presetLabel) {
     let amountLabel, amountValue;
     if(presetLabel === 'custom') {
-      amountValue = ''; 
+      amountValue = '';
       amountLabel = "Custom";
-    } 
+    }
     else {
       amountValue = presetLabel;
       amountLabel = (<Currency value={amountValue} currency={currency} precision={0} />);
