@@ -34,7 +34,7 @@ class Transaction extends Component {
             </div>
             <div className='Transaction-description'>{description}</div>
             <div className='Transaction-status'>
-              <div className='Transaction-amount'><Currency value={amount} currency={currency} /></div>
+              <div className='Transaction-amount'><Currency value={amount} currency={currency} precision={2} /></div>
               <div className='Transaction-approved'>
                 {hideStatus ? null : <TransactionStatus {...this.props} />}
               </div>
