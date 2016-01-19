@@ -10,9 +10,12 @@ const schema = Joi.object().keys({
     .label('PayPal account'),
   link: Joi.string().uri()
     .label('Photo'),
-  password: Joi.string(),
+  password: Joi.string()
+    .label('Password'),
   passwordConfirmation: Joi.any().valid(Joi.ref('password'))
-    .label('password confirmation')
+    .label('password confirmation').options({
+      language: { any: { allowOnly: 'must match password' } }
+    })
 });
 
 export default (obj) => validate(obj, schema);

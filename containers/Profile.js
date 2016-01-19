@@ -66,10 +66,6 @@ export class Profile extends Component {
 export function resetPassword(userid, password, passwordConfirmation) {
   const { updatePassword, notify } = this.props;
 
-  if (password !== passwordConfirmation) {
-    throw new Error('Passwords are not matching');
-  }
-
   return updatePassword(userid, password, passwordConfirmation)
   .then(() => notify('success', 'Reset password successful'));
 };
