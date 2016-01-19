@@ -5,36 +5,33 @@ import * as constants from '../../constants/images';
  * Upload an image to S3
  */
 
-export default (data, tag) => {
+export default (data) => {
   return dispatch => {
-    dispatch(request(data, tag));
+    dispatch(request(data));
     return post('images/', data)
-      .then(json => dispatch(success(json, tag)))
-      .catch(error => dispatch(failure(error, tag)));
+      .then(json => dispatch(success(json)))
+      .catch(error => dispatch(failure(error)));
   };
 };
 
-function request(data, tag) {
+function request(data) {
   return {
     type: constants.UPLOAD_IMAGE_REQUEST,
-    data,
-    tag
+    data
   };
 }
 
-function success(json, tag) {
+function success(json) {
   return {
     type: constants.UPLOAD_IMAGE_SUCCESS,
-    response: json,
-    tag
+    response: json
   };
 }
 
-function failure(error, tag) {
+function failure(error) {
   return {
     type: constants.UPLOAD_IMAGE_FAILURE,
-    error: error,
-    tag
+    error: error
   };
 }
 

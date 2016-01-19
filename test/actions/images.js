@@ -24,8 +24,8 @@ describe('images actions', () => {
       .reply(200, image);
 
     const expected = [
-      { type: UPLOAD_IMAGE_REQUEST, data: {}, tag: undefined },
-      { type: UPLOAD_IMAGE_SUCCESS, response: image, tag: undefined }
+      { type: UPLOAD_IMAGE_REQUEST, data: {} },
+      { type: UPLOAD_IMAGE_SUCCESS, response: image }
     ];
     const store = mockStore({}, expected, done);
     store.dispatch(uploadImage({}));
@@ -37,8 +37,8 @@ describe('images actions', () => {
       .replyWithError('');
 
     const expected = [
-      { type: UPLOAD_IMAGE_REQUEST, data: {}, tag: undefined },
-      { type: UPLOAD_IMAGE_FAILURE, error: new Error('request to http://localhost:3000/api/images/ failed'), tag: undefined }
+      { type: UPLOAD_IMAGE_REQUEST, data: {} },
+      { type: UPLOAD_IMAGE_FAILURE, error: new Error('request to http://localhost:3000/api/images/ failed') }
     ];
     const store = mockStore({}, expected, done);
     store.dispatch(uploadImage({}));
