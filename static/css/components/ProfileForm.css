@@ -25,7 +25,8 @@
   font-weight: bold;
 }
 
-.ProfileForm-field {
+.ProfileForm-field,
+.ProfileForm-input .Field {
   box-sizing: border-box;
   width: 100%;
 }

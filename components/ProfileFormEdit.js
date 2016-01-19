@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ProfilePhotoUpload from './ProfilePhotoUpload';
 import SaveButton from './SaveButton';
 import CancelButton from './CancelButton';
+import Input from './Input';
 
 class ProfileFormEdit extends Component {
   render() {
@@ -11,7 +12,8 @@ class ProfileFormEdit extends Component {
       form,
       save,
       saveInProgress,
-      cancel
+      cancel,
+      appendProfileForm
     } = this.props;
     const { paypalEmail } = user;
 
@@ -21,17 +23,32 @@ class ProfileFormEdit extends Component {
           <ProfilePhotoUpload
           {...this.props}
           value={form.attributes.link || user.avatar}
-          onFinished={this.handleUpload.bind(this)} />
+          onFinished={link => appendProfileForm({link})} />
         </div>
+        <div className='ProfileForm-label'>Password reset</div>
+        <Input
+          type='password'
+          customClass='ProfileForm-input'
+          placeholder='Password'
+          value={form.attributes.password}
+          handleChange={password => appendProfileForm({password})} />
+
+        <Input
+          type='password'
+          customClass='ProfileForm-input'
+          placeholder='Password confirmation'
+          value={form.attributes.passwordConfirmation}
+          handleChange={passwordConfirmation => appendProfileForm({passwordConfirmation})}/>
+
         <div className='ProfileForm-label'>
           Paypal Account
         </div>
-        <input
+        <Input
           type='email'
-          className='Field ProfileForm-field'
-          placeholder= 'user@email.com'
+          customClass='ProfileForm-input'
+          placeholder='user@email.com'
           value={form.attributes.paypalEmail || paypalEmail}
-          onChange={this.append.bind(this)} />
+          handleChange={paypalEmail => appendProfileForm({paypalEmail})}/>
         <div>
           <SaveButton
             save={save}
@@ -50,9 +67,6 @@ class ProfileFormEdit extends Component {
     });
   }
 
-  handleUpload({url}) {
-    this.props.appendProfileForm({ link: url });
-  }
 }
 
 export default ProfileFormEdit;
