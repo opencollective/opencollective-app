@@ -46,19 +46,29 @@ describe('PublicGroup container', () => {
   });
 
   it('should donate to the group', (done) => {
-    const donate = chai.spy(() => Promise.resolve());
     const notify = chai.spy(() => Promise.resolve());
     const showAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
+    const token = {
+      id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',
+      email: 'test@gmail.com'
+    };
+    const donate = chai.spy((groupid, payment) => {
+      expect(groupid).to.be.equal(1);
+      expect(payment.currency).to.be.equal('MXN');
+      expect(payment.email).to.be.equal(token.email);
+      expect(payment.amount).to.be.equal(10);
+
+      return Promise.resolve();
+    });
 
     const props = {
       groupid: 1,
       donate,
+      group: {
+        currency: 'MXN'
+      },
       notify,
       showAdditionalUserInfoForm,
-    };
-    const token = {
-      id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',
-      email: 'test@gmail.com'
     };
 
     donateToGroup.call({props}, 10, token)
@@ -80,6 +90,7 @@ describe('PublicGroup container', () => {
       expect(payment.interval).to.be.equal('month');
       expect(payment.stripeToken).to.be.equal(token.id);
       expect(payment.email).to.be.equal(token.email);
+      expect(payment.currency).to.be.equal('MXN');
       expect(payment.amount).to.be.equal(10);
       return Promise.resolve();
     });
@@ -91,6 +102,9 @@ describe('PublicGroup container', () => {
       groupid: 1,
       donate,
       notify,
+      group: {
+        currency: 'MXN'
+      },
       showAdditionalUserInfoForm,
       frequency: 'month'
     };
@@ -115,6 +129,7 @@ describe('PublicGroup container', () => {
       expect(payment.stripeToken).to.be.equal(token.id);
       expect(payment.email).to.be.equal(token.email);
       expect(payment.amount).to.be.equal(10);
+      expect(payment.amount).to.be.equal(10);
       return Promise.resolve();
     });
     const notify = chai.spy(() => Promise.resolve());
@@ -123,6 +138,9 @@ describe('PublicGroup container', () => {
     const props = {
       groupid: 1,
       donate,
+      group: {
+        currency: 'MXN'
+      },
       notify,
       showAdditionalUserInfoForm,
       frequency: 'one-time'
@@ -186,7 +204,10 @@ describe('PublicGroup container', () => {
     const props = {
       groupid: 1,
       donate,
-      notify
+      notify,
+      group: {
+        currency: 'MXN'
+      }
     };
     const token = {
       id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',

@@ -34,6 +34,7 @@ const PublicGroupForm = ({
         token={onToken}
         stripeKey={stripeKey}
         name={group.name}
+        currency={group.currency}
         amount={stripeAmount}
         description={stripeDescription}>
         <div className='u-center'>
