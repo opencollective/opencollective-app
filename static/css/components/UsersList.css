@@ -6,14 +6,22 @@
   display: inline-block;
   padding-right: var(--spacing);
   text-align: center;
+  width: 6rem;
   height: 7rem;
   vertical-align: top;
+}
+
+.UsersList .ProfilePhoto {
+  margin: 1px auto;
 }
 
 .UsersList-name {
   padding-top: calc(var(--spacing) / 2);
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  height: 1rem;
+  overflow: hidden;
+  margin: 0 auto;
 }
 
 .UsersList-amount {
