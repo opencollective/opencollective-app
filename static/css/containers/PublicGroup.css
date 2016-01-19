@@ -35,6 +35,11 @@
   clear: both;  
 }
 
+.PublicGroup-quote {
+  overflow: hidden;
+  clear: both;
+}
+
 .PublicGroup-quoteUser .ProfilePhoto,
 .PublicGroup-quoteName {
   display: inline-block;
@@ -53,7 +58,6 @@
 }
 
 .PublicGroup-quoteText {
-  font-style: italic;
   padding-left: calc(var(--spacing) * 2);
   box-sizing: border-box;
   line-height: 24px;
