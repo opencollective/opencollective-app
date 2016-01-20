@@ -20,7 +20,10 @@ export default ({email, password}) => {
     })
     .then(json => dispatch(success(json)))
     .then(json => dispatch(decodeJWT(json)))
-    .catch(err => dispatch(failure(err)));
+    .catch(err => {
+      dispatch(failure(err));
+      throw new Error(err.message);
+    });
   };
 };
 

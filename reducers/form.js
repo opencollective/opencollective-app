@@ -50,7 +50,6 @@ function transaction(state=transactionInitialState, action={}) {
  */
 
 const loginInitialState = {
-  attributes: {},
   error: {}
 };
 
@@ -58,12 +57,6 @@ function login(state=loginInitialState, action={}) {
   switch (action.type) {
     case constants.RESET_LOGIN_FORM:
       return merge({}, loginInitialState);
-
-    case constants.APPEND_LOGIN_FORM:
-      return merge({}, state, { attributes: action.attributes });
-
-    case constants.VALIDATE_LOGIN_REQUEST:
-      return merge({}, omit(state, 'error'), { error: {} });
 
     case constants.VALIDATE_LOGIN_FAILURE:
       const { message, path } = errorDetail(action);

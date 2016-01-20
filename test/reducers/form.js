@@ -43,14 +43,14 @@ describe('form reducer', () => {
   describe('login', () => {
 
     it('should have a default state', () => {
-      expect(reducer().transaction.attributes).toExist();
+      expect(reducer().transaction.error).toEqual({});
     });
 
     it('should reset the form', () => {
       const state = {
         login: {
-          attributes: {
-            email: 'test@gmail.com'
+          error: {
+            message: 'oops'
           }
         }
       };
@@ -58,17 +58,7 @@ describe('form reducer', () => {
       const newState = reducer(state, {
         type: constants.RESET_LOGIN_FORM
       });
-      expect(newState.login.attributes.email).toNotExist();
-    });
-
-    it('should append new attributes to the form', () => {
-      const email = 'test@gmail.com';
-      const state = reducer({}, {
-        type: constants.APPEND_LOGIN_FORM,
-        attributes: { email }
-      });
-
-      expect(state.login.attributes.email).toEqual(email);
+      expect(newState.login.error.message).toNotExist();
     });
 
   });
