@@ -220,6 +220,7 @@ export function donateToGroup(amount, token) {
     groupid,
     notify,
     donate,
+    group,
     frequency,
     showAdditionalUserInfoForm
   } = this.props;
@@ -227,7 +228,8 @@ export function donateToGroup(amount, token) {
   const payment = {
     stripeToken: token.id,
     email: token.email,
-    amount
+    amount,
+    currency: group.currency
   };
 
   if (contains(['month', 'year'], frequency)) {
