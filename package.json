@@ -19,6 +19,7 @@
     "posttest": "npm run nightwatch",
     "nightwatch": "./node_modules/nightwatch/bin/nightwatch --config nightwatch.json",
     "hint": "eslint **/*.js --quiet",
+    "posttest": "./node_modules/nightwatch/bin/nightwatch --config nightwatch.json",
     "build": "npm run build:js && npm run build:css",
     "build:js": "NODE_ENV=production browserify client.js | uglifyjs -cm > static/bundle.js",
     "build:css": "cssnext static/css/main.css static/build.css",
