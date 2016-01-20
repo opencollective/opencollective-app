@@ -92,7 +92,7 @@ export class AddFund extends Component {
             <SubmitButton />
           </div>
           <p>
-            Don't worry, no real money will be moved when you add funds. We only transfer money when you explicitly approve an expense.
+            Don't worry, no money will be moved when you add funds. We only transfer money when you explicitly approve an expense.
           </p>
         </form>
       </div>
