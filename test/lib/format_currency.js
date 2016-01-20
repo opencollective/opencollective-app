@@ -23,7 +23,7 @@ describe('formatCurrency', () => {
     expect(formatCurrency(12.34,'EUR'), '€12 345.67');
   });
 
-  it.only('should return -€12.34', () => {
+  it('should return -€12.34', () => {
     expect(formatCurrency(-12.34,'EUR'), '-€12.34');
   });
 
