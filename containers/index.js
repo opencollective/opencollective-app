@@ -1,8 +1,7 @@
 import App from './App';
 import GroupsList from './GroupsList';
 import GroupTransactions from './GroupTransactions';
-import DonationMethod from './DonationMethod';
-import Donation from './Donation';
+import AddFund from './AddFund';
 import TransactionNew from './TransactionNew';
 import TransactionDetail from './TransactionDetail';
 import Login from './Login';
@@ -16,8 +15,7 @@ export {
   App,
   GroupsList,
   GroupTransactions,
-  DonationMethod,
-  Donation,
+  AddFund,
   TransactionNew,
   TransactionDetail,
   Login,

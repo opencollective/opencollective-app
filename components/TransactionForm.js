@@ -16,21 +16,21 @@ import SubmitButton from './SubmitButton';
 import DatePicker from './DatePicker';
 
 class TransactionForm extends Component {
-  
+
   vatInput() {
-    const { 
-      enableVAT, 
-      transaction, 
+    const {
+      enableVAT,
+      transaction,
       group,
-      appendTransactionForm 
+      appendTransactionForm
     } = this.props;
-    
+
     if (!enableVAT) return;
-    
+
     let vatInput = (
       <div>
         <span className='Label'>VAT: </span>
-        <Input 
+        <Input
           placeholder={formatCurrency(0, group.currency)}
           hasError={transaction.error.vat}
           value={transaction.attributes.vat}
@@ -58,12 +58,12 @@ class TransactionForm extends Component {
       'TransactionForm--isUploading': isUploading,
       'js-form': true, // for testing
     });
-    
+
     let amountPlaceholder = formatCurrency(0, group.currency);
     if (enableVAT) {
       amountPlaceholder += ' (including VAT)';
     }
-    
+
     return (
       <div className={className}>
         <Notification {...this.props} />
@@ -76,7 +76,7 @@ class TransactionForm extends Component {
           className='TransactionForm-form'
           onSubmit={this.handleSubmit.bind(this)} >
           <div>
-            <span className='Label'>Title: </span>
+            <span className='Label'>Description: </span>
             <Input
               hasError={transaction.error.description}
               value={transaction.attributes.description}
@@ -116,7 +116,7 @@ class TransactionForm extends Component {
 
           <div className='Input textarea'>
             <label className='Label'>Note:</label>
-            <TextArea 
+            <TextArea
               placeholder='Optional'
               value={attributes.comment}
               handleChange={comment => appendTransactionForm({comment})} />
@@ -134,7 +134,7 @@ class TransactionForm extends Component {
   }
 
   componentDidMount() {
-    const { 
+    const {
       tags,
       resetTransactionForm,
       appendTransactionForm,
@@ -142,7 +142,7 @@ class TransactionForm extends Component {
 
     resetTransactionForm();
     appendTransactionForm({tags: [tags[0]]});
-    
+
   }
 }
 

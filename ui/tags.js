@@ -38,12 +38,13 @@ export default function(groupid) {
         'Transport'
       ];
       break;
-    default: 
+    default:
       tags = [
         'Communications',
         'Design',
         'Donation',
         'Engineering',
+        'Fund',
         'Food & Beverage',
         'Marketing',
         'Legal',
