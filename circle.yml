@@ -6,3 +6,6 @@ deployment:
     branch: staging
     heroku:
       appname: opencollective-staging-app
+test:
+  pre:
+    - nohup bash -c "npm start &"

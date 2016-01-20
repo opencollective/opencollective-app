@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="2">
+
+  <testsuite name="create_expense"
+    errors="0" failures="0" hostname="" id="" package="create_expense" skipped="0"
+    tests="2" time="23.76" timestamp="Tue, 26 Jan 2016 22:14:50 GMT">
+  
+    <testcase name="Submits an expense" time="11.78" assertions="10">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Shows an error message if an empty form is submitted" time="11.99" assertions="10">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>
