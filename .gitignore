@@ -32,3 +32,6 @@ node_modules
 # Build
 static/bundle.js
 static/build.css
+
+# Test outputs
+test/output
