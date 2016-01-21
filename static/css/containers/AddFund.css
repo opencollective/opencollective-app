@@ -23,3 +23,7 @@
   margin-top: var(--spacing);
 }
 
+.AddFund-info {
+  font-style: italic;
+  text-align: center;
+}

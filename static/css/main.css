@@ -18,6 +18,7 @@
  * Containers
  */
 
+@import './containers/App.css';
 @import './containers/AddFund.css';
 @import './containers/Content.css';
 @import './containers/Login.css';
