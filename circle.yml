@@ -8,4 +8,4 @@ deployment:
       appname: opencollective-staging-app
 test:
   pre:
-    - nohup bash -c "npm start &"
+    - nohup bash -c "NODE_ENV=test_server npm start &"
