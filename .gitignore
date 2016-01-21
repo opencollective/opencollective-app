@@ -35,4 +35,4 @@ static/bundle.js
 static/build.css
 
 # Test outputs
-test/output
+test/e2e/output
