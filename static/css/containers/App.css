@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-.App label.inline {
+.App > div:not(.PublicGroup) label.inline {
   display: inline-block;
   margin-right: 0.5rem;
 }
