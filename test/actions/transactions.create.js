@@ -1,4 +1,3 @@
-import expect from 'expect';
 import nock from 'nock';
 import _ from 'lodash';
 import mockStore from '../helpers/mockStore';

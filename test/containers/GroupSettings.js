@@ -3,10 +3,7 @@ import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 
-import {
-  GroupSettings,
-  mapStateToProps
-} from '../../containers/GroupSettings';
+import { GroupSettings } from '../../containers/GroupSettings';
 
 const { expect } = chai;
 const {

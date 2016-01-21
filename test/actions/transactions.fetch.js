@@ -1,4 +1,3 @@
-import expect from 'expect';
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
 import env from '../../lib/env';

@@ -16,7 +16,7 @@
     "dev": "PORT=3000 nf start -j Procfile_dev",
     "pretest": "npm run hint",
     "test": "NODE_ENV=test mocha",
-    "hint": "eslint **/*.js --quiet",
+    "hint": "eslint '**/*.js' --quiet",
     "build": "npm run build:js && npm run build:css",
     "build:js": "NODE_ENV=production browserify client.js | uglifyjs -cm > static/bundle.js",
     "build:css": "cssnext static/css/main.css static/build.css",

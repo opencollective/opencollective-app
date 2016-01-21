@@ -7,7 +7,6 @@ import { createExpense, TransactionNew } from '../../containers/TransactionNew';
 const {expect} = chai;
 const {
   findRenderedDOMComponentWithClass,
-  Simulate,
   renderIntoDocument
 } = TestUtils;
 
