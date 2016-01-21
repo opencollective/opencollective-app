@@ -25,24 +25,22 @@ class ProfileFormEdit extends Component {
           value={form.attributes.link || user.avatar}
           onFinished={link => appendProfileForm({link})} />
         </div>
-        <div className='ProfileForm-label'>Password reset</div>
+        <label>Password reset</label>
         <Input
           type='password'
           customClass='ProfileForm-input'
-          placeholder='Password'
+          placeholder='New password'
           value={form.attributes.password}
           handleChange={password => appendProfileForm({password})} />
 
         <Input
           type='password'
           customClass='ProfileForm-input'
-          placeholder='Password confirmation'
+          placeholder='New password confirmation'
           value={form.attributes.passwordConfirmation}
           handleChange={passwordConfirmation => appendProfileForm({passwordConfirmation})}/>
 
-        <div className='ProfileForm-label'>
-          Paypal Account
-        </div>
+        <label>Paypal Account</label>
         <Input
           type='email'
           customClass='ProfileForm-input'

@@ -29,7 +29,7 @@ class TransactionForm extends Component {
 
     let vatInput = (
       <div>
-        <span className='Label'>VAT: </span>
+        <span className='inline'>VAT: </span>
         <Input
           placeholder={formatCurrency(0, group.currency)}
           hasError={transaction.error.vat}
@@ -76,14 +76,14 @@ class TransactionForm extends Component {
           className='TransactionForm-form'
           onSubmit={this.handleSubmit.bind(this)} >
           <div>
-            <span className='Label'>Description: </span>
+            <label className='inline'>Description: </label>
             <Input
               hasError={transaction.error.description}
               value={transaction.attributes.description}
               handleChange={description => appendTransactionForm({description})} />
           </div>
           <div>
-            <span className='Label'>Amount: </span>
+            <label className='inline'>Amount: </label>
             <Input
               placeholder={amountPlaceholder}
               hasError={transaction.error.amount}
@@ -92,14 +92,14 @@ class TransactionForm extends Component {
           </div>
           {this.vatInput()}
           <div className='Input'>
-            <label className='Label'>Date:</label>
+            <label className='inline'>Date:</label>
             <DatePicker
               selected={moment(attributes.createdAt)}
               maxDate={moment()}
               handleChange={createdAt => appendTransactionForm({createdAt})} />
           </div>
           <div className='Input u-mb05'>
-            <label className='Label'>Category:</label>
+            <label className='inline'>Category:</label>
             <SelectTag
               attributes={attributes}
               tags={tags}
@@ -107,7 +107,7 @@ class TransactionForm extends Component {
           </div>
 
           <div className='Input'>
-            <label className='Label'>Method:</label>
+            <label className='inline'>Method:</label>
             <Select
               options={paymentMethods}
               value={attributes.paymentMethod}
@@ -115,7 +115,7 @@ class TransactionForm extends Component {
           </div>
 
           <div className='Input textarea'>
-            <label className='Label'>Note:</label>
+            <label className='inline'>Note:</label>
             <TextArea
               placeholder='Optional'
               value={attributes.comment}

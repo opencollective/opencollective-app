@@ -1,0 +1,12 @@
+.App label {
+  color: var(--light-blue); 
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+.App label.inline {
+  display: inline-block;
+  margin-right: 0.5rem;
+}

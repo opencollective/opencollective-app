@@ -37,15 +37,11 @@ export class AddFund extends Component {
     return (
       <div className='AddFund'>
         <TopBar
-          title='Add funds'
+          title={`Add funds to ${group.name}`}
           backLink={`/app/groups/${this.props.groupid}/transactions/`} />
         <Content>
           <Notification {...this.props} />
           <div className='padded'>
-            <div className='AddFund-header'>
-              <div className='AddFund-name'>{group.name}</div>
-              <div className='AddFund-description'>{group.description}</div>
-            </div>
             {hasPaypalCard ? this.form() : this.paypalReminder()}
           </div>
         </Content>
@@ -76,13 +72,13 @@ export class AddFund extends Component {
           event.preventDefault();
           donate.call(this);
         }}>
-          <span className='Label'>Amount:</span>
+          <label>Amount:</label>
           <Input
             value={this.state.amount}
             placeholder={formatCurrency(0, this.props.group.currency)}
             handleChange={amount => this.setState({amount})} />
 
-          <span className='Label'>Description:</span>
+          <label>Description:</label>
           <Input
             value={this.state.description}
             placeholder='Description'
@@ -91,7 +87,7 @@ export class AddFund extends Component {
           <div className='AddFund-buttonContainer'>
             <SubmitButton />
           </div>
-          <p>
+          <p className='AddFund-info'>
             Don't worry, no money will be moved when you add funds. We only transfer money when you explicitly approve an expense.
           </p>
         </form>
