@@ -17,7 +17,7 @@ module.exports = {
   "Sign into login page" : function (client) {
     client
       .assert.title("OpenCollective - create and fund your collective transparently")
-      .setValue('input[type=email]', 'devuser@opencollective.com')
+      .setValue('input[type=email]', 'testuser@opencollective.com')
       .setValue('input[type=password', 'password')
       .click('button[type=submit')
       .pause(1000)
