@@ -32,13 +32,13 @@ class Login extends Component {
               <img src='/static/images/logo.svg' />
             </div>
             <div className='Login-quote'>
-              Collect money &<br />disperse it transparently
+              Collect & disburse money<br />transparently
             </div>
           </div>
           <form
             name='login'
             onSubmit={this.handleSubmit.bind(this)}
-            className='padded'>
+            className='Login-form'>
             <Input
               type='email'
               hasError={this.props.error.email}
