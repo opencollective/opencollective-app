@@ -39,8 +39,9 @@ git push heroku-production master
 ## Test
 
 ```
+// in a separate window
+npm run testserver
 npm test
-npm run hint
 ```
 
 ## Stack
