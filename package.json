@@ -26,7 +26,8 @@
     "watch:js": "NODE_ENV=development watchify client.js -o static/bundle.js -dv",
     "watch:test": "NODE_ENV=test mocha --watch",
     "postinstall": "npm run build",
-    "git:clean": "git branch --merged | grep -v \\* | grep -v master | grep -v dev | xargs -n 1 git branch -d"
+    "git:clean": "git branch --merged | grep -v \\* | grep -v master | grep -v dev | xargs -n 1 git branch -d",
+    "testserver": "NODE_ENV=test_server npm start"
   },
   "dependencies": {
     "babelify": "^6.1.3",
