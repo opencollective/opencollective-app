@@ -1,14 +1,17 @@
 import React from 'react';
 import Icon from './Icon';
 
-export default () => {
+export default ({children}) => {
   return (
     <span>
       <button
         type='submit'
         className='Button Button--submit'>
-        <Icon type='upload' />
-        Submit
+        {!!children ? children : (
+          <span>
+            <Icon type='upload' />Submit
+          </span>
+        )}
       </button>
     </span>
   );

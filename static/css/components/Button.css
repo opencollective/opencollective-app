@@ -23,11 +23,6 @@
   background-color: var(--orange);
 }
 
-.Button--login {
-  background-color: var(--orange);
-  display: block;
-}
-
 .Button--approve,
 .Button--save,
 .Button--green,

@@ -11,7 +11,10 @@ export default (attributes) => {
 
     return loginIsValid(attributes)
     .then(attributes => dispatch(success(attributes)))
-    .catch(error => dispatch(failure(error)));
+    .catch(error => {
+      dispatch(failure(error));
+      throw new Error(error.details[0].message);
+    });
   };
 };
 
