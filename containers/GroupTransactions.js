@@ -32,6 +32,11 @@ class GroupTransactions extends Component {
     } = this.props;
 
     const url = `/app/groups/${groupid}/settings/`;
+    var exportTransactionsButton;
+    if (isHost) {
+      exportTransactionsButton = <ExportButton exportAction={exportTransactions.bind(this)}/>;
+    }
+
     return (
       <div className='GroupTransactions'>
         <TopBar
@@ -45,8 +50,7 @@ class GroupTransactions extends Component {
           <div className='padded'>
             <div className='GroupTransactions-title'>
               <span>Activity Detail</span>
-              <ExportButton
-                exportAction={exportTransactions.bind(this)} />
+              {exportTransactionsButton}
             </div>
             {this.list(this.props)}
           </div>
