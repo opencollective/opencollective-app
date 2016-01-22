@@ -78,6 +78,7 @@ class TransactionForm extends Component {
           <div>
             <label className='inline'>Description: </label>
             <Input
+              customClass='js-transaction-description'
               hasError={transaction.error.description}
               value={transaction.attributes.description}
               handleChange={description => appendTransactionForm({description})} />
@@ -85,6 +86,7 @@ class TransactionForm extends Component {
           <div>
             <label className='inline'>Amount: </label>
             <Input
+              customClass='js-transaction-amount'
               placeholder={amountPlaceholder}
               hasError={transaction.error.amount}
               value={transaction.attributes.amount}
