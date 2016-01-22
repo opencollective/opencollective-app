@@ -17,7 +17,8 @@
   margin-top: calc((var(--image-upload-height) - var(--image-upload-child-height)) / 2);
 }
 
-.ImageUpload label {
+/* Need to be more specific to override the .App > div:not(.PublicGroup) label */
+.App .Content .ImageUpload label {
   display: block;
   width: 190px;
   text-align: center;
