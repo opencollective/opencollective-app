@@ -16,6 +16,7 @@ import Content from './Content';
 import TopBar from '../components/TopBar';
 import Footer from '../components/Footer';
 import TransactionsList from '../components/TransactionsList';
+import ExportButton from '../components/ExportButton';
 import GroupTitle from '../components/GroupTitle';
 import EmptyList from '../components/EmptyList';
 
@@ -41,7 +42,11 @@ class GroupTransactions extends Component {
           hasPopOverMenuOpen={hasPopOverMenuOpen} >
           <GroupTitle group={group} />
           <div className='padded'>
-            <div className='GroupTransactions-title'>Activity Detail</div>
+            <div className='GroupTransactions-title'>
+              <span>Activity Detail</span>
+              <ExportButton
+                exportAction={exportTransactions.bind(this)} />
+            </div>
             {this.list(this.props)}
           </div>
         </Content>
@@ -109,4 +114,8 @@ export function mapStateToProps({transactions, router, groups, users={}, session
     isLoading: !group.id,
     hasPopOverMenuOpen: session.hasPopOverMenuOpen
   };
+}
+
+export function exportTransactions() {
+  alert("blah");
 }
