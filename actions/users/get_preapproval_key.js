@@ -8,7 +8,7 @@ import * as constants from '../../constants/users';
 
 export default (userid, options={}) => {
   // Redirect to homepage that has will confirmed the preapproval key
-  const callback = `${origin}app/?approvalStatus=`;
+  const callback = `${origin}/app/?approvalStatus=`;
 
   const params = {
     returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
