@@ -6,6 +6,7 @@ const request = require('request');
 const morgan = require('morgan');
 const path = require('path');
 const _ = require('lodash');
+const robots = require('robots.txt')
 const config = require('config');
 
 const apiUrl = url => {
@@ -41,10 +42,9 @@ app.use(morgan('dev'));
 app.use('/static', express.static(path.join(__dirname, '../static')));
 
 /**
- * /robots.txt 
+ * GET /robots.txt
  */
-const robotstxt = fs.readFileSync(path.join(__dirname, '../static/robots.txt'), 'utf-8');
-app.get('/robots.txt', (req, res) => res.send(robotstxt));
+app.use(robots(path.join(__dirname, '../static/robots.txt')));
 
 /**
  * Pipe the requests before the middlewares, the piping will only work with raw
@@ -78,9 +78,8 @@ app.get(/^\/app(\/.*)?$/, (req, res) => {
     image: '/static/images/LogoLargeTransparent.png',
     twitter: '@OpenCollect',
   };
-  const options = {
-    showGA: false
-  };
+  const options = { showGA: false };
+
   return res.render('index', { meta, options });
 });
 
@@ -88,28 +87,44 @@ app.get(/^\/app(\/.*)?$/, (req, res) => {
  * Server public page
  */
 
-app.get('/:slug', (req, res) => {
+app.get('/:slug([A-Za-z0-9-]+)', (req, res, next) => {
   const options = {
     showGA: process.env.NODE_ENV === 'production'
-  }
+  };
+
   request
     .get({
       url: apiUrl(`groups/${req.params.slug}/`),
       json: true
     }, (err, response, group) => {
+      if (err) return next(err);
       if (response.statusCode !== 200) {
-        res.render('404', { options }); 
-      } else {
-        const meta = {
-          url: group.publicUrl,
-          title: 'Join ' + group.name + '\'s open collective',
-          description: group.name + ' is collecting funds to continue their activities. Chip in!',
-          image: group.image || group.logo,
-          twitter: '@'+group.twitterHandle,
-        }
-        res.render('index', { meta, options });
+        return next(response.body.error);
       }
+
+      const meta = {
+        url: group.publicUrl,
+        title: 'Join ' + group.name + '\'s open collective',
+        description: group.name + ' is collecting funds to continue their activities. Chip in!',
+        image: group.image || group.logo,
+        twitter: '@'+group.twitterHandle,
+      };
+
+      res.render('index', { meta, options });
     });
+});
+
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  res.render('error', {
+    message: 'Error ' + err.code + ': ' + err.message,
+    options: {
+      showGA: process.env.NODE_ENV === 'production'
+    }
+  });
 });
 
 /**
