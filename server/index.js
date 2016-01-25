@@ -1,4 +1,3 @@
-const fs = require('fs');
 const express = require('express');
 const serverStatus = require('express-server-status');
 const favicon = require('serve-favicon');
@@ -114,6 +113,21 @@ app.get('/:slug([A-Za-z0-9-]+)', (req, res, next) => {
     });
 });
 
+/**
+ * 404 route
+ */
+
+app.use((req, res, next) => {
+  return next({
+    code: 404,
+    message: 'Does not match any route'
+  });
+});
+
+/**
+ * Error handling
+ */
+
 app.use((err, req, res, next) => {
   if (res.headersSent) {
     return next(err);
@@ -133,6 +147,14 @@ app.use((err, req, res, next) => {
 
 app.set('port', process.env.PORT || 3000);
 
-app.listen(app.get('port'), () => {
-  console.log('Express server listening on port ' + app.get('port'));
-});
+if (!_.contains(['test', 'circleci'], app.set('env'))) {
+  /**
+   * Start server
+   */
+  app.listen(app.get('port'), () => {
+    console.log('Express server listening on port ' + app.get('port'));
+  });
+
+}
+
+module.exports = app;

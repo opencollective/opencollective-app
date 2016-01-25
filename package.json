@@ -15,7 +15,7 @@
     "start": "NODE_CONFIG_DIR=./server/config node server",
     "dev": "PORT=3000 nf start -j Procfile_dev",
     "pretest": "npm run hint",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_CONFIG_DIR=./server/config NODE_ENV=test mocha",
     "hint": "eslint **/*.js --quiet",
     "build": "npm run build:js && npm run build:css",
     "build:js": "NODE_ENV=production browserify client.js | uglifyjs -cm > static/bundle.js",
