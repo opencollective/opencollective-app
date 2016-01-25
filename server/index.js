@@ -1,6 +1,6 @@
 const fs = require('fs');
 const express = require('express');
-const hbs = require('express-hbs');
+const serverStatus = require('express-server-status');
 const favicon = require('serve-favicon');
 const request = require('request');
 const morgan = require('morgan');
