@@ -6,7 +6,7 @@ module.exports = {
       // reset test database
       .url('https://opencollective-test-api.herokuapp.com/database/reset')
 
-      .url('http://localhost:3000/Testcollective')
+      .url('http://localhost:3000/testcollective')
       .waitForElementVisible('body', 1000)
       .assert.containsText('body', 'OpenCollective test group on the test server')
       .waitForElementVisible('div[class=PublicGroupForm]', 1000)
