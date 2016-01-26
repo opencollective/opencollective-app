@@ -4,7 +4,7 @@ module.exports = {
     client
 
       // reset test database
-      //.url('https://opencollective-test-api.herokuapp.com/database/reset')
+      .url('https://opencollective-test-api.herokuapp.com/database/reset')
 
       .url('http://localhost:3000/Testcollective')
       .waitForElementVisible('body', 1000)
