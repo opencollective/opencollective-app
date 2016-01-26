@@ -12,7 +12,7 @@ module.exports = {
       .setValue('input[type=email]', 'testuser@opencollective.com')
       .setValue('input[type=password]', 'password')
       .click('button[type=submit]')
-      .pause(1000)
+      .pause(2000)
 
       // check main page
       .assert.containsText('body', 'My collectives')
