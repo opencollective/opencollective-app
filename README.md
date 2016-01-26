@@ -36,10 +36,6 @@ Then you can run:
 git push heroku-production master
 ```
 
-For 
-
-The app will automatically build on Heroku.
-
 ## Test
 
 ```
