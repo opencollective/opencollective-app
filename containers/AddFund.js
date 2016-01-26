@@ -75,12 +75,14 @@ export class AddFund extends Component {
           <label>Amount:</label>
           <Input
             value={this.state.amount}
+            customClass='js-amount' // for tests
             placeholder={formatCurrency(0, this.props.group.currency)}
             handleChange={amount => this.setState({amount})} />
 
           <label>Description:</label>
           <Input
             value={this.state.description}
+            customClass='js-description' // for tests
             placeholder='Description'
             handleChange={description => this.setState({description})} />
 
