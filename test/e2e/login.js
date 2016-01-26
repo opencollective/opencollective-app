@@ -1,6 +1,8 @@
 module.exports = {
   beforeEach: (client) => {
     client
+      // reset test database
+      .url('https://opencollective-test-api.herokuapp.com/database/reset')
       .url("http://localhost:3000/app/login")
       .waitForElementVisible("body", 1000);
   },
