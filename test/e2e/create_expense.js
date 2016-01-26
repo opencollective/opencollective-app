@@ -29,7 +29,7 @@ module.exports = {
 
       // click on 'Submit Expense'
       .click('div[class=PopOverMenu-item]:nth-child(2)')
-      .pause(1000)
+      .pause(2000)
       .assert.containsText('body', 'Submit Expense')
       .assert.urlContains('http://localhost:3000/app/groups/1/transactions/new');
   },
