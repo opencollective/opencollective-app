@@ -120,7 +120,7 @@ app.get('/:slug([A-Za-z0-9-]+)', (req, res, next) => {
 app.use((req, res, next) => {
   return next({
     code: 404,
-    message: 'Does not match any route'
+    message: 'We can\'t find that page.'
   });
 });
 
