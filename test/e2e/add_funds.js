@@ -5,14 +5,14 @@ module.exports = {
 
       // reset test database
       .url('https://opencollective-test-api.herokuapp.com/database/reset')
-
+      .pause(1000)
       // login
       .url('http://localhost:3000/app/login')
       .waitForElementVisible('body', 1000)
       .setValue('input[type=email]', 'testuser@opencollective.com')
       .setValue('input[type=password]', 'password')
       .click('button[type=submit]')
-      .pause(1000)
+      .pause(2000)
 
       // check main page
       .assert.containsText('body', 'My collectives')
@@ -39,12 +39,8 @@ module.exports = {
     const amount = 100;
 
     client
-      .setValue('input[class=Field]:nth-child(1)', amount)
-      // .setValue('input[class=Field]:nth-child(2)', description)
-      // Hack below because above CSS selector isn't working
-      .keys('\t')
-      .pause(500)
-      .keys(description)
+      .setValue('.js-amount input', amount)
+      .setValue('.js-description input', description)
 
       .click('button[type=submit')
       .pause(1000)

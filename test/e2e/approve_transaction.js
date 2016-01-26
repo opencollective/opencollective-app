@@ -1,4 +1,5 @@
 module.exports = {
+  '@tags': ['approve_transaction'],
   beforeEach: (client) => {
     const description = `Day out in tahoe ${Math.random()}`;
     const amount = 10;
@@ -33,6 +34,7 @@ module.exports = {
       .assert.containsText('body', 'APPROVE')
       .click('.Button--approve')
       .waitForElementVisible('.Transaction', 2000)
+      .pause(1000) // wait for transaction
       .assert.urlEquals('http://localhost:3000/app/groups/1/transactions')
       .assert.containsText('.Transaction:first-child', 'Reimbursed')
       .end();
