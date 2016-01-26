@@ -1,10 +1,11 @@
 module.exports = {
-  '@tags': ['create_expense'],
+  '@tags': ['add_funds'],
   beforeEach: (client) => {
     client
 
       // reset test database
       .url('https://opencollective-test-api.herokuapp.com/database/reset')
+      .pause(1000)
 
       // login
       .url('http://localhost:3000/app/login')
@@ -25,24 +26,28 @@ module.exports = {
       // click on footer
       .click('div[class=Footer-addButton]')
       .waitForElementVisible('div[class=PopOverMenu-group]', 1000)
-      .assert.containsText('div[class=PopOverMenu-group]', 'Add expense')
+      .assert.containsText('div[class=PopOverMenu-group]', 'Add funds')
 
-      // click on 'Submit Expense'
-      .click('div[class=PopOverMenu-item]:nth-child(2)')
+      // click on 'Add funds'
+      .click('div[class=PopOverMenu-item]:nth-child(1)')
       .pause(1000)
-      .assert.containsText('body', 'Submit Expense')
-      .assert.urlContains('http://localhost:3000/app/groups/1/transactions/new');
+      .assert.containsText('body', 'Add funds to OpenCollective Test Group')
+      .assert.urlContains('app/groups/1/funds/');
   },
 
-  'Submits an expense': (client) => {
-    const description = 'Day out in tahoe';
-    const amount = 10;
+  'Add funds': (client) => {
+    const description = 'Budget for this month'; // TODO: if we don't reset the db, then add a random string here
+    const amount = 100;
 
     client
-      .assert.containsText('body', 'Submit Expense')
-      .setValue('.js-transaction-description input', description)
-      .setValue('.js-transaction-amount input', amount)
-      .submitForm('form.TransactionForm-form')
+      .setValue('input[class=Field]:nth-child(1)', amount)
+      // .setValue('input[class=Field]:nth-child(2)', description)
+      // Hack below because above CSS selector isn't working
+      .keys('\t')
+      .pause(500)
+      .keys(description)
+
+      .click('button[type=submit')
       .pause(1000)
       .assert.urlContains('app/groups/1/transactions')
       .assert.containsText('.Transaction', description.toUpperCase())
@@ -51,10 +56,9 @@ module.exports = {
 
   'Shows an error message if an empty form is submitted': (client) => {
     client
-      .assert.containsText('body', 'Submit Expense')
-      .submitForm('form.TransactionForm-form')
+      .click('button[type=submit')
       .pause(1000)
-      .assert.urlContains('app/groups/1/transactions/new')
+      .assert.urlContains('app/groups/1/funds/')
       .assert.containsText('.Notification', '"Description" is not allowed to be empty')
       .end();
   }
