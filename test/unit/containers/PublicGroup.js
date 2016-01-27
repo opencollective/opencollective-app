@@ -69,6 +69,7 @@ describe('PublicGroup container', () => {
       },
       notify,
       showAdditionalUserInfoForm,
+      fetchGroup: () => Promise.resolve()
     };
 
     donateToGroup.call({props}, 10, token)
@@ -106,6 +107,7 @@ describe('PublicGroup container', () => {
         currency: 'MXN'
       },
       showAdditionalUserInfoForm,
+      fetchGroup: () => Promise.resolve(),
       frequency: 'month'
     };
 
@@ -143,6 +145,7 @@ describe('PublicGroup container', () => {
       },
       notify,
       showAdditionalUserInfoForm,
+      fetchGroup: () => Promise.resolve(),
       frequency: 'one-time'
     };
 
