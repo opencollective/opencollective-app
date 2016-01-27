@@ -222,7 +222,9 @@ export function donateToGroup(amount, token) {
     donate,
     group,
     frequency,
-    showAdditionalUserInfoForm
+    showAdditionalUserInfoForm,
+    fetchGroup,
+    slug
   } = this.props;
 
   const payment = {
@@ -238,6 +240,7 @@ export function donateToGroup(amount, token) {
 
   return donate(groupid, payment)
   .then(() => showAdditionalUserInfoForm())
+  .then(() => fetchGroup(slug))
   .catch((err) => notify('error', err.message));
 }
 
