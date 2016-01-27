@@ -8,7 +8,6 @@ import Currency from './Currency';
 import TransactionStatus from './TransactionStatus';
 import ProfilePhoto from './ProfilePhoto';
 
-
 class Transaction extends Component {
   render() {
     const {
