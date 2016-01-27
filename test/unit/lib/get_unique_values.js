@@ -1,4 +1,4 @@
-import expect from 'expect';
+import {expect} from 'chai';
 import getUniqueValues from '../../../lib/get_unique_values';
 
 describe('getUniqueValues', () => {

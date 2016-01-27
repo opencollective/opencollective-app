@@ -1,4 +1,4 @@
-import expect from 'expect';
+import {expect} from 'chai';
 import errorDetail from '../../../lib/error_detail';
 
 describe('errorDetail', () => {
