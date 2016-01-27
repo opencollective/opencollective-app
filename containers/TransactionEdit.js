@@ -57,6 +57,7 @@ export class TransactionEdit extends Component {
     fetchTransaction(groupid, transactionid)
     .then(() => {
       const transaction = this.props.initialTransaction;
+
       // Let's invert to show a positive expense value to the user
       return appendTransactionForm({
        ...transaction,

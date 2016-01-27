@@ -3,6 +3,8 @@ import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 
+import noop from '../helpers/noop';
+
 import {
   GroupSettings,
 } from '../../../containers/GroupSettings';
@@ -23,7 +25,7 @@ chai.use(spies);
 describe('GroupSettings container', () => {
 
   it('fetches group', () => {
-    const fetchGroup = chai.spy(() => Promise.resolve());
+    const fetchGroup = chai.spy(noop);
     const form = {
       attributes: {
         logo: ''
@@ -35,7 +37,7 @@ describe('GroupSettings container', () => {
       groupid: 1,
       group: {},
       fetchGroup,
-      resetNotifications: () => {},
+      resetNotifications: noop,
       notification: {}
     });
 
@@ -53,8 +55,8 @@ describe('GroupSettings container', () => {
       form,
       groupid: 1,
       group: {},
-      fetchGroup: () => Promise.resolve(),
-      resetNotifications: () => {},
+      fetchGroup: noop,
+      resetNotifications: noop,
       notification: {}
     }, 'Input');
 
@@ -73,8 +75,8 @@ describe('GroupSettings container', () => {
       form,
       groupid: 1,
       group: {},
-      fetchGroup: () => Promise.resolve(),
-      resetNotifications: () => {},
+      fetchGroup: noop,
+      resetNotifications: noop,
       notification: {}
     }, 'test1');
 

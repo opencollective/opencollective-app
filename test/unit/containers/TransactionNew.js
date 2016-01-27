@@ -3,6 +3,7 @@ import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 import { createExpense, TransactionNew } from '../../../containers/TransactionNew';
+import noop from '../helpers/noop';
 
 const {expect} = chai;
 const {
@@ -20,7 +21,7 @@ chai.use(spies);
 describe('TransactionNew container', () => {
 
   it('should reset form on mount', () => {
-      const handler = chai.spy(() => {});
+      const handler = chai.spy(noop);
       const transaction = {
         attributes: {},
         error: {}
@@ -29,9 +30,9 @@ describe('TransactionNew container', () => {
       createElement({
         transaction,
         tags: [],
-        resetNotifications: () => {},
+        resetNotifications: noop,
         notification: {},
-        fetchGroup: () => {},
+        fetchGroup: noop,
         group: {id: 1, currency: 'USD' },
         appendTransactionForm: handler,
         resetTransactionForm: handler
@@ -46,7 +47,7 @@ describe('TransactionNew container', () => {
       transaction: {
         attributes: {amount}
       },
-      validateTransaction: () => Promise.resolve(),
+      validateTransaction: noop,
       createTransaction
     };
 
