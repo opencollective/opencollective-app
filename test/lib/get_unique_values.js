@@ -14,7 +14,7 @@ describe('getUniqueValues', () => {
   });
 
   // This test fails: it returns [ 1, undefined, 3 ]
-  it.skip('should remove unvalid values', () => { 
+  it('should remove unvalid values', () => {
     const data = {
       1: { id: 1 },
       2: { id: undefined },
