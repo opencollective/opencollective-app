@@ -25,7 +25,6 @@ import Notification from '../components/Notification';
 import nestTransactionsInGroups from '../lib/nest_transactions_in_groups';
 import getUniqueValues from '../lib/get_unique_values';
 import isHost from '../lib/is_host';
-import rejectError from '../lib/reject_error';
 
 export class GroupsList extends Component {
   render() {
@@ -76,7 +75,6 @@ export class GroupsList extends Component {
 
     if (query.preapprovalKey && query.approvalStatus === 'success') {
       confirmPreapprovalKey(userid, query.preapprovalKey)
-      .then(rejectError)
       .catch(error => notify('error', error.message));
     }
   }

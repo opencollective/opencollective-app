@@ -5,14 +5,17 @@ import * as constants from '../../constants/groups';
  * update group information
  */
 
-export default (groupid, attributes) => {
+export default (groupid, group) => {
   const url = `groups/${groupid}`;
 
   return dispatch => {
-    dispatch(request(groupid, attributes));
-    return putJSON(url, { "group": attributes })
-      .then(json => dispatch(success(groupid, attributes, json)))
-      .catch(err => dispatch(failure(err)));
+    dispatch(request(groupid, group));
+    return putJSON(url, { group })
+      .then(json => dispatch(success(groupid, group, json)))
+      .catch(err => {
+        dispatch(failure(err));
+        throw new Error(err.message);
+      });
   };
 };
 
