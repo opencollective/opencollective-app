@@ -42,9 +42,8 @@ module.exports = {
     client
       .setValue('.js-amount input', amount)
       .setValue('.js-description input', description)
-
       .click('button[type=submit')
-      .pause(1000)
+      .pause(3000)
       .assert.urlContains('app/groups/1/transactions')
       .assert.containsText('.Transaction', description.toUpperCase())
       .end();
