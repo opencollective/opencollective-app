@@ -24,11 +24,11 @@ module.exports = {
 
       // click on footer
       .click('div[class=Footer-addButton]')
+      .pause(1000)
       .waitForElementVisible('div[class=PopOverMenu-group]', 1000)
       .assert.containsText('div[class=PopOverMenu-group]', 'Add expense')
-
       // click on 'Submit Expense'
-      .click('div[class=PopOverMenu-item]:nth-child(2)')
+      .click('.js-transactionNewLink')
       .pause(2000)
       .assert.containsText('body', 'Submit Expense')
       .assert.urlContains('http://localhost:3000/app/groups/1/transactions/new');

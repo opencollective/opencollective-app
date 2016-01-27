@@ -24,11 +24,12 @@ module.exports = {
 
       // click on footer
       .click('div[class=Footer-addButton]')
+      .pause(1000)
       .waitForElementVisible('div[class=PopOverMenu-group]', 1000)
       .assert.containsText('div[class=PopOverMenu-group]', 'Add funds')
 
       // click on 'Add funds'
-      .click('div[class=PopOverMenu-item]:nth-child(1)')
+      .click('.js-addFundsLink')
       .pause(1000)
       .assert.containsText('body', 'Add funds to OpenCollective Test Group')
       .assert.urlContains('app/groups/1/funds/');
