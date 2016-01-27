@@ -23,7 +23,6 @@
 .TransactionItem-created {
   float: right;
   font-size: 0.9rem;
-  font-style: italic;
 }
 
 .TransactionItem-status {

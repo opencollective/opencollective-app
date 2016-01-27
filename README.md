@@ -21,21 +21,20 @@ npm run build
 
 ## Deployment
 
-If you want to deploy the app on Heroku, you need to add the remotes:
+If you want to deploy to staging, you need to push your code to the `staging` branch. CircleCI will run the tests on this branch and push to Heroku for you if successful.
+
+### Manually
+If you want to deploy the app on Heroku manually (only for production), you need to add the remotes:
 
 ```
-git remote add heroku-staging https://git.heroku.com/opencollective-staging-app.git
 git remote add heroku-production https://git.heroku.com/opencollective-prod-app.git
 ```
 
 Then you can run:
 
 ```
-git push heroku-staging master
-git push heroku-staging branch:master
+git push heroku-production master
 ```
-
-The app will automatically build on Heroku.
 
 ## Test
 

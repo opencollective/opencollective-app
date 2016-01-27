@@ -107,7 +107,7 @@
   overflow: hidden;
   border-radius: 50%;
   text-align:center;
-  background-size: contain;
+  background-size: cover;
   margin: 0 auto 0.5rem;
 }
 

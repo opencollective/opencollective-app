@@ -16,7 +16,7 @@ export default ({users=[]}) => {
   return (
     <div className='UsersList'>
       {users.map(({id, avatar, name, website, twitterHandle}) => {
-        const href = website || 'https://twitter.com/' + twitterHandle;
+        const href = website || (twitterHandle) ? 'https://twitter.com/' + twitterHandle : null;
         return (
             <div className='UsersList-item' key={id}>
               {href ? <a href={href} title={name}>{profileImageName(avatar,name)}</a> : profileImageName(avatar,name) }
