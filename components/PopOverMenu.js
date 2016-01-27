@@ -12,14 +12,14 @@ const PopOverMenu = ({showPopOverMenu, groupid, hasPopOverMenuOpen, showAddFunds
     <div className={className}>
       <div className='PopOverMenu-group'>
       {showAddFunds ?
-        <div className='PopOverMenu-item'>
+        <div className='PopOverMenu-item js-addFundsLink'>
           <Link to={`/app/groups/${groupid}/funds/`}>
             Add funds
           </Link>
         </div>
         : null
       }
-        <div className='PopOverMenu-item'>
+        <div className='PopOverMenu-item js-transactionNewLink'>
           <Link to={`/app/groups/${groupid}/transactions/new`}>
             Add expense
           </Link>

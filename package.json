@@ -15,7 +15,9 @@
     "start": "NODE_CONFIG_DIR=./server/config node server",
     "dev": "PORT=3000 nf start -j Procfile_dev",
     "pretest": "npm run hint",
-    "test": "NODE_CONFIG_DIR=./server/config NODE_ENV=test mocha",
+    "test": "NODE_CONFIG_DIR=./server/config NODE_ENV=test mocha test/unit/ --opts test/unit/mocha.opts",
+    "posttest": "npm run nightwatch",
+    "nightwatch": "./node_modules/nightwatch/bin/nightwatch --config nightwatch.json",
     "hint": "eslint **/*.js --quiet",
     "build": "npm run build:js && npm run build:css",
     "build:js": "NODE_ENV=production browserify client.js | uglifyjs -cm > static/bundle.js",
@@ -24,7 +26,8 @@
     "watch:js": "NODE_ENV=development watchify client.js -o static/bundle.js -dv",
     "watch:test": "NODE_ENV=test mocha --watch",
     "postinstall": "npm run build",
-    "git:clean": "git branch --merged | grep -v \\* | grep -v master | grep -v dev | xargs -n 1 git branch -d"
+    "git:clean": "git branch --merged | grep -v \\* | grep -v master | grep -v dev | xargs -n 1 git branch -d",
+    "testserver": "NODE_ENV=test_server npm start"
   },
   "dependencies": {
     "babelify": "^6.1.3",
@@ -79,7 +82,7 @@
     "babel-eslint": "^4.1.5",
     "chai": "^3.3.0",
     "chai-spies": "^0.7.1",
-    "enzyme": "^1.2.0",
+    "chromedriver": "^2.20.0",
     "eslint": "^1.9.0",
     "eslint-config-rackt": "^1.1.1",
     "eslint-plugin-react": "^3.9.0",
@@ -88,6 +91,7 @@
     "jsdom": "3.1.2",
     "localmockage": "0.0.1",
     "mocha": "^2.3.3",
+    "nightwatch": "^0.8.15",
     "react-addons-test-utils": "^0.14.0",
     "react-unit": "^1.0.8",
     "redux-devtools": "^2.1.5",
