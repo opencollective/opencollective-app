@@ -5,7 +5,6 @@ import spies from 'chai-spies';
 
 import {
   GroupSettings,
-  mapStateToProps
 } from '../../../containers/GroupSettings';
 
 const { expect } = chai;

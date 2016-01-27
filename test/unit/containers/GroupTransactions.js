@@ -1,24 +1,12 @@
-import React from 'react';
-import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 import roles from '../../../constants/roles';
 
 import {
-  GroupTransactions,
   mapStateToProps
 } from '../../../containers/GroupTransactions';
 
 const { expect } = chai;
-const {
-  findRenderedDOMComponentWithClass,
-  renderIntoDocument
-} = TestUtils;
-
-const createElement = (props, className = 'GroupTransactions') => {
-  const rendered = renderIntoDocument(<GroupTransactions {...props} />);
-  return findRenderedDOMComponentWithClass(rendered, className);
-};
 
 chai.use(spies);
 
