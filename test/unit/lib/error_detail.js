@@ -1,10 +1,5 @@
-<<<<<<< HEAD:test/lib/error_detail.js
 import {expect} from 'chai';
-import errorDetail from '../../lib/error_detail';
-=======
-import expect from 'expect';
 import errorDetail from '../../../lib/error_detail';
->>>>>>> refactor folder structure of tests and added circle ci e2e:test/unit/lib/error_detail.js
 
 describe('errorDetail', () => {
 

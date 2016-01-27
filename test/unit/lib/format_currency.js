@@ -1,10 +1,5 @@
-<<<<<<< HEAD:test/lib/format_currency.js
 import {expect} from 'chai';
-import formatCurrency from '../../lib/format_currency';
-=======
-import expect from 'expect';
 import formatCurrency from '../../../lib/format_currency';
->>>>>>> refactor folder structure of tests and added circle ci e2e:test/unit/lib/format_currency.js
 
 describe('formatCurrency', () => {
 

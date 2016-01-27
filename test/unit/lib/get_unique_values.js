@@ -1,10 +1,5 @@
-<<<<<<< HEAD:test/lib/get_unique_values.js
 import {expect} from 'chai';
-import getUniqueValues from '../../lib/get_unique_values';
-=======
-import expect from 'expect';
 import getUniqueValues from '../../../lib/get_unique_values';
->>>>>>> refactor folder structure of tests and added circle ci e2e:test/unit/lib/get_unique_values.js
 
 describe('getUniqueValues', () => {
 
