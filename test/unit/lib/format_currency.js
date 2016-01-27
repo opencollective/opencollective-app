@@ -1,4 +1,4 @@
-import expect from 'expect';
+import {expect} from 'chai';
 import formatCurrency from '../../../lib/format_currency';
 
 describe('formatCurrency', () => {
