@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import debounce from 'lodash/function/debounce';
 
-import rejectError from '../lib/reject_error';
-
 import Content from './Content';
 import TopBar from '../components/TopBar'
 import Notification from '../components/Notification';
@@ -14,7 +12,7 @@ import ProfilePhotoUpload from '../components/ProfilePhotoUpload';
 import resetNotifications from '../actions/notification/reset';
 import notify from '../actions/notification/notify';
 import fetchGroup from '../actions/groups/fetch_by_id';
-import validateAttribute from '../actions/form/validate_group_settings';
+import validateSettings from '../actions/form/validate_group_settings';
 import appendGroupSettingsForm from '../actions/form/append_group_settings';
 import updateGroup from '../actions/groups/update_group';
 import uploadImage from '../actions/images/upload';
@@ -82,51 +80,50 @@ export class GroupSettings extends Component {
       expensePolicy: this.props.group.expensePolicy,
       isPublic: this.props.group.isPublic
     }));
+
     this.debouncedValidateAndUpdateSetting = debounce(this.validateAndUpdateSetting, 500);
   }
 
   validateAndUpdateSetting(attribute){
-      const {
-          validateAttribute,
-          notify,
-          groupid,
-          updateGroup
-      } = this.props;
+    const {
+      validateSettings,
+      notify,
+      groupid,
+      updateGroup
+    } = this.props;
 
-    return validateAttribute(attribute)
-      .then(rejectError.bind(this, 'validationError'))
+    return validateSettings(attribute)
       .then(() => updateGroup(groupid, attribute))
-      .then(rejectError.bind(this, 'serverError'))
       .catch(({message}) => notify('error', message));
   }
 
   handleChange(field, value){
-      const attribute = {
-        [field]: value
-      };
-      this.props.appendGroupSettingsForm(attribute);
-      this.debouncedValidateAndUpdateSetting(attribute);
+    const attribute = {
+      [field]: value
+    };
+    this.props.appendGroupSettingsForm(attribute);
+    this.debouncedValidateAndUpdateSetting(attribute);
   }
 }
 
 export default connect(mapStateToProps, {
-    resetNotifications,
-    fetchGroup,
-    validateAttribute,
-    appendGroupSettingsForm,
-    notify,
-    updateGroup,
-    uploadImage,
+  resetNotifications,
+  fetchGroup,
+  validateSettings,
+  appendGroupSettingsForm,
+  notify,
+  updateGroup,
+  uploadImage,
 })(GroupSettings)
 
 function mapStateToProps({groups, router, form, notification}){
-    const groupid = router.params.groupid;
-    const group = groups[groupid] || {};
-    return {
-        groupid,
-        group,
-        form1: form,
-        notification,
-        form: form.groupSettings,
-    }
+  const groupid = router.params.groupid;
+  const group = groups[groupid] || {};
+
+  return {
+    groupid,
+    group,
+    notification,
+    form: form.groupSettings,
+  }
 }

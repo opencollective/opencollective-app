@@ -12,7 +12,10 @@ export default (userid, preapprovalKey) => {
     dispatch(request(userid, preapprovalKey));
     return post(url)
       .then(json => dispatch(success(userid, preapprovalKey, json)))
-      .catch(err => dispatch(failure(err)));
+      .catch(err => {
+        dispatch(failure(err));
+        throw new Error(err.message);
+      });
   };
 };
 
