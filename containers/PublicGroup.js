@@ -7,6 +7,7 @@ import take from 'lodash/array/take';
 import contains from 'lodash/collection/contains';
 import uniq from 'lodash/array/uniq';
 import values from 'lodash/object/values';
+import sortBy from 'lodash/collection/sortBy'
 
 import convertToCents from '../lib/convert_to_cents';
 import filterCollection from '../lib/filter_collection';
@@ -224,7 +225,8 @@ export function donateToGroup(amount, token) {
     frequency,
     showAdditionalUserInfoForm,
     fetchGroup,
-    slug
+    slug,
+    fetchTransactions
   } = this.props;
 
   const payment = {
@@ -241,6 +243,12 @@ export function donateToGroup(amount, token) {
   return donate(groupid, payment)
   .then(() => showAdditionalUserInfoForm())
   .then(() => fetchGroup(slug))
+  .then(() => fetchTransactions(slug, {
+                per_page: 2,
+                sort: 'createdAt',
+                direction: 'desc',
+                donation: true
+  }))
   .catch((err) => notify('error', err.message));
 }
 
@@ -291,8 +299,8 @@ function mapStateToProps({
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
     members,
-    donations: take(donations, 2),
-    expenses: take(expenses, 2),
+    donations: take(sortBy(donations, function(txn) { return txn.createdAt}).reverse(), 2),
+    expenses: take(sortBy(expenses, function(exp) { return exp.createdAt}).reverse(), 2),
     amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
     frequency: form.donation.attributes.frequency || 'one-time',
     stripeAmount: convertToCents(form.donation.attributes.amount),
