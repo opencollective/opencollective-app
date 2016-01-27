@@ -1,10 +1,11 @@
-import expect from 'expect';
+import {expect} from 'chai';
 import errorDetail from '../../lib/error_detail';
 
 describe('errorDetail', () => {
 
   it('should return the detail', () => {
     const error = {
+      name: 'ValidationError',
       details: [{
         message: 'Title is not allowed to be empty',
         path: 'description',
@@ -12,7 +13,7 @@ describe('errorDetail', () => {
       }]
     };
 
-    expect(errorDetail({error}), error.details[0]);
+    expect(errorDetail({error})).to.equal(error.details[0]);
   });
 
   it('should return an empty object if unvalid', () => {
@@ -20,7 +21,7 @@ describe('errorDetail', () => {
       details: []
     };
 
-    expect(errorDetail({error}), {});
+    expect(errorDetail({error})).to.deep.equal({});
   });
 
 });
