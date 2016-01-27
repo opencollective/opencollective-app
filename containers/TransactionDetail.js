@@ -7,6 +7,7 @@ import payTransaction from '../actions/transactions/pay';
 import updateTransaction from '../actions/transactions/update';
 import approveTransaction from '../actions/transactions/approve';
 import rejectTransaction from '../actions/transactions/reject';
+import deleteTransaction from '../actions/transactions/delete';
 import fetchTransaction from '../actions/transactions/fetch_by_id';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
@@ -23,10 +24,10 @@ import paymentMethods from '../ui/payment_methods';
 import TopBar from '../components/TopBar';
 import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
-import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import ReceiptPreview from '../components/ReceiptPreview';
 
 import Notification from '../components/Notification';
+import AsyncButton from '../components/AsyncButton';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
 import Select from '../components/Select';
@@ -34,6 +35,14 @@ import TransactionStatus from '../components/TransactionStatus';
 
 import isHost from '../lib/is_host';
 import transactionIsDonation from '../lib/is_donation';
+
+const Title = ({description}) => (
+  <div className='Well'>
+    <div className='Well-primary'>
+      {description}
+    </div>
+  </div>
+);
 
 class TransactionDetail extends Component {
   render() {
@@ -75,7 +84,7 @@ class TransactionDetail extends Component {
         <Content isLoading={isLoading}>
           <Notification {...this.props} />
 
-          <TransactionDetailTitle {...transaction} />
+          <Title description={transaction.description} />
 
           <div className={className}>
 
@@ -101,7 +110,18 @@ class TransactionDetail extends Component {
               <TransactionStatus {...transaction} />
             </div>
 
-            {!isReimbursed && isHost && isExpense && !isRejected && (
+            {isExpense && isRejected && isHost && (
+              <div className='u-mt1'>
+                <AsyncButton
+                  color='red'
+                  onClick={deleteExpense.bind(this)}>
+                  Delete expense
+                </AsyncButton>
+              </div>
+
+            )}
+
+            {!isReimbursed && !isRejected && isHost && isExpense && (
               <div>
                 <div className='TransactionDetail-paymentMethod'>
                   <div className='u-bold u-py1'>Payment method</div>
@@ -186,6 +206,20 @@ export function reject() {
   .catch(({message}) => notify('error', message));
 };
 
+export function deleteExpense() {
+  const {
+    notify,
+    deleteTransaction,
+    groupid,
+    transactionid
+  } = this.props;
+
+  deleteTransaction(groupid, transactionid)
+  .then(() => notify('success', 'Expense is deleted'))
+  .then(() => this.nextPage())
+  .catch(({message}) => notify('error', message));
+};
+
 export default connect(mapStateToProps, {
   fetchTransaction,
   approveTransaction,
@@ -198,6 +232,7 @@ export default connect(mapStateToProps, {
   payTransaction,
   notify,
   resetNotifications,
+  deleteTransaction,
   updateTransaction
 })(TransactionDetail);
 
