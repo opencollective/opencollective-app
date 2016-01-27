@@ -69,7 +69,8 @@ describe('PublicGroup container', () => {
       },
       notify,
       showAdditionalUserInfoForm,
-      fetchGroup: () => Promise.resolve()
+      fetchGroup: () => Promise.resolve(),
+      fetchTransactions: () => Promise.resolve()
     };
 
     donateToGroup.call({props}, 10, token)
@@ -108,6 +109,7 @@ describe('PublicGroup container', () => {
       },
       showAdditionalUserInfoForm,
       fetchGroup: () => Promise.resolve(),
+      fetchTransactions: () => Promise.resolve(),
       frequency: 'month'
     };
 
@@ -146,6 +148,7 @@ describe('PublicGroup container', () => {
       notify,
       showAdditionalUserInfoForm,
       fetchGroup: () => Promise.resolve(),
+      fetchTransactions: () => Promise.resolve(),
       frequency: 'one-time'
     };
 
