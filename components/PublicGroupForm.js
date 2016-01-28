@@ -18,7 +18,8 @@ const PublicGroupForm = ({
 
   const frequencyHuman = frequency === 'one-time' ? '' : `per ${frequency}`;
 
-  const stripeDescription = `${formatCurrency(amount, group.currency)} ${frequencyHuman}`
+  let stripeDescription =  `${formatCurrency(amount, group.currency, { compact: false })} ${frequencyHuman}`;
+
 
   return (
     <div className='PublicGroupForm'>
