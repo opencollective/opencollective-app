@@ -51,6 +51,7 @@ class TransactionDetail extends Component {
       isHost,
       isReimbursed,
       isRejected,
+      showEditButton,
 
       approveInProgress,
       rejectInProgress,
@@ -65,13 +66,15 @@ class TransactionDetail extends Component {
       'TransactionDetail--noImage': !transaction.link
     });
 
-    const backLink = (isPublic ?  '/public' : '/app') + `/groups/${groupid}/transactions/`;
-
     return (
       <div>
         <TopBar
           title={group.name}
-          backLink={backLink} />
+          backLink={`${isPublic ? '/public' : '/app'}/groups/${groupid}/transactions/`}
+          rightLink={showEditButton && {
+            label: 'Edit',
+            url: `/app/groups/${groupid}/transactions/${transactionid}/edit`
+          }} />
         <Content isLoading={isLoading}>
           <Notification {...this.props} />
 
@@ -241,6 +244,7 @@ function mapStateToProps({
     isLoading: !transaction.id,
     isRejected: transaction.approvedAt && !transaction.approved,
     isReimbursed: !!transaction.reimbursedAt,
+    showEditButton: !transaction.approvedAt && transaction.amount < 0,
 
     approveInProgress: transactions.approveInProgress,
     payInProgress: transactions.payInProgress,

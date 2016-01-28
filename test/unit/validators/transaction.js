@@ -14,6 +14,7 @@ describe('validator transaction', () => {
 
   it('should resolve the promise when the data is valid', (done) => {
     const transaction = {
+      link: 'http://google.com/photo.jpg',
       description: 'Expense',
       amount: 10,
       vat: 10.13,

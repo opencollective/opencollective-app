@@ -44,3 +44,11 @@
   position: relative;
   cursor: pointer;
 }
+
+.TopBar-rightLink {
+  float: right;
+  line-height: var(--topbar-height);
+  z-index: 20;
+  cursor: pointer;
+  position: relative;
+}

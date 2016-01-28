@@ -3,6 +3,7 @@ import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 import { Profile, save, cancel, getPreapprovalInfo } from '../../../containers/Profile';
+import noop from '../helpers/noop';
 
 const {expect} = chai;
 const {
@@ -20,10 +21,10 @@ chai.use(spies);
 describe('Profile container', () => {
 
   describe('on mount', function () {
-    const fetchUser = chai.spy(() => Promise.resolve({}));
-    const resetNotifications = chai.spy(() => Promise.resolve({}));
-    const getPreapprovalDetails = chai.spy(() => Promise.resolve({}));
-    const fetchCards = chai.spy(() => Promise.resolve({}));
+    const fetchUser = chai.spy(noop);
+    const resetNotifications = chai.spy(noop);
+    const getPreapprovalDetails = chai.spy(noop);
+    const fetchCards = chai.spy(noop);
 
     before(() => {
       createElement({
@@ -31,7 +32,7 @@ describe('Profile container', () => {
         resetNotifications,
         getPreapprovalDetails,
         fetchCards,
-        fetchGroups: () => {},
+        fetchGroups: noop,
         notification: {},
         userid: 1,
         user: {},
@@ -56,7 +57,7 @@ describe('Profile container', () => {
   it('should notify when validateProfile fails on saving', (done) => {
     const message = 'fail';
     const validateProfile = () => Promise.resolve({error: { message }});
-    const notify = chai.spy(() => {});
+    const notify = chai.spy(noop);
 
     const props = {
       validateProfile,
@@ -73,15 +74,12 @@ describe('Profile container', () => {
 
 
   it('should call updatePaypalEmail when validateProfile succeeds', (done) => {
-    const validateProfile = () => Promise.resolve({});
-    const fetchUser = () => Promise.resolve({});
-    const setEditMode = () => Promise.resolve({});
-    const updatePaypalEmail = chai.spy(() => Promise.resolve({}));
+    const updatePaypalEmail = chai.spy(noop);
 
     const props = {
-      validateProfile,
-      fetchUser,
-      setEditMode,
+      validateProfile: noop,
+      fetchUser: noop,
+      setEditMode: noop,
       updatePaypalEmail,
       user: { id: 1 },
       form: { attributes: {paypalEmail: 'test@gmail.com'} }
@@ -96,7 +94,7 @@ describe('Profile container', () => {
   });
 
   it('should setEditMode to false when canceling', () => {
-    const setEditMode = chai.spy(() => {});
+    const setEditMode = chai.spy(noop);
 
     cancel.apply({ props: { setEditMode }});
 
@@ -114,7 +112,7 @@ describe('Profile container', () => {
       userid: 1,
       getPreapprovalDetails,
       card: { token: 'abc' },
-      fetchCards: () => Promise.resolve()
+      fetchCards: noop
     };
 
     getPreapprovalInfo.call({props})
@@ -125,13 +123,13 @@ describe('Profile container', () => {
   });
 
   it('should NOT get preapproval details if the card does not have a token', (done) => {
-    const getPreapprovalDetails = chai.spy(() => {});
+    const getPreapprovalDetails = chai.spy(noop);
 
     const props = {
       userid: 1,
       getPreapprovalDetails,
       card: {},
-      fetchCards: () => Promise.resolve()
+      fetchCards: noop
     };
 
     getPreapprovalInfo.call({props})
