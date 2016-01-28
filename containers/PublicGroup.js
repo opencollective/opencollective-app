@@ -302,7 +302,7 @@ function mapStateToProps({
     donations: take(sortBy(donations, txn => txn.createdAt).reverse(), 2),
     expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), 2),
     amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
-    frequency: form.donation.attributes.frequency || 'one-time',
+    frequency: form.donation.attributes.frequency || 'month',
     stripeAmount: convertToCents(form.donation.attributes.amount),
     stripeKey: group.stripeAccount && group.stripeAccount.stripePublishableKey,
     inProgress: groups.donateInProgress,

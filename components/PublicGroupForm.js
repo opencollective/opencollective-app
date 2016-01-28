@@ -18,7 +18,10 @@ const PublicGroupForm = ({
 
   const frequencyHuman = frequency === 'one-time' ? '' : `per ${frequency}`;
 
-  const stripeDescription = `${formatCurrency(amount, group.currency)} ${frequencyHuman}`
+  let stripeDescription =  `${formatCurrency(amount, group.currency)} ${frequencyHuman}`;
+  if(group.currency == 'MXN')
+    stripeDescription = 'Mex' + stripeDescription;
+
 
   return (
     <div className='PublicGroupForm'>
