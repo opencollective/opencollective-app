@@ -18,9 +18,7 @@ const PublicGroupForm = ({
 
   const frequencyHuman = frequency === 'one-time' ? '' : `per ${frequency}`;
 
-  let stripeDescription =  `${formatCurrency(amount, group.currency)} ${frequencyHuman}`;
-  if(group.currency == 'MXN')
-    stripeDescription = 'Mex' + stripeDescription;
+  let stripeDescription =  `${formatCurrency(amount, group.currency, { compact: false })} ${frequencyHuman}`;
 
 
   return (
