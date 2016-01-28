@@ -283,6 +283,7 @@ function mapStateToProps({
 
   const hosts = filterCollection(users, { role: roles.HOST });
   const members = filterCollection(users, { role: roles.MEMBER });
+  const membersAndHost = [...hosts, ...members];
   const backers = filterCollection(users, { role: roles.BACKER });
 
   const groupTransactions = filterCollection(transactions, { GroupId });
@@ -298,7 +299,7 @@ function mapStateToProps({
     users,
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
-    members,
+    members: membersAndHost,
     donations: take(sortBy(donations, txn => txn.createdAt).reverse(), 2),
     expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), 2),
     amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
