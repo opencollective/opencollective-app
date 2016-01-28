@@ -18,7 +18,10 @@
     padding: 1rem 1rem 5rem 1rem;
     max-width: calc(var(--public-topbar-height) + var(--spacing)) auto 0 auto;
   }
-  .PublicTopBar-tagLine .Tagline {
+  .PublicTopBar .long {
+    display: none;
+  }
+  .PublicTopBar-tagLine .Tagline, .PublicTopBar-signup {
     font-size: .8rem;
   }
   .PublicGroup-video, .PublicGroup-image, .PublicGroup-summary {

@@ -41,7 +41,7 @@ import hideAdditionalUserInfoForm from '../actions/users/hide_additional_user_in
 import appendProfileForm from '../actions/form/append_profile';
 import updateUser from '../actions/users/update_user';
 import validateDonationProfile from '../actions/form/validate_donation_profile';
-
+import logout from '../actions/session/logout';
 
 export class PublicGroup extends Component {
 
@@ -93,7 +93,7 @@ export class PublicGroup extends Component {
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
 
-          <PublicTopBar />
+          <PublicTopBar session={this.props.session} logout={logoutAndRedirect.bind(this)} />
           <Notification {...this.props} />
 
           <div className='PublicContent'>
@@ -265,8 +265,14 @@ export default connect(mapStateToProps, {
   hideAdditionalUserInfoForm,
   appendProfileForm,
   updateUser,
+  logout,
   validateDonationProfile
 })(PublicGroup);
+
+function logoutAndRedirect() {
+  this.props.logout();
+  this.props.replaceState(null, '/app/login?next=');
+};
 
 function mapStateToProps({
   router,
@@ -274,7 +280,8 @@ function mapStateToProps({
   form,
   notification,
   transactions,
-  users
+  users,
+  session
 }) {
   const slug = router.params.slug;
   const status = router.location.query.status;
@@ -296,6 +303,7 @@ function mapStateToProps({
     group,
     notification,
     users,
+    session,
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
     members,
