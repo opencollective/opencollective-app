@@ -25,7 +25,7 @@
     "build:css": "cssnext static/css/main.css static/build.css",
     "watch:css": "cssnext --watch static/css/main.css static/build.css -v",
     "watch:js": "NODE_ENV=development watchify client.js -o static/bundle.js -dv",
-    "watch:test": "NODE_ENV=test mocha --watch",
+    "watch:test": "NODE_ENV=test mocha test/unit/ --opts test/unit/mocha.opts --watch",
     "postinstall": "npm run build",
     "git:clean": "git branch --merged | grep -v \\* | grep -v master | grep -v dev | xargs -n 1 git branch -d",
     "testserver": "NODE_ENV=test_server npm start"
@@ -91,6 +91,7 @@
     "jscs": "^2.1.1",
     "jsdom": "3.1.2",
     "localmockage": "0.0.1",
+    "loose-envify": "^1.1.0",
     "mocha": "^2.3.3",
     "nightwatch": "^0.8.15",
     "react-addons-test-utils": "^0.14.0",
