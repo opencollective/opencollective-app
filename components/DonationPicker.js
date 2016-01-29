@@ -6,7 +6,7 @@ import Input from './Input';
 import RadioGroup from 'react-radio-group';
 
 export default ({value, currency, frequency, onChange}) => {
-  const presetAmounts = [5, 10, 50, 100, 'custom'];
+  const presetAmounts = [1, 5, 10, 20, 50, 'custom'];
   const frequencies = [{
     label: 'Monthly',
     value: 'month'
