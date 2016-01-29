@@ -11,7 +11,8 @@ import {
   PublicTransactions,
   PublicTransaction,
   GroupSettings,
-  TransactionEdit
+  TransactionEdit,
+  ForgotPassword
 } from '../containers';
 
 import { requireAuthentication } from '../components/AuthenticatedComponent';
@@ -20,6 +21,8 @@ const routes = {
   component: App,
   childRoutes: [
     { path: 'app/login', component: Login },
+
+    { path: 'app/forgot', component: ForgotPassword },
 
     // Public routes (web)
     { path: 'public/groups/:groupid', component: PublicGroup },
