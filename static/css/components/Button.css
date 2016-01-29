@@ -42,6 +42,7 @@
   background-color: var(--dark-green);
 }
 
+.Button--red,
 .Button--reject,
 .Button--cancel {
   background-color: var(--red);
@@ -50,7 +51,9 @@
 
 .Button--reject:hover,
 .Button--cancel:hover,
+.Button--red:hover,
 .Button--reject:active,
+.Button--red:active,
 .Button--cancel:active {
   background-color: var(--dark-red);
 }

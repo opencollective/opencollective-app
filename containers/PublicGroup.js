@@ -43,6 +43,9 @@ import updateUser from '../actions/users/update_user';
 import validateDonationProfile from '../actions/form/validate_donation_profile';
 import logout from '../actions/session/logout';
 
+// Number of expenses and revenue items to show on the public page
+const NUM_TRANSACTIONS_TO_SHOW = 3;
+
 export class PublicGroup extends Component {
 
   GroupVideoOrImage(group) {
@@ -112,7 +115,7 @@ export class PublicGroup extends Component {
               <div className='PublicGroup-metricContainer'>
                 <Metric
                   label='Funds Available'
-                  value={formatCurrency(group.balance, group.currency, 0)} />
+                  value={formatCurrency(group.balance, group.currency, {precision: 0})} />
                 <Metric
                   label='Backers'
                   value={group.backersCount} />
@@ -199,14 +202,14 @@ export class PublicGroup extends Component {
     fetchGroup(slug);
 
     fetchTransactions(slug, {
-      per_page: 2,
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
       sort: 'createdAt',
       direction: 'desc',
       donation: true
     });
 
     fetchTransactions(slug, {
-      per_page: 2,
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
       sort: 'createdAt',
       direction: 'desc',
       expense: true
@@ -244,7 +247,7 @@ export function donateToGroup(amount, token) {
   .then(() => showAdditionalUserInfoForm())
   .then(() => fetchGroup(slug))
   .then(() => fetchTransactions(slug, {
-                per_page: 2,
+                per_page: NUM_TRANSACTIONS_TO_SHOW,
                 sort: 'createdAt',
                 direction: 'desc',
                 donation: true
@@ -290,6 +293,7 @@ function mapStateToProps({
 
   const hosts = filterCollection(users, { role: roles.HOST });
   const members = filterCollection(users, { role: roles.MEMBER });
+  const membersAndHost = [...hosts, ...members];
   const backers = filterCollection(users, { role: roles.BACKER });
 
   const groupTransactions = filterCollection(transactions, { GroupId });
@@ -306,11 +310,11 @@ function mapStateToProps({
     session,
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
-    members,
-    donations: take(sortBy(donations, txn => txn.createdAt).reverse(), 2),
-    expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), 2),
+    members: membersAndHost,
+    donations: take(sortBy(donations, txn => txn.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
+    expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
     amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
-    frequency: form.donation.attributes.frequency || 'one-time',
+    frequency: form.donation.attributes.frequency || 'month',
     stripeAmount: convertToCents(form.donation.attributes.amount),
     stripeKey: group.stripeAccount && group.stripeAccount.stripePublishableKey,
     inProgress: groups.donateInProgress,

@@ -8,7 +8,7 @@ export default [
     value: 'paypal'
   },
   {
-    label: 'Already paid',
+    label: 'Already reimbursed',
     value: 'manual'
   }
 ];

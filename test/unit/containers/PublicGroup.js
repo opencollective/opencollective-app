@@ -2,6 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
+import noop from '../helpers/noop';
 
 import {
   PublicGroup,
@@ -28,13 +29,13 @@ chai.use(spies);
 describe('PublicGroup container', () => {
 
   it('should fetch the group on mount', () => {
-      const handler = chai.spy(() => Promise.resolve());
+      const handler = chai.spy(noop);
       createElement({
         fetchGroup: handler,
         groupid: 1,
-        resetNotifications: () => {},
-        fetchTransactions: () => Promise.resolve(),
-        fetchUsers: () => {},
+        resetNotifications: noop,
+        fetchTransactions: noop,
+        fetchUsers: noop,
         notification: {},
         group: {},
         host: {},
@@ -46,8 +47,8 @@ describe('PublicGroup container', () => {
   });
 
   it('should donate to the group', (done) => {
-    const notify = chai.spy(() => Promise.resolve());
-    const showAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
+    const notify = chai.spy(noop);
+    const showAdditionalUserInfoForm = chai.spy(noop);
     const token = {
       id: 'tok_17BNlt2eZvKYlo2CVoTcWs9D',
       email: 'test@gmail.com'
@@ -69,8 +70,8 @@ describe('PublicGroup container', () => {
       },
       notify,
       showAdditionalUserInfoForm,
-      fetchGroup: () => Promise.resolve(),
-      fetchTransactions: () => Promise.resolve()
+      fetchGroup: noop,
+      fetchTransactions: noop
     };
 
     donateToGroup.call({props}, 10, token)
@@ -96,8 +97,8 @@ describe('PublicGroup container', () => {
       expect(payment.amount).to.be.equal(10);
       return Promise.resolve();
     });
-    const notify = chai.spy(() => Promise.resolve());
-    const showAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
+    const notify = chai.spy(noop);
+    const showAdditionalUserInfoForm = chai.spy(noop);
 
 
     const props = {
@@ -108,8 +109,8 @@ describe('PublicGroup container', () => {
         currency: 'MXN'
       },
       showAdditionalUserInfoForm,
-      fetchGroup: () => Promise.resolve(),
-      fetchTransactions: () => Promise.resolve(),
+      fetchGroup: noop,
+      fetchTransactions: noop,
       frequency: 'month'
     };
 
@@ -136,8 +137,8 @@ describe('PublicGroup container', () => {
       expect(payment.amount).to.be.equal(10);
       return Promise.resolve();
     });
-    const notify = chai.spy(() => Promise.resolve());
-    const showAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
+    const notify = chai.spy(noop);
+    const showAdditionalUserInfoForm = chai.spy(noop);
 
     const props = {
       groupid: 1,
@@ -147,8 +148,8 @@ describe('PublicGroup container', () => {
       },
       notify,
       showAdditionalUserInfoForm,
-      fetchGroup: () => Promise.resolve(),
-      fetchTransactions: () => Promise.resolve(),
+      fetchGroup: noop,
+      fetchTransactions: noop,
       frequency: 'one-time'
     };
 
@@ -162,11 +163,11 @@ describe('PublicGroup container', () => {
   });
 
   it('should save the user info', (done) => {
-    const validateDonationProfile = chai.spy(() => Promise.resolve());
-    const notify = chai.spy(() => Promise.resolve());
-    const updateUser = chai.spy(() => Promise.resolve());
-    const fetchUsers = chai.spy(() => Promise.resolve());
-    const hideAdditionalUserInfoForm = chai.spy(() => Promise.resolve());
+    const validateDonationProfile = chai.spy(noop);
+    const notify = chai.spy(noop);
+    const updateUser = chai.spy(noop);
+    const fetchUsers = chai.spy(noop);
+    const hideAdditionalUserInfoForm = chai.spy(noop);
     const pushState = chai.spy((ctx, url) => {
       expect(url).to.be.equal('/groupslug?status=thankyou')
     });
@@ -234,10 +235,10 @@ describe('PublicGroup container', () => {
       message: 'Fail'
     };
     const element = createElement({
-      fetchGroup: () => Promise.resolve(),
-      fetchTransactions: () => Promise.resolve(),
-      fetchUsers: () => {},
-      resetNotifications: () => {},
+      fetchGroup: noop,
+      fetchTransactions: noop,
+      fetchUsers: noop,
+      resetNotifications: noop,
       groupid: 1,
       group: {},
       notification,

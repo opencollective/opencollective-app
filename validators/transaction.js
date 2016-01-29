@@ -11,10 +11,11 @@ import paymentMethods from '../ui/payment_methods';
 
 const schema = Joi.object().keys({
   link: Joi.string().uri()
-    .label('Photo'),
+    .label('Photo')
+    .allow(null),
   description: Joi.string().required()
     .label('Description'),
-  amount: Joi.number().precision(2).min(0).required()
+  amount: Joi.number().precision(2).required()
     .label('Amount'),
   vat: Joi.number().precision(2).min(0).allow(null)
     .label('VAT'),
@@ -23,14 +24,16 @@ const schema = Joi.object().keys({
     .label('CreatedAt'),
   approvedAt: Joi.date().max(dates().tomorrow)
     .raw() // doesn't convert date into Date object
-    .label('Date'),
+    .label('Date')
+    .allow(null),
   tags: Joi.array().items(Joi.string()).required()
     .label('Category'),
   approved: Joi.boolean(),
   paymentMethod: Joi.string().valid(pluck(paymentMethods, 'value'))
     .label('Payment method'),
   comment: Joi.string()
-    .label('Comment'),
+    .label('Comment')
+    .allow(null),
 });
 
 export default (obj) => validate(obj, schema);

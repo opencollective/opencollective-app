@@ -3,6 +3,8 @@ import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 
+import noop from '../helpers/noop';
+
 import { AddFund, donate } from '../../../containers/AddFund';
 
 const { expect } = chai;
@@ -21,14 +23,14 @@ chai.use(spies);
 describe('AddFund container', () => {
 
   it('should fetch user and group on mount', () => {
-    const fetchGroup = chai.spy(() => {});
-    const fetchCards = chai.spy(() => {});
+    const fetchGroup = chai.spy(noop);
+    const fetchCards = chai.spy(noop);
 
     createElement({
       fetchGroup,
       fetchCards,
       userCardsLabels: [],
-      resetNotifications: () => {},
+      resetNotifications: noop,
       notification: {},
       group: {},
       form: { donation: {} },
@@ -54,7 +56,7 @@ describe('AddFund container', () => {
 
     donate.apply({
       props: {
-        validateTransaction: validateTransaction,
+        validateTransaction,
         groupid: 1,
         form: { donation: {} },
         group: {},
@@ -75,8 +77,8 @@ describe('AddFund container', () => {
 
     donate.apply({
       props: {
-        validateTransaction: () => Promise.resolve(),
-        createTransaction: () => Promise.resolve(),
+        validateTransaction: noop,
+        createTransaction: noop,
         pushState,
         groupid: 1,
         amount: 1,

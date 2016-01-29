@@ -3,6 +3,7 @@ import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 import roles from '../../../constants/roles';
+import noop from '../helpers/noop';
 
 import {
   GroupsList,
@@ -25,17 +26,17 @@ chai.use(spies);
 describe('GroupsList container', () => {
 
   it('fetches user, transactions and cards on mount', () => {
-    const fetchUserGroupsAndTransactions = chai.spy(() => Promise.resolve());
-    const fetchCards = chai.spy(() => Promise.resolve());
+    const fetchUserGroupsAndTransactions = chai.spy(noop);
+    const fetchCards = chai.spy(noop);
 
     createElement({
       userid: 1,
       fetchUserGroupsAndTransactions,
       fetchCards,
-      fetchUser: () => {},
+      fetchUser: noop,
       groups: [],
       query: {},
-      resetNotifications: () => {},
+      resetNotifications: noop,
       notification: {}
     });
 
@@ -56,11 +57,11 @@ describe('GroupsList container', () => {
 
     createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: () => Promise.resolve(),
-      fetchCards: () => Promise.resolve(),
+      fetchUserGroupsAndTransactions: noop,
+      fetchCards: noop,
       confirmPreapprovalKey,
-      fetchUser: () => {},
-      resetNotifications: () => {},
+      fetchUser: noop,
+      resetNotifications: noop,
       notification: {},
       groups: [],
       query
@@ -77,12 +78,12 @@ describe('GroupsList container', () => {
     };
     const element = createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: () => Promise.resolve(),
-      fetchCards: () => Promise.resolve(),
-      confirmPreapprovalKey: () => Promise.resolve(),
-      getPreapprovalKeyForUser: () => {},
-      fetchUser: () => {},
-      resetNotifications: () => {},
+      fetchUserGroupsAndTransactions: noop,
+      fetchCards: noop,
+      confirmPreapprovalKey: noop,
+      getPreapprovalKeyForUser: noop,
+      fetchUser: noop,
+      resetNotifications: noop,
       notification: {},
       groups: [],
       showPaypalReminder: true,
@@ -100,12 +101,12 @@ describe('GroupsList container', () => {
     };
     const element = createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: () => Promise.resolve(),
-      fetchCards: () => Promise.resolve(),
-      confirmPreapprovalKey: () => Promise.resolve(),
-      fetchUser: () => {},
-      getPreapprovalKeyForUser: () => {},
-      resetNotifications: () => {},
+      fetchUserGroupsAndTransactions: noop,
+      fetchCards: noop,
+      confirmPreapprovalKey: noop,
+      fetchUser: noop,
+      getPreapprovalKeyForUser: noop,
+      resetNotifications: noop,
       notification: {},
       groups: [],
       showProfileReminder: true,
@@ -118,12 +119,12 @@ describe('GroupsList container', () => {
   it('shows the stripe reminder if showStripeReminder is true', () => {
     const element = createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: () => Promise.resolve(),
-      fetchCards: () => Promise.resolve(),
-      confirmPreapprovalKey: () => Promise.resolve(),
-      getPreapprovalKeyForUser: () => {},
-      fetchUser: () => {},
-      resetNotifications: () => {},
+      fetchUserGroupsAndTransactions: noop,
+      fetchCards: noop,
+      confirmPreapprovalKey: noop,
+      getPreapprovalKeyForUser: noop,
+      fetchUser: noop,
+      resetNotifications: noop,
       notification: {},
       groups: [],
       showStripeReminder: true,
