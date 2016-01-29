@@ -11,7 +11,10 @@ export default (groupid, transactionid) => {
 
     return api.del(`groups/${groupid}/transactions/${transactionid}`)
       .then(json => dispatch(success(groupid, transactionid, json)))
-      .catch(error => dispatch(failure(error)));
+      .catch(error => {
+        dispatch(failure(error));
+        throw new Error(error.message);
+      });
   };
 };
 
@@ -23,18 +26,17 @@ function request(groupid, transactionid) {
   };
 }
 
-function success(groupid, transactionid, json) {
+function success(groupid, transactionid) {
   return {
     type: constants.DELETE_TRANSACTION_SUCCESS,
     groupid,
-    transactionid,
-    transactions: json.transactions,
+    transactionid
   };
 }
 
 function failure(error) {
   return {
     type: constants.DELETE_TRANSACTION_FAILURE,
-    error,
+    error
   };
 }
