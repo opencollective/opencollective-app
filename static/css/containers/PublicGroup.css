@@ -8,7 +8,7 @@
 }
 
 .PublicGroup-summary {
-  display: inline-block;  
+  display: inline-block;
   width: 25%;
   padding-left: calc(var(--spacing) * 1.25);
 }
@@ -32,7 +32,7 @@
 }
 
 .PublicGroup-backers {
-  clear: both;  
+  clear: both;
 }
 
 .PublicGroup-quote {
@@ -74,11 +74,6 @@
   display: inline-block;
   vertical-align: top;
   box-sizing: border-box;
-}
-
-.PublicGroup .TransactionItem .ProfilePhoto {
-  width: 4rem;
-  height: 4rem;
 }
 
 .PublicGroup .Button {

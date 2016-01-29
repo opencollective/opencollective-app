@@ -12,21 +12,19 @@ export default ({transaction, user}) => (
       url={user && user.avatar} />
 
     <div className='TransactionItem-info'>
-      <div className='TransactionItem-meta'>
-        <span className='TransactionItem-created'>
-          {transaction.createdAt && moment(transaction.createdAt).fromNow()}
-        </span>
-        <span className='TransactionItem-status'>
-          {<TransactionStatus {...transaction} />}
-        </span>
+      <div className='TransactionItem-amount'>
+        <Currency value={transaction.amount} currency={transaction.currency} />
       </div>
-
       <div className='TransactionItem-description'>
         {transaction.description}
       </div>
 
-      <div className='TransactionItem-amount'>
-        <Currency value={transaction.amount} currency={transaction.currency} />
+      <div className='TransactionItem-created'>
+        {transaction.createdAt && moment(transaction.createdAt).fromNow()}
+      </div>
+
+      <div className='TransactionItem-status'>
+          {<TransactionStatus {...transaction} />}
       </div>
     </div>
   </div>

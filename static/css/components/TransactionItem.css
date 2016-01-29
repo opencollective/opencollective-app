@@ -7,9 +7,9 @@
 
 .TransactionItem .ProfilePhoto {
   float: left;
-  width: 3rem;
-  height: 3rem;
-} 
+  width: 2.5rem;
+  height: 2.5rem;
+}
 .TransactionItem-info {
   float: left;
   width: calc(100% - 86px - 1rem);
@@ -21,24 +21,31 @@
 }
 
 .TransactionItem-created {
-  float: right;
+  clear: both;
+  float: left;
   font-size: 0.9rem;
+  width: 50%;
+  color: gray;
 }
 
 .TransactionItem-status {
-  float: left;
+  float: right;
   font-size: 0.9rem;
+  font-style: italic;
 }
 
 .TransactionItem-description {
-  clear: both;
-  font-weight: bold;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: 80%;
   font-size: 1.25rem;
+  float:left;
 }
 
 .TransactionItem-amount {
   font-size: 1.25rem;
+  float: right;
+  text-align: right;
+  width: 15%;
 }
