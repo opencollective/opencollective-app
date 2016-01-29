@@ -42,6 +42,8 @@ import appendProfileForm from '../actions/form/append_profile';
 import updateUser from '../actions/users/update_user';
 import validateDonationProfile from '../actions/form/validate_donation_profile';
 
+// Number of expenses and revenue items to show on the public page
+const NUM_TRANSACTIONS_TO_SHOW = 3;
 
 export class PublicGroup extends Component {
 
@@ -199,14 +201,14 @@ export class PublicGroup extends Component {
     fetchGroup(slug);
 
     fetchTransactions(slug, {
-      per_page: 2,
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
       sort: 'createdAt',
       direction: 'desc',
       donation: true
     });
 
     fetchTransactions(slug, {
-      per_page: 2,
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
       sort: 'createdAt',
       direction: 'desc',
       expense: true
@@ -244,7 +246,7 @@ export function donateToGroup(amount, token) {
   .then(() => showAdditionalUserInfoForm())
   .then(() => fetchGroup(slug))
   .then(() => fetchTransactions(slug, {
-                per_page: 2,
+                per_page: NUM_TRANSACTIONS_TO_SHOW,
                 sort: 'createdAt',
                 direction: 'desc',
                 donation: true
@@ -300,8 +302,8 @@ function mapStateToProps({
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
     members: membersAndHost,
-    donations: take(sortBy(donations, txn => txn.createdAt).reverse(), 2),
-    expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), 2),
+    donations: take(sortBy(donations, txn => txn.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
+    expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
     amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
     frequency: form.donation.attributes.frequency || 'month',
     stripeAmount: convertToCents(form.donation.attributes.amount),

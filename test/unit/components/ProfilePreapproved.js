@@ -34,8 +34,8 @@ describe('ProfilePreapproved component', () => {
       getPreapprovalKey: () => {}
     }, 'ProfilePreapproved-balance');
 
-    expect(element.innerHTML).to.contain('$ 1,900.00');
-    expect(element.innerHTML).to.contain('$ 2,000.00');
+    expect(element.innerHTML).to.contain('$1,900.00');
+    expect(element.innerHTML).to.contain('$2,000.00');
   });
 
   it('should repreapproved the account', () => {
