@@ -35,7 +35,6 @@ import Select from '../components/Select';
 import TransactionStatus from '../components/TransactionStatus';
 
 import isHost from '../lib/is_host';
-import transactionIsDonation from '../lib/is_donation';
 
 class TransactionDetail extends Component {
   render() {
@@ -45,15 +44,12 @@ class TransactionDetail extends Component {
 
       group,
       transaction,
-
       isPublic,
-      isManual,
-      isExpense,
       isLoading,
-      isHost,
-      isReimbursed,
-      isRejected,
       showEditButton,
+      isManual,
+      showDeleteButton,
+      showApprovalButtons,
 
       approveInProgress,
       rejectInProgress,
@@ -69,7 +65,7 @@ class TransactionDetail extends Component {
     });
 
     return (
-      <div>
+      <div className={className}>
         <TopBar
           title={group.name}
           backLink={`${isPublic ? '/public' : '/app'}/groups/${groupid}/transactions/`}
@@ -82,7 +78,7 @@ class TransactionDetail extends Component {
 
           <TransactionDetailTitle {...transaction} />
 
-          <div className={className}>
+          <div className='padded'>
 
             {/* Receipt */}
             {transaction.link && (
@@ -106,7 +102,7 @@ class TransactionDetail extends Component {
               <TransactionStatus {...transaction} />
             </div>
 
-            {isExpense && isRejected && isHost && (
+            {showDeleteButton && (
               <div className='u-mt1'>
                 <AsyncButton
                   color='red'
@@ -117,7 +113,7 @@ class TransactionDetail extends Component {
 
             )}
 
-            {!isReimbursed && !isRejected && isHost && isExpense && (
+            {showApprovalButtons && (
               <div>
                 <div className='TransactionDetail-paymentMethod'>
                   <div className='u-bold u-py1'>Payment method</div>
@@ -210,10 +206,10 @@ export function deleteExpense() {
     transactionid
   } = this.props;
 
-  deleteTransaction(groupid, transactionid)
-  .then(() => notify('success', 'Expense is deleted'))
-  .then(() => this.nextPage())
-  .catch(({message}) => notify('error', message));
+  return deleteTransaction(groupid, transactionid)
+    .then(() => notify('success', 'Expense is deleted'))
+    .then(() => this.nextPage())
+    .catch(({message}) => notify('error', message));
 };
 
 export default connect(mapStateToProps, {
@@ -232,7 +228,7 @@ export default connect(mapStateToProps, {
   updateTransaction
 })(TransactionDetail);
 
-function mapStateToProps({
+export function mapStateToProps({
   router,
   transactions,
   users,
@@ -246,13 +242,16 @@ function mapStateToProps({
   const user = users[userid] || {};
   const group = groups[groupid] || {};
   const transaction = transactions[transactionid] || {};
+  const {
+    isExpense,
+    isDonation,
+    isManual,
+    isRejected,
+    isReimbursed
+  } = transaction;
 
   const userGroups = user.groups || {};
   const userIsHost = isHost([userGroups[groupid]]) ;
-
-  const isDonation = transactionIsDonation(transaction) ;
-  const isExpense = !isDonation;
-  const isManual = transaction.paymentMethod === 'manual';
 
   return {
     groupid,
@@ -265,15 +264,17 @@ function mapStateToProps({
     tags: tags(groupid),
     commenter: users[transaction.UserId] || {},
 
+    isHost: userIsHost,
+    isLoading: !transaction.id,
     isDonation,
     isExpense,
     isManual,
-    isHost: userIsHost,
-    isLoading: !transaction.id,
-    isRejected: transaction.approvedAt && !transaction.approved,
-    isReimbursed: !!transaction.reimbursedAt,
-    showEditButton: !transaction.approvedAt && transaction.amount < 0,
+    showEditButton: !transaction.approvedAt && isExpense,
 
+    isReimbursed,
+    isRejected,
+    showDeleteButton: isExpense && isRejected && userIsHost,
+    showApprovalButtons: !isReimbursed && !isRejected && isHost && isExpense,
     approveInProgress: transactions.approveInProgress,
     payInProgress: transactions.payInProgress,
     rejectInProgress: transactions.rejectInProgress,

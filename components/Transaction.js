@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 
-import isDonation from '../lib/is_donation';
-
 import Currency from './Currency';
 import TransactionStatus from './TransactionStatus';
 import ProfilePhoto from './ProfilePhoto';
@@ -18,9 +16,10 @@ class Transaction extends Component {
       GroupId,
       createdAt,
       user,
+      isDonation,
       isPublic
     } = this.props;
-    const hideStatus = isDonation(this.props);
+
     const prefix = isPublic ? '/public' : '/app';
 
     return (
@@ -35,7 +34,7 @@ class Transaction extends Component {
             <div className='Transaction-status'>
               <div className='Transaction-amount'><Currency value={amount} currency={currency} precision={2} /></div>
               <div className='Transaction-approved'>
-                {hideStatus ? null : <TransactionStatus {...this.props} />}
+                {!isDonation && <TransactionStatus {...this.props} />}
               </div>
             </div>
           </div>
