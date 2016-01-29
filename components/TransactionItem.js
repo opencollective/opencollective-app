@@ -24,7 +24,7 @@ export default ({transaction, user}) => (
       </div>
 
       <div className='TransactionItem-status'>
-          {<TransactionStatus {...transaction} />}
+          <TransactionStatus {...transaction} />
       </div>
     </div>
   </div>

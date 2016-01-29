@@ -42,8 +42,8 @@ import appendProfileForm from '../actions/form/append_profile';
 import updateUser from '../actions/users/update_user';
 import validateDonationProfile from '../actions/form/validate_donation_profile';
 
-import { NUM_TRANSACTIONS_TO_SHOW } from '../constants/variables';
-
+// Number of expenses and revenue items to show on the public page
+const NUM_TRANSACTIONS_TO_SHOW = 3;
 
 export class PublicGroup extends Component {
 
