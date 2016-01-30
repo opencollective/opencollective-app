@@ -7,6 +7,7 @@ import take from 'lodash/array/take';
 import contains from 'lodash/collection/contains';
 import uniq from 'lodash/array/uniq';
 import values from 'lodash/object/values';
+import sortBy from 'lodash/collection/sortBy'
 
 import convertToCents from '../lib/convert_to_cents';
 import filterCollection from '../lib/filter_collection';
@@ -40,7 +41,10 @@ import hideAdditionalUserInfoForm from '../actions/users/hide_additional_user_in
 import appendProfileForm from '../actions/form/append_profile';
 import updateUser from '../actions/users/update_user';
 import validateDonationProfile from '../actions/form/validate_donation_profile';
+import logout from '../actions/session/logout';
 
+// Number of expenses and revenue items to show on the public page
+const NUM_TRANSACTIONS_TO_SHOW = 3;
 
 export class PublicGroup extends Component {
 
@@ -92,7 +96,7 @@ export class PublicGroup extends Component {
       <BodyClassName className='Public'>
         <div className='PublicGroup'>
 
-          <PublicTopBar />
+          <PublicTopBar session={this.props.session} logout={logoutAndRedirect.bind(this)} />
           <Notification {...this.props} />
 
           <div className='PublicContent'>
@@ -111,7 +115,7 @@ export class PublicGroup extends Component {
               <div className='PublicGroup-metricContainer'>
                 <Metric
                   label='Funds Available'
-                  value={formatCurrency(group.balance, group.currency, 0)} />
+                  value={formatCurrency(group.balance, group.currency, {precision: 0})} />
                 <Metric
                   label='Backers'
                   value={group.backersCount} />
@@ -198,14 +202,14 @@ export class PublicGroup extends Component {
     fetchGroup(slug);
 
     fetchTransactions(slug, {
-      per_page: 2,
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
       sort: 'createdAt',
       direction: 'desc',
       donation: true
     });
 
     fetchTransactions(slug, {
-      per_page: 2,
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
       sort: 'createdAt',
       direction: 'desc',
       expense: true
@@ -222,7 +226,10 @@ export function donateToGroup(amount, token) {
     donate,
     group,
     frequency,
-    showAdditionalUserInfoForm
+    showAdditionalUserInfoForm,
+    fetchGroup,
+    slug,
+    fetchTransactions
   } = this.props;
 
   const payment = {
@@ -238,6 +245,13 @@ export function donateToGroup(amount, token) {
 
   return donate(groupid, payment)
   .then(() => showAdditionalUserInfoForm())
+  .then(() => fetchGroup(slug))
+  .then(() => fetchTransactions(slug, {
+                per_page: NUM_TRANSACTIONS_TO_SHOW,
+                sort: 'createdAt',
+                direction: 'desc',
+                donation: true
+  }))
   .catch((err) => notify('error', err.message));
 }
 
@@ -254,8 +268,14 @@ export default connect(mapStateToProps, {
   hideAdditionalUserInfoForm,
   appendProfileForm,
   updateUser,
+  logout,
   validateDonationProfile
 })(PublicGroup);
+
+function logoutAndRedirect() {
+  this.props.logout();
+  this.props.replaceState(null, '/app/login?next=');
+};
 
 function mapStateToProps({
   router,
@@ -263,7 +283,8 @@ function mapStateToProps({
   form,
   notification,
   transactions,
-  users
+  users,
+  session
 }) {
   const slug = router.params.slug;
   const status = router.location.query.status;
@@ -272,6 +293,7 @@ function mapStateToProps({
 
   const hosts = filterCollection(users, { role: roles.HOST });
   const members = filterCollection(users, { role: roles.MEMBER });
+  const membersAndHost = [...hosts, ...members];
   const backers = filterCollection(users, { role: roles.BACKER });
 
   const groupTransactions = filterCollection(transactions, { GroupId });
@@ -285,13 +307,14 @@ function mapStateToProps({
     group,
     notification,
     users,
+    session,
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
-    members,
-    donations: take(donations, 2),
-    expenses: take(expenses, 2),
+    members: membersAndHost,
+    donations: take(sortBy(donations, txn => txn.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
+    expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
     amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
-    frequency: form.donation.attributes.frequency || 'one-time',
+    frequency: form.donation.attributes.frequency || 'month',
     stripeAmount: convertToCents(form.donation.attributes.amount),
     stripeKey: group.stripeAccount && group.stripeAccount.stripePublishableKey,
     inProgress: groups.donateInProgress,

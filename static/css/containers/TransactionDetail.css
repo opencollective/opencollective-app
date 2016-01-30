@@ -1,7 +1,3 @@
-.TransactionDetail {
-  padding: var(--spacing);
-}
-
 .TransactionDetail-image {
   float: left;
   padding-right: var(--spacing);

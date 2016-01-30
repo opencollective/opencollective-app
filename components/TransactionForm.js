@@ -48,7 +48,8 @@ class TransactionForm extends Component {
       group,
       appendTransactionForm,
       isUploading,
-      enableVAT
+      enableVAT,
+      children
     } = this.props;
 
     const attributes = transaction.attributes;
@@ -78,6 +79,7 @@ class TransactionForm extends Component {
           <div>
             <label className='inline'>Description: </label>
             <Input
+              customClass='js-transaction-description'
               hasError={transaction.error.description}
               value={transaction.attributes.description}
               handleChange={description => appendTransactionForm({description})} />
@@ -85,6 +87,7 @@ class TransactionForm extends Component {
           <div>
             <label className='inline'>Amount: </label>
             <Input
+              customClass='js-transaction-amount'
               placeholder={amountPlaceholder}
               hasError={transaction.error.amount}
               value={transaction.attributes.amount}
@@ -121,8 +124,7 @@ class TransactionForm extends Component {
               value={attributes.comment}
               handleChange={comment => appendTransactionForm({comment})} />
           </div>
-
-          <SubmitButton />
+          {children || <SubmitButton />}
         </form>
       </div>
     );
@@ -130,7 +132,7 @@ class TransactionForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.handleSubmit();
+    this.props.handleSubmit(this.props.transaction);
   }
 
   componentDidMount() {

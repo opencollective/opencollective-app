@@ -15,8 +15,8 @@ const TransactionStatus = ({approved, approvedAt, amount, reimbursedAt}) => {
     status = 'Rejected';
     iconType = 'rejected';
   } else if (amount > 0) {
-    status = 'Added';
-    iconType = 'approved';
+    status = '';
+    iconType = '';
   }
 
   return (

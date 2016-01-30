@@ -10,7 +10,8 @@ import {
   PublicGroup,
   PublicTransactions,
   PublicTransaction,
-  GroupSettings
+  GroupSettings,
+  TransactionEdit
 } from '../containers';
 
 import { requireAuthentication } from '../components/AuthenticatedComponent';
@@ -33,6 +34,7 @@ const routes = {
     { path: 'app/groups/:groupid/transactions', component: requireAuthentication(GroupTransactions)},
     { path: 'app/groups/:groupid/transactions/new', component: requireAuthentication(TransactionNew) },
     { path: 'app/groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
+    { path: 'app/groups/:groupid/transactions/:transactionid/edit', component: requireAuthentication(TransactionEdit) },
     { path: 'app/groups/:groupid/funds', component: requireAuthentication(AddFund)},
 
     { path: ':slug', component: PublicGroup },

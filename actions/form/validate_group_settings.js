@@ -11,7 +11,10 @@ export default (newAttribute) => {
 
     return groupSettingsAreValid(newAttribute)
     .then(attribute => dispatch(success(attribute)))
-    .catch(error => dispatch(failure(error)));
+    .catch(error => {
+      dispatch(failure(error));
+      throw new Error(error.details[0].message);
+    });
   };
 };
 

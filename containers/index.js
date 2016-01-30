@@ -10,6 +10,7 @@ import PublicGroup from './PublicGroup';
 import PublicTransactions from './PublicTransactions';
 import PublicTransaction from './PublicTransaction';
 import GroupSettings from './GroupSettings';
+import TransactionEdit from './TransactionEdit';
 
 export {
   App,
@@ -23,5 +24,6 @@ export {
   PublicGroup,
   PublicTransactions,
   PublicTransaction,
-  GroupSettings
+  GroupSettings,
+  TransactionEdit
 };

@@ -55,6 +55,9 @@ export default function transactions(state=defaults, action={}) {
     case constants.UPDATE_TRANSACTION_FAILURE:
       return merge({}, state, { updateInProgress: false });
 
+    case constants.DELETE_TRANSACTION_SUCCESS:
+      return merge({}, omit(state, action.transactionid));
+
     default:
       return state;
   }
