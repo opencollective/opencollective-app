@@ -6,50 +6,40 @@ import CancelButton from './CancelButton';
 import Input from './Input';
 
 class ProfileFormEdit extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     const {
       user,
-      form,
       save,
       saveInProgress,
       cancel,
-      appendProfileForm
+      error
     } = this.props;
-    const { paypalEmail } = user;
 
     return (
       <div className='ProfileForm'>
         <div className='Profile-header'>
           <ProfilePhotoUpload
-          {...this.props}
-          value={form.attributes.link || user.avatar}
-          onFinished={link => appendProfileForm({link})} />
+            {...this.props}
+            value={this.state.link || user.avatar}
+            onFinished={link => this.setState({link})} />
         </div>
-        <label>Password reset</label>
-        <Input
-          type='password'
-          customClass='ProfileForm-input'
-          placeholder='New password'
-          value={form.attributes.password}
-          handleChange={password => appendProfileForm({password})} />
-
-        <Input
-          type='password'
-          customClass='ProfileForm-input'
-          placeholder='New password confirmation'
-          value={form.attributes.passwordConfirmation}
-          handleChange={passwordConfirmation => appendProfileForm({passwordConfirmation})}/>
 
         <label>Paypal Account</label>
         <Input
           type='email'
           customClass='ProfileForm-input'
           placeholder='user@email.com'
-          value={form.attributes.paypalEmail || paypalEmail}
-          handleChange={paypalEmail => appendProfileForm({paypalEmail})}/>
+          hasError={error.paypalEmail}
+          value={this.state.paypalEmail || user.paypalEmail}
+          handleChange={paypalEmail => this.setState({paypalEmail})}/>
         <div>
           <SaveButton
-            save={save}
+            save={() => save(this.state)}
             inProgress={saveInProgress} />
           <CancelButton
             cancel={cancel}
@@ -57,12 +47,6 @@ class ProfileFormEdit extends Component {
         </div>
       </div>
     );
-  }
-
-  append({target}) {
-    this.props.appendProfileForm({
-      paypalEmail: target.value
-    });
   }
 
 }

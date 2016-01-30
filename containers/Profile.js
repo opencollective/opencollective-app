@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
 import values from 'lodash/object/values';
+import Joi from 'joi';
 
 import Content from './Content';
+
 import TopBar from '../components/TopBar';
-import ProfileForm from '../components/ProfileForm';
 import Notification from '../components/Notification';
-import setEditMode from '../actions/form/set_edit_mode_profile';
-import appendProfileForm from '../actions/form/append_profile';
-import validateProfile from '../actions/form/validate_profile';
+import ProfileFormDefault from '../components/ProfileFormDefault';
+import ProfileFormEdit from '../components/ProfileFormEdit';
+
+import validate from '../actions/form/validate_schema';
 
 import updatePaypalEmail from '../actions/users/update_paypal_email';
 import updateAvatar from '../actions/users/update_avatar';
-import updatePassword from '../actions/users/update_password';
 import fetchUser from '../actions/users/fetch_by_id';
 import fetchCards from '../actions/users/fetch_cards';
 import fetchGroups from '../actions/users/fetch_groups';
@@ -25,9 +26,18 @@ import resetNotifications from '../actions/notification/reset';
 import logout from '../actions/session/logout';
 import { getPaypalCard } from '../reducers/users';
 
-// Use named export for unconnected component (for tests)
-// http://rackt.org/redux/docs/recipes/WritingTests.html
 export class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditMode: false
+    };
+    this.schema = Joi.object().keys({
+      paypalEmail: Joi.string().email().label('PayPal account'),
+      link: Joi.string().uri().label('Photo'),
+    });
+  }
+
   render() {
     return (
       <div className='Profile'>
@@ -35,11 +45,17 @@ export class Profile extends Component {
         <Content>
           <Notification {...this.props} />
           <div className='padded'>
-            <ProfileForm
-              {...this.props}
-              logoutAndRedirect={logoutAndRedirect.bind(this)}
-              save={save.bind(this)}
-              cancel={cancel.bind(this)} />
+            {this.state.isEditMode ?
+              (
+                <ProfileFormEdit {...this.props}
+                  save={save.bind(this)}
+                  cancel={cancel.bind(this)} />
+              ) : (
+                <ProfileFormDefault {...this.props}
+                  logoutAndRedirect={logoutAndRedirect.bind(this)}
+                  setEditMode={() => this.setEditMode(true)} />
+              )
+            }
           </div>
         </Content>
       </div>
@@ -56,6 +72,10 @@ export class Profile extends Component {
     fetchUser(userid);
     getPreapprovalInfo.call(this);
     fetchGroups(userid, {stripe: true});
+  }
+
+  setEditMode(isEditMode) {
+    this.setState({isEditMode});
   }
 }
 
@@ -89,50 +109,38 @@ export function logoutAndRedirect() {
 };
 
 export function cancel() {
-  this.props.setEditMode(false);
+  this.setEditMode(false);
+  this.props.resetNotifications();
 };
 
-export function save() {
+export function save(profile) {
   const {
     user,
     updatePaypalEmail,
     updateAvatar,
-    form,
-    validateProfile,
+    validate,
     notify,
-    setEditMode,
     fetchUser
   } = this.props;
 
-  const { paypalEmail, link, password, passwordConfirmation } = form.attributes;
+  const { paypalEmail, link } = profile;
 
-  return validateProfile(form.attributes)
-  .then(() => {
-    if (paypalEmail) {
-      return updatePaypalEmail(user.id, paypalEmail)
-    }
-  })
-  .then(() => {
-    if (link) {
-      return updateAvatar(user.id, link)
-    }
-  })
-  .then(() => {
-    if (password && passwordConfirmation) {
-      return resetPassword.call(this, user.id, password, passwordConfirmation);
-    }
-  })
-  .then(() => fetchUser(user.id)) // refresh email after saving
-  .then(() => setEditMode(false))
-  .catch(({message}) => notify('error', message));
-};
+  return validate(profile, this.schema)
+    .then(() => {
+      if (paypalEmail) return updatePaypalEmail(user.id, paypalEmail);
+    })
+    .then(() => {
+      if (link) return updateAvatar(user.id, link)
+    })
+    .then(() => fetchUser(user.id)) // refresh email after saving
+    .then(() => this.setEditMode(false))
+    .catch(({message}) => notify('error', message));
+  };
 
 export default connect(mapStateToProps, {
-  setEditMode,
   updatePaypalEmail,
   updateAvatar,
-  appendProfileForm,
-  validateProfile,
+  validate,
   resetNotifications,
   fetchUser,
   notify,
@@ -142,11 +150,10 @@ export default connect(mapStateToProps, {
   fetchCards,
   getPreapprovalKey,
   fetchGroups,
-  uploadImage,
-  updatePassword
+  uploadImage
 })(Profile);
 
-function mapStateToProps({session, form, notification, users, images}) {
+function mapStateToProps({session, notification, users, images, form}) {
   const userid = session.user.id;
   const user = users[userid] || {};
   const card = getPaypalCard(users, userid);
@@ -158,12 +165,11 @@ function mapStateToProps({session, form, notification, users, images}) {
     notification,
     card,
     preapprovalDetails,
-    form: form.profile,
     user,
-    isEditMode: form.profile.isEditMode,
     saveInProgress: users.updateInProgress,
     hasPreapproved,
     isUploading: images.isUploading || false,
-    groups: values(user.groups)
+    groups: values(user.groups),
+    error: form.schema.error
   };
 }
