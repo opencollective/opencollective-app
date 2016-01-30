@@ -22,7 +22,7 @@ class ForgotPassword extends Component {
   render() {
     return (
       <div className='ForgotPassword'>
-        <TopBar title='Sign in' />
+        <TopBar title='Forgot your password' />
         <Content>
           <Notification {...this.props} />
           <p>
@@ -58,7 +58,7 @@ class ForgotPassword extends Component {
     event.preventDefault();
 
     sendResetPasswordLink(this.state.email)
-    .then(({message}) => notify('success', message))
+    .then(() => notify('success', 'Email sent'))
     .catch(({message}) => notify('error', message));
   }
 
