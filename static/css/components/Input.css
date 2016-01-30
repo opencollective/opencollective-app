@@ -5,3 +5,11 @@
 .Input--error .Field{
   box-shadow: inset 0 0 0 1px var(--dark-red);
 }
+
+.Input--success .Label{
+  color: var(--green);
+}
+
+.Input--success .Field{
+  box-shadow: inset 0 0 0 1px var(--green);
+}
