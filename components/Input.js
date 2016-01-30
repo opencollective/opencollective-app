@@ -1,33 +1,34 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
-const Input = (
-  {
-    type,
-    hasError,
-    placeholder,
-    maxLength,
-    handleChange,
-    value,
-    customClass
-  }) => {
-    const className = classnames({
-      Input: true,
-      'Input--error': hasError,
-      [customClass]: !!customClass
-    });
+const Input = ({
+  type,
+  hasError,
+  placeholder,
+  maxLength,
+  handleChange,
+  value,
+  customClass,
+  isSuccessful
+}) => {
+  const className = classnames({
+    Input: true,
+    'Input--error': hasError,
+    'Input--success': isSuccessful,
+    [customClass]: !!customClass
+  });
 
-    return (
-      <span className={className}>
-        <input
-          className='Field'
-          type={type}
-          maxLength={maxLength}
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => handleChange(e.target.value) } />
-      </span>
-    );
+  return (
+    <span className={className}>
+      <input
+        className='Field'
+        type={type}
+        maxLength={maxLength}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => handleChange(e.target.value) } />
+    </span>
+  );
 };
 
 Input.propTypes = {

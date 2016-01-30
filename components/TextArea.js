@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 const TextArea = ({
   hasError,
+  isSuccessful,
   placeholder,
   maxLength,
   rows,
@@ -13,6 +14,7 @@ const TextArea = ({
   const className = classnames({
     TextArea: true,
     'TextArea--error': hasError,
+    'TextArea--success': isSuccessful,
     [customClass]: !!customClass
   });
 
