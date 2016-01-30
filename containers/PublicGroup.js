@@ -37,9 +37,8 @@ import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import showAdditionalUserInfoForm from '../actions/users/show_additional_user_info_form';
 import hideAdditionalUserInfoForm from '../actions/users/hide_additional_user_info_form';
-import appendProfileForm from '../actions/form/append_profile';
 import updateUser from '../actions/users/update_user';
-import validateDonationProfile from '../actions/form/validate_donation_profile';
+import validate from '../actions/form/validate_schema';
 import logout from '../actions/session/logout';
 
 // Number of expenses and revenue items to show on the public page
@@ -239,12 +238,14 @@ export function donateToGroup(amount, token) {
   return donate(groupid, payment)
   .then(() => showAdditionalUserInfoForm())
   .then(() => fetchGroup(slug))
-  .then(() => fetchTransactions(slug, {
-                per_page: NUM_TRANSACTIONS_TO_SHOW,
-                sort: 'createdAt',
-                direction: 'desc',
-                donation: true
-  }))
+  .then(() => {
+    return fetchTransactions(slug, {
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
+      sort: 'createdAt',
+      direction: 'desc',
+      donation: true
+    });
+  })
   .catch((err) => notify('error', err.message));
 }
 
@@ -259,10 +260,9 @@ export default connect(mapStateToProps, {
   fetchUsers,
   showAdditionalUserInfoForm,
   hideAdditionalUserInfoForm,
-  appendProfileForm,
   updateUser,
   logout,
-  validateDonationProfile
+  validate
 })(PublicGroup);
 
 function logoutAndRedirect() {
@@ -301,6 +301,7 @@ function mapStateToProps({
     notification,
     users,
     session,
+    donator: users.donator,
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
     members: membersAndHost,
@@ -312,7 +313,6 @@ function mapStateToProps({
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
     shareUrl: window.location.href,
-    profileForm: form.profile,
     showUserForm: users.showUserForm || false,
     saveInProgress: users.updateInProgress,
     isAuthenticated: session.isAuthenticated

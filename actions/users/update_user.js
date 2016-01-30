@@ -12,9 +12,9 @@ export default (userid, attributes) => {
     dispatch(request(userid, attributes));
     return putJSON(url, { "user": attributes })
       .then(json => dispatch(success(userid, attributes, json)))
-      .catch(error => {
-        dispatch(failure(error));
-        throw new Error(error.message);
+      .catch(err => {
+        dispatch(failure(err));
+        throw new Error(err.message);
       });
   };
 };

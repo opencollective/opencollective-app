@@ -8,7 +8,8 @@ import {DONATE_GROUP_SUCCESS} from'../constants/groups';
 
 export default function users(state={
   updateInProgress: false,
-  cards: []
+  cards: [],
+  donator: {}
 }, action={}) {
   const {
     groups,
@@ -96,7 +97,7 @@ export default function users(state={
 
     case DONATE_GROUP_SUCCESS:
       return merge({}, state, {
-        newUser: action.json.user
+        donator: action.json.user
       });
 
     default:
