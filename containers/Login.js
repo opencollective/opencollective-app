@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
+import Joi from 'joi';
 
 import login from '../actions/session/login';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
-import resetLoginForm from '../actions/form/reset_login';
-import validateLogin from '../actions/form/validate_login';
+import validate from '../actions/form/validate_schema';
 
 import Content from './Content';
 
@@ -19,6 +19,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.schema = Joi.object().keys({
+      email: Joi.string().email().required(),
+      password: Joi.string().min(6).max(128).required(),
+    });
   }
 
   render() {
@@ -68,17 +72,17 @@ class Login extends Component {
       notify,
       redirectRoute,
       login,
-      validateLogin
+      validate
     } = this.props;
 
     const user = this.state;
 
     event.preventDefault();
 
-    validateLogin(user)
-    .then(() => login(user))
-    .then(() => replaceState(null, redirectRoute))
-    .catch(({message}) => notify('error', message));
+    validate(user, this.schema)
+      .then(() => login(user))
+      .then(() => replaceState(null, redirectRoute))
+      .catch(({message}) => notify('error', message));
   }
 
 }
@@ -86,16 +90,15 @@ class Login extends Component {
 export default connect(mapStateToProps, {
   login,
   replaceState,
-  resetLoginForm,
   notify,
-  validateLogin,
+  validate,
   resetNotifications
 })(Login);
 
 function mapStateToProps({notification, router, form}) {
   return {
     notification,
-    error: form.login.error,
+    error: form.schema.error,
     redirectRoute: router.location.query.next || '/app/'
   };
 }
