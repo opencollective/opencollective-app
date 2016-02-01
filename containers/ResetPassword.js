@@ -43,7 +43,7 @@ class ResetPassword extends Component {
         <Content>
           <Notification {...this.props} />
           <div className='padded'>
-          <p>Insert your new password</p>
+            <p className='u-py1'>Enter your new password</p>
             <form
               name='forgot'
               onSubmit={this.handleSubmit.bind(this)}
@@ -53,18 +53,16 @@ class ResetPassword extends Component {
                 placeholder='******'
                 value={this.state.password}
                 handleChange={password => this.setState({password})} />
-             <Input
+              <Input
                 type='password'
                 placeholder='******'
                 value={this.state.passwordConfirmation}
                 handleChange={passwordConfirmation => this.setState({passwordConfirmation})} />
 
-              <div className='ResetPassword-buttonContainter'>
-                <SubmitButton
-                  inProgress={this.state.inProgress}>
-                  Confirm
-                </SubmitButton>
-              </div>
+              <SubmitButton
+                inProgress={this.state.inProgress}>
+                Confirm
+              </SubmitButton>
             </form>
           </div>
         </Content>

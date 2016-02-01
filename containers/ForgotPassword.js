@@ -27,8 +27,8 @@ class ForgotPassword extends Component {
         <TopBar title='Forgot your password' />
         <Content>
           <Notification {...this.props} />
-          <p>
-            We will send you an email with a link to a page to reset your password.
+          <p className='u-py1'>
+            We will send you an email with a link to reset your password.
           </p>
           <form
             name='forgot'
@@ -39,13 +39,10 @@ class ForgotPassword extends Component {
               placeholder='email@example.com'
               value={this.state.email}
               handleChange={email => this.setState({email})} />
-
-            <div className='ForgotPassword-buttonContainter'>
-              <SubmitButton
-                inProgress={this.state.inProgress}>
-                Send email
-              </SubmitButton>
-            </div>
+            <SubmitButton
+              inProgress={this.state.inProgress}>
+              Send email
+            </SubmitButton>
           </form>
         </Content>
       </div>
