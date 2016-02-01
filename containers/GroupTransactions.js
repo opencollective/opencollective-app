@@ -5,7 +5,6 @@ import sortByDate from '../lib/sort_by_date';
 import getUniqueValues from '../lib/get_unique_values';
 import filterCollection from '../lib/filter_collection';
 import isHost from '../lib/is_host';
-import exportFile from '../lib/export_file';
 
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import fetchTransactions from '../actions/transactions/fetch_by_group';
@@ -17,7 +16,7 @@ import Content from './Content';
 import TopBar from '../components/TopBar';
 import Footer from '../components/Footer';
 import TransactionsList from '../components/TransactionsList';
-import ExportButton from '../components/ExportButton';
+import ExportTransactionsButton from '../components/ExportTransactionsButton';
 import GroupTitle from '../components/GroupTitle';
 import EmptyList from '../components/EmptyList';
 
@@ -32,10 +31,6 @@ class GroupTransactions extends Component {
     } = this.props;
 
     const url = `/app/groups/${groupid}/settings/`;
-    var exportTransactionsButton;
-    if (isHost) {
-      exportTransactionsButton = <ExportButton exportAction={exportTransactions.bind(this)}/>;
-    }
 
     return (
       <div className='GroupTransactions'>
@@ -50,7 +45,8 @@ class GroupTransactions extends Component {
           <div className='padded'>
             <div className='GroupTransactions-title'>
               <span>Activity Detail</span>
-              {exportTransactionsButton}
+              <ExportTransactionsButton
+                props={this.props}/>
             </div>
             {this.list(this.props)}
           </div>
@@ -120,26 +116,3 @@ export function mapStateToProps({transactions, router, groups, users={}, session
     hasPopOverMenuOpen: session.hasPopOverMenuOpen
   };
 }
-
-export function exportTransactions() {
-  var user, text = "createdAt,description,amount,currency,vat,tags,status,link,userName,userEmail\n";
-  this.props.transactions.forEach(transaction => {
-    user = this.props.users[transaction.UserId];
-    text += toStr(transaction.createdAt) + ',' +
-      toStr(transaction.description) + ',' +
-      toStr(transaction.amount) + ',' +
-      toStr(transaction.currency) + ',' +
-      toStr(transaction.vat) + ',' +
-      toStr(transaction.tags) + ',' +
-      toStr(transaction.status) + ',' +
-      toStr(transaction.link) + ',' +
-      toStr(user.name) + ',' +
-      toStr(user.email) + '\n';
-  });
-
-  exportFile('text/plain;charset=utf-8', 'transactions.csv', text);
-}
-
-var toStr = function(text) {
-  return text ? text : '';
-};
