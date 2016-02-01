@@ -16,7 +16,9 @@ import SubmitButton from '../components/SubmitButton';
 class ForgotPassword extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      inProgress: false
+    };
   }
 
   render() {
@@ -39,7 +41,8 @@ class ForgotPassword extends Component {
               handleChange={email => this.setState({email})} />
 
             <div className='ForgotPassword-buttonContainter'>
-              <SubmitButton>
+              <SubmitButton
+                inProgress={this.state.inProgress}>
                 Send email
               </SubmitButton>
             </div>
@@ -57,9 +60,12 @@ class ForgotPassword extends Component {
 
     event.preventDefault();
 
+    this.setState({ inProgress: true });
+
     sendResetPasswordLink(this.state.email)
-    .then(() => notify('success', 'Email sent'))
-    .catch(({message}) => notify('error', message));
+      .then(() => notify('success', 'Email sent'))
+      .catch(({message}) => notify('error', message))
+      .then(() => this.setState({ inProgress: false }));
   }
 
 }
@@ -71,7 +77,7 @@ export default connect(mapStateToProps, {
   sendResetPasswordLink
 })(ForgotPassword);
 
-function mapStateToProps({notification, router, form}) {
+function mapStateToProps({notification}) {
   return {
     notification
   };

@@ -19,7 +19,10 @@ class ResetPassword extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      inProgress: false
+    };
+
     this.schema = Joi.object().keys({
       password: Joi
         .string()
@@ -57,7 +60,8 @@ class ResetPassword extends Component {
                 handleChange={passwordConfirmation => this.setState({passwordConfirmation})} />
 
               <div className='ResetPassword-buttonContainter'>
-                <SubmitButton>
+                <SubmitButton
+                  inProgress={this.state.inProgress}>
                   Confirm
                 </SubmitButton>
               </div>
@@ -79,10 +83,16 @@ class ResetPassword extends Component {
 
     event.preventDefault();
 
-    validate(this.state, this.schema)
+    this.setState({ inProgress: true });
+
+    validate({
+      password: this.state.password,
+      passwordConfirmation: this.state.passwordConfirmation
+    }, this.schema)
       .then(() => resetPassword(userToken, resetToken, this.state.password))
       .then(() => notify('success', 'Password reset'))
-      .catch(({message}) => notify('error', message));
+      .catch(({message}) => notify('error', message))
+      .then(() => this.setState({ inProgress: false }));
   }
 
 }
