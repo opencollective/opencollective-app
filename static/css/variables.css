@@ -21,6 +21,7 @@
   --image-upload-child-height: 100px;
   --max-container-width: 1070px;
   --blur: 4px;
+  --max-form-width: 400px;
 }
 
 @custom-media --large-viewport (min-width: 1070px);

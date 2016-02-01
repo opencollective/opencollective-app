@@ -11,6 +11,8 @@ import PublicTransactions from './PublicTransactions';
 import PublicTransaction from './PublicTransaction';
 import GroupSettings from './GroupSettings';
 import TransactionEdit from './TransactionEdit';
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 
 export {
   App,
@@ -25,5 +27,7 @@ export {
   PublicTransactions,
   PublicTransaction,
   GroupSettings,
-  TransactionEdit
+  TransactionEdit,
+  ForgotPassword,
+  ResetPassword
 };

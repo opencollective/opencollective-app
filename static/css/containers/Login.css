@@ -1,10 +1,10 @@
 .Login-form {
-  max-width: 400px;
+  max-width: var(--max-form-width);
   margin: 1rem auto;
 }
 
 .Login-logo {
-  max-width: 400px;
+  max-width: var(--max-form-width);
   margin: 2rem auto 0 auto;
 }
 

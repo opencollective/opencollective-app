@@ -21,12 +21,14 @@
 @import './containers/App.css';
 @import './containers/AddFund.css';
 @import './containers/Content.css';
+@import './containers/ForgotPassword.css';
 @import './containers/Login.css';
 @import './containers/Profile.css';
 @import './containers/Public.css';
 @import './containers/PublicGroup.css';
 @import './containers/PublicTransaction.css';
 @import './containers/PublicTransactions.css';
+@import './containers/ResetPassword.css';
 @import './containers/TransactionDetail.css';
 
 /**
