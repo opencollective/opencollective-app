@@ -40,28 +40,4 @@ describe('form reducer', () => {
 
   });
 
-  describe('login', () => {
-
-    it('should have a default state', () => {
-      expect(reducer().transaction.error).toEqual({});
-    });
-
-    it('should reset the form', () => {
-      const state = {
-        login: {
-          error: {
-            message: 'oops'
-          }
-        }
-      };
-
-      const newState = reducer(state, {
-        type: constants.RESET_LOGIN_FORM
-      });
-      expect(newState.login.error.message).toNotExist();
-    });
-
-  });
-
-
 });

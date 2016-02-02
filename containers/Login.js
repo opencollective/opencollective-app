@@ -15,14 +15,15 @@ import Notification from '../components/Notification';
 import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 
-class Login extends Component {
+export const schema = Joi.object().keys({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).max(128).required(),
+});
+
+export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.schema = Joi.object().keys({
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(128).required(),
-    });
   }
 
   render() {
@@ -79,7 +80,7 @@ class Login extends Component {
 
     event.preventDefault();
 
-    validate(user, this.schema)
+    validate(user, schema)
       .then(() => login(user))
       .then(() => replaceState(null, redirectRoute))
       .catch(({message}) => notify('error', message));
