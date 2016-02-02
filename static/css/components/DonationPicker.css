@@ -16,7 +16,8 @@
 
 .DonationPicker li, .DonationPicker label {
   float: left;
-  cursor: pointer; 
+  cursor: pointer;
+
 }
 
 .DonationPicker-frequency {
@@ -52,7 +53,7 @@
   min-width: 50%;
   -webkit-transition: all 230ms ease-in;
   transition: all 230ms ease-in;
-  border: 1px solid transparent; 
+  border: 1px solid transparent;
 }
 
 .DonationPicker-currency {

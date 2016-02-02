@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import BodyClassName from 'react-body-classname';
 import take from 'lodash/array/take';
-import contains from 'lodash/collection/contains';
 import uniq from 'lodash/array/uniq';
 import values from 'lodash/object/values';
 import sortBy from 'lodash/collection/sortBy'
@@ -119,15 +118,15 @@ export class PublicGroup extends Component {
                 <Metric
                   label='Backers'
                   value={group.backersCount} />
-                <Metric label='Share'>
-                  <ShareIcon type='twitter' url={shareUrl} name={group.name} description={group.description} />
-                  <ShareIcon type='facebook' url={shareUrl} name={group.name} description={group.description} />
-                  <ShareIcon type='mail' url={shareUrl} name={group.name} description={group.description} />
-                </Metric>
               </div>
               <a className='Button Button--green PublicGroup-support' href='#support'>
                 Back us
               </a>
+              <div className='PublicGroup-share'>
+                  <ShareIcon type='twitter' url={shareUrl} name={group.name} description={group.description} />
+                  <ShareIcon type='facebook' url={shareUrl} name={group.name} description={group.description} />
+                  <ShareIcon type='mail' url={shareUrl} name={group.name} description={group.description} />
+                </div>
             </div>
 
             <div className='PublicGroup-quote'>
@@ -225,7 +224,6 @@ export function donateToGroup(amount, token) {
     notify,
     donate,
     group,
-    frequency,
     showAdditionalUserInfoForm,
     fetchGroup,
     slug,
@@ -239,9 +237,7 @@ export function donateToGroup(amount, token) {
     currency: group.currency
   };
 
-  if (contains(['month', 'year'], frequency)) {
-    payment.interval = frequency;
-  }
+  payment.interval = 'month';
 
   return donate(groupid, payment)
   .then(() => showAdditionalUserInfoForm())
@@ -314,7 +310,6 @@ function mapStateToProps({
     donations: take(sortBy(donations, txn => txn.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
     expenses: take(sortBy(expenses, exp => exp.createdAt).reverse(), NUM_TRANSACTIONS_TO_SHOW),
     amount: (form.donation.attributes.amount == null) ? 10 : form.donation.attributes.amount,
-    frequency: form.donation.attributes.frequency || 'month',
     stripeAmount: convertToCents(form.donation.attributes.amount),
     stripeKey: group.stripeAccount && group.stripeAccount.stripePublishableKey,
     inProgress: groups.donateInProgress,
