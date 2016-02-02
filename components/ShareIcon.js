@@ -4,14 +4,15 @@ import Icon from './Icon';
 
 export default ({type, url, name, description}) => {
 
-  const caption = encodeURIComponent("I just backed the " + name + "collective");
-  const body = encodeURIComponent("I just backed the " + name + " collective.\n\nJoin me in supporting them! " + url);
+  const tweet = encodeURIComponent("I just backed the " + name + " collective.\nJoin me in supporting them! " + url);
+  const subject = encodeURIComponent("I just backed the " + name + " collective. Join me in supporting them!");
+  const body = encodeURIComponent("I just backed the " + name + " collective:\n" + description + "\n" + url + "\n\nJoin me in supporting them!\n");
   const url_encoded = encodeURIComponent(url);
 
   const link = {
-    twitter: `https://twitter.com/intent/tweet?status=${caption}%20${url_encoded}`,
+    twitter: `https://twitter.com/intent/tweet?status=${tweet}`,
     facebook: `https://www.facebook.com/sharer.php?url=${url_encoded}`,
-    mail: `mailto:?subject=${caption}&body=${body}`,
+    mail: `mailto:?subject=${subject}&body=${body}`,
   };
 
   const w = 650;
