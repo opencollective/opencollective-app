@@ -75,7 +75,8 @@ export class PublicGroup extends Component {
       shareUrl,
       users,
       members,
-      showUserForm
+      showUserForm,
+      isAuthenticated
     } = this.props;
 
     const logoStyle = group.logo ? {
@@ -83,7 +84,7 @@ export class PublicGroup extends Component {
     } : {};
 
     var donationSection;
-    if (showThankYouPage) {
+    if (showThankYouPage || (isAuthenticated && showUserForm)) { // we don't handle userform from logged in users
       donationSection = <PublicGroupThanks />;
     } else if (showUserForm) {
       donationSection = <PublicGroupSignup {...this.props} />
@@ -317,6 +318,7 @@ function mapStateToProps({
     shareUrl: window.location.href,
     profileForm: form.profile,
     showUserForm: users.showUserForm || false,
-    saveInProgress: users.updateInProgress
+    saveInProgress: users.updateInProgress,
+    isAuthenticated: session.isAuthenticated
   };
 }
