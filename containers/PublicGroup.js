@@ -84,7 +84,7 @@ export class PublicGroup extends Component {
     } : {};
 
     var donationSection;
-    if (showThankYouPage || (isAuthenticated && showUserForm)) { // we don't handle donations from loggedin users
+    if (showThankYouPage || (isAuthenticated && showUserForm)) { // we don't handle userform from logged in users
       donationSection = <PublicGroupThanks />;
     } else if (showUserForm) {
       donationSection = <PublicGroupSignup {...this.props} />
