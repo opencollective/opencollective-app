@@ -16,7 +16,7 @@ function schema(state={
     case constants.VALIDATE_SCHEMA_FAILURE:
       const { path, message } = errorDetail(action);
 
-      return merge({}, state, {
+      return merge({}, omit(state, 'error'), {
         error: {
           [path]: true,
           message
@@ -68,34 +68,6 @@ function transaction(state=transactionInitialState, action={}) {
     case constants.VALIDATE_SCHEMA_FAILURE:
     case constants.VALIDATE_TRANSACTION_REQUEST:
       return merge({}, omit(state, 'error'), { error: {} });
-
-    default:
-      return state;
-  }
-}
-
-/**
- * Login form reducer
- */
-
-const loginInitialState = {
-  error: {}
-};
-
-function login(state=loginInitialState, action={}) {
-  switch (action.type) {
-    case constants.RESET_LOGIN_FORM:
-      return merge({}, loginInitialState);
-
-    case constants.VALIDATE_LOGIN_FAILURE:
-      const { message, path } = errorDetail(action);
-
-      return merge({}, state, {
-        error: {
-          [path]: true,
-          message
-        }
-      });
 
     default:
       return state;
@@ -194,7 +166,6 @@ function donation(state={
 
 export default combineReducers({
   transaction,
-  login,
   profile,
   donation,
   groupSettings,

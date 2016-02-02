@@ -1,8 +1,6 @@
 import expect from 'expect';
 import resetTransactionForm from '../../../actions/form/reset_transaction';
 import appendTransactionForm from '../../../actions/form/append_transaction';
-import resetLoginForm from '../../../actions/form/reset_login';
-import appendLoginForm from '../../../actions/form/append_login';
 import setEditMode from '../../../actions/form/set_edit_mode_profile';
 import appendDonation from '../../../actions/form/append_donation';
 import * as constants from '../../../constants/form';
@@ -20,37 +18,6 @@ describe('form actions', () => {
 
     expect(appendTransactionForm(attributes)).toEqual({
       type: constants.APPEND_TRANSACTION_FORM,
-      attributes
-    });
-  });
-
-  it('should create an action to reset the login form', () => {
-    expect(resetLoginForm()).toEqual({
-      type: constants.RESET_LOGIN_FORM,
-    });
-  });
-
-  it('should create an action to append a fields to the login form', () => {
-    const attributes = { email: 'test@gmail.com' };
-
-    expect(appendLoginForm(attributes)).toEqual({
-      type: constants.APPEND_LOGIN_FORM,
-      attributes
-    });
-  });
-
-
-  it('should create an action to reset the login form', () => {
-    expect(resetLoginForm()).toEqual({
-      type: constants.RESET_LOGIN_FORM,
-    });
-  });
-
-  it('should create an action to append a fields to the login form', () => {
-    const attributes = { email: 'test@gmail.com' };
-
-    expect(appendLoginForm(attributes)).toEqual({
-      type: constants.APPEND_LOGIN_FORM,
       attributes
     });
   });
