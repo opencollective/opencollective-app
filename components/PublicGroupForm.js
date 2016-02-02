@@ -43,7 +43,7 @@ const PublicGroupForm = ({
           </AsyncButton>
         </div>
         <span className='PublicGroupForm-disclaimer'>
-        By clicking above, you are pledging to support us monthly. We appreciate it! And you can cancel anytime. <a href='http://www.opencollective.com/faq'>Learn more</a>
+        By clicking above, you are pledging to support us monthly. We appreciate it! And you can cancel anytime. <a href='https://opencollective.com/faq'>Learn more</a>
         </span>
       </StripeCheckout>
     </div>
