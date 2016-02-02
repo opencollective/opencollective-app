@@ -7,6 +7,10 @@
   width: 100%;
 }
 
+.PublicFooter a {
+  color: #abb3c3;
+}
+
 .PublicFooter img {
   height: 50px;
 }
