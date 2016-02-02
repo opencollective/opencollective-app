@@ -5,7 +5,7 @@ import Icon from './Icon';
 export default ({type, url, name, description}) => {
 
   const caption = encodeURIComponent("I just backed the " + name + "collective");
-  const body = encodeURIComponent("I just backed the " + name + " collective: " + url + '\n\n' + description "Join me in supporting them!");
+  const body = encodeURIComponent("I just backed the " + name + " collective.\n\nJoin me in supporting them! " + url);
   const url_encoded = encodeURIComponent(url);
 
   const link = {
