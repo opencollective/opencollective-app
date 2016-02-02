@@ -6,8 +6,8 @@ export default({props}) => {
   if (props.isHost) {
     return (
       <span className="ExportTransactionsButton" onClick={exportTransactions.bind(null, props)}>
-      <Icon type='down'/>Export
-    </span>
+        <Icon type='down'/>Export
+      </span>
     );
   }
   return <span/>;
