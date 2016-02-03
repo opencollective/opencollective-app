@@ -9,6 +9,6 @@ export function displayUrl(url) {
 
 export default ({url}) => { 
   return (
-    <span><a href={url}>{displayUrl(url)}</a></span>
+    <span><a href={url} target="_blank">{displayUrl(url)}</a></span>
   )
 };

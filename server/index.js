@@ -91,9 +91,11 @@ app.get('/:slug([A-Za-z0-9-]+)', (req, res, next) => {
     showGA: process.env.NODE_ENV === 'production'
   };
 
+  const slug = req.params.slug.toLowerCase();
+
   request
     .get({
-      url: apiUrl(`groups/${req.params.slug}/`),
+      url: apiUrl(`groups/${slug}/`),
       json: true
     }, (err, response, group) => {
       if (err) return next(err);

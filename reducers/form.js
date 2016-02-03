@@ -6,6 +6,33 @@ import errorDetail from '../lib/error_detail';
 import * as constants from '../constants/form';
 
 /**
+ * Validate generic joi schema
+ */
+
+function schema(state={
+  error: {}
+}, action={}) {
+  switch (action.type) {
+    case constants.VALIDATE_SCHEMA_FAILURE:
+      const { path, message } = errorDetail(action);
+
+      return merge({}, omit(state, 'error'), {
+        error: {
+          [path]: true,
+          message
+        }
+      });
+
+    case constants.VALIDATE_SCHEMA_SUCCESS:
+    case constants.VALIDATE_SCHEMA_FAILURE:
+      return merge({}, omit(state, 'error'), { error: {} });
+
+    default:
+      return state;
+  }
+}
+
+/**
  * New transaction form reducer
  */
 const transactionInitialState = {
@@ -27,6 +54,7 @@ function transaction(state=transactionInitialState, action={}) {
     case constants.APPEND_TRANSACTION_FORM:
       return merge({}, state, { attributes: action.attributes });
 
+    case constants.VALIDATE_SCHEMA_FAILURE:
     case constants.VALIDATE_TRANSACTION_FAILURE:
       const { path, message } = errorDetail(action);
 
@@ -37,36 +65,9 @@ function transaction(state=transactionInitialState, action={}) {
         }
       });
 
+    case constants.VALIDATE_SCHEMA_FAILURE:
     case constants.VALIDATE_TRANSACTION_REQUEST:
       return merge({}, omit(state, 'error'), { error: {} });
-
-    default:
-      return state;
-  }
-}
-
-/**
- * Login form reducer
- */
-
-const loginInitialState = {
-  error: {}
-};
-
-function login(state=loginInitialState, action={}) {
-  switch (action.type) {
-    case constants.RESET_LOGIN_FORM:
-      return merge({}, loginInitialState);
-
-    case constants.VALIDATE_LOGIN_FAILURE:
-      const { message, path } = errorDetail(action);
-
-      return merge({}, state, {
-        error: {
-          [path]: true,
-          message
-        }
-      });
 
     default:
       return state;
@@ -165,8 +166,8 @@ function donation(state={
 
 export default combineReducers({
   transaction,
-  login,
   profile,
   donation,
-  groupSettings
+  groupSettings,
+  schema
 });

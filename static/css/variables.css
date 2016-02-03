@@ -12,6 +12,7 @@
   --orange: #F3C524;
   --yellow: #fffbe1;
   --gold: #cfa236;
+  --black: #505050;
   --spacing: 1rem;
   --topbar-height: 62px;
   --public-topbar-height: 60px;
@@ -21,6 +22,7 @@
   --image-upload-child-height: 100px;
   --max-container-width: 1070px;
   --blur: 4px;
+  --max-form-width: 400px;
 }
 
 @custom-media --large-viewport (min-width: 1070px);

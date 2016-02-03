@@ -11,7 +11,9 @@ import {
   PublicTransactions,
   PublicTransaction,
   GroupSettings,
-  TransactionEdit
+  TransactionEdit,
+  ForgotPassword,
+  ResetPassword
 } from '../containers';
 
 import { requireAuthentication } from '../components/AuthenticatedComponent';
@@ -20,6 +22,9 @@ const routes = {
   component: App,
   childRoutes: [
     { path: 'app/login', component: Login },
+
+    { path: 'app/forgot', component: ForgotPassword },
+    { path: 'app/reset/:usertoken/:resettoken', component: ResetPassword },
 
     // Public routes (web)
     { path: 'public/groups/:groupid', component: PublicGroup },
