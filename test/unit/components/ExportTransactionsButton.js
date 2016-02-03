@@ -2,7 +2,6 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import ApproveButton from '../../../components/ApproveButton';
 import ExportTransactionsButton from '../../../components/ExportTransactionsButton';
 
 const {expect} = chai;
