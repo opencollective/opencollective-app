@@ -100,13 +100,12 @@
   padding: 0 calc(var(--spacing) / 2);
 }
 
+.PublicGroupHeader {
+  text-align: center;
+}
+
 .PublicGroupHeader-logo {
-  width: 100px;
   height: 100px;
-  overflow: hidden;
-  border-radius: 50%;
-  text-align:center;
-  background-size: cover;
   margin: 0 auto 0.5rem;
 }
 
