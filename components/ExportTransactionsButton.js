@@ -2,10 +2,10 @@ import React from 'react';
 import Icon from './Icon';
 import exportFile from '../lib/export_file';
 
-export default({props}) => {
-  if (props.isHost) {
+export default({isHost, transactions, users}) => {
+  if (isHost) {
     return (
-      <span className="ExportTransactionsButton" onClick={exportTransactions.bind(null, props)}>
+      <span className="ExportTransactionsButton" onClick={exportTransactions.bind(null, transactions, users)}>
         <Icon type='down'/>Export
       </span>
     );
@@ -13,10 +13,10 @@ export default({props}) => {
   return <span/>;
 }
 
-export function exportTransactions(props) {
+const exportTransactions = function(transactions, users) {
   var user, text = "createdAt,description,amount,currency,vat,tags,status,link,userName,userEmail\n";
-  props.transactions.forEach(transaction => {
-    user = props.users[transaction.UserId];
+  transactions.forEach(transaction => {
+    user = users[transaction.UserId];
     text += toStr(transaction.createdAt) + ',' +
       toStr(transaction.description) + ',' +
       toStr(transaction.amount) + ',' +
@@ -30,8 +30,8 @@ export function exportTransactions(props) {
   });
 
   exportFile('text/plain;charset=utf-8', 'transactions.csv', text);
-}
+};
 
-var toStr = function(text) {
+const toStr = function(text) {
   return text ? text : '';
 };

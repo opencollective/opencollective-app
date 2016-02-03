@@ -45,8 +45,7 @@ class GroupTransactions extends Component {
           <div className='padded'>
             <div className='GroupTransactions-title'>
               <span>Activity Detail</span>
-              <ExportTransactionsButton
-                props={this.props}/>
+              <ExportTransactionsButton {...this.props} />
             </div>
             {this.list(this.props)}
           </div>
