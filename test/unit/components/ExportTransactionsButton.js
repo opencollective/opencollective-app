@@ -1,16 +1,12 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-//import ReactShallowRenderer from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
 import ApproveButton from '../../../components/ApproveButton';
 import ExportTransactionsButton from '../../../components/ExportTransactionsButton';
 
 const {expect} = chai;
-const {
-  createRenderer
-  } = TestUtils;
-const renderer = createRenderer();
+const renderer = TestUtils.createRenderer();
 
 const createElement = (props) => {
   renderer.render(<ExportTransactionsButton {...props} />);
@@ -28,12 +24,13 @@ describe('ExportTransactionsButton component', () => {
     expect(element.props).to.deep.equal({});
   });
 
-  it('should be displayed if user is host', () => {
+  it('should be displayed with a click handler if user is host', () => {
     const element = createElement({
       isHost: true,
       transactions: []
     });
 
     expect(element.props.className).to.equal('ExportTransactionsButton');
+    expect(element.props.onClick.name).to.contain('exportTransactions');
   });
 });
