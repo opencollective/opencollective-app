@@ -237,7 +237,10 @@ export function donateToGroup(amount, token) {
   payment.interval = 'month';
 
   return donate(groupid, payment)
-  .then(() => showAdditionalUserInfoForm())
+  .then((object) => {
+    if (!object.json.hasFullAccount)
+      showAdditionalUserInfoForm();
+  })
   .then(() => fetchGroup(slug))
   .then(() => fetchTransactions(slug, {
                 per_page: NUM_TRANSACTIONS_TO_SHOW,
