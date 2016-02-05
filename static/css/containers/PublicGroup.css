@@ -63,9 +63,17 @@
 }
 
 .PublicGroup-quoteText {
-  padding-left: calc(var(--spacing) * 2);
+  clear: both;
   box-sizing: border-box;
   line-height: 24px;
+}
+
+.PublicGroup-quoteText h1, .PublicGroup-quoteText h2 {
+  font-size: 1.2rem;
+}
+
+.PublicGroup-quoteText h2:first-child {
+  margin-top: 0px;
 }
 
 .PublicGroup-transactions {
