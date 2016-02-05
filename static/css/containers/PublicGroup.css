@@ -31,11 +31,6 @@
   margin-bottom: calc(var(--spacing) * 2);
 }
 
-.PublicGroup-members {
-  float: left;
-  margin-right: 20px;
-}
-
 .PublicGroup-backers {
   clear: both;
 }
@@ -72,7 +67,7 @@
   font-size: 1.2rem;
 }
 
-.PublicGroup-quoteText h2:first-child {
+.PublicGroup-quoteText p:first-child, .PublicGroup-quoteText h1:first-child, .PublicGroup-quoteText h2:first-child {
   margin-top: 0px;
 }
 
@@ -94,14 +89,6 @@
   font-weight: bold;
   padding: 1rem 1.5rem;
   font-size: 1.3rem;
-}
-
-.PublicGroup .UsersList {
-  padding-bottom: var(--spacing);
-}
-
-.PublicGroup-backers .UsersList {
-  text-align: left;
 }
 
 .PublicGroupForm-radioLabel {
