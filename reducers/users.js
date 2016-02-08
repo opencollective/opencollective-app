@@ -4,7 +4,6 @@ import find from 'lodash/collection/find'
 import mapValues from 'lodash/object/mapValues'
 
 import * as constants from '../constants/users';
-import {DONATE_GROUP_SUCCESS} from'../constants/groups';
 
 export default function users(state={
   updateInProgress: false,
@@ -83,21 +82,6 @@ export default function users(state={
 
     case constants.FETCH_USERS_BY_GROUP_FAILURE:
       return merge({}, state, { error });
-
-    case constants.SHOW_ADDITIONAL_USER_INFO_FORM:
-      return merge({}, state, {
-        showUserForm: true,
-      });
-
-    case constants.HIDE_ADDITIONAL_USER_INFO_FORM:
-      return merge({}, state, {
-        showUserForm: false,
-      });
-
-    case DONATE_GROUP_SUCCESS:
-      return merge({}, state, {
-        newUser: action.json.user
-      });
 
     default:
       return state;
