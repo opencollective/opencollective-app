@@ -45,7 +45,7 @@ class ProfileFormDefault extends Component {
         <div className='ProfileForm-buttonContainer'>
           <div
             className='Button ProfileForm-button'
-            onClick={this.toggleEditMode.bind(this)}>
+            onClick={this.props.setEditMode}>
             Edit profile
           </div>
         </div>
@@ -59,12 +59,6 @@ class ProfileFormDefault extends Component {
 
       </div>
     );
-  }
-
-  toggleEditMode() {
-    const { isEditMode, setEditMode } = this.props;
-
-    setEditMode(!isEditMode);
   }
 
   stripeInfo(groups) {

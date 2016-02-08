@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
+import Joi from 'joi';
 
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import sendResetPasswordLink from '../actions/users/send_reset_password_link';
+import validate from '../actions/form/validate_schema';
 
 import Content from './Content';
 
@@ -19,6 +21,9 @@ class ForgotPassword extends Component {
     this.state = {
       inProgress: false
     };
+    this.schema = Joi.object().keys({
+      email: Joi.string().email().required()
+    });
   }
 
   render() {
@@ -38,6 +43,7 @@ class ForgotPassword extends Component {
               type='email'
               placeholder='email@example.com'
               value={this.state.email}
+              hasError={this.props.error.email}
               handleChange={email => this.setState({email})} />
             <SubmitButton
               inProgress={this.state.inProgress}>
@@ -53,13 +59,15 @@ class ForgotPassword extends Component {
     const {
       sendResetPasswordLink,
       notify,
+      validate
     } = this.props;
 
     event.preventDefault();
 
     this.setState({ inProgress: true });
 
-    sendResetPasswordLink(this.state.email)
+    validate(this.state, this.schema)
+      .then(() => sendResetPasswordLink(this.state.email))
       .then(() => notify('success', 'Email sent'))
       .catch(({message}) => notify('error', message))
       .then(() => this.setState({ inProgress: false }));
@@ -71,11 +79,13 @@ export default connect(mapStateToProps, {
   replaceState,
   notify,
   resetNotifications,
-  sendResetPasswordLink
+  sendResetPasswordLink,
+  validate
 })(ForgotPassword);
 
-function mapStateToProps({notification}) {
+function mapStateToProps({notification, form}) {
   return {
-    notification
+    notification,
+    error: form.schema.error
   };
 }

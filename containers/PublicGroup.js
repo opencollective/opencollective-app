@@ -18,15 +18,15 @@ import Notification from '../components/Notification';
 import PublicFooter from '../components/PublicFooter';
 import PublicGroupForm from '../components/PublicGroupForm';
 import PublicGroupThanks from '../components/PublicGroupThanks';
-import TransactionItem from '../components/TransactionItem';
 import YoutubeVideo from '../components/YoutubeVideo';
 import Metric from '../components/Metric';
 import UsersList from '../components/UsersList';
 import ShareIcon from '../components/ShareIcon';
-import Icon from '../components/Icon';
 import DisplayUrl from '../components/DisplayUrl';
 import PublicGroupSignup from '../components/PublicGroupSignup';
 import Markdown from '../components/Markdown';
+import ExpensesList from '../components/ExpensesList';
+import DonationsList from '../components/DonationsList';
 
 import appendDonationForm from '../actions/form/append_donation';
 import fetchGroup from '../actions/groups/fetch_by_id';
@@ -37,32 +37,40 @@ import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import showAdditionalUserInfoForm from '../actions/users/show_additional_user_info_form';
 import hideAdditionalUserInfoForm from '../actions/users/hide_additional_user_info_form';
-import appendProfileForm from '../actions/form/append_profile';
 import updateUser from '../actions/users/update_user';
-import validateDonationProfile from '../actions/form/validate_donation_profile';
+import validate from '../actions/form/validate_schema';
 import logout from '../actions/session/logout';
 
 // Number of expenses and revenue items to show on the public page
 const NUM_TRANSACTIONS_TO_SHOW = 3;
 
-export class PublicGroup extends Component {
-
-  GroupVideoOrImage(group) {
-    if(group.video) {
-      return (
-        <div className='PublicGroup-video'>
-          <YoutubeVideo video={group.video} />
-        </div>
-      );
-    }
-    else {
-      return (
-        <div className='PublicGroup-image'>
-          <img src={group.image} />
-        </div>
-      );
-    }
+const Media = ({video, image}) => {
+  if(video) {
+    return (
+      <div className='PublicGroup-video'>
+        <YoutubeVideo video={video} />
+      </div>
+    );
+  } else {
+    return (
+      <div className='PublicGroup-image'>
+        <img src={image} />
+      </div>
+    );
   }
+};
+
+const DonationSection = (props) => {
+  if (props.showThankYouPage) {
+    return <PublicGroupThanks />;
+  } else if (props.showUserForm) {
+    return <props.PublicGroupSignup {...props} />
+  } else {
+    return <PublicGroupForm {...props} />
+  }
+};
+
+export class PublicGroup extends Component {
 
   render() {
     const {
@@ -105,7 +113,7 @@ export class PublicGroup extends Component {
               </div>
             </div>
 
-            {this.GroupVideoOrImage(group)}
+            <Media />
 
             <div className='PublicGroup-summary'>
               <div className='PublicGroup-metricContainer'>
@@ -142,43 +150,19 @@ export class PublicGroup extends Component {
             <div className='PublicGroup-transactions'>
               <div className='PublicGroup-expenses'>
                 <h2>Expenses</h2>
-                {(expenses.length === 0) && (
-                <div className='PublicGroup-emptyState'>
-                    <div className='PublicGroup-expenseIcon'>
-                      <Icon type='expense' />
-                    </div>
-                    <label>
-                      All your approved expenses will show up here
-                    </label>
-                  </div>
-                )}
-                {expenses.map(expense => <TransactionItem
-                                            key={expense.id}
-                                            transaction={expense}
-                                            user={users[expense.UserId]} />)}
+                <ExpensesList {...this.props}/>
               </div>
 
               <div className='PublicGroup-donations'>
                 <h2>Revenue</h2>
-                {(donations.length === 0) && (
-                  <div className='PublicGroup-emptyState'>
-                    <div className='PublicGroup-donationIcon'>
-                      <Icon type='revenue' />
-                    </div>
-                    <label>
-                      All your latest donations will show up here
-                    </label>
-                  </div>
-                )}
-                {donations.map(donation => <TransactionItem
-                                              key={donation.id}
-                                              transaction={donation}
-                                              user={users[donation.UserId]} />)}
+                <DonationsList {...this.props} />
               </div>
             </div>
 
             <div id='support'></div>
-            {donationSection}
+            <DonationSection
+              {...this.props}
+              onToken={donateToGroup.bind(this, amount)} />
 
           </div>
           <PublicFooter />
@@ -239,12 +223,14 @@ export function donateToGroup(amount, token) {
   return donate(groupid, payment)
   .then(() => showAdditionalUserInfoForm())
   .then(() => fetchGroup(slug))
-  .then(() => fetchTransactions(slug, {
-                per_page: NUM_TRANSACTIONS_TO_SHOW,
-                sort: 'createdAt',
-                direction: 'desc',
-                donation: true
-  }))
+  .then(() => {
+    return fetchTransactions(slug, {
+      per_page: NUM_TRANSACTIONS_TO_SHOW,
+      sort: 'createdAt',
+      direction: 'desc',
+      donation: true
+    });
+  })
   .catch((err) => notify('error', err.message));
 }
 
@@ -259,10 +245,9 @@ export default connect(mapStateToProps, {
   fetchUsers,
   showAdditionalUserInfoForm,
   hideAdditionalUserInfoForm,
-  appendProfileForm,
   updateUser,
   logout,
-  validateDonationProfile
+  validate
 })(PublicGroup);
 
 function logoutAndRedirect() {
@@ -301,6 +286,7 @@ function mapStateToProps({
     notification,
     users,
     session,
+    donator: users.donator,
     backers: uniq(backers, 'id'),
     host: hosts[0] || {},
     members: membersAndHost,
@@ -312,7 +298,6 @@ function mapStateToProps({
     inProgress: groups.donateInProgress,
     showThankYouPage: status === 'thankyou',
     shareUrl: window.location.href,
-    profileForm: form.profile,
     showUserForm: users.showUserForm || false,
     saveInProgress: users.updateInProgress,
     isAuthenticated: session.isAuthenticated
