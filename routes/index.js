@@ -18,24 +18,22 @@ import { requireAuthentication } from '../components/AuthenticatedComponent';
 const routes = {
   component: App,
   childRoutes: [
-    { path: 'app/login', component: Login },
+    { path: 'login', component: Login },
 
-    { path: 'app/forgot', component: ForgotPassword },
-    { path: 'app/reset/:usertoken/:resettoken', component: ResetPassword },
+    { path: 'forgot', component: ForgotPassword },
+    { path: 'reset/:usertoken/:resettoken', component: ResetPassword },
 
-    // Private routes (app)
-    { path: 'app', component: requireAuthentication(GroupsList) },
-    { path: 'app/', component: requireAuthentication(GroupsList) },
-    { path: 'app/profile', component: requireAuthentication(Profile) },
-    { path: 'app/groups/:groupid/settings', component:requireAuthentication(GroupSettings)},
-    { path: 'app/groups/:groupid/transactions', component: requireAuthentication(GroupTransactions)},
-    { path: 'app/groups/:groupid/transactions/new', component: requireAuthentication(TransactionNew) },
-    { path: 'app/groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
-    { path: 'app/groups/:groupid/transactions/:transactionid/edit', component: requireAuthentication(TransactionEdit) },
-    { path: 'app/groups/:groupid/funds', component: requireAuthentication(AddFund)},
+    { path: '/', component: requireAuthentication(GroupsList) },
+    { path: 'profile', component: requireAuthentication(Profile) },
+    { path: 'groups/:groupid/settings', component:requireAuthentication(GroupSettings)},
+    { path: 'groups/:groupid/transactions', component: requireAuthentication(GroupTransactions)},
+    { path: 'groups/:groupid/transactions/new', component: requireAuthentication(TransactionNew) },
+    { path: 'groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
+    { path: 'groups/:groupid/transactions/:transactionid/edit', component: requireAuthentication(TransactionEdit) },
+    { path: 'groups/:groupid/funds', component: requireAuthentication(AddFund)},
 
     // Wildcard route
-    { path: 'app/*', component: Login }
+    { path: '*', component: requireAuthentication(GroupsList) }
   ]
 };
 

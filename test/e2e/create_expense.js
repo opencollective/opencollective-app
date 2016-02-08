@@ -7,7 +7,7 @@ module.exports = {
       .url('https://opencollective-test-api.herokuapp.com/database/reset')
 
       // login
-      .url('http://localhost:3000/app/login')
+      .url('http://localhost:3000/login')
       .waitForElementVisible('body', 1000)
       .setValue('input[type=email]', 'testuser@opencollective.com')
       .setValue('input[type=password]', 'password')
@@ -31,7 +31,7 @@ module.exports = {
       .click('.js-transactionNewLink')
       .pause(2000)
       .assert.containsText('body', 'Submit Expense')
-      .assert.urlContains('http://localhost:3000/app/groups/1/transactions/new');
+      .assert.urlContains('http://localhost:3000/groups/1/transactions/new');
   },
 
   'Submits an expense': (client) => {
@@ -44,7 +44,7 @@ module.exports = {
       .setValue('.js-transaction-amount input', amount)
       .submitForm('form.TransactionForm-form')
       .pause(1000)
-      .assert.urlContains('app/groups/1/transactions')
+      .assert.urlContains('groups/1/transactions')
       .assert.containsText('.Transaction', description.toUpperCase())
       .end();
   },
@@ -54,7 +54,7 @@ module.exports = {
       .assert.containsText('body', 'Submit Expense')
       .submitForm('form.TransactionForm-form')
       .pause(1000)
-      .assert.urlContains('app/groups/1/transactions/new')
+      .assert.urlContains('groups/1/transactions/new')
       .assert.containsText('.Notification', '"Description" is not allowed to be empty')
       .end();
   }

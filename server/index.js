@@ -68,7 +68,7 @@ app.set('view engine', 'ejs');
  * Serve the SPA
  */
 
-app.get(/^\/app(\/.*)?$/, (req, res) => {
+app.get('*', (req, res) => {
 
   const meta = {
     url: 'https://opencollective.com',
