@@ -30,7 +30,7 @@ export class TransactionEdit extends Component {
       <div>
         <TopBar
           title='Edit Expense'
-          backLink={`/app/groups/${this.props.groupid}/transactions/`} />
+          backLink={`/groups/${this.props.groupid}/transactions/`} />
         <Content>
           <TransactionForm
             {...this.props}
@@ -96,7 +96,7 @@ export function update({attributes}) {
   validateTransaction(transaction)
   .then(() => updateTransaction(groupid, transactionid, transaction))
   .then(() => notify('success', 'Updated the expense'))
-  .then(() => pushState(null, `/app/groups/${groupid}/transactions`))
+  .then(() => pushState(null, `/groups/${groupid}/transactions`))
   .catch(({message}) => notify('error', message));
 };
 

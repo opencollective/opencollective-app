@@ -7,7 +7,7 @@ module.exports = {
       .url('https://opencollective-test-api.herokuapp.com/database/reset')
       .pause(1000)
       // login
-      .url('http://localhost:3000/app/login')
+      .url('http://localhost:3000/login')
       .waitForElementVisible('body', 1000)
       .setValue('input[type=email]', 'testuser@opencollective.com')
       .setValue('input[type=password]', 'password')
@@ -32,7 +32,7 @@ module.exports = {
       .click('.js-addFundsLink')
       .pause(1000)
       .assert.containsText('body', 'Add funds to OpenCollective Test Group')
-      .assert.urlContains('app/groups/1/funds/');
+      .assert.urlContains('groups/1/funds/');
   },
 
   'Add funds': (client) => {
@@ -45,7 +45,7 @@ module.exports = {
 
       .click('button[type=submit')
       .pause(1000)
-      .assert.urlContains('app/groups/1/transactions')
+      .assert.urlContains('groups/1/transactions')
       .assert.containsText('.Transaction', description.toUpperCase())
       .end();
   },
@@ -54,7 +54,7 @@ module.exports = {
     client
       .click('button[type=submit')
       .pause(1000)
-      .assert.urlContains('app/groups/1/funds/')
+      .assert.urlContains('groups/1/funds/')
       .assert.containsText('.Notification', '"Description" is not allowed to be empty')
       .end();
   }

@@ -68,10 +68,10 @@ class TransactionDetail extends Component {
       <div className={className}>
         <TopBar
           title={group.name}
-          backLink={`${isPublic ? '/public' : '/app'}/groups/${groupid}/transactions/`}
+          backLink={`${isPublic ? '/public' : ''}/groups/${groupid}/transactions/`}
           rightLink={showEditButton && {
             label: 'Edit',
-            url: `/app/groups/${groupid}/transactions/${transactionid}/edit`
+            url: `/groups/${groupid}/transactions/${transactionid}/edit`
           }} />
         <Content isLoading={isLoading}>
           <Notification {...this.props} />
@@ -169,7 +169,7 @@ class TransactionDetail extends Component {
   }
 
   nextPage() {
-    this.props.pushState(null, `/app/groups/${this.props.groupid}/transactions`);
+    this.props.pushState(null, `/groups/${this.props.groupid}/transactions`);
   }
 }
 

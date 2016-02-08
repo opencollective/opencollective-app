@@ -71,7 +71,7 @@ describe('AddFund container', () => {
 
   it('should redirect to GroupTransactions page if successful', (done) => {
     const pushState = (ctx, url) => {
-      expect(url).to.be.equal(`/app/groups/1/transactions`);
+      expect(url).to.be.equal(`/groups/1/transactions`);
       done();
     }
 

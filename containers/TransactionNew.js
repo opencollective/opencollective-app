@@ -25,7 +25,7 @@ export class TransactionNew extends Component {
       <div>
         <TopBar
           title='Submit Expense'
-          backLink={`/app/groups/${this.props.groupid}/transactions/`} />
+          backLink={`/groups/${this.props.groupid}/transactions/`} />
         <Content>
           <TransactionForm
             {...this.props}
@@ -62,7 +62,7 @@ export function createExpense() {
 
     return createTransaction(group.id, newTransaction);
   })
-  .then(() => pushState(null, `/app/groups/${groupid}/transactions`))
+  .then(() => pushState(null, `/groups/${groupid}/transactions`))
   .catch(error => notify('error', error.message));
 };
 

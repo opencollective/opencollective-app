@@ -20,7 +20,7 @@ class Transaction extends Component {
       isPublic
     } = this.props;
 
-    const prefix = isPublic ? '/public' : '/app';
+    const prefix = isPublic ? '/public' : '';
 
     return (
       <div className='Transaction'>

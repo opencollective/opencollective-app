@@ -38,7 +38,7 @@ export class AddFund extends Component {
       <div className='AddFund'>
         <TopBar
           title={`Add funds to ${group.name}`}
-          backLink={`/app/groups/${this.props.groupid}/transactions/`} />
+          backLink={`/groups/${this.props.groupid}/transactions/`} />
         <Content>
           <Notification {...this.props} />
           <div className='padded'>
@@ -131,7 +131,7 @@ export function donate() {
 
   return validateTransaction(transaction)
   .then(() => createTransaction(groupid, transaction))
-  .then(() => pushState(null, `/app/groups/${groupid}/transactions`))
+  .then(() => pushState(null, `/groups/${groupid}/transactions`))
   .then(() => notify('success', 'Funds added'))
   .catch(({message}) => notify('error', message));
 }

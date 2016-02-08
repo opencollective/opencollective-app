@@ -100,6 +100,6 @@ function mapStateToProps({notification, router, form}) {
   return {
     notification,
     error: form.schema.error,
-    redirectRoute: router.location.query.next || '/app/'
+    redirectRoute: router.location.query.next || '/'
   };
 }
