@@ -6,9 +6,6 @@ import TransactionNew from './TransactionNew';
 import TransactionDetail from './TransactionDetail';
 import Login from './Login';
 import Profile from './Profile';
-import PublicGroup from './PublicGroup';
-import PublicTransactions from './PublicTransactions';
-import PublicTransaction from './PublicTransaction';
 import GroupSettings from './GroupSettings';
 import TransactionEdit from './TransactionEdit';
 import ForgotPassword from './ForgotPassword';
@@ -23,9 +20,6 @@ export {
   TransactionDetail,
   Login,
   Profile,
-  PublicGroup,
-  PublicTransactions,
-  PublicTransaction,
   GroupSettings,
   TransactionEdit,
   ForgotPassword,
