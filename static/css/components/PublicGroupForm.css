@@ -2,3 +2,13 @@
 	margin-top: 1rem;
 	display: inline-block;
 }
+
+.PublicGroupForm .StripeCheckout {
+	max-width: 200px;
+	display: inline-block;
+}
+
+.PublicGroupForm-checkout {
+	margin: auto;
+	text-align: center;
+}
