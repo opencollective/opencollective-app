@@ -7,9 +7,6 @@ import {
   TransactionDetail,
   Login,
   Profile,
-  PublicGroup,
-  PublicTransactions,
-  PublicTransaction,
   GroupSettings,
   TransactionEdit,
   ForgotPassword,
@@ -26,11 +23,6 @@ const routes = {
     { path: 'app/forgot', component: ForgotPassword },
     { path: 'app/reset/:usertoken/:resettoken', component: ResetPassword },
 
-    // Public routes (web)
-    { path: 'public/groups/:groupid', component: PublicGroup },
-    { path: 'public/groups/:groupid/transactions', component: PublicTransactions },
-    { path: 'public/groups/:groupid/transactions/:transactionid', component: PublicTransaction },
-
     // Private routes (app)
     { path: 'app', component: requireAuthentication(GroupsList) },
     { path: 'app/', component: requireAuthentication(GroupsList) },
@@ -42,10 +34,8 @@ const routes = {
     { path: 'app/groups/:groupid/transactions/:transactionid/edit', component: requireAuthentication(TransactionEdit) },
     { path: 'app/groups/:groupid/funds', component: requireAuthentication(AddFund)},
 
-    { path: ':slug', component: PublicGroup },
-
     // Wildcard route
-    { path: '*', component: Login }
+    { path: 'app/*', component: Login }
   ]
 };
 

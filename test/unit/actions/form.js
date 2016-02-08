@@ -2,7 +2,6 @@ import expect from 'expect';
 import resetTransactionForm from '../../../actions/form/reset_transaction';
 import appendTransactionForm from '../../../actions/form/append_transaction';
 import setEditMode from '../../../actions/form/set_edit_mode_profile';
-import appendDonation from '../../../actions/form/append_donation';
 import * as constants from '../../../constants/form';
 
 describe('form actions', () => {
@@ -31,18 +30,6 @@ describe('form actions', () => {
       type: constants.SET_EDIT_MODE_PROFILE,
       isEditMode: false
     });
-  });
-
-  describe('donation', function () {
-    it('should set append a field to the donation form', () => {
-      const attributes = { amount: 10 };
-
-      expect(appendDonation(attributes)).toEqual({
-        type: constants.APPEND_DONATION_FORM,
-        attributes
-      });
-    });
-
   });
 
 });

@@ -146,28 +146,9 @@ function groupSettings(state=groupSettingsInitialState, action={}) {
   }
 }
 
-/**
- * Donation form
- */
-
-function donation(state={
-  attributes: {
-    amount: null,
-    frequency: null
-  }
-}, action={}) {
-  switch(action.type) {
-    case constants.APPEND_DONATION_FORM:
-      return merge({}, state, { attributes: action.attributes });
-    default:
-      return state;
-  }
-}
-
 export default combineReducers({
   transaction,
   profile,
-  donation,
   groupSettings,
   schema
 });

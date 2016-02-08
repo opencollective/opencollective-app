@@ -83,39 +83,6 @@ app.get(/^\/app(\/.*)?$/, (req, res) => {
 });
 
 /**
- * Server public page
- */
-
-app.get('/:slug([A-Za-z0-9-]+)', (req, res, next) => {
-  const options = {
-    showGA: process.env.NODE_ENV === 'production'
-  };
-
-  const slug = req.params.slug.toLowerCase();
-
-  request
-    .get({
-      url: apiUrl(`groups/${slug}/`),
-      json: true
-    }, (err, response, group) => {
-      if (err) return next(err);
-      if (response.statusCode !== 200) {
-        return next(response.body.error);
-      }
-
-      const meta = {
-        url: group.publicUrl,
-        title: 'Join ' + group.name + '\'s open collective',
-        description: group.name + ' is collecting funds to continue their activities. Chip in!',
-        image: group.image || group.logo,
-        twitter: '@'+group.twitterHandle,
-      };
-
-      res.render('index', { meta, options });
-    });
-});
-
-/**
  * 404 route
  */
 
