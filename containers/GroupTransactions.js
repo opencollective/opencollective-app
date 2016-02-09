@@ -16,6 +16,7 @@ import Content from './Content';
 import TopBar from '../components/TopBar';
 import Footer from '../components/Footer';
 import TransactionsList from '../components/TransactionsList';
+import ExportTransactionsButton from '../components/ExportTransactionsButton';
 import GroupTitle from '../components/GroupTitle';
 import EmptyList from '../components/EmptyList';
 
@@ -30,6 +31,7 @@ class GroupTransactions extends Component {
     } = this.props;
 
     const url = `/app/groups/${groupid}/settings/`;
+
     return (
       <div className='GroupTransactions'>
         <TopBar
@@ -41,7 +43,10 @@ class GroupTransactions extends Component {
           hasPopOverMenuOpen={hasPopOverMenuOpen} >
           <GroupTitle group={group} />
           <div className='padded'>
-            <div className='GroupTransactions-title'>Activity Detail</div>
+            <div className='GroupTransactions-title'>
+              <span>Activity Detail</span>
+              <ExportTransactionsButton {...this.props} />
+            </div>
             {this.list(this.props)}
           </div>
         </Content>

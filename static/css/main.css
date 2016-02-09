@@ -40,6 +40,7 @@
 @import './components/Currency.css';
 @import './components/DonationPicker.css';
 @import './components/EmptyList.css';
+@import 'components/ExportTransactionsButton.css';
 @import './components/Field.css';
 @import './components/Footer.css';
 @import './components/GroupLink.css';
