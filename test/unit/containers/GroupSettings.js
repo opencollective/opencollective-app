@@ -83,7 +83,4 @@ describe('GroupSettings container', () => {
     expect(DOM.children[0].value).to.be.equal(text);
   });
 
-
-
-
 });

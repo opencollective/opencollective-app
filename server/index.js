@@ -12,7 +12,7 @@ const apiUrl = url => {
   const withoutParams = config.apiUrl + (url.replace('/api/', ''));
   const hasParams = _.contains(url, '?');
 
-  return withoutParams + (hasParams ? '&' : '?') + `api_key=${config.apiKey}`;
+  return `${withoutParams}${hasParams ? '&' : '?'}api_key=${config.apiKey}`;
 };
 
 /**
@@ -28,7 +28,7 @@ app.use('/status', serverStatus(app));
 /**
  * Favicon
  */
-app.use(favicon(__dirname + '/../static/images/favicon.ico.png'));
+app.use(favicon(path.join(__dirname, '/../static/images/favicon.ico.png')));
 
 /**
  * Log
@@ -60,7 +60,7 @@ app.all('/api/*', (req, res) => {
 /**
  * Ejs template engine
  */
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, '/views'));
 app.set('view cache', config.viewCache);
 app.set('view engine', 'ejs');
 
@@ -103,7 +103,7 @@ app.use((err, req, res, next) => {
   }
 
   res.render('error', {
-    message: 'Error ' + err.code + ': ' + err.message,
+    message: `Error ${err.code}: ${err.message}`,
     options: {
       showGA: process.env.NODE_ENV === 'production'
     }
@@ -121,7 +121,7 @@ if (!_.contains(['test', 'circleci'], app.set('env'))) {
    * Start server
    */
   app.listen(app.get('port'), () => {
-    console.log('Express server listening on port ' + app.get('port'));
+    console.log(`Express server listening on port ${app.get('port')}`);
   });
 
 }

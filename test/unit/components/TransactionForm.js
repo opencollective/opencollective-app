@@ -13,8 +13,8 @@ chai.use(spies);
 
 describe('TransactionForm component', () => {
   const noop = () => {};
-  let resetTransactionForm = chai.spy(noop);
-  let appendTransactionForm = chai.spy(noop);
+  const resetTransactionForm = chai.spy(noop);
+  const appendTransactionForm = chai.spy(noop);
 
   beforeEach(() => {
     const props = {
