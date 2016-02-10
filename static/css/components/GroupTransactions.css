@@ -17,3 +17,7 @@
 	color: var(--light-blue);
 	cursor: pointer;
 }
+
+.Export-link .Icon--down {
+	vertical-align: sub;
+}

@@ -48,9 +48,14 @@ class GroupTransactions extends Component {
           <div className='padded'>
             <div className='GroupTransactions-title'>
               <span>Activity Detail</span>
-              {isHost ? <span className='Export-link' onClick={exportTransactions.bind(this, transactions, users)}>
-                          Export <Icon type='down'/> </span>
-                      : ''}
+              {isHost &&
+                (
+                  <span className='Export-link'
+                    onClick={exportTransactions.bind(this, transactions, users)}>
+                    Export <Icon type='down'/>
+                  </span>
+                )
+              }
             </div>
             {this.list(this.props)}
           </div>
@@ -94,8 +99,6 @@ class GroupTransactions extends Component {
 }
 
 export function exportTransactions(transactions, users) {
-  console.log("txns:", transactions);
-  console.log("users", users);
   var text = "createdAt,description,amount,currency,vat,tags,status,link,userName,userEmail\n";
   transactions.forEach(transaction => {
     const user = users[transaction.UserId];
@@ -105,7 +108,7 @@ export function exportTransactions(transactions, users) {
   });
 
   // remove all null strings before saving to file
-  text = text.replace(/null/gi, '');
+  text = text.replace(/,null,/gi, ',,');
   exportFile('text/plain;charset=utf-8', 'transactions.csv', text);
 };
 
