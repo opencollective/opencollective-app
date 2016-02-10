@@ -1,0 +1,18 @@
+html,
+body {
+  height: 100%;
+  font-size: 16px; /* 1 rem = 16px */
+}
+
+body {
+  color: var(--dark-gray);
+  font-family: 'Proxima Nova', Helvetica;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--light-blue);
+  text-decoration: none;
+}
