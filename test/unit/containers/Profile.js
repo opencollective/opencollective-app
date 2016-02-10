@@ -20,7 +20,7 @@ chai.use(spies);
 
 describe('Profile container', () => {
 
-  describe('on mount', function () {
+  describe('on mount', () => {
     const fetchUser = chai.spy(noop);
     const resetNotifications = chai.spy(noop);
     const getPreapprovalDetails = chai.spy(noop);

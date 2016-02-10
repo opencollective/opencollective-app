@@ -27,7 +27,7 @@ class TransactionForm extends Component {
 
     if (!enableVAT) return;
 
-    let vatInput = (
+    return (
       <div>
         <span className='inline'>VAT: </span>
         <Input
@@ -37,8 +37,6 @@ class TransactionForm extends Component {
           handleChange={vat => appendTransactionForm({vat})} />
       </div>
     );
-
-    return vatInput;
   }
 
   render() {

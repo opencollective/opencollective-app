@@ -4,7 +4,7 @@ import createHistory from 'history/lib/createBrowserHistory';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import * as reducers from '../reducers/index';
+import * as reducers from '../reducers';
 import routes from '../routes';
 
 const combinedReducers = combineReducers(reducers);
