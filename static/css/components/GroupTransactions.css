@@ -11,3 +11,9 @@
 .GroupTransactions-list .Transaction {
   padding-left: 0;
 }
+
+.GroupTransactions-title .Export-link {
+	float: right;
+	color: var(--light-blue);
+	cursor: pointer;
+}
