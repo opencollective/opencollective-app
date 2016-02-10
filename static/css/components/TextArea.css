@@ -5,3 +5,11 @@
 .TextArea--error .Field{
   box-shadow: inset 0 0 0 1px var(--dark-red);
 }
+
+.TextArea--success .Label{
+  color: var(--green);
+}
+
+.TextArea--success .Field{
+  box-shadow: inset 0 0 0 1px var(--green);
+}

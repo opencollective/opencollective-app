@@ -13,7 +13,8 @@ describe('groups reducer', () => {
 
   it('should add a group', () => {
     const groups = {
-      1: {name: 'New York'}
+      1: {name: 'New York'},
+      updated: {}
     };
     const state = reducer(undefined, {
       type: GROUP_SUCCESS,

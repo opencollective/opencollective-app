@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Joi from 'joi';
 import debounce from 'lodash/function/debounce';
+import pick from 'lodash/object/pick';
 
 import Content from './Content';
 import TopBar from '../components/TopBar'
@@ -12,15 +14,28 @@ import ProfilePhotoUpload from '../components/ProfilePhotoUpload';
 import resetNotifications from '../actions/notification/reset';
 import notify from '../actions/notification/notify';
 import fetchGroup from '../actions/groups/fetch_by_id';
-import validateSettings from '../actions/form/validate_group_settings';
-import appendGroupSettingsForm from '../actions/form/append_group_settings';
+import validate from '../actions/form/validate_schema';
 import updateGroup from '../actions/groups/update_group';
 import uploadImage from '../actions/images/upload';
 
 export class GroupSettings extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.schema = Joi.object().keys({
+      name: Joi.string(),
+      description: Joi.string().max(95),
+      longDescription: Joi.string(),
+      logo: Joi.string().uri(),
+      image: Joi.string().uri(),
+    });
+  }
+
   render() {
     const {
-        form
+      error,
+      updated
     } = this.props;
 
     return (
@@ -31,40 +46,41 @@ export class GroupSettings extends Component {
           <div className='padded'>
             <ProfilePhotoUpload
               {...this.props}
-              value={form.attributes.logo || this.props.group.logo}
-              onFinished={({url}) => this.handleChange('logo', url)} />
+              value={this.state.logo || this.props.group.logo}
+              onFinished={({url}) => this.handleChange({logo: url})} />
 
             <div className='Label'> Name: </div>
             <Input
-              type = 'text'
-              placeholder = 'Group name'
-              customClass=''
-              value={form.attributes.name}
-              handleChange= {this.handleChange.bind(this, 'name')}/>
+              type='text'
+              placeholder='Group name'
+              value={this.state.name}
+              hasError={error.name}
+              isSuccessful={updated.name}
+              handleChange={name => this.handleChange({name})}/>
 
             <div className='Label'> Short description: </div>
             <TextArea
-              placeholder = 'Short description (in 140 characters or less)'
+              placeholder='Short description (in 140 characters or less)'
               rows='3'
-              value={form.attributes.description}
-              customClass='test1'
-              handleChange= {this.handleChange.bind(this, 'description')}/>
+              value={this.state.description}
+              isSuccessful={updated.description}
+              handleChange={description => this.handleChange({description})}/>
 
             <div className='Label'> Long description: </div>
             <TextArea
-              placeholder = 'Detailed description'
+              placeholder='Detailed description'
               rows='5'
-              value={form.attributes.longDescription}
-              customClass='test2'
-              handleChange= {this.handleChange.bind(this, 'longDescription')}/>
+              value={this.state.longDescription}
+              isSuccessful={updated.longDescription}
+              handleChange={longDescription => this.handleChange({longDescription})}/>
 
             <div className='Label'> Expense Policy: </div>
             <TextArea
-              placeholder = 'Optional -- specify what can be expensed by the members of the collective'
+              placeholder='Optional -- specify what can be expensed by the members of the collective'
               rows='3'
-              value={form.attributes.expensePolicy}
-              handleChange= {this.handleChange.bind(this, 'expensePolicy')}/>
-
+              value={this.state.expensePolicy}
+              isSuccessful={updated.expensePolicy}
+              handleChange= {expensePolicy => this.handleChange({expensePolicy})}/>
           </div>
         </Content>
       </div>
@@ -72,45 +88,36 @@ export class GroupSettings extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchGroup(this.props.groupid)
-    .then(() => this.props.appendGroupSettingsForm({
-      name: this.props.group.name,
-      description: this.props.group.description,
-      longDescription: this.props.group.longDescription,
-      expensePolicy: this.props.group.expensePolicy,
-      isPublic: this.props.group.isPublic
-    }));
+    this.debounceUpdateSettings = debounce(this.updateSettings, 500);
 
-    this.debouncedValidateAndUpdateSetting = debounce(this.validateAndUpdateSetting, 500);
+    this.props.fetchGroup(this.props.groupid)
+      .then(() => this.setState(this.props.initialGroup));
+
   }
 
-  validateAndUpdateSetting(attribute){
+  updateSettings(attribute){
     const {
-      validateSettings,
+      validate,
       notify,
       groupid,
       updateGroup
     } = this.props;
 
-    return validateSettings(attribute)
+    return validate(attribute, this.schema)
       .then(() => updateGroup(groupid, attribute))
       .catch(({message}) => notify('error', message));
   }
 
-  handleChange(field, value){
-    const attribute = {
-      [field]: value
-    };
-    this.props.appendGroupSettingsForm(attribute);
-    this.debouncedValidateAndUpdateSetting(attribute);
+  handleChange(attribute){
+    this.setState(attribute);
+    this.debounceUpdateSettings(attribute);
   }
 }
 
 export default connect(mapStateToProps, {
   resetNotifications,
   fetchGroup,
-  validateSettings,
-  appendGroupSettingsForm,
+  validate,
   notify,
   updateGroup,
   uploadImage,
@@ -119,11 +126,20 @@ export default connect(mapStateToProps, {
 function mapStateToProps({groups, router, form, notification}){
   const groupid = router.params.groupid;
   const group = groups[groupid] || {};
+  const initialGroup = pick(group, [
+    'name',
+    'description',
+    'longDescription',
+    'expensePolicy',
+    'isPublic'
+  ]);
 
   return {
     groupid,
+    initialGroup,
     group,
     notification,
-    form: form.groupSettings,
+    error: form.schema.error,
+    updated: groups.updated,
   }
 }
