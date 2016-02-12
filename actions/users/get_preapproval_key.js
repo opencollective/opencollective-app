@@ -9,10 +9,11 @@ import * as constants from '../../constants/users';
 export default (userid, options={}) => {
   // Redirect to homepage that has will confirmed the preapproval key
   const callback = `${origin}/?approvalStatus=`;
+  const preapprovalTemplate = '${preapprovalKey}';
 
   const params = {
-    returnUrl: callback + 'success&preapprovalKey=${preapprovalKey}',
-    cancelUrl: callback + 'cancel',
+    returnUrl: `${callback}success&preapprovalKey=${preapprovalTemplate}`,
+    cancelUrl: `${callback}cancel`,
     maxTotalAmountOfAllPayments: options.maxTotalAmountOfAllPayments || 2000
   };
 

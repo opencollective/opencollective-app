@@ -1,0 +1,10 @@
+{
+  "cacheBust": false,
+  "viewCache": false,
+  "host": {
+    "api": "http://localhost:3060/",
+    "app": "http://localhost:3000/"
+  },
+  "apiKey": "0ac43519edcf4421d80342403fb5985d",
+  "stripePublicKey": "pk_test_5olkhgG5FgJDHcGpJllmCj6z"
+}

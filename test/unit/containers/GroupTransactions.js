@@ -29,5 +29,4 @@ describe('GroupTransactions container', () => {
     expect(state.isHost).to.be.equal(true);
   });
 
-
 });

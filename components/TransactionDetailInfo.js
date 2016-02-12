@@ -34,7 +34,3 @@ export default ({transaction, tags, handleChange, isDonation, isPublic, isReject
     </div>
   );
 };
-
-
-
-

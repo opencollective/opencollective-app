@@ -24,17 +24,13 @@ npm run build
 If you want to deploy to staging, you need to push your code to the `staging` branch. CircleCI will run the tests on this branch and push to Heroku for you if successful.
 
 ### Manually
-If you want to deploy the app on Heroku manually (only for production), you need to add the remotes:
 
 ```
-git remote add heroku-production https://git.heroku.com/opencollective-prod-app.git
+npm run deploy:staging
+npm run deploy:production
 ```
 
-Then you can run:
-
-```
-git push heroku-production master
-```
+The script will merge `origin/master` to the branch `staging` or `production` branch. Push it to GitHub and Heroku.
 
 ## Test
 

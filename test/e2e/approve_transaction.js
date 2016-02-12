@@ -24,7 +24,8 @@ module.exports = {
       .waitForElementVisible("option[value='manual']", 1000)
       .click("option[value='manual']")
       .submitForm('form.TransactionForm-form')
-      .waitForElementVisible('.Transaction', 1000);
+      .waitForElementVisible('.Transaction', 1000)
+      .waitForElementVisible('.Export-link', 1000);
   },
 
   'Approves an expense': (client) => {
