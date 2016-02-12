@@ -21,11 +21,11 @@ class ForgotPassword extends Component {
     this.state = {
       inProgress: false,
       form: {
-        email: '',
+        email: ''
       }
     };
     this.schema = Joi.object().keys({
-      email: Joi.string().email().required(),
+      email: Joi.string().email().required()
     });
   }
 
@@ -48,8 +48,9 @@ class ForgotPassword extends Component {
               value={this.state.form.email}
               hasError={this.props.error.email}
               handleChange={email => {
-                const form = {email: email};
-                this.setState({form})}} />
+                  this.setState({form: {email} })
+                }
+              } />
             <SubmitButton
               inProgress={this.state.inProgress}>
               Send email
