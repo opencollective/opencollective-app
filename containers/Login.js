@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
 import Joi from 'joi';
-
 import login from '../actions/session/login';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
@@ -56,6 +55,7 @@ export class Login extends Component {
               placeholder='******'
               value={this.state.password}
               handleChange={password => this.setState({password})} />
+            <a href='/forgot'>Forgot password?</a>
             <div className='Login-buttonContainter'>
               <SubmitButton>
                 Login
