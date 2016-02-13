@@ -7,6 +7,7 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('build', ['copy-assets', 'resize-icons', 'build:css']);
+gulp.task('build:dev', ['copy-assets', 'build:css']);
 
 /**
  * Build css for main or widget
