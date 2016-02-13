@@ -3,5 +3,6 @@
     "api": "API_URL",
     "app": "CLIENT_URL"
   },
+  "apiKey": "API_KEY",
   "stripePublicKey": "STRIPE_PUBLIC_KEY"
 }
