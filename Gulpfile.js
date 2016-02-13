@@ -1,19 +1,44 @@
-const ASSETS_SRC_DIR = './frontend/src/assets'
-const ICONS_SRC_DIR = `${ASSETS_SRC_DIR}/images/icons`;
-const DIST_DIR = './frontend/dist';
+const SRC_DIR = 'frontend/src';
+const DIST_DIR = 'frontend/dist';
+const ICONS_SRC_DIR = `${SRC_DIR}/assets/images/icons`;
 const ICONS_DIST_DIR = `${DIST_DIR}/images/icons`;
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
-gulp.task('build', ['copy-assets', 'resize-icons']);
+gulp.task('build', ['copy-assets', 'resize-icons', 'build:css']);
+
+/**
+ * Build css for main or widget
+ */
+gulp.task('build:css', () => {
+
+  return gulp.src(`${SRC_DIR}/css/main.css`)
+    .pipe($.changed(`${DIST_DIR}/css`))
+    .pipe($.postcss([
+      require('autoprefixer'),
+      require('postcss-import')(),
+      require('postcss-cssnext')(),
+      require('postcss-discard-comments')(),
+      require('cssnano')(),
+    ]))
+    .pipe(gulp.dest(`${DIST_DIR}/css`));
+});
 
 /**
  * Copy all static assets from ./frontend/src/assets/* to ./frontend/dist/
  * (includes /images, /fonts, /robots.txt)
  */
 gulp.task('copy-assets', () => {
-  return gulp.src([`${ASSETS_SRC_DIR}/**/*`]).pipe(gulp.dest(DIST_DIR));  
+  return gulp.src([`${SRC_DIR}/assets/**/*`])
+    .pipe($.changed(DIST_DIR))
+    .pipe(gulp.dest(DIST_DIR));
+});
+
+gulp.task('watch', () => {
+  gulp.watch(`${SRC_DIR}/assets/**/*`, ['copy-assets']);
+  gulp.watch(`${ICONS_SRC_DIR}/*.png`, ['resize-icons']);
+  gulp.watch(`${SRC_DIR}/css/**/*.css`, ['build:css']);
 });
 
 /**
