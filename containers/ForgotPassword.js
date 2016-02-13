@@ -47,7 +47,7 @@ class ForgotPassword extends Component {
               placeholder='email@example.com'
               value={this.state.form.email}
               hasError={this.props.error.email}
-              handleChange={email => { this.setState({form: {email} }) } } />
+              handleChange={this.handleChange.bind(this)} />
             <SubmitButton
               inProgress={this.state.inProgress}>
               Send email
@@ -56,6 +56,10 @@ class ForgotPassword extends Component {
         </Content>
       </div>
     );
+  }
+
+  handleChange(email) {
+    this.setState({form: {email} });
   }
 
   handleSubmit(event) {
