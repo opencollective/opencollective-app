@@ -21,7 +21,7 @@
     "posttest": "npm run nightwatch",
     "nightwatch": "./node_modules/nightwatch/bin/nightwatch --config nightwatch.json",
     "build": "gulp build && npm run build:js && npm run build:css",
-    "build:js": "NODE_ENV=production browserify frontend/src/client.js | uglifyjs -cm > frontend/dist/js/bundle.js",
+    "build:js": "mkdir -p frontend/dist/js NODE_ENV=production browserify frontend/src/client.js | uglifyjs -cm > frontend/dist/js/bundle.js",
     "build:css": "cssnext frontend/src/css/main.css frontend/dist/css/build.css",
     "watch:css": "cssnext --watch frontend/src/css/main.css frontend/dist/css/build.css -v",
     "watch:js": "mkdir -p frontend/dist/js && NODE_ENV=development watchify frontend/src/client.js -o frontend/dist/js/bundle.js -dv",
