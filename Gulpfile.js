@@ -6,7 +6,7 @@ const ICONS_DIST_DIR = `${DIST_DIR}/images/icons`;
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
-gulp.task('build', ['copy-assets']);
+gulp.task('build', ['copy-assets', 'resize-icons']);
 
 /**
  * Copy all static assets from ./frontend/src/assets/* to ./frontend/dist/
@@ -73,7 +73,7 @@ gulp.task('resize-icons', () => {
       'icon-512px.png': [{
         width: 152,
         height: 152,
-        rename: { basename: 'icon', suffix: '-152x152px' },
+        rename: { basename: 'icon', suffix: '-152px' },
       }, {
         width: 144,
         height: 144,
