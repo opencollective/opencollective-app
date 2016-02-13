@@ -15,7 +15,7 @@
     <meta name="twitter:description" content="<%= meta.description %>" />
     <meta name="twitter:image" content="<%= meta.image %>" />
     <link rel="shortcut icon" type="image/png" href="/static/images/favicon.ico.png"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="<%= busted('/css/main.css') %>">
     
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="OpenCollective" />
@@ -39,7 +39,7 @@
   <body>
     <div id="content"></div>
 
-    <script src="/static/js/bundle.js"></script>
+    <script src="<%= busted('/js/bundle.js') %>"></script>
     <% include google_analytics.ejs %>
 
   </body>
