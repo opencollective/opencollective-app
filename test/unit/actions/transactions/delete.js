@@ -1,8 +1,8 @@
 import nock from 'nock';
 import mockStore from '../../helpers/mockStore';
-import env from '../../../../lib/env';
-import * as constants from '../../../../constants/transactions';
-import deleteTransaction from '../../../../actions/transactions/delete';
+import env from '../../../../frontend/src/lib/env';
+import * as constants from '../../../../frontend/src/constants/transactions';
+import deleteTransaction from '../../../../frontend/src/actions/transactions/delete';
 
 describe('transactions delete actions', () => {
 

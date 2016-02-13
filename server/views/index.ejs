@@ -15,13 +15,31 @@
     <meta name="twitter:description" content="<%= meta.description %>" />
     <meta name="twitter:image" content="<%= meta.image %>" />
     <link rel="shortcut icon" type="image/png" href="/static/images/favicon.ico.png"/>
-    <link rel="stylesheet" type="text/css" href="/static/dist/build.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/build.css">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="OpenCollective" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="initial-scale=1" />
+    <link href="/static/images/icons/icon-152px.png" sizes="152x152" rel="apple-touch-icon-precomposed" />
+    <link href="/static/images/icons/icon-120px.png" sizes="120x120" rel="apple-touch-icon-precomposed" />
+    <link href="/static/images/icons/icon-144px.png" sizes="144x144" rel="apple-touch-icon-precomposed" />
+    <link href="/static/images/icons/icon-114px.png" sizes="114x114" rel="apple-touch-icon-precomposed" />
+    <link href="/static/images/icons/icon-72px.png" sizes="72x72" rel="apple-touch-icon-precomposed" />
+    <link href="/static/images/icons/icon-57px.png" sizes="57x57" rel="apple-touch-icon-precomposed" />
+    <link href="/static/images/icons/icon-1242x2148px.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" rel="apple-touch-startup-image" />
+    <link href="/static/images/icons/icon-1182x2208px.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" rel="apple-touch-startup-image" />
+    <link href="/static/images/icons/icon-750x1294px.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="/static/images/icons/icon-640x1096px.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="/static/images/icons/icon-640x920px.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+    <link href="/static/images/icons/icon-320x460px.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image" />      
+    
     <title><%= meta.title %></title>
   </head>
   <body>
     <div id="content"></div>
 
-    <script src="/static/dist/bundle.js"></script>
+    <script src="/static/js/bundle.js"></script>
     <% include google_analytics.ejs %>
 
   </body>

@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { createExpense, TransactionNew } from '../../../containers/TransactionNew';
+import { createExpense, TransactionNew } from '../../../frontend/src/containers/TransactionNew';
 import noop from '../helpers/noop';
 
 const {expect} = chai;

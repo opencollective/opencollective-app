@@ -5,10 +5,10 @@ import _ from 'lodash';
 import {
   deleteExpense,
   mapStateToProps
-} from '../../../containers/TransactionDetail';
+} from '../../../frontend/src/containers/TransactionDetail';
 
-import roles from '../../../constants/roles';
-import createStore from '../../../store/create';
+import roles from '../../../frontend/src/constants/roles';
+import createStore from '../../../frontend/src/store/create';
 
 const defaultState = createStore().getState();
 

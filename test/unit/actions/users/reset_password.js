@@ -1,9 +1,9 @@
 import nock from 'nock';
 import mockStore from '../../helpers/mockStore';
-import env from '../../../../lib/env';
-import * as constants from '../../../../constants/users';
+import env from '../../../../frontend/src/lib/env';
+import * as constants from '../../../../frontend/src/constants/users';
 
-import resetPassword from '../../../../actions/users/reset_password';
+import resetPassword from '../../../../frontend/src/actions/users/reset_password';
 
 describe('users actions', () => {
 

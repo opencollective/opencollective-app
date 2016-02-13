@@ -29,7 +29,7 @@ app.use('/status', serverStatus(app));
 /**
  * Favicon
  */
-app.use(favicon(path.join(__dirname, '/../static/images/favicon.ico.png')));
+app.use(favicon(path.join(__dirname, '/../frontend/dist/images/favicon.ico.png')));
 
 /**
  * Log
@@ -39,12 +39,12 @@ app.use(morgan('dev'));
 /**
  * Static folder
  */
-app.use('/static', express.static(path.join(__dirname, '../static')));
+app.use('/static', express.static(path.join(__dirname, '../frontend/dist')));
 
 /**
  * GET /robots.txt
  */
-app.use(robots(path.join(__dirname, '../static/robots.txt')));
+app.use(robots(path.join(__dirname, '../frontend/dist/robots.txt')));
 
 /**
  * Pipe the requests before the middlewares, the piping will only work with raw

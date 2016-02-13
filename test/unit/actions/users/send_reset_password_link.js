@@ -1,9 +1,9 @@
 import nock from 'nock';
 import mockStore from '../../helpers/mockStore';
-import env from '../../../../lib/env';
-import * as constants from '../../../../constants/users';
+import env from '../../../../frontend/src/lib/env';
+import * as constants from '../../../../frontend/src/constants/users';
 
-import sendLink from '../../../../actions/users/send_reset_password_link';
+import sendLink from '../../../../frontend/src/actions/users/send_reset_password_link';
 
 describe('users actions', () => {
 

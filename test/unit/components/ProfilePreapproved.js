@@ -7,7 +7,7 @@ import {
 import chai, { expect } from 'chai';
 import spies from 'chai-spies';
 
-import ProfilePreapproved from '../../../components/ProfilePreapproved';
+import ProfilePreapproved from '../../../frontend/src/components/ProfilePreapproved';
 
 var Wrapper = React.createClass({
     render() {

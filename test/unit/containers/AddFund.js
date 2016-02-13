@@ -5,7 +5,7 @@ import spies from 'chai-spies';
 
 import noop from '../helpers/noop';
 
-import { AddFund, donate } from '../../../containers/AddFund';
+import { AddFund, donate } from '../../../frontend/src/containers/AddFund';
 
 const { expect } = chai;
 const {

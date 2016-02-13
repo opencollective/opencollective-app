@@ -1,8 +1,8 @@
 import nock from 'nock';
 import mockStore from '../../helpers/mockStore';
-import env from '../../../../lib/env';
-import * as constants from '../../../../constants/transactions';
-import payTransaction from '../../../../actions/transactions/pay';
+import env from '../../../../frontend/src/lib/env';
+import * as constants from '../../../../frontend/src/constants/transactions';
+import payTransaction from '../../../../frontend/src/actions/transactions/pay';
 
 describe('transactions pay actions', () => {
 

@@ -1,10 +1,10 @@
 import chai from 'chai';
 import spies from 'chai-spies';
-import roles from '../../../constants/roles';
+import roles from '../../../frontend/src/constants/roles';
 
 import {
   mapStateToProps
-} from '../../../containers/GroupTransactions';
+} from '../../../frontend/src/containers/GroupTransactions';
 
 const { expect } = chai;
 

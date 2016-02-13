@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { update, TransactionEdit } from '../../../containers/TransactionEdit';
+import { update, TransactionEdit } from '../../../frontend/src/containers/TransactionEdit';
 
 const {expect} = chai;
 const {
