@@ -3,14 +3,14 @@ import nock from 'nock';
 import jwt from 'jwt-simple';
 import sinon from 'sinon';
 
-import env from '../../../lib/env';
+import env from '../../../frontend/src/lib/env';
 import mockStore from '../helpers/mockStore';
-import * as constants from '../../../constants/session';
+import * as constants from '../../../frontend/src/constants/session';
 
-import login from '../../../actions/session/login';
-import logout from '../../../actions/session/logout';
-import decodeJWT from '../../../actions/session/decode_jwt';
-import showPopOverMenu from '../../../actions/session/show_popovermenu';
+import login from '../../../frontend/src/actions/session/login';
+import logout from '../../../frontend/src/actions/session/logout';
+import decodeJWT from '../../../frontend/src/actions/session/decode_jwt';
+import showPopOverMenu from '../../../frontend/src/actions/session/show_popovermenu';
 
 describe('session actions', () => {
   beforeEach(() => {

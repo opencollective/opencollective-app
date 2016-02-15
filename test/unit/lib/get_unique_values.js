@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import getUniqueValues from '../../../lib/get_unique_values';
+import getUniqueValues from '../../../frontend/src/lib/get_unique_values';
 
 describe('getUniqueValues', () => {
 

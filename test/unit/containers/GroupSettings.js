@@ -7,7 +7,7 @@ import noop from '../helpers/noop';
 
 import {
   GroupSettings,
-} from '../../../containers/GroupSettings';
+} from '../../../frontend/src/containers/GroupSettings';
 
 const { expect } = chai;
 const {

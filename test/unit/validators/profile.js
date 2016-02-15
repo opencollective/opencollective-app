@@ -1,5 +1,5 @@
 import expect from 'expect';
-import validate from '../../../validators/profile';
+import validate from '../../../frontend/src/validators/profile';
 
 describe('validator profile', () => {
   it('should resolve the promise when the data is valid', (done) => {

@@ -1,14 +1,14 @@
 import nock from 'nock';
 import mockStore from '../../helpers/mockStore';
-import env from '../../../../lib/env';
-import * as constants from '../../../../constants/users';
+import env from '../../../../frontend/src/lib/env';
+import * as constants from '../../../../frontend/src/constants/users';
 
-import getPreapprovalKeyForUser from '../../../../actions/users/get_preapproval_key';
-import confirmPreapprovalKey from '../../../../actions/users/confirm_preapproval_key';
-import fetchUserIfNeeded from '../../../../actions/users/fetch_by_id_cached';
-import fetchUserGroups from '../../../../actions/users/fetch_groups';
-import fetchCards from '../../../../actions/users/fetch_cards';
-import updatePaypalEmail from '../../../../actions/users/update_paypal_email';
+import getPreapprovalKeyForUser from '../../../../frontend/src/actions/users/get_preapproval_key';
+import confirmPreapprovalKey from '../../../../frontend/src/actions/users/confirm_preapproval_key';
+import fetchUserIfNeeded from '../../../../frontend/src/actions/users/fetch_by_id_cached';
+import fetchUserGroups from '../../../../frontend/src/actions/users/fetch_groups';
+import fetchCards from '../../../../frontend/src/actions/users/fetch_cards';
+import updatePaypalEmail from '../../../../frontend/src/actions/users/update_paypal_email';
 
 describe('users actions', () => {
 

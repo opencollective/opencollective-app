@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { Profile, save, cancel, getPreapprovalInfo } from '../../../containers/Profile';
+import { Profile, save, cancel, getPreapprovalInfo } from '../../../frontend/src/containers/Profile';
 import noop from '../helpers/noop';
 
 const {expect} = chai;

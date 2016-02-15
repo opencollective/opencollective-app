@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import RejectButton from '../../../components/RejectButton';
+import RejectButton from '../../../frontend/src/components/RejectButton';
 
 const {expect} = chai;
 const {

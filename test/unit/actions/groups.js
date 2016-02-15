@@ -1,9 +1,9 @@
 import nock from 'nock';
 
 import mockStore from '../helpers/mockStore';
-import env from '../../../lib/env';
-import fetchById from '../../../actions/groups/fetch_by_id';
-import * as constants from '../../../constants/groups';
+import env from '../../../frontend/src/lib/env';
+import fetchById from '../../../frontend/src/actions/groups/fetch_by_id';
+import * as constants from '../../../frontend/src/constants/groups';
 
 describe('groups actions', () => {
 

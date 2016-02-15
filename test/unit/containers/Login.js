@@ -1,6 +1,6 @@
 import expect from 'expect';
-import { schema } from '../../../containers/Login';
-import validate from '../../../lib/validate';
+import { schema } from '../../../frontend/src/containers/Login';
+import validate from '../../../frontend/src/lib/validate';
 
 describe('Login container', () => {
 

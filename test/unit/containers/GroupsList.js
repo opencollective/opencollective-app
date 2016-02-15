@@ -2,13 +2,13 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import roles from '../../../constants/roles';
+import roles from '../../../frontend/src/constants/roles';
 import noop from '../helpers/noop';
 
 import {
   GroupsList,
   mapStateToProps
-} from '../../../containers/GroupsList';
+} from '../../../frontend/src/containers/GroupsList';
 
 const { expect } = chai;
 const {

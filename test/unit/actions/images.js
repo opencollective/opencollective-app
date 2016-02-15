@@ -1,12 +1,12 @@
 import nock from 'nock';
 import mockStore from '../helpers/mockStore';
-import env from '../../../lib/env';
-import uploadImage from '../../../actions/images/upload';
+import env from '../../../frontend/src/lib/env';
+import uploadImage from '../../../frontend/src/actions/images/upload';
 import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
   UPLOAD_IMAGE_FAILURE,
-} from '../../../constants/images';
+} from '../../../frontend/src/constants/images';
 
 describe('images actions', () => {
 
