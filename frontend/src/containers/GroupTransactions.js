@@ -108,7 +108,7 @@ export function exportTransactions(transactions, users) {
   });
 
   // remove all null strings before saving to file
-  text = text.replace(/,null,/gi, ',,');
+  text = text.replace(/,null/gi, ',');
   exportFile('text/plain;charset=utf-8', 'transactions.csv', text);
 };
 
