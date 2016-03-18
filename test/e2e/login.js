@@ -1,9 +1,10 @@
+const config = require('config');
+const resetDb = require('../lib/reset_db.js');
+
 module.exports = {
   beforeEach: (client) => {
-    client
-      // reset test database
-      .url('https://opencollective-test-api.herokuapp.com/database/reset')
-      .url("http://localhost:3000/login")
+    resetDb(client)
+      .url(`${config.host.app}/login`)
       .waitForElementVisible("body", 1000);
   },
 

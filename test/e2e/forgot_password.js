@@ -1,3 +1,6 @@
+const config = require('config');
+const resetDb = require('../lib/reset_db.js');
+
 const page = {
   title: "OpenCollective - create and fund your collective transparently"
 }
@@ -5,10 +8,8 @@ const page = {
 
 module.exports = {
   beforeEach: (client) => {
-    client
-      // reset test database
-      .url('https://opencollective-test-api.herokuapp.com/database/reset')
-      .url("http://localhost:3000/forgot")
+    resetDb(client)
+      .url(`${config.host.app}/forgot`)
       .waitForElementVisible("body", 1000);
   },
 
