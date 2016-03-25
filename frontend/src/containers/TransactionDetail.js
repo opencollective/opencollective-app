@@ -19,7 +19,7 @@ import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import Content from './Content';
 
 import tags from '../ui/tags';
-import paymentMethods from '../ui/payment_methods';
+import payoutMethods from '../ui/payout_methods';
 
 import TopBar from '../components/TopBar';
 import TransactionDetailComment from '../components/TransactionDetailComment';
@@ -115,13 +115,13 @@ class TransactionDetail extends Component {
 
             {showApprovalButtons && (
               <div>
-                <div className='TransactionDetail-paymentMethod'>
-                  <div className='u-bold u-py1'>Payment method</div>
+                <div className='TransactionDetail-payoutMethod'>
+                  <div className='u-bold u-py1'>Payout method</div>
                   <Select
                     disabled={!!transaction.reimbursedAt}
-                    options={paymentMethods}
-                    value={transaction.paymentMethod}
-                    handleChange={paymentMethod => updateTransaction(groupid, transactionid, {paymentMethod})} />
+                    options={payoutMethods}
+                    value={transaction.payoutMethod}
+                    handleChange={payoutMethod => updateTransaction(groupid, transactionid, {payoutMethod})} />
                 </div>
                 <div className='u-mt2'>
                   <ApproveButton

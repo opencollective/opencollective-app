@@ -1,5 +1,5 @@
 /**
- * Static data the for the payment methods (transaction)
+ * Static data the for the payout methods (transaction)
  */
 
 export default [
