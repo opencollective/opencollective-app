@@ -17,6 +17,20 @@ module.exports = {
       .click('button[type=submit]')
       .pause(1000)
 
+      // Connect Paypal account
+      .click('.Button--paypal')
+      .waitForElementVisible('#loadLogin', 20000)
+      .click('#loadLogin')
+      .waitForElementVisible('input#login_email', 20000)
+      .setValue('input#login_email', 'admin@opencollective.com')
+      .setValue('input#login_password', 'sandbox123')
+      .click('#submitLogin')
+      .waitForElementVisible('input.button.primary.default', 20000)
+      .click('input.button.primary.default')
+      .waitForElementVisible('#returnToMerchant', 20000)
+      .click('#returnToMerchant')
+      .verify.containsText('.PaypalReminder', 'You have successfully approved your Paypal account')
+
       // submit transaction
       .url('http://localhost:3000/groups/1/transactions/new')
       .setValue('.js-transaction-description input', description)

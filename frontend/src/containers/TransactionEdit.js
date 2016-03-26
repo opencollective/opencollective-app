@@ -86,7 +86,7 @@ export function update({attributes}) {
     'approvedAt',
     'tags',
     'approved',
-    'paymentMethod',
+    'payoutMethod',
     'comment'
   ]);
 

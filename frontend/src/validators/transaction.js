@@ -3,7 +3,7 @@ import pluck from 'lodash/collection/pluck';
 
 import dates from '../lib/dates';
 import validate from '../lib/validate';
-import paymentMethods from '../ui/payment_methods';
+import payoutMethods from '../ui/payout_methods';
 
 /**
  * New transaction schema
@@ -29,8 +29,8 @@ const schema = Joi.object().keys({
   tags: Joi.array().items(Joi.string()).required()
     .label('Category'),
   approved: Joi.boolean(),
-  paymentMethod: Joi.string().valid(pluck(paymentMethods, 'value'))
-    .label('Payment method'),
+  payoutMethod: Joi.string().valid(pluck(payoutMethods, 'value'))
+    .label('Payout method'),
   comment: Joi.string()
     .label('Comment')
     .allow(null),

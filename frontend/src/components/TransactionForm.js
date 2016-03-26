@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import formatCurrency from '../lib/format_currency';
 
-import paymentMethods from '../ui/payment_methods';
+import payoutMethods from '../ui/payout_methods';
 
 import ImageUpload from './ImageUpload';
 import Input from './Input';
@@ -110,9 +110,9 @@ class TransactionForm extends Component {
           <div className='Input'>
             <label className='inline'>Method:</label>
             <Select
-              options={paymentMethods}
-              value={attributes.paymentMethod}
-              handleChange={paymentMethod => appendTransactionForm({paymentMethod})} />
+              options={payoutMethods}
+              value={attributes.payoutMethod}
+              handleChange={payoutMethod => appendTransactionForm({payoutMethod})} />
           </div>
 
           <div className='Input textarea'>
