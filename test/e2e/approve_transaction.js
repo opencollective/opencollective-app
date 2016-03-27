@@ -38,7 +38,7 @@ module.exports = {
       .waitForElementVisible('#returnToMerchant', 10000)
       .click('#returnToMerchant')
       .waitForElementVisible('.PaypalReminder', 10000)
-      .verify.containsText('.PaypalReminder', 'You have successfully connected your Paypal account')
+      .verify.containsText('.PaypalReminder', 'You have successfully connected your PayPal account')
   },
 
   'set personal paypal email': (client) => {
