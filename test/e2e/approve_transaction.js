@@ -19,16 +19,18 @@ module.exports = {
 
       // Connect Paypal account
       .click('.Button--paypal')
-      .waitForElementVisible('#loadLogin', 20000)
+      .waitForElementVisible('#loadLogin', 10000)
       .click('#loadLogin')
-      .waitForElementVisible('input#login_email', 20000)
+      .waitForElementVisible('input#login_email', 10000)
       .setValue('input#login_email', 'admin@opencollective.com')
       .setValue('input#login_password', 'sandbox123')
       .click('#submitLogin')
-      .waitForElementVisible('input.button.primary.default', 20000)
+      .pause(1500)
+      .waitForElementVisible('input.button.primary.default', 10000)
       .click('input.button.primary.default')
-      .waitForElementVisible('#returnToMerchant', 20000)
+      .waitForElementVisible('#returnToMerchant', 10000)
       .click('#returnToMerchant')
+      .waitForElementVisible('.PayPalReminder', 10000)
       .verify.containsText('.PaypalReminder', 'You have successfully approved your Paypal account')
 
       // submit transaction
@@ -38,8 +40,8 @@ module.exports = {
       .waitForElementVisible("option[value='manual']", 1000)
       .click("option[value='manual']")
       .submitForm('form.TransactionForm-form')
-      .waitForElementVisible('.Transaction', 1000)
-      .waitForElementVisible('.Export-link', 1000);
+      .waitForElementVisible('.Transaction', 1500)
+      .waitForElementVisible('.Export-link', 1500);
   },
 
   'Approves an expense': (client) => {
