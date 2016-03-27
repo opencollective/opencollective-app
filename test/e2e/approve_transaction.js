@@ -30,7 +30,7 @@ module.exports = {
       .click('input.button.primary.default')
       .waitForElementVisible('#returnToMerchant', 10000)
       .click('#returnToMerchant')
-      .waitForElementVisible('.PayPalReminder', 10000)
+      .waitForElementVisible('.PaypalReminder', 10000)
       .verify.containsText('.PaypalReminder', 'You have successfully approved your Paypal account')
 
       // submit transaction
