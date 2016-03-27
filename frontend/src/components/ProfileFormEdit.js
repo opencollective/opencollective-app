@@ -40,9 +40,10 @@ class ProfileFormEdit extends Component {
           value={form.attributes.passwordConfirmation}
           handleChange={passwordConfirmation => appendProfileForm({passwordConfirmation})}/>
 
-        <label>Paypal Account</label>
+        <label>Personal Paypal account for being reimbursed</label>
         <Input
           type='email'
+          id='paypalEmail'
           customClass='ProfileForm-input'
           placeholder='user@email.com'
           value={form.attributes.paypalEmail || paypalEmail}

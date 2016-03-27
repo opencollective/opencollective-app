@@ -1,10 +1,10 @@
 .ProfilePreapproved {
-  font-style: italic;
+  padding-top: calc(var(--spacing) / 2);
   font-size: calc(var(--spacing) * 0.92);
 }
 
-.ProfilePreapproved-balance {
-  padding-top: calc(var(--spacing) / 2);
+.ProfilePreapproved-info {
+  font-style: italic;
 }
 
 .ProfilePreapproved-reapprove {

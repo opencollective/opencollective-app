@@ -25,15 +25,15 @@ class ProfileFormDefault extends Component {
             {name}
           </div>
         </div>
-        <TableHead value='Personal email' />
+        <TableHead value='Email address' />
         <TableRow value={email} />
 
-        <TableHead value='Paypal email' />
+        <TableHead value='Personal Paypal account for being reimbursed' />
         <TableRow value={paypalEmail || 'No email'} />
 
         { preapprovalDetails.senderEmail ? (
           <div>
-            <TableHead value='Paypal preapproved email' />
+            <TableHead value='Paypal account from which expenses will be reimbursed' />
             <TableRow value={preapprovalDetails.senderEmail} />
           </div>
           ) : null}
@@ -45,6 +45,7 @@ class ProfileFormDefault extends Component {
         <div className='ProfileForm-buttonContainer'>
           <div
             className='Button ProfileForm-button'
+            id='editProfileBtn'
             onClick={this.toggleEditMode.bind(this)}>
             Edit profile
           </div>

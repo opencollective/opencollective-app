@@ -16,11 +16,11 @@ class PaypalReminder extends Component {
 
   message(status) {
     if (status === 'success') {
-      return 'You have successfully approved your Paypal account';
+      return 'You have successfully connected your PayPal account.';
     } else if (status === 'failure') {
-      return 'Something went wrong. Please try again later';
+      return 'Something went wrong. Please try again later.';
     } else {
-      return 'Please, connect your PayPal account to start sending funds.'
+      return 'Please, connect your PayPal account to assign funds to your collectives and to reimburse their expenses.'
     }
   }
 
@@ -30,7 +30,7 @@ class PaypalReminder extends Component {
         customClass='Button--paypal'
         inProgress={inProgress}
         onClick={getPreapprovalKey}>
-        Login with Paypal
+        Connect PayPal
       </AsyncButton>
     );
   }
