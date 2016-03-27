@@ -32,13 +32,13 @@ module.exports = {
       .setValue('input#login_email', 'admin@opencollective.com')
       .setValue('input#login_password', 'sandbox123')
       .click('#submitLogin')
-      .pause(1500)
+      .pause(1750)
       .waitForElementVisible('input.button.primary.default', 10000)
       .click('input.button.primary.default')
       .waitForElementVisible('#returnToMerchant', 10000)
       .click('#returnToMerchant')
       .waitForElementVisible('.PaypalReminder', 10000)
-      .verify.containsText('.PaypalReminder', 'You have successfully approved your Paypal account')
+      .verify.containsText('.PaypalReminder', 'You have successfully connected your Paypal account')
   },
 
   'set personal paypal email': (client) => {
