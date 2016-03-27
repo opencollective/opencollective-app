@@ -24,7 +24,7 @@ const createElement = (props, className='ProfilePreapproved') => {
 chai.use(spies);
 
 describe('ProfilePreapproved component', () => {
-  it('should show the preapproved amount and the difference', () => {
+  it('should show the preapproved amount remaining', () => {
     const element = createElement({
       userid: 1,
       preapprovalDetails: {
@@ -35,7 +35,6 @@ describe('ProfilePreapproved component', () => {
     }, 'ProfilePreapproved-balance');
 
     expect(element.innerHTML).to.contain('$1,900.00');
-    expect(element.innerHTML).to.contain('$2,000.00');
   });
 
   it('should repreapproved the account', () => {
