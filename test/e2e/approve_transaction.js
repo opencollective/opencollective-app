@@ -69,7 +69,8 @@ module.exports = {
       .waitForElementVisible('.Button--approve', 1000)
       .assert.containsText('body', 'APPROVE')
       .click('.Button--approve')
-      .waitForElementVisible('.Transaction', 2000)
+      .pause(1000)
+      .waitForElementVisible('.Transaction', 5000)
       .pause(1000) // wait for transaction
       .assert.urlEquals('http://localhost:3000/groups/1/transactions')
       .assert.containsText('.Transaction:first-child', 'Reimbursed')
