@@ -28,12 +28,12 @@ class ProfileFormDefault extends Component {
         <TableHead value='Email address' />
         <TableRow value={email} />
 
-        <TableHead value='Your Paypal account for reimbursements' />
+        <TableHead value='Your PayPal account for reimbursements' />
         <TableRow value={paypalEmail || 'No email'} />
 
         { preapprovalDetails.senderEmail ? (
           <div>
-            <TableHead value='Host\'s Paypal account for reimbursing expenses' />
+            <TableHead value='Host\'s PayPal account for reimbursing expenses' />
             <TableRow value={preapprovalDetails.senderEmail} />
           </div>
           ) : null}
