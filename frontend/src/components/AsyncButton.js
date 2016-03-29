@@ -6,6 +6,7 @@ export default ({
   onClick,
   customClass,
   children,
+  id,
   color,
   disabled
 }) => {
@@ -20,6 +21,7 @@ export default ({
 
   return (
     <div
+      id={id}
       className={btnClass}
       onClick={disabled || inProgress ? noop : onClick} >
       {inProgress ? 'Loading' : children}

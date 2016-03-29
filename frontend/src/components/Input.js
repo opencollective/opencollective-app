@@ -7,6 +7,7 @@ const Input = ({
   placeholder,
   maxLength,
   handleChange,
+  id,
   value,
   customClass,
   isSuccessful
@@ -22,6 +23,7 @@ const Input = ({
     <span className={className}>
       <input
         className='Field'
+        id={id}
         type={type}
         maxLength={maxLength}
         placeholder={placeholder}
@@ -35,6 +37,7 @@ Input.propTypes = {
   handleChange: PropTypes.func.isRequired,
   type: PropTypes.string,
   max: PropTypes.string,
+  id: PropTypes.string,
   hasError: PropTypes.bool,
   placeholder: PropTypes.string
 };

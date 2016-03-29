@@ -8,6 +8,7 @@ const SaveButton = ({save, inProgress}) => {
     <div>
       <AsyncButton
         customClass='Button--save'
+        id='saveBtn'
         inProgress={inProgress}
         onClick={save.bind(this)}>
         <Icon type='approved' /> Save
