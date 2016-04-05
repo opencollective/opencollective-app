@@ -1,9 +1,9 @@
+const resetDb = require('../lib/reset_db.js');
+
 module.exports = {
   '@tags': ['approve_transaction'],
   before: (client) => {
-    client
-      // reset test database
-      .url('https://opencollective-test-api.herokuapp.com/database/reset')
+    resetDb(client);
   },
 
   'login': (client) => {
@@ -29,7 +29,7 @@ module.exports = {
       .pause(1750)
       .waitForElementVisible('input.button.primary.default', 10000)
       .click('input.button.primary.default')
-      .waitForElementVisible('#returnToMerchant', 10000)
+      .waitForElementVisible('#returnToMerchant', 25000)
       .click('#returnToMerchant')
       .waitForElementVisible('.PaypalReminder', 10000)
       .verify.containsText('.PaypalReminder', 'You have successfully connected your PayPal account')

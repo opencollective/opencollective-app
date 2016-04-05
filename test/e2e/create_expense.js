@@ -1,12 +1,10 @@
+const resetDb = require('../lib/reset_db.js');
+
 module.exports = {
   '@tags': ['create_expense'],
   beforeEach: (client) => {
-    client
-
-      // reset test database
-      .url('https://opencollective-test-api.herokuapp.com/database/reset')
-
-      // login
+    resetDb(client)
+    // login
       .url('http://localhost:3000/login')
       .waitForElementVisible('body', 1000)
       .setValue('input[type=email]', 'testuser@opencollective.com')
