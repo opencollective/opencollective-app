@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 import mockStore from '../../helpers/mockStore';
 import env from '../../../../frontend/src/lib/env';
 import * as constants from '../../../../frontend/src/constants/users';
@@ -26,13 +27,15 @@ describe('users actions', () => {
         .query(true) // match all query params
         .reply(200, json);
 
-      const expected = [
-        { type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid },
-        { type: constants.GET_APPROVAL_KEY_FOR_USER_SUCCESS, userid, json },
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(getPreapprovalKeyForUser(userid));
+      const store = mockStore({});
+      store.dispatch(getPreapprovalKeyForUser(userid))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid });
+        expect(success).toEqual({ type: constants.GET_APPROVAL_KEY_FOR_USER_SUCCESS, userid, json });
+        done();
+      })
+      .catch(done);
     });
 
     it('creates GET_APPROVAL_KEY_FOR_USER_FAILURE if it fails', (done) => {
@@ -43,13 +46,16 @@ describe('users actions', () => {
         .query(true) // match all query params
         .replyWithError('');
 
-      const expected = [
-        { type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid },
-        { type: constants.GET_APPROVAL_KEY_FOR_USER_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed') }
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(getPreapprovalKeyForUser(userid));
+      const store = mockStore({});
+      store.dispatch(getPreapprovalKeyForUser(userid))
+      .then(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid });
+        expect(failure.type).toEqual(constants.GET_APPROVAL_KEY_FOR_USER_FAILURE);
+        expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%2F%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%2F%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed');
+        done();
+      })
+      .catch(done);
     });
   });
 
@@ -64,13 +70,15 @@ describe('users actions', () => {
         .post(`/users/${userid}/paypal/preapproval/${preapprovalKey}`)
         .reply(200, json);
 
-      const expected = [
-        { type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey },
-        { type: constants.CONFIRM_APPROVAL_KEY_SUCCESS, userid, preapprovalKey, json }
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(confirmPreapprovalKey(userid, preapprovalKey));
+      const store = mockStore({});
+      store.dispatch(confirmPreapprovalKey(userid, preapprovalKey))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey });
+        expect(success).toEqual({ type: constants.CONFIRM_APPROVAL_KEY_SUCCESS, userid, preapprovalKey, json });
+        done();
+      })
+      .catch(done);
     });
 
     it('creates CONFIRM_APPROVAL_KEY_FAILURE if it fails', (done) => {
@@ -81,13 +89,15 @@ describe('users actions', () => {
         .post(`/users/${userid}/paypal/preapproval/${preapprovalKey}`)
         .replyWithError('');
 
-      const expected = [
-        { type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey },
-        { type: constants.CONFIRM_APPROVAL_KEY_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed') }
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(confirmPreapprovalKey(userid, preapprovalKey));
+      const store = mockStore({});
+      store.dispatch(confirmPreapprovalKey(userid, preapprovalKey))
+      .catch(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey });
+        expect(failure.type).toEqual(constants.CONFIRM_APPROVAL_KEY_FAILURE);
+        expect(failure.error.message).toContain('http://localhost:3000/api/users/1/paypal/preapproval/abc failed');
+        done();
+      })
     });
   });
 
@@ -100,10 +110,14 @@ describe('users actions', () => {
           [user.id]: user
         }
       };
-      const expected = [{ type: constants.FETCH_USER_FROM_STATE, user }];
 
-      const store = mockStore(state, expected, done);
+      const store = mockStore(state);
       store.dispatch(fetchUserIfNeeded(user.id));
+      // no .then here because this is not a promise.
+
+      const [request] = store.getActions();
+      expect(request).toEqual({ type: constants.FETCH_USER_FROM_STATE, user });
+      done();
     });
 
     it('should fetch the user if it is not in the state', (done) => {
@@ -115,13 +129,15 @@ describe('users actions', () => {
         .get(`/users/${id}`)
         .reply(200, user);
 
-      const expected = [
-        { type: constants.FETCH_USER_REQUEST, id: id },
-        { type: constants.FETCH_USER_SUCCESS, id: id, users }
-      ];
-
-      const store = mockStore({ users: {} }, expected, done);
-      store.dispatch(fetchUserIfNeeded(user.id));
+      const store = mockStore({ users: {} });
+      store.dispatch(fetchUserIfNeeded(user.id))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.FETCH_USER_REQUEST, id: id });
+        expect(success).toEqual({ type: constants.FETCH_USER_SUCCESS, id: id, users });
+        done();
+      })
+      .catch(done);
     });
 
     it('creates FETCH_USER_FAILURE if it fails', (done) => {
@@ -131,13 +147,15 @@ describe('users actions', () => {
         .get(`/users/${id}`)
         .replyWithError('');
 
-      const expected = [
-        { type: constants.FETCH_USER_REQUEST, id: id },
-        { type: constants.FETCH_USER_FAILURE, error: new Error('request to http://localhost:3000/api/users/1 failed') }
-      ];
-
-      const store = mockStore({ users: {} }, expected, done);
-      store.dispatch(fetchUserIfNeeded(id));
+      const store = mockStore({ users: {} });
+      store.dispatch(fetchUserIfNeeded(id))
+      .catch(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.FETCH_USER_REQUEST, id: id });
+        expect(failure.type).toEqual(constants.FETCH_USER_FAILURE);
+        expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1 failed');
+        done();
+      });
     });
   });
 
@@ -159,13 +177,15 @@ describe('users actions', () => {
         .query(true) // match all query params
         .reply(200, reponse);
 
-      const expected = [
-        { type: constants.USER_GROUPS_REQUEST, userid },
-        { type: constants.USER_GROUPS_SUCCESS, userid, groups }
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchUserGroups(userid));
+      const store = mockStore({});
+      store.dispatch(fetchUserGroups(userid))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.USER_GROUPS_REQUEST, userid });
+        expect(success).toEqual({ type: constants.USER_GROUPS_SUCCESS, userid, groups });
+        done();
+      })
+      .catch(done);
     });
 
     it('creates USER_GROUPS_FAILURE if it fails', (done) => {
@@ -175,13 +195,16 @@ describe('users actions', () => {
         .get(`/users/${userid}/groups`)
         .replyWithError('');
 
-      const expected = [
-        { type: constants.USER_GROUPS_REQUEST, userid },
-        { type: constants.USER_GROUPS_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/groups?include=usergroup.role failed') }
-      ];
-
-      const store = mockStore({}, expected, done, true);
-      store.dispatch(fetchUserGroups(userid));
+      const store = mockStore({});
+      store.dispatch(fetchUserGroups(userid))
+      .then(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.USER_GROUPS_REQUEST, userid });
+        expect(failure.type).toEqual(constants.USER_GROUPS_FAILURE);
+        expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1/groups?include=usergroup.role failed');
+        done();
+      })
+      .catch(done);
     });
   });
 
@@ -199,22 +222,15 @@ describe('users actions', () => {
         .put(`/users/${userid}/paypalemail`, { paypalEmail })
         .reply(200, response);
 
-      const expected = [
-        {
-          type: constants.UPDATE_PAYPAL_EMAIL_REQUEST,
-          userid,
-          paypalEmail
-        },
-        {
-          type: constants.UPDATE_PAYPAL_EMAIL_SUCCESS,
-          userid,
-          paypalEmail,
-          json: response
-        }
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(updatePaypalEmail(userid, paypalEmail));
+      const store = mockStore({});
+      store.dispatch(updatePaypalEmail(userid, paypalEmail))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.UPDATE_PAYPAL_EMAIL_REQUEST, userid, paypalEmail });
+        expect(success).toEqual({type: constants.UPDATE_PAYPAL_EMAIL_SUCCESS, userid, paypalEmail, json: response });
+        done();
+      })
+      .catch(done);
     });
 
     it('creates UPDATE_PAYPAL_EMAIL_FAILURE if it fails', (done) => {
@@ -225,13 +241,15 @@ describe('users actions', () => {
         .put(`/users/${userid}/paypalemail`, { paypalEmail })
         .replyWithError('');
 
-      const expected = [
-        { type: constants.UPDATE_PAYPAL_EMAIL_REQUEST, userid, paypalEmail },
-        { type: constants.UPDATE_PAYPAL_EMAIL_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/paypalemail failed') }
-      ];
-
-      const store = mockStore({}, expected, done, true);
-      store.dispatch(updatePaypalEmail(userid, paypalEmail));
+      const store = mockStore({});
+      store.dispatch(updatePaypalEmail(userid, paypalEmail))
+      .catch(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.UPDATE_PAYPAL_EMAIL_REQUEST, userid, paypalEmail });
+        expect(failure.type).toEqual(constants.UPDATE_PAYPAL_EMAIL_FAILURE);
+        expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1/paypalemail failed');
+        done();
+      });
     });
   });
 
@@ -252,13 +270,14 @@ describe('users actions', () => {
         .get(`/users/${userid}/cards`)
         .reply(200, reponse);
 
-      const expected = [
-        { type: constants.USER_CARDS_REQUEST, userid },
-        { type: constants.USER_CARDS_SUCCESS, userid, cards }
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchCards(userid));
+      const store = mockStore({});
+      store.dispatch(fetchCards(userid))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.USER_CARDS_REQUEST, userid });
+        expect(success).toEqual({ type: constants.USER_CARDS_SUCCESS, userid, cards });
+        done();
+      });
     });
 
     it('creates USER_CARDS_FAILURE if it fails', (done) => {
@@ -268,13 +287,16 @@ describe('users actions', () => {
         .get(`/users/${userid}/cards`)
         .replyWithError('');
 
-      const expected = [
-        { type: constants.USER_CARDS_REQUEST, userid },
-        { type: constants.USER_CARDS_FAILURE, error: new Error('request to http://localhost:3000/api/users/1/cards failed') }
-      ];
-
-      const store = mockStore({}, expected, done, true);
-      store.dispatch(fetchCards(userid));
+      const store = mockStore({});
+      store.dispatch(fetchCards(userid))
+      .then(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.USER_CARDS_REQUEST, userid });
+        expect(failure.type).toEqual(constants.USER_CARDS_FAILURE);
+        expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1/cards failed');
+        done();
+      })
+      .catch(done);
     });
   });
 });
