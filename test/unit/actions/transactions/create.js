@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 import _ from 'lodash';
 import mockStore from '../../helpers/mockStore';
 import env from '../../../../frontend/src/lib/env';
@@ -23,13 +24,15 @@ describe('transactions create actions', () => {
       .post(`/groups/${groupid}/transactions/`, {transaction})
       .reply(200, response);
 
-    const expected = [
-      { type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction },
-      { type: constants.CREATE_TRANSACTION_SUCCESS, groupid, transactions }
-    ];
-
-    const store = mockStore({}, expected, done);
-    store.dispatch(createTransaction(groupid, transaction));
+    const store = mockStore({});
+    store.dispatch(createTransaction(groupid, transaction))
+    .then(() => {
+      const [request, success] = store.getActions();
+      expect(request).toEqual({ type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction });
+      expect(success).toEqual({ type: constants.CREATE_TRANSACTION_SUCCESS, groupid, transactions });
+      done();
+    })
+    .catch(done);
   });
 
   it('creates CREATE_TRANSACTION_FAILURE if it fails', (done) => {
@@ -40,13 +43,16 @@ describe('transactions create actions', () => {
       .post(`/groups/${groupid}/transactions/`)
       .replyWithError('');
 
-    const expected = [
-      { type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction },
-      { type: constants.CREATE_TRANSACTION_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions/ failed') }
-    ];
 
-    const store = mockStore({}, expected, done);
-    store.dispatch(createTransaction(groupid, transaction));
+    const store = mockStore({});
+    store.dispatch(createTransaction(groupid, transaction))
+    .catch(() => {
+      const [request, failure] = store.getActions();
+      expect(request).toEqual({ type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction });
+      expect(failure.type).toEqual(constants.CREATE_TRANSACTION_FAILURE);
+      expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions/ failed');
+      done();
+    });
   });
 
 });

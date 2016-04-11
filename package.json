@@ -116,7 +116,7 @@
     "react-addons-test-utils": "^0.14.0",
     "react-unit": "^1.0.8",
     "redux-devtools": "^2.1.5",
-    "redux-mock-store": "0.0.6",
+    "redux-mock-store": "1.0.2",
     "sinon": "^1.17.2"
   }
 }

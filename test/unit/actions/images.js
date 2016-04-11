@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 import mockStore from '../helpers/mockStore';
 import env from '../../../frontend/src/lib/env';
 import uploadImage from '../../../frontend/src/actions/images/upload';
@@ -23,12 +24,15 @@ describe('images actions', () => {
       .post('/images/')
       .reply(200, image);
 
-    const expected = [
-      { type: UPLOAD_IMAGE_REQUEST, data: {} },
-      { type: UPLOAD_IMAGE_SUCCESS, response: image }
-    ];
-    const store = mockStore({}, expected, done);
-    store.dispatch(uploadImage({}));
+    const store = mockStore({});
+    store.dispatch(uploadImage({}))
+    .then(() => {
+      const [request, success] = store.getActions();
+      expect(request).toEqual({ type: UPLOAD_IMAGE_REQUEST, data: {} });
+      expect(success).toEqual({ type: UPLOAD_IMAGE_SUCCESS, response: image });
+      done();
+    })
+    .catch(done);
   });
 
   it('creates UPLOAD_IMAGE_FAILURE when uploading an image fails', (done) => {
@@ -36,12 +40,16 @@ describe('images actions', () => {
       .post('/images/')
       .replyWithError('');
 
-    const expected = [
-      { type: UPLOAD_IMAGE_REQUEST, data: {} },
-      { type: UPLOAD_IMAGE_FAILURE, error: new Error('request to http://localhost:3000/api/images/ failed') }
-    ];
-    const store = mockStore({}, expected, done);
-    store.dispatch(uploadImage({}));
+    const store = mockStore({});
+    store.dispatch(uploadImage({}))
+    .then(() => {
+      const [request, failure] = store.getActions();
+      expect(request).toEqual({ type: UPLOAD_IMAGE_REQUEST, data: {} });
+      expect(failure.type).toEqual(UPLOAD_IMAGE_FAILURE);
+      expect(failure.error.message).toContain('request to http://localhost:3000/api/images/ failed');
+      done();
+    })
+    .catch(done);
   });
 
 });

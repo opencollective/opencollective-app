@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 import mockStore from '../../helpers/mockStore';
 import env from '../../../../frontend/src/lib/env';
 import * as constants from '../../../../frontend/src/constants/users';
@@ -26,13 +27,15 @@ describe('users actions', () => {
         })
         .reply(200, json);
 
-      const expected = [
-        { type: constants.RESET_PASSWORD_REQUEST, userToken, resetToken, password },
-        { type: constants.RESET_PASSWORD_SUCCESS, userToken, resetToken, password, json },
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(resetPassword(userToken, resetToken, password));
+      const store = mockStore({});
+      store.dispatch(resetPassword(userToken, resetToken, password))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.RESET_PASSWORD_REQUEST, userToken, resetToken, password });
+        expect(success).toEqual({ type: constants.RESET_PASSWORD_SUCCESS, userToken, resetToken, password, json });
+        done();
+      })
+      .catch(done);
     });
 
     it('creates RESET_PASSWORD_FAILURE if it fails', (done) => {
@@ -43,13 +46,19 @@ describe('users actions', () => {
         })
         .replyWithError('');
 
-      const expected = [
-        { type: constants.RESET_PASSWORD_REQUEST, userToken, resetToken, password },
-        { type: constants.RESET_PASSWORD_FAILURE,  userToken, resetToken, password, error: new Error()}
-      ];
+      const store = mockStore({});
 
-      const store = mockStore({}, expected, done);
-      store.dispatch(resetPassword(userToken, resetToken, password));
+      store.dispatch(resetPassword(userToken, resetToken, password))
+      .catch(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.RESET_PASSWORD_REQUEST, userToken, resetToken, password });
+        expect(failure.type).toEqual(constants.RESET_PASSWORD_FAILURE);
+        expect(failure.userToken).toEqual(userToken);
+        expect(failure.resetToken).toEqual(resetToken);
+        expect(failure.password).toEqual(password);
+        expect(failure.error.message).toEqual('request to http://localhost:3000/api/users/password/reset/123/abc failed, reason: ');
+        done();
+      })
     });
   });
 
