@@ -28,8 +28,8 @@ export default function(groupid) {
         'Event Prizes',
         'Event Facilities',
         'Network supplies',
-        'Other Program Expense'
-        'Global Development'
+        'Other Program Expense',
+        'Global Development',
         'Fees'
       ];
       break;
