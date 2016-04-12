@@ -12,6 +12,15 @@ export default function(groupid) {
     case 2:
     case 3:
     case 4:
+    case 10:
+    case 12:
+    case 13: 
+    case 14:
+    case 15: 
+    case 47: 
+    case 48: 
+    case 51: 
+    case 59: 
       tags = [
         'Donation',
         'Event Refreshments',
@@ -20,6 +29,8 @@ export default function(groupid) {
         'Event Facilities',
         'Network supplies',
         'Other Program Expense'
+        'Global Development'
+        'Fees'
       ];
       break;
     case 6:
