@@ -19,27 +19,30 @@ describe('session actions', () => {
 
   describe('login', () => {
      it('creates LOGIN_SUCCESS if it successfully logs in', (done) => {
-      const email = 'test@gmail.com';
-      const user = { id: 1, email };
-      const accessToken = jwt.encode(user, 'aaa');
-      const refreshToken = '123';
-      const response = {
-        access_token: accessToken,
-        refresh_token: refreshToken
-      };
+       const email = 'test@gmail.com';
+       const user = { id: 1, email };
+       const accessToken = jwt.encode(user, 'aaa');
+       const refreshToken = '123';
+       const response = {
+         access_token: accessToken,
+         refresh_token: refreshToken
+       };
 
-      nock(env.API_ROOT)
-        .post('/authenticate')
-        .reply(200, response);
+       nock(env.API_ROOT)
+         .post('/authenticate')
+         .reply(200, response);
 
-      const expected = [
-        { type: constants.LOGIN_REQUEST, email },
-        { type: constants.LOGIN_SUCCESS, json: response },
-        { type: constants.DECODE_JWT_SUCCESS, user }
-      ];
-      const store = mockStore({}, expected, done);
-      store.dispatch(login({email}));
+       const store = mockStore({});
 
+       store.dispatch(login({email}))
+         .then(() => {
+           const [request, success, decodeJwt] = store.getActions();
+           expect(request).toEqual({ type: constants.LOGIN_REQUEST, email });
+           expect(success).toEqual({ type: constants.LOGIN_SUCCESS, json: response });
+           expect(decodeJwt).toEqual({ type: constants.DECODE_JWT_SUCCESS, user });
+           done();
+         })
+         .catch(done)
     });
 
     it('creates LOGIN_FAILURE if it fails to log in', (done) => {
@@ -49,12 +52,16 @@ describe('session actions', () => {
         .post('/authenticate')
         .replyWithError('Wrong stuff');
 
-        const expected = [
-          { type: constants.LOGIN_REQUEST, email },
-          { type: constants.LOGIN_FAILURE, error: new Error('request to http://localhost:3000/api/authenticate failed') }
-        ];
-        const store = mockStore({}, expected, done);
-        store.dispatch(login({email}));
+      const store = mockStore({});
+
+      store.dispatch(login({email}))
+        .catch(() => {
+          const [request, failure] = store.getActions();
+          expect(request).toEqual({ type: constants.LOGIN_REQUEST, email });
+          expect(failure.type).toEqual(constants.LOGIN_FAILURE);
+          expect(failure.error.message).toContain('request to http://localhost:3000/api/authenticate failed');
+          done();
+        })
     });
   });
 

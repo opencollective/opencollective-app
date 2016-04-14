@@ -15,21 +15,25 @@
     "start": "NODE_CONFIG_DIR=./server/config node server",
     "dev": "gulp build:dev && PORT=3000 nf start -j Procfile_dev",
     "hint": "eslint '**/*.js' --quiet",
-    "test:unit": "NODE_CONFIG_DIR=./server/config NODE_ENV=test mocha test/unit/ --opts test/unit/mocha.opts",
+
     "pretest": "npm run hint",
     "test": "npm run test:unit",
-    "posttest": "npm run nightwatch",
-    "nightwatch": "./node_modules/nightwatch/bin/nightwatch --config nightwatch.json",
+    "test:unit": "NODE_CONFIG_DIR=./server/config mocha test/unit/ --opts test/unit/mocha.opts --reporter-options mochaFile=$(sh scripts/test_output_dir.sh junit)/junit.xml",
+    "posttest": "npm run test:e2e cleanup api:run app:run app:testE2E cleanup",
+    "test:e2e": "npm run rexec:api test_e2e.sh",
+    "nightwatch": "NODE_CONFIG_DIR=./server/config ./node_modules/nightwatch/bin/nightwatch --config nightwatch.json",
+
     "build": "gulp build && npm run build:js",
-    "build:js": "mkdir -p frontend/dist/js && NODE_ENV=production browserify frontend/src/client.js | uglifyjs -cm > frontend/dist/js/bundle.js",
-    "watch:js": "mkdir -p frontend/dist/js && NODE_ENV=development watchify frontend/src/client.js -o frontend/dist/js/bundle.js -dv",
-    "watch:test": "NODE_ENV=test mocha test/unit/ --opts test/unit/mocha.opts --watch",
-    "watch:server": "NODE_ENV=development NODE_CONFIG_DIR=./server/config nodemon -e js,ejs,hbs -w server server/index.js",
+    "build:js": "mkdir -p frontend/dist/js && browserify frontend/src/client.js | uglifyjs -cm > frontend/dist/js/bundle.js",
+    "watch:js": "mkdir -p frontend/dist/js && watchify frontend/src/client.js -o frontend/dist/js/bundle.js -dv",
+    "watch:test": "mocha test/unit/ --opts test/unit/mocha.opts --watch",
+    "watch:server": "NODE_CONFIG_DIR=./server/config nodemon -e js,ejs,hbs -w server server/index.js",
     "postinstall": "npm run build",
     "git:clean": "git branch --merged | grep -v \\* | grep -v master | grep -v dev | xargs -n 1 git branch -d",
-    "testserver": "NODE_ENV=test_server npm start",
     "deploy:staging": "bash -x scripts/deploy.sh staging",
-    "deploy:production": "bash -x scripts/deploy.sh production"
+    "deploy:production": "bash -x scripts/deploy.sh production",
+    "rexec:api": "bash scripts/remote_exec_api.sh",
+    "install:debs": "npm run rexec:api install_apt_get_debs.sh"
   },
   "dependencies": {
     "autoprefixer": "^6.3.2",
@@ -112,11 +116,12 @@
     "localmockage": "0.0.1",
     "loose-envify": "^1.1.0",
     "mocha": "^2.3.3",
+    "mocha-circleci-reporter": "0.0.1",
     "nightwatch": "^0.8.15",
     "react-addons-test-utils": "^0.14.0",
     "react-unit": "^1.0.8",
     "redux-devtools": "^2.1.5",
-    "redux-mock-store": "0.0.6",
+    "redux-mock-store": "1.0.2",
     "sinon": "^1.17.2"
   }
 }

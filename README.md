@@ -34,11 +34,7 @@ The script will merge `origin/master` to the branch `staging` or `production` br
 
 ## Test
 
-```
-// in a separate window
-npm run testserver
-npm test
-```
+See [Wiki](https://github.com/OpenCollective/OpenCollective/wiki/Software-testing).
 
 ## Stack
 

@@ -4,7 +4,6 @@ import favicon from 'serve-favicon';
 import request from 'request';
 import morgan from 'morgan';
 import path from 'path';
-import _ from 'lodash';
 import robots from 'robots.txt';
 import config from 'config';
 
@@ -121,14 +120,8 @@ app.use((err, req, res, next) => {
 
 app.set('port', process.env.PORT || 3000);
 
-if (!_.contains(['test', 'circleci'], app.set('env'))) {
-  /**
-   * Start server
-   */
-  app.listen(app.get('port'), () => {
-    console.log(`Express server listening on port ${app.get('port')}`);
-  });
-
-}
+app.listen(app.get('port'), () => {
+  console.log(`Express server listening on port ${app.get('port')}`);
+});
 
 module.exports = app;

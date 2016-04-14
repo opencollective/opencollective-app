@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 import mockStore from '../../helpers/mockStore';
 import env from '../../../../frontend/src/lib/env';
 import * as constants from '../../../../frontend/src/constants/transactions';
@@ -25,20 +26,21 @@ describe('transactions actions', () => {
         .get(`/groups/${groupid}/transactions/${transactionid}`)
         .reply(200, transaction);
 
-      const success = {
-        type: constants.TRANSACTION_SUCCESS,
-        groupid,
-        transactionid,
-        transactions: { 2: transaction }
-      };
+      const store = mockStore({});
 
-      const expected = [
-        { type: constants.TRANSACTION_REQUEST, groupid, transactionid },
-        success
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchById(groupid, transactionid));
+      store.dispatch(fetchById(groupid, transactionid))
+        .then(() => {
+          const [request, success] = store.getActions();
+          expect(request).toEqual({ type: constants.TRANSACTION_REQUEST, groupid, transactionid });
+          expect(success).toEqual({
+            type: constants.TRANSACTION_SUCCESS,
+            groupid,
+            transactionid,
+            transactions: { 2: transaction }
+          });
+          done();
+        })
+        .catch(done)
     });
 
     it('creates TRANSACTION_FAILURE if it fails to fetch a transaction', (done) => {
@@ -53,13 +55,17 @@ describe('transactions actions', () => {
         .get(`/groups/${groupid}/transactions/${transactionid}`)
         .replyWithError('');
 
-      const expected = [
-        { type: constants.TRANSACTION_REQUEST, groupid, transactionid },
-        { type: constants.TRANSACTION_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions/2 failed') }
-      ];
+      const store = mockStore({});
 
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchById(groupid, transactionid));
+      store.dispatch(fetchById(groupid, transactionid))
+        .then(() => {
+          const [request, failure] = store.getActions();
+          expect(request).toEqual({ type: constants.TRANSACTION_REQUEST, groupid, transactionid });
+          expect(failure.type).toEqual(constants.TRANSACTION_FAILURE);
+          expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions/2 failed');
+          done();
+        })
+        .catch(done)
     });
   });
 
@@ -76,19 +82,20 @@ describe('transactions actions', () => {
         .get(`/groups/${groupid}/transactions`)
         .reply(200, [transaction]);
 
-      const success = {
-        type: constants.TRANSACTIONS_SUCCESS,
-        groupid,
-        transactions: { 2: transaction }
-      };
-
-      const expected = [
-        { type: constants.TRANSACTIONS_REQUEST, groupid },
-        success
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchByGroup(groupid));
+      const store = mockStore({});
+      
+      store.dispatch(fetchByGroup(groupid))
+        .then(() => {
+          const [request, success] = store.getActions();
+          expect(request).toEqual({ type: constants.TRANSACTIONS_REQUEST, groupid });
+          expect(success).toEqual({
+            type: constants.TRANSACTIONS_SUCCESS,
+            groupid,
+            transactions: { 2: transaction }
+          });
+          done();
+        })
+        .catch(done)
     });
 
     it('creates TRANSACTIONS_FAILURE if it fails', (done) => {
@@ -98,13 +105,16 @@ describe('transactions actions', () => {
         .get(`/groups/${groupid}/transactions`)
         .replyWithError('');
 
-      const expected = [
-        { type: constants.TRANSACTIONS_REQUEST, groupid },
-        { type: constants.TRANSACTIONS_FAILURE, error: new Error('request to http://localhost:3000/api/groups/1/transactions failed') }
-      ];
-
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchByGroup(groupid));
+      const store = mockStore({});
+      store.dispatch(fetchByGroup(groupid))
+        .then(() => {
+          const [request, failure] = store.getActions();
+          expect(request).toEqual({ type: constants.TRANSACTIONS_REQUEST, groupid });
+          expect(failure.type).toEqual(constants.TRANSACTIONS_FAILURE);
+          expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions failed');
+          done();
+        })
+        .catch(done)
     });
   });
 
