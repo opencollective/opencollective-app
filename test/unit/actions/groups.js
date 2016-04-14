@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 
 import mockStore from '../helpers/mockStore';
 import env from '../../../frontend/src/lib/env';
@@ -22,12 +23,16 @@ describe('groups actions', () => {
         .get('/groups/1')
         .reply(200, group);
 
-      const expected = [
-        { type: constants.GROUP_REQUEST, id: 1 },
-        { type: constants.GROUP_SUCCESS, id: 1, groups: {1: group} }
-      ];
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchById(1));
+      const store = mockStore({});
+
+      store.dispatch(fetchById(1))
+        .then(() => {
+          const [request, success] = store.getActions();
+          expect(request).toEqual({ type: constants.GROUP_REQUEST, id: 1 });
+          expect(success).toEqual({ type: constants.GROUP_SUCCESS, id: 1, groups: {1: group} });
+          done();
+        })
+        .catch(done)
     });
 
     it('creates GROUP_ERROR when fetching a group fails', (done) => {
@@ -35,19 +40,18 @@ describe('groups actions', () => {
         .get('/groups/1')
         .replyWithError('');
 
-      const error = new Error('request to http://localhost:3000/api/groups/1 failed');
+      const store = mockStore({});
 
-      // Improve test with error message
-      const expected = [
-        { type: constants.GROUP_REQUEST, id: 1 },
-        {
-          type: constants.GROUP_FAILURE,
-          id: 1,
-          error
-        }
-      ];
-      const store = mockStore({}, expected, done);
-      store.dispatch(fetchById(1));
+      store.dispatch(fetchById(1))
+        .then(() => {
+          const [request, failure] = store.getActions();
+          expect(request).toEqual({ type: constants.GROUP_REQUEST, id: 1 });
+          expect(failure.type).toEqual(constants.GROUP_FAILURE);
+          expect(failure.id).toEqual(1);
+          expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1 failed');
+          done();
+        })
+        .catch(done)
     });
   });
 

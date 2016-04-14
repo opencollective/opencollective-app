@@ -1,3 +1,5 @@
+.env
+
 .DS_Store
 .vscode
 .idea/
@@ -33,5 +35,5 @@ node_modules
 # Build
 frontend/dist
 
-# Test outputs
-test/e2e/output
+# test artifacts
+output/

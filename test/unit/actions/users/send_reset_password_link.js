@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 import mockStore from '../../helpers/mockStore';
 import env from '../../../../frontend/src/lib/env';
 import * as constants from '../../../../frontend/src/constants/users';
@@ -21,13 +22,16 @@ describe('users actions', () => {
         .post('/users/password/forgot')
         .reply(200, json);
 
-      const expected = [
-        { type: constants.SEND_RESET_PASSWORD_LINK_REQUEST, email },
-        { type: constants.SEND_RESET_PASSWORD_LINK_SUCCESS, email, json },
-      ];
+      const store = mockStore({});
 
-      const store = mockStore({}, expected, done);
-      store.dispatch(sendLink(email));
+      store.dispatch(sendLink(email))
+        .then(() => {
+          const [request, success] = store.getActions();
+          expect(request).toEqual({ type: constants.SEND_RESET_PASSWORD_LINK_REQUEST, email });
+          expect(success).toEqual({ type: constants.SEND_RESET_PASSWORD_LINK_SUCCESS, email, json });
+          done();
+        })
+        .catch(done)
     });
 
     it('creates SEND_RESET_PASSWORD_LINK_FAILURE if it fails', (done) => {
@@ -35,13 +39,16 @@ describe('users actions', () => {
         .post('/users/password/forgot')
         .replyWithError('');
 
-      const expected = [
-        { type: constants.SEND_RESET_PASSWORD_LINK_REQUEST, email },
-        { type: constants.SEND_RESET_PASSWORD_LINK_FAILURE, error: new Error()}
-      ];
+      const store = mockStore({});
 
-      const store = mockStore({}, expected, done);
-      store.dispatch(sendLink(email));
+      store.dispatch(sendLink(email))
+        .catch(() => {
+          const [request, failure] = store.getActions();
+          expect(request).toEqual({ type: constants.SEND_RESET_PASSWORD_LINK_REQUEST, email });
+          expect(failure.type).toEqual(constants.SEND_RESET_PASSWORD_LINK_FAILURE);
+          expect(failure.error.message).toContain('request to http://localhost:3000/api/users/password/forgot failed');
+          done();
+        })
     });
   });
 

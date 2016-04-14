@@ -1,4 +1,5 @@
 import nock from 'nock';
+import expect from 'expect';
 import mockStore from '../../helpers/mockStore';
 import env from '../../../../frontend/src/lib/env';
 import * as constants from '../../../../frontend/src/constants/transactions';
@@ -18,13 +19,16 @@ describe('transactions delete actions', () => {
       .delete(`/groups/${groupid}/transactions/${transactionid}`)
       .reply(200, { success: true });
 
-    const expected = [
-      { type: constants.DELETE_TRANSACTION_REQUEST, groupid, transactionid },
-      { type: constants.DELETE_TRANSACTION_SUCCESS, groupid, transactionid }
-    ];
+    const store = mockStore({});
 
-    const store = mockStore({}, expected, done);
-    store.dispatch(deleteTransaction(groupid, transactionid));
+    store.dispatch(deleteTransaction(groupid, transactionid))
+      .then(() => {
+        const [request, success] = store.getActions();
+        expect(request).toEqual({ type: constants.DELETE_TRANSACTION_REQUEST, groupid, transactionid });
+        expect(success).toEqual({ type: constants.DELETE_TRANSACTION_SUCCESS, groupid, transactionid });
+        done();
+      })
+      .catch(done)
   });
 
   it('creates DELETE_TRANSACTION_FAILURE if it fails', (done) => {
@@ -35,13 +39,16 @@ describe('transactions delete actions', () => {
       .delete(`/groups/${groupid}/transactions/${transactionid}`)
       .replyWithError('');
 
-    const expected = [
-      { type: constants.DELETE_TRANSACTION_REQUEST, groupid, transactionid },
-      { type: constants.DELETE_TRANSACTION_FAILURE, error: new Error() }
-    ];
+    const store = mockStore({});
 
-    const store = mockStore({}, expected, done);
-    store.dispatch(deleteTransaction(groupid, transactionid));
+    store.dispatch(deleteTransaction(groupid, transactionid))
+      .catch(() => {
+        const [request, failure] = store.getActions();
+        expect(request).toEqual({ type: constants.DELETE_TRANSACTION_REQUEST, groupid, transactionid });
+        expect(failure.type).toEqual(constants.DELETE_TRANSACTION_FAILURE);
+        expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions/2 failed');
+        done();
+      })
   });
 
 });
