@@ -29,7 +29,7 @@ module.exports = {
       .pause(1750)
       .waitForElementVisible('input.button.primary.default', 10000)
       .click('input.button.primary.default')
-      .waitForElementVisible('#returnToMerchant', 25000)
+      .waitForElementVisible('#returnToMerchant', 40000)
       .click('#returnToMerchant')
       .waitForElementVisible('.PaypalReminder', 10000)
       .verify.containsText('.PaypalReminder', 'You have successfully connected your PayPal account')
@@ -44,7 +44,7 @@ module.exports = {
       .setValue('input#paypalEmail', 'testuser@opencollective.com')
       .click('#saveBtn')
   },
-  
+
   'submit a new expense (already reimbursed)': (client) => {
     client
       .url('http://localhost:3000/groups/1/transactions/new')
