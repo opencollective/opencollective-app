@@ -1,4 +1,18 @@
 #!/usr/bin/env bash
+#
+# Documentation cfr. usage() method below.
+
+usage() {
+  CMD=remote_exec_api.sh
+  echo " "
+  echo "Remote execution of a script stored within API repo under scripts folder."
+  echo " "
+  echo "Usage: $CMD <remote API script> [<params>]"
+  echo " "
+  echo "E.g : $CMD test_e2e.sh api:install"
+  echo " "
+  exit $1;
+}
 
 main() {
   set -e
@@ -22,18 +36,8 @@ parseParams() {
   if [ "$1" != "" ]; then
     SCRIPT=$1
   else
-    usage
+    usage 1
   fi
-}
-
-usage() {
-  CMD=remote_exec_api.sh
-  echo " "
-  echo "Usage: $CMD <remote API script> [<params>]"
-  echo " "
-  echo "E.g : $CMD test_e2e.sh api:install"
-  echo " "
-  exit $1;
 }
 
 setEnvironment() {
