@@ -115,13 +115,12 @@ app.use((err, req, res, next) => {
 });
 
 /**
- * Port config
+ * Start server
  */
-
-app.set('port', process.env.PORT || 3000);
-
-app.listen(app.get('port'), () => {
-  console.log(`Express server listening on port ${app.get('port')}`);
+const port = process.env.PORT || 3030;
+const server = app.listen(port, () => {
+  const host = require('os').hostname();
+  console.log('OpenCollective APP listening at http://%s:%s in %s environment.', host, server.address().port, app.set('env'));
 });
 
 module.exports = app;

@@ -55,8 +55,8 @@ describe('users actions', () => {
           expect(request).toEqual({ type: constants.GET_APPROVAL_KEY_FOR_USER_REQUEST, userid });
           expect(failure.type).toEqual(constants.GET_APPROVAL_KEY_FOR_USER_FAILURE);
           expect(failure.error.message).toContain(
-            //'request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed');
-            'request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%2F%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%2F%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed');
+            //'request to http://localhost:3030/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed');
+            'request to http://localhost:3030/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%2F%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%2F%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed');
           done();
         })
         .catch(done)
@@ -102,8 +102,8 @@ describe('users actions', () => {
           expect(request).toEqual({ type: constants.CONFIRM_APPROVAL_KEY_REQUEST, userid, preapprovalKey });
           expect(failure.type).toEqual(constants.CONFIRM_APPROVAL_KEY_FAILURE);
           expect(failure.error.message).toContain(
-            //'request to http://localhost:3000/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed'
-            'request to http://localhost:3000/api/users/1/paypal/preapproval/abc failed');
+            //'request to http://localhost:3030/api/users/1/paypal/preapproval?cancelUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dcancel&maxTotalAmountOfAllPayments=2000&returnUrl=about%3A%2F%2Fblank%3FapprovalStatus%3Dsuccess%26preapprovalKey%3D%24%7BpreapprovalKey%7D failed'
+            'request to http://localhost:3030/api/users/1/paypal/preapproval/abc failed');
           done();
         })
     });
@@ -159,7 +159,7 @@ describe('users actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.FETCH_USER_REQUEST, id: id });
           expect(failure.type).toEqual(constants.FETCH_USER_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1 failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/users/1 failed');
           done();
         })
     });
@@ -209,7 +209,7 @@ describe('users actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.USER_GROUPS_REQUEST, userid });
           expect(failure.type).toEqual(constants.USER_GROUPS_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1/groups?include=usergroup.role failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/users/1/groups?include=usergroup.role failed');
           done();
         })
         .catch(done)
@@ -266,7 +266,7 @@ describe('users actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.UPDATE_PAYPAL_EMAIL_REQUEST, userid, paypalEmail });
           expect(failure.type).toEqual(constants.UPDATE_PAYPAL_EMAIL_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1/paypalemail failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/users/1/paypalemail failed');
           done();
         })
     });
@@ -315,7 +315,7 @@ describe('users actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.USER_CARDS_REQUEST, userid });
           expect(failure.type).toEqual(constants.USER_CARDS_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/users/1/cards failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/users/1/cards failed');
           done();
         })
         .catch(done)

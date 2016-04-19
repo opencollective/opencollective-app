@@ -3,7 +3,7 @@ const resetDb = require('../lib/reset_db.js');
 module.exports = {
   beforeEach: (client) => {
     resetDb(client)
-      .url("http://localhost:3000/login")
+      .url("http://localhost:3030/login")
       .waitForElementVisible("body", 1000);
   },
 

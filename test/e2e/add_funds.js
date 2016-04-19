@@ -6,7 +6,7 @@ module.exports = {
     resetDb(client)
       .pause(1000)
       // login
-      .url('http://localhost:3000/login')
+      .url('http://localhost:3030/login')
       .waitForElementVisible('body', 1000)
       .setValue('input[type=email]', 'testuser@opencollective.com')
       .setValue('input[type=password]', 'password')

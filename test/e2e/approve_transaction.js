@@ -8,7 +8,7 @@ module.exports = {
 
   'login': (client) => {
     client
-      .url('http://localhost:3000/login')
+      .url('http://localhost:3030/login')
       .waitForElementVisible('body', 1000)
       .setValue('input[type=email]', 'testuser@opencollective.com')
       .setValue('input[type=password]', 'password')
@@ -37,7 +37,7 @@ module.exports = {
 
   'set personal paypal email': (client) => {
     client
-      .url('http://localhost:3000/profile')
+      .url('http://localhost:3030/profile')
       .waitForElementVisible('#editProfileBtn', 5000)
       .click('#editProfileBtn')
       .waitForElementVisible('input#paypalEmail', 2000)
@@ -47,7 +47,7 @@ module.exports = {
 
   'submit a new expense (already reimbursed)': (client) => {
     client
-      .url('http://localhost:3000/groups/1/transactions/new')
+      .url('http://localhost:3030/groups/1/transactions/new')
       .setValue('.js-transaction-description input', 'Expense already reimbursed')
       .setValue('.js-transaction-amount input', 20)
       .waitForElementVisible("option[value='manual']", 1000)
@@ -66,13 +66,13 @@ module.exports = {
       .pause(1000)
       .waitForElementVisible('.Transaction', 5000)
       .pause(1000) // wait for transaction
-      .assert.urlEquals('http://localhost:3000/groups/1/transactions')
+      .assert.urlEquals('http://localhost:3030/groups/1/transactions')
       .assert.containsText('.Transaction:first-child', 'Reimbursed')
   },
 
   'submit a new expense to be reimbursed': (client) => {
     client
-      .url('http://localhost:3000/groups/1/transactions/new')
+      .url('http://localhost:3030/groups/1/transactions/new')
       .setValue('.js-transaction-description input', 'Expense to be reimbursed via PayPal')
       .setValue('.js-transaction-amount input', 5)
       .waitForElementVisible("option[value='paypal']", 1000)
@@ -91,7 +91,7 @@ module.exports = {
       .pause(2000)
       .waitForElementVisible('.Transaction', 10000)
       .pause(1000) // wait for transaction
-      .assert.urlEquals('http://localhost:3000/groups/1/transactions')
+      .assert.urlEquals('http://localhost:3030/groups/1/transactions')
       .assert.containsText('.Transaction:first-child', 'Reimbursed')
       .end();
   }

@@ -48,7 +48,7 @@ describe('images actions', () => {
         const [request, failure] = store.getActions();
         expect(request).toEqual({ type: UPLOAD_IMAGE_REQUEST, data: {} });
         expect(failure.type).toEqual(UPLOAD_IMAGE_FAILURE);
-        expect(failure.error.message).toContain('request to http://localhost:3000/api/images/ failed');
+        expect(failure.error.message).toContain('request to http://localhost:3030/api/images/ failed');
         done();
       })
       .catch(done)

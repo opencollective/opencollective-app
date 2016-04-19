@@ -54,7 +54,7 @@ describe('transactions approval actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.APPROVE_TRANSACTION_REQUEST, groupid, transactionid });
           expect(failure.type).toEqual(constants.APPROVE_TRANSACTION_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions/2/approve failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/groups/1/transactions/2/approve failed');
           done();
         })
     });
@@ -103,7 +103,7 @@ describe('transactions approval actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.REJECT_TRANSACTION_REQUEST, groupid, transactionid });
           expect(failure.type).toEqual(constants.REJECT_TRANSACTION_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions/2/approve failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/groups/1/transactions/2/approve failed');
           done();
         })
     });

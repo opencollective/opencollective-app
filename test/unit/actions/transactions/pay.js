@@ -49,7 +49,7 @@ describe('transactions pay actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.PAY_TRANSACTION_REQUEST, groupid, transactionid });
           expect(failure.type).toEqual(constants.PAY_TRANSACTION_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions/2/pay failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/groups/1/transactions/2/pay failed');
           done();
         })
     });

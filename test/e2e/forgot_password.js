@@ -8,7 +8,7 @@ const page = {
 module.exports = {
   beforeEach: (client) => {
     resetDb(client)
-      .url("http://localhost:3000/forgot")
+      .url("http://localhost:3030/forgot")
       .waitForElementVisible("body", 1000);
   },
 
