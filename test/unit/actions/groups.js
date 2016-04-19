@@ -48,7 +48,7 @@ describe('groups actions', () => {
           expect(request).toEqual({ type: constants.GROUP_REQUEST, id: 1 });
           expect(failure.type).toEqual(constants.GROUP_FAILURE);
           expect(failure.id).toEqual(1);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1 failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/groups/1 failed');
           done();
         })
         .catch(done)

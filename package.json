@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "NODE_CONFIG_DIR=./server/config node server",
-    "dev": "gulp build:dev && PORT=3000 nf start -j Procfile_dev",
+    "dev": "gulp build:dev && PORT=3030 nf start -j Procfile_dev",
     "hint": "eslint '**/*.js' --quiet",
 
     "pretest": "npm run hint",

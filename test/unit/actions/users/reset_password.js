@@ -57,7 +57,7 @@ describe('users actions', () => {
           expect(failure.userToken).toEqual(userToken);
           expect(failure.resetToken).toEqual(resetToken);
           expect(failure.password).toEqual(password);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/users/password/reset/123/abc failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/users/password/reset/123/abc failed');
           done();
         })
     });

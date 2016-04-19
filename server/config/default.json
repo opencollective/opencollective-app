@@ -3,7 +3,7 @@
   "viewCache": false,
   "host": {
     "api": "http://localhost:3060",
-    "app": "http://localhost:3000"
+    "app": "http://localhost:3030"
   },
   "apiKey": "0ac43519edcf4421d80342403fb5985d"
 }

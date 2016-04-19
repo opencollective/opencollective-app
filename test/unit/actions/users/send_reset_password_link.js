@@ -46,7 +46,7 @@ describe('users actions', () => {
           const [request, failure] = store.getActions();
           expect(request).toEqual({ type: constants.SEND_RESET_PASSWORD_LINK_REQUEST, email });
           expect(failure.type).toEqual(constants.SEND_RESET_PASSWORD_LINK_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3000/api/users/password/forgot failed');
+          expect(failure.error.message).toContain('request to http://localhost:3030/api/users/password/forgot failed');
           done();
         })
     });

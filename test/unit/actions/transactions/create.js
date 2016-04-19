@@ -51,7 +51,7 @@ describe('transactions create actions', () => {
         const [request, failure] = store.getActions();
         expect(request).toEqual({ type: constants.CREATE_TRANSACTION_REQUEST, groupid, transaction });
         expect(failure.type).toEqual(constants.CREATE_TRANSACTION_FAILURE);
-        expect(failure.error.message).toContain('request to http://localhost:3000/api/groups/1/transactions/ failed');
+        expect(failure.error.message).toContain('request to http://localhost:3030/api/groups/1/transactions/ failed');
         done();
       })
   });
