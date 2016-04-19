@@ -121,7 +121,7 @@ app.use((err, req, res, next) => {
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), () => {
-  console.log(`Express server listening on port ${app.get('port')}`);
+  console.log(`OpenCollective app listening on port ${app.get('port')} in ${process.env.NODE_ENV} environment.`);
 });
 
 module.exports = app;
