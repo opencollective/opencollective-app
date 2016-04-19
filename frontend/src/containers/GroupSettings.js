@@ -29,6 +29,7 @@ export class GroupSettings extends Component {
       longDescription: Joi.string(),
       logo: Joi.string().uri(),
       image: Joi.string().uri(),
+      expensePolicy: Joi.string()
     });
   }
 
