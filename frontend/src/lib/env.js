@@ -15,5 +15,6 @@ if (process.env.hasOwnProperty('APP_URL')) {
 } else if (env.NODE_ENV === 'circleci' || env.NODE_ENV === 'development') {
   env.API_ROOT = 'http://localhost:3000/api/';
 }
+console.log("env.API_ROOT set to", env.API_ROOT);
 
 export default env;
