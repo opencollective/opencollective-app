@@ -18,9 +18,10 @@
 
     "pretest": "npm run hint",
     "test": "npm run test:unit",
-    "test:unit": "NODE_CONFIG_DIR=./server/config mocha test/unit/ --opts test/unit/mocha.opts --reporter-options mochaFile=$(sh scripts/test_output_dir.sh junit)/junit.xml",
-    "posttest": "npm run test:e2e cleanup api:run app:run app:testE2E cleanup",
-    "test:e2e": "npm run rexec:api test_e2e.sh",
+    "test:unit": "NODE_CONFIG_DIR=./server/config mocha test/unit/ --opts test/unit/mocha.opts --reporter-options mochaFile=$(bash scripts/test_output_dir.sh junit)/junit.xml",
+    "posttest": "npm run test:e2e",
+    "test:e2e": "npm run test:e2e:exec api:run app:run app:testE2E",
+    "test:e2e:exec": "npm run rexec:api test_e2e.sh",
     "nightwatch": "NODE_CONFIG_DIR=./server/config ./node_modules/nightwatch/bin/nightwatch --config nightwatch.json",
 
     "build": "gulp build && npm run build:js",
