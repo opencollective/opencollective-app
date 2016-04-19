@@ -29,7 +29,7 @@ module.exports = {
       .pause(1750)
       .waitForElementVisible('input.button.primary.default', 10000)
       .click('input.button.primary.default')
-      .waitForElementVisible('#returnToMerchant', 40000)
+      .waitForElementVisible('#returnToMerchant', 60000)
       .click('#returnToMerchant')
       .waitForElementVisible('.PaypalReminder', 10000)
       .verify.containsText('.PaypalReminder', 'You have successfully connected your PayPal account')
