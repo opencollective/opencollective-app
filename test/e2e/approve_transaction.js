@@ -27,11 +27,11 @@ module.exports = {
       .setValue('input#login_password', 'sandbox123')
       .click('#submitLogin')
       .pause(1750)
-      .waitForElementVisible('input.button.primary.default', 10000)
+      .waitForElementVisible('input.button.primary.default', 30000)
       .click('input.button.primary.default')
       .waitForElementVisible('#returnToMerchant', 60000)
       .click('#returnToMerchant')
-      .waitForElementVisible('.PaypalReminder', 10000)
+      .waitForElementVisible('.PaypalReminder', 30000)
       .verify.containsText('.PaypalReminder', 'You have successfully connected your PayPal account')
   },
 
