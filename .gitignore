@@ -37,3 +37,6 @@ frontend/dist
 
 # test artifacts
 output/
+
+# extra binaries
+bin
