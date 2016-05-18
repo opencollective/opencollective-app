@@ -1,4 +1,9 @@
-# OpenCollective Mobile app [![Circle CI](https://circleci.com/gh/OpenCollective/opencollective-mobileapp/tree/master.svg?style=svg&circle-token=f96fc77d4d46882a72fff85ad9ce98b8b9f58ca7)](https://circleci.com/gh/OpenCollective/opencollective-mobileapp/tree/master)
+# OpenCollective Mobile app
+
+[![Circle CI](https://circleci.com/gh/OpenCollective/opencollective-app/tree/master.svg?style=shield)](https://circleci.com/gh/OpenCollective/opencollective-app/tree/master)
+[![Slack Status](https://slack.opencollective.com/badge.svg)](https://slack.opencollective.com)
+[![Gitter chat](https://badges.gitter.im/OpenCollective/OpenCollective.svg)](https://gitter.im/OpenCollective/OpenCollective)
+[![Dependency Status](https://david-dm.org/opencollective/opencollective-website.svg)](https://david-dm.org/opencollective/opencollective-app)
 
 ## Setup
 
