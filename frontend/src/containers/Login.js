@@ -45,12 +45,14 @@ export class Login extends Component {
             onSubmit={this.handleSubmit.bind(this)}
             className='Login-form'>
             <Input
+              name='email'
               type='email'
               hasError={this.props.error.email}
               placeholder='email@example.com'
               value={this.state.email}
               handleChange={email => this.setState({email})} />
             <Input
+              name='password'
               type='password'
               hasError={this.props.error.password}
               placeholder='******'
