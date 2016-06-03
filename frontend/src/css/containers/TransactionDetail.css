@@ -15,10 +15,24 @@
   box-sizing: border-box;
 }
 
-.TransactionDetail--noImage .TransactionDetail-info{
+.TransactionDetail--noImage .TransactionDetail-info {
   float: none;
   padding-bottom: calc(var(--spacing) * 2);
   width: 100%;
+}
+.TransactionDetail-user {
+  overflow: auto;
+}
+
+.TransactionDetail-user .ProfilePhoto {
+  float: left;
+  width: 2rem;
+  height: 2rem;
+}
+
+.TransactionDetail-user-name {
+  padding: 0.4rem 0 0 2.5rem;
+  font-weight: bold;
 }
 
 .TransactionDetail-price {

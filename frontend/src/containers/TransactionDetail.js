@@ -26,6 +26,7 @@ import TransactionDetailComment from '../components/TransactionDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
 import TransactionDetailTitle from '../components/TransactionDetailTitle';
 import ReceiptPreview from '../components/ReceiptPreview';
+import ProfilePhoto from '../components/ProfilePhoto';
 
 import Notification from '../components/Notification';
 import AsyncButton from '../components/AsyncButton';
@@ -41,6 +42,7 @@ class TransactionDetail extends Component {
     const {
       groupid,
       transactionid,
+      commenter,
 
       group,
       transaction,
@@ -80,6 +82,12 @@ class TransactionDetail extends Component {
 
           <div className='padded'>
 
+            <div className='TransactionDetail-user'>
+              <ProfilePhoto url={commenter && commenter.avatar} />
+              <div className='TransactionDetail-user-name'>
+                {commenter.name}
+              </div>
+            </div>
             {/* Receipt */}
             {transaction.link && (
               <div className='TransactionDetail-image'>
@@ -257,6 +265,7 @@ export function mapStateToProps({
     groupid,
     transactionid,
     userid,
+    user,
 
     group,
     transaction,

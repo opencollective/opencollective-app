@@ -14,10 +14,8 @@ gulp.task('build:dev', ['copy-assets', 'build:css']);
  */
 gulp.task('build:css', () => {
 
-  return gulp.src(`${SRC_DIR}/css/main.css`)
-    .pipe($.changed(`${DIST_DIR}/css`))
+  return gulp.src(`${SRC_DIR}/css/*.css`)
     .pipe($.postcss([
-      require('autoprefixer'),
       require('postcss-import')(),
       require('postcss-cssnext')(),
       require('postcss-discard-comments')(),
@@ -46,7 +44,7 @@ gulp.task('watch', () => {
  * Resizes the OpenCollective icon for the homescreen and startup screen for different resolutions
  * Source icon: ./frontend/src/assets/icons/icon-512px.png
  * Source startup screen: ./frontend/src/assets/icons/startup-536x2208.png
- * 
+ *
  * Requires `sharp` (already installed on most Linux distributions)
  * Installation instructions for MacOSX: http://sharp.dimens.io/en/stable/install/
  * $> brew update && brew install homebrew/science/vips --with-imagemagick --with-webp
