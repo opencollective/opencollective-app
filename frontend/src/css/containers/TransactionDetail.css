@@ -22,6 +22,7 @@
 }
 .TransactionDetail-user {
   overflow: auto;
+  padding-bottom: 0.5rem;
 }
 
 .TransactionDetail-user .ProfilePhoto {
