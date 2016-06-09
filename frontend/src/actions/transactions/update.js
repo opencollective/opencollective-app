@@ -5,12 +5,17 @@ import * as constants from '../../constants/transactions';
  * Update a transaction in a group
  */
 
-export default (groupid, transactionid, transaction) => {
-  const url = `groups/${groupid}/transactions/${transactionid}`;
+export default (groupid, transactionid, expense) => {
+  transactionid = transactionid.slice(1);
+  const url = `groups/${groupid}/expenses/${transactionid}`;
 
   return dispatch => {
-    dispatch(request(groupid, transaction));
-    return putJSON(url, {transaction})
+    dispatch(request(groupid, expense));
+    return putJSON(url, {expense})
+      .then(e => {
+        e.id = 'e'+e.id;
+        return e;
+      })
       .then(json => dispatch(success(groupid, json)))
       .catch(error => {
         dispatch(failure(error))
@@ -19,23 +24,23 @@ export default (groupid, transactionid, transaction) => {
   };
 };
 
-function request(groupid, transaction) {
+function request(groupid, expense) {
   return {
     type: constants.UPDATE_TRANSACTION_REQUEST,
     groupid,
-    transaction
+    expense
   };
 }
 
-function success(groupid, transaction) {
-  const transactions = {
-    [transaction.id]: transaction
+function success(groupid, expense) {
+  const expenses = {
+    [expense.id]: expense
   };
 
   return {
     type: constants.UPDATE_TRANSACTION_SUCCESS,
     groupid,
-    transactions,
+    expenses
   };
 }
 

@@ -99,16 +99,16 @@ class GroupTransactions extends Component {
 }
 
 export function exportTransactions(transactions, users) {
-  var text = "createdAt,description,amount,currency,vat,tags,status,link,userName,userEmail\n";
+  var text = "incurredOrCreatedAt,description,amount,currency,vat,category,status,attachment,userName,userEmail\n";
   transactions.forEach(transaction => {
     const user = users[transaction.UserId];
-    text += `${transaction.createdAt},${transaction.description},${transaction.amount},`
-    text += `${transaction.currency},${transaction.vat},${transaction.tags},`
-    text += `${transaction.status},${transaction.link},${user.name},${user.email}\n`;
+    text += `${transaction.createdAt||transaction.createdAt},${transaction.description||transaction.description},${transaction.amount},`
+    text += `${transaction.currency},${transaction.vat},${transaction.category},`
+    text += `${transaction.status},${transaction.attachment},${user.name},${user.email}\n`;
   });
 
   // remove all null strings before saving to file
-  text = text.replace(/,null,/gi, ',,');
+  text = text.replace(/,null/gi, ',');
   exportFile('text/plain;charset=utf-8', 'transactions.csv', text);
 };
 

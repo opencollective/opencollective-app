@@ -6,10 +6,11 @@ import * as constants from '../../constants/transactions';
  */
 
 export default (groupid, transactionid) => {
+  transactionid = transactionid.slice(1);
   return dispatch => {
     dispatch(request(groupid, transactionid));
 
-    return api.del(`groups/${groupid}/transactions/${transactionid}`)
+    return api.del(`groups/${groupid}/expenses/${transactionid}`)
       .then(json => dispatch(success(groupid, transactionid, json)))
       .catch(error => {
         dispatch(failure(error));

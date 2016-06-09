@@ -50,13 +50,15 @@ export function createExpense() {
     validateTransaction,
     transaction
   } = this.props;
-  const attributes = transaction.attributes;
+  const attributes = {
+    ...transaction.attributes,
+    amount: Math.round(100 * transaction.attributes.amountText)
+  };
 
   return validateTransaction(attributes)
   .then(() => {
     const newTransaction = {
       ...attributes,
-      amount: -attributes.amount,
       currency: group.currency
     };
 

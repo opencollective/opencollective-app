@@ -16,10 +16,14 @@ export default ({transaction, tags, handleChange, isDonation, isPublic, isReject
     )
   }
 
+  function getAmount(amount) {
+    return isDonation ? amount : (amount/100).toFixed(2);
+  }
+
   return (
     <div className='TransactionDetail-info'>
       <div className='TransactionDetail-price'>
-        <Currency value={transaction.amount} currency={transaction.currency} />
+        <Currency value={getAmount(transaction.amount)} currency={transaction.currency} />
       </div>
       {vatInput()}
       <div className='TransactionDetail-category'>

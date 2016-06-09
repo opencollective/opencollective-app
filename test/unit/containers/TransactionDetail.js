@@ -10,6 +10,15 @@ import {
 import roles from '../../../frontend/src/constants/roles';
 import createStore from '../../../frontend/src/store/create';
 
+import {
+  DONATION,
+  EXPENSE,
+  PENDING,
+  APPROVED,
+  REJECTED,
+  PAID
+} from '../../../frontend/src/constants/transactions';
+
 const defaultState = createStore().getState();
 
 const { expect } = chai;
@@ -40,8 +49,8 @@ describe('TransactionDetail container', () => {
     const props = mapStateToProps(_.merge({}, pageState, {
       transactions: {
         1: {
-          isRejected: false,
-          isExpense: true
+          status: APPROVED,
+          type: EXPENSE
         }
       }
     }));
@@ -53,8 +62,8 @@ describe('TransactionDetail container', () => {
     const props = mapStateToProps(_.merge({}, pageState, {
       transactions: {
         1: {
-          isRejected: true,
-          isExpense: false
+          status: REJECTED,
+          type: DONATION
         }
       }
     }));
@@ -66,8 +75,8 @@ describe('TransactionDetail container', () => {
     const props = mapStateToProps(_.merge({}, pageState, {
       transactions: {
         1: {
-          isRejected: true,
-          isExpense: true
+          status: REJECTED,
+          type: EXPENSE
         }
       }
     }));
@@ -75,13 +84,12 @@ describe('TransactionDetail container', () => {
     expect(props.showDeleteButton).to.be.true;
   });
 
-  it('shows the approval buttons if expense is not reimbursed, not rejected, user is host', () => {
+  it('shows the approval buttons if expense is pending and user is host', () => {
     const props = mapStateToProps(_.merge({}, pageState, {
       transactions: {
         1: {
-          isRejected: false,
-          isExpense: true,
-          isReimbursed: false
+          status: PENDING,
+          type: EXPENSE
         }
       }
     }));

@@ -1,3 +1,11 @@
+export const EXPENSE = 'EXPENSE';
+export const DONATION = 'DONATION';
+
+export const PENDING = 'PENDING';
+export const APPROVED = 'APPROVED';
+export const REJECTED = 'REJECTED';
+export const PAID = 'PAID';
+
 export const TRANSACTIONS_REQUEST = 'TRANSACTIONS_REQUEST';
 export const TRANSACTIONS_SUCCESS = 'TRANSACTIONS_SUCCESS';
 export const TRANSACTIONS_FAILURE = 'TRANSACTIONS_FAILURE';

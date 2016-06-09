@@ -6,7 +6,8 @@ import * as constants from '../../constants/transactions';
  */
 
 export default (groupid, transactionid) => {
-  const url = `groups/${groupid}/transactions/${transactionid}/pay`;
+  transactionid = transactionid.slice(1);
+  const url = `groups/${groupid}/expenses/${transactionid}/pay`;
 
   return dispatch => {
     dispatch(request(groupid, transactionid));

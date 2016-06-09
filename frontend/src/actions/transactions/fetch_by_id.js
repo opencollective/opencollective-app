@@ -7,11 +7,18 @@ import * as constants from '../../constants/transactions';
  */
 
 export default (groupid, transactionid) => {
+  const prefix = transactionid[0];
+  const type = prefix === 'e' ? 'expenses' : 'transactions';
+  transactionid = transactionid.slice(1);
   return dispatch => {
     dispatch(request(groupid, transactionid));
 
-    return get(`groups/${groupid}/transactions/${transactionid}`, {
+    return get(`groups/${groupid}/${type}/${transactionid}`, {
       schema: Schemas.TRANSACTION
+    })
+    .then(t => {
+      t.id = prefix+t.id;
+      return t;
     })
     .then(json => dispatch(success(groupid, transactionid, json)))
     .catch(error => dispatch(failure(error)));
