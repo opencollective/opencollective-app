@@ -1,25 +1,18 @@
 import { get } from '../../lib/api';
 import Schemas from '../../lib/schemas';
 import * as constants from '../../constants/transactions';
-import { normalize } from 'normalizr';
-import merge from 'lodash/object/merge';
 
 /**
  * Fetch multiple transactions in a group
  */
 
-export default (groupid, params={}) => {
+export default (groupid, options={}) => {
   return dispatch => {
     dispatch(request(groupid));
-    const donationParams = merge({}, params);
-    donationParams.donation = true;
-    let donations, expenses;
-    return get(`groups/${groupid}/transactions`, { params: donationParams })
-    .then(d => donations = d)
-    .then(() => get(`groups/${groupid}/expenses`, { params }))
-    .then(e => expenses = e)
-    .then(() => [...donations, ...expenses])
-    .then(json => normalize(json, Schemas.TRANSACTION_ARRAY).entities)
+    return get(`groups/${groupid}/transactions`, {
+      schema: Schemas.TRANSACTION_ARRAY,
+      params: options || {}
+    })
     .then(json => dispatch(success(groupid, json)))
     .catch(error => dispatch(failure(error)));
   };

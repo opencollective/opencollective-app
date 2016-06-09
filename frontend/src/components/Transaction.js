@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import moment from 'moment';
 
 import Currency from './Currency';
-import ExpenseStatus from './ExpenseStatus';
+import TransactionStatus from './TransactionStatus';
 import ProfilePhoto from './ProfilePhoto';
 
 class Transaction extends Component {
@@ -22,13 +22,6 @@ class Transaction extends Component {
 
     const prefix = isPublic ? '/public' : '';
 
-    function getAmount(amount) {
-      if (isDonation) {
-        return amount;
-      }
-      return (amount/100).toFixed(2);
-    }
-
     return (
       <div className='Transaction'>
         <Link to={`${prefix}/groups/${GroupId}/transactions/${id}`}>
@@ -39,9 +32,9 @@ class Transaction extends Component {
             </div>
             <div className='Transaction-description'>{description}</div>
             <div className='Transaction-status'>
-              <div className='Transaction-amount'><Currency value={getAmount(amount)} currency={currency} precision={2} /></div>
+              <div className='Transaction-amount'><Currency value={amount} currency={currency} precision={2} /></div>
               <div className='Transaction-approved'>
-                {!isDonation && <ExpenseStatus status={this.props.status} />}
+                {!isDonation && <TransactionStatus {...this.props} />}
               </div>
             </div>
           </div>
