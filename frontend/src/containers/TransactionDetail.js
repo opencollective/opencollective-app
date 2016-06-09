@@ -33,7 +33,7 @@ import AsyncButton from '../components/AsyncButton';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
 import Select from '../components/Select';
-import TransactionStatus from '../components/TransactionStatus';
+import ExpenseStatus from '../components/ExpenseStatus';
 
 import isHost from '../lib/is_host';
 
@@ -107,7 +107,7 @@ class TransactionDetail extends Component {
             )}
 
             <div className='TransactionDetail-status'>
-              <TransactionStatus {...transaction} />
+              <ExpenseStatus status={transaction.status} />
             </div>
 
             {showDeleteButton && (
