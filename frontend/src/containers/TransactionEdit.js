@@ -59,10 +59,7 @@ export class TransactionEdit extends Component {
       const transaction = this.props.initialTransaction;
 
       // Let's invert to show a positive expense value to the user
-      return appendTransactionForm({
-       ...transaction,
-        amount: -transaction.amount
-      });
+      return appendTransactionForm({...transaction});
     });
   }
 };
@@ -76,22 +73,21 @@ export function update({attributes}) {
     transactionid,
     validateTransaction
   } = this.props;
+  attributes = {
+    ...attributes,
+    amount: Math.round(100 * attributes.amountText)
+  };
 
   const transaction = pick(attributes, [
-    'link',
-    'description',
+    'attachment',
+    'title',
     'amount',
     'vat',
-    'createdAt',
-    'approvedAt',
-    'tags',
-    'approved',
+    'incurredAt',
+    'category',
     'payoutMethod',
-    'comment'
+    'notes'
   ]);
-
-  // reinvert to save negative value in db
-  transaction.amount = -transaction.amount;
 
   validateTransaction(transaction)
   .then(() => updateTransaction(groupid, transactionid, transaction))

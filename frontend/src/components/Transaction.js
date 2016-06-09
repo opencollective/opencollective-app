@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import moment from 'moment';
 
 import Currency from './Currency';
-import TransactionStatus from './TransactionStatus';
+import ExpenseStatus from './ExpenseStatus';
 import ProfilePhoto from './ProfilePhoto';
 
 class Transaction extends Component {
@@ -15,12 +15,20 @@ class Transaction extends Component {
       id,
       GroupId,
       createdAt,
+      incurredAt,
       user,
       isDonation,
-      isPublic
+      isPublic,
+      status
     } = this.props;
 
     const prefix = isPublic ? '/public' : '';
+
+    const txDate = incurredAt || createdAt;
+
+    function getAmount(amount) {
+      return isDonation ? amount : (amount/100).toFixed(2);
+    }
 
     return (
       <div className='Transaction'>
@@ -28,13 +36,13 @@ class Transaction extends Component {
           <ProfilePhoto url={user && user.avatar} />
           <div className='Transaction-info'>
             <div className='Transaction-created'>
-              {createdAt ? moment(createdAt).fromNow() : ''}
+              {txDate && moment(txDate).fromNow()}
             </div>
             <div className='Transaction-description'>{description}</div>
             <div className='Transaction-status'>
-              <div className='Transaction-amount'><Currency value={amount} currency={currency} precision={2} /></div>
+              <div className='Transaction-amount'><Currency value={getAmount(amount)} currency={currency} precision={2} /></div>
               <div className='Transaction-approved'>
-                {!isDonation && <TransactionStatus {...this.props} />}
+                {/* TODO restore this !isDonation && <ExpenseStatus status={status} />*/}
               </div>
             </div>
           </div>

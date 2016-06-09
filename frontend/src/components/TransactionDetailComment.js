@@ -16,7 +16,7 @@ export default ({transaction, commenter}) => {
           {commenter.name}
         </div>
         <div className='TransactionComment-comment'>
-          {transaction.comment}
+          {transaction.notes}
         </div>
       </div>
     </div>

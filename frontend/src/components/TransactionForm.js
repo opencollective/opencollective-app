@@ -68,8 +68,8 @@ class TransactionForm extends Component {
         <Notification {...this.props} />
         <ImageUpload
           {...this.props}
-          value={attributes.link}
-          onFinished={({url: link}) => appendTransactionForm({link})} />
+          value={attributes.attachment}
+          onFinished={({url: attachment}) => appendTransactionForm({attachment})} />
         <form
           name='transaction'
           className='TransactionForm-form'
@@ -78,33 +78,33 @@ class TransactionForm extends Component {
             <label className='inline'>Description: </label>
             <Input
               customClass='js-transaction-description'
-              hasError={transaction.error.description}
-              value={transaction.attributes.description}
-              handleChange={description => appendTransactionForm({description})} />
+              hasError={transaction.error.title}
+              value={transaction.attributes.title}
+              handleChange={title => appendTransactionForm({title})} />
           </div>
           <div>
             <label className='inline'>Amount: </label>
             <Input
               customClass='js-transaction-amount'
               placeholder={amountPlaceholder}
-              hasError={transaction.error.amount}
-              value={transaction.attributes.amount}
-              handleChange={amount => appendTransactionForm({amount})} />
+              hasError={transaction.error.amountText}
+              value={transaction.attributes.amountText}
+              handleChange={amountText => appendTransactionForm({amountText})} />
           </div>
           {this.vatInput()}
           <div className='Input'>
             <label className='inline'>Date:</label>
             <DatePicker
-              selected={moment(attributes.createdAt)}
+              selected={moment(attributes.incurredAt)}
               maxDate={moment()}
-              handleChange={createdAt => appendTransactionForm({createdAt})} />
+              handleChange={incurredAt => appendTransactionForm({incurredAt})} />
           </div>
           <div className='Input u-mb05'>
             <label className='inline'>Category:</label>
             <SelectTag
               attributes={attributes}
               tags={tags}
-              handleChange={tag => appendTransactionForm({tags: [tag]})} />
+              handleChange={category => appendTransactionForm({category})} />
           </div>
 
           <div className='Input'>
@@ -119,8 +119,8 @@ class TransactionForm extends Component {
             <label className='inline'>Note:</label>
             <TextArea
               placeholder='Optional'
-              value={attributes.comment}
-              handleChange={comment => appendTransactionForm({comment})} />
+              value={attributes.notes}
+              handleChange={notes => appendTransactionForm({notes})} />
           </div>
           {children || <SubmitButton />}
         </form>

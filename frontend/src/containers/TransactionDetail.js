@@ -33,7 +33,7 @@ import AsyncButton from '../components/AsyncButton';
 import ApproveButton from '../components/ApproveButton';
 import RejectButton from '../components/RejectButton';
 import Select from '../components/Select';
-import TransactionStatus from '../components/TransactionStatus';
+import ExpenseStatus from '../components/ExpenseStatus';
 
 import isHost from '../lib/is_host';
 
@@ -63,7 +63,7 @@ class TransactionDetail extends Component {
 
     const className = classnames({
       TransactionDetail: true,
-      'TransactionDetail--noImage': !transaction.link
+      'TransactionDetail--noImage': !transaction.attachment
     });
 
     return (
@@ -89,25 +89,25 @@ class TransactionDetail extends Component {
               </div>
             </div>
             {/* Receipt */}
-            {transaction.link && (
+            {transaction.attachment && (
               <div className='TransactionDetail-image'>
                 <ReceiptPreview
-                  src={transaction.link}
-                  href={transaction.link}
+                  src={transaction.attachment}
+                  href={transaction.attachment}
                 />
               </div>
             )}
 
             <TransactionDetailInfo
               {...this.props}
-              handleChange={tag => updateTransaction(groupid, transactionid, {tags: [tag]})} />
+              handleChange={tag => updateTransaction(groupid, transactionid, {category})} />
 
-            {transaction.comment && (
+            {transaction.notes && (
               <TransactionDetailComment {...this.props} />
             )}
 
             <div className='TransactionDetail-status'>
-              <TransactionStatus {...transaction} />
+              {/* TODO restore this !transaction.isDonation && <ExpenseStatus status={transaction.status} />*/}
             </div>
 
             {showDeleteButton && (
@@ -135,7 +135,7 @@ class TransactionDetail extends Component {
                   <ApproveButton
                     disabled={updateInProgress}
                     isManual={isManual}
-                    approved={transaction.approved}
+                    approved={transaction.status === 'APPROVED'}
                     approveTransaction={approve.bind(this)}
                     inProgress={approveInProgress || payInProgress} />
                   <RejectButton
@@ -250,13 +250,15 @@ export function mapStateToProps({
   const user = users[userid] || {};
   const group = groups[groupid] || {};
   const transaction = transactions[transactionid] || {};
-  const {
-    isExpense,
-    isDonation,
-    isManual,
-    isRejected,
-    isReimbursed
-  } = transaction;
+
+  const isDonation = transaction.type === 'DONATION';
+  const isExpense = transaction.type === 'EXPENSE';
+
+  const isPending = transaction.status === 'PENDING';
+  const isRejected = transaction.status === 'REJECTED';
+  
+  // TODO fetch from backend
+  const isManual = false;
 
   const userGroups = user.groups || {};
   const userIsHost = isHost([userGroups[groupid]]) ;
@@ -278,12 +280,11 @@ export function mapStateToProps({
     isDonation,
     isExpense,
     isManual,
-    showEditButton: !transaction.approvedAt && isExpense,
+    showEditButton: isExpense && isPending,
 
-    isReimbursed,
     isRejected,
-    showDeleteButton: isExpense && isRejected && userIsHost,
-    showApprovalButtons: !isReimbursed && !isRejected && isHost && isExpense,
+    showDeleteButton: isExpense && userIsHost && isRejected,
+    showApprovalButtons: isExpense && userIsHost && isPending,
     approveInProgress: transactions.approveInProgress,
     payInProgress: transactions.payInProgress,
     rejectInProgress: transactions.rejectInProgress,
