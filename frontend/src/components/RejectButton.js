@@ -5,7 +5,7 @@ import Icon from './Icon';
 // Leave non shallow until proper way of testing them
 class RejectButton extends Component {
   render() {
-    const {rejectTransaction, inProgress, disabled} = this.props;
+    const {rejectExpense, inProgress, disabled} = this.props;
 
     return (
       <div>
@@ -13,7 +13,7 @@ class RejectButton extends Component {
           customClass='Button--reject'
           inProgress={inProgress}
           disabled={disabled}
-          onClick={rejectTransaction.bind(this)}>
+          onClick={rejectExpense.bind(this)}>
           <Icon type='rejected' /> Reject
         </AsyncButton>
       </div>
@@ -22,7 +22,7 @@ class RejectButton extends Component {
 }
 
 RejectButton.propTypes = {
-  rejectTransaction: PropTypes.func.isRequired,
+  rejectExpense: PropTypes.func.isRequired,
   inProgress: PropTypes.bool.isRequired
 };
 

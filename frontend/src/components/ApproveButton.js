@@ -6,7 +6,7 @@ import Icon from './Icon';
 class ApproveButton extends Component {
   render() {
     const {
-      approveTransaction,
+      approveExpense,
       inProgress,
       disabled,
       isManual,
@@ -27,7 +27,7 @@ class ApproveButton extends Component {
           customClass='Button--approve'
           inProgress={inProgress}
           disabled={disabled}
-          onClick={approveTransaction.bind(this)}>
+          onClick={approveExpense.bind(this)}>
           <Icon type='approved' /> {label}
         </AsyncButton>
       </div>
@@ -36,7 +36,7 @@ class ApproveButton extends Component {
 }
 
 ApproveButton.propTypes = {
-  approveTransaction: PropTypes.func.isRequired,
+  approveExpense: PropTypes.func.isRequired,
   inProgress: PropTypes.bool.isRequired
 };
 

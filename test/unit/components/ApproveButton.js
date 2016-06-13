@@ -22,9 +22,9 @@ describe('ApproveButton component', () => {
   it('should call the action when clicked', () => {
     const handler = chai.spy(() => {});
     const element = createElement({
-      transactionid: '1',
+      expenseid: '1',
       groupid: '1',
-      approveTransaction: handler,
+      approveExpense: handler,
       inProgress: false
     });
 
@@ -36,9 +36,9 @@ describe('ApproveButton component', () => {
   it('should not do anything if the action is in progress', () => {
     const handler = chai.spy(() => {});
     const element = createElement({
-      transactionid: '1',
+      expenseid: '1',
       groupid: '1',
-      approveTransaction: handler,
+      approveExpense: handler,
       inProgress: true
     });
 

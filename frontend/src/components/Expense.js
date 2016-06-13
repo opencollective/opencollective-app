@@ -14,7 +14,7 @@ class Expense extends Component {
       title,
       id,
       GroupId,
-      createdAt,
+      incurredAt,
       user,
       status
     } = this.props;
@@ -25,7 +25,7 @@ class Expense extends Component {
           <ProfilePhoto url={user && user.avatar} />
           <div className='Expense-info'>
             <div className='Expense-created'>
-              {createdAt ? moment(createdAt).fromNow() : ''}
+              {incurredAt ? moment(incurredAt).fromNow() : ''}
             </div>
             <div className='Expense-title'>{title}</div>
             <div className='Expense-status'>

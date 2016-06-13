@@ -4,6 +4,8 @@ import values from 'lodash/object/values';
 
 import sortByDate from './sort_by_date';
 
+import { PENDING, APPROVED } from '../constants/expenses';
+
 /**
  * Builds the following structure from a group collection and a transaction
  * collection. This is used in the UI to display the data
@@ -35,7 +37,7 @@ export default {
 
     return groupsArray.map((group) => {
       return extend(group, {
-        expenses: filter(expensesArray, { GroupId: group.id, status: "PENDING" }).sort(sortByDate)
+        expenses: filter(expensesArray, e => e.GroupId === group.id && (e.status === PENDING || e.status === APPROVED)).sort(sortByDate)
       });
     });
   }

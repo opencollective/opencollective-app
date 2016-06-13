@@ -6,7 +6,8 @@ import classnames from 'classnames';
 import {PENDING,
         APPROVED,
         REJECTED,
-        PAID} from '../constants/expenses'
+        PAID,
+        MANUAL } from '../constants/expenses'
 
 import payExpense from '../actions/expenses/pay';
 import updateExpense from '../actions/expenses/update';
@@ -54,6 +55,7 @@ class ExpenseDetail extends Component {
       isLoading,
       showEditButton,
       isManual,
+      isApproved,
       showDeleteButton,
       showApprovalButtons,
 
@@ -130,7 +132,7 @@ class ExpenseDetail extends Component {
                 <div className='ExpenseDetail-payoutMethod'>
                   <div className='u-bold u-py1'>Payout method</div>
                   <Select
-                    disabled={expense.isPending || expense.isApproved}
+                    disabled={expense.isRejected || expense.isApproved}
                     options={payoutMethods}
                     value={expense.payoutMethod}
                     handleChange={payoutMethod => updateExpense(groupid, expenseid, {payoutMethod})} />
@@ -139,12 +141,12 @@ class ExpenseDetail extends Component {
                   <ApproveButton
                     disabled={updateInProgress}
                     isManual={isManual}
-                    approved={expense.isApproved}
-                    approveTransaction={approve.bind(this)}
+                    approved={isApproved}
+                    approveExpense={approveAndPay.bind(this)}
                     inProgress={approveInProgress || payInProgress} />
                   <RejectButton
                     disabled={updateInProgress}
-                    rejectTransaction={reject.bind(this)}
+                    rejectExpense={reject.bind(this)}
                     inProgress={rejectInProgress} />
                 </div>
               </div>
@@ -185,21 +187,29 @@ class ExpenseDetail extends Component {
   }
 }
 
-export function approve() {
+export function approveAndPay() {
   const {
+    approveExpense,
     group,
     expense,
-    approveExpense,
     payExpense,
     notify
   } = this.props;
 
-  approveExpense(group.id, expense.id)
+  approve(approveExpense, group, expense)
   .then(() => payExpense(group.id, expense.id))
   .then(() => notify('success', 'Successfully approved expense'))
   .then(() => this.nextPage())
   .catch(({message}) => notify('error', message));
 };
+
+function approve(approveExpense, group, expense) {
+  if (expense.status === PENDING) {
+    return approveExpense(group.id, expense.id)
+  } else {
+    return Promise.resolve();
+  }
+}
 
 export function reject() {
   const { group, expense, rejectExpense, notify } = this.props;
@@ -259,7 +269,7 @@ export function mapStateToProps({
   const isApproved = expense.status === APPROVED;
   const isRejected = expense.status === REJECTED;
   const isPaid = expense.status === PAID;
-  const isManual = expense.payoutMethod === 'manual';
+  const isManual = expense.payoutMethod === MANUAL;
 
   const userGroups = user.groups || {};
   const isHost = isHostLib([userGroups[groupid]]) ;

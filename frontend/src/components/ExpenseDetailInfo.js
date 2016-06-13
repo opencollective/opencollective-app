@@ -11,7 +11,7 @@ export default ({expense, tags, handleChange, isRejected}) => {
     return (
       <div className="ExpenseDetail-vat">
         Including&nbsp;
-        <Currency value={expense.vat} currency={expense.currency} /> VAT
+        <Currency value={expense.vat} currency={expense.currency} precision={2} /> VAT
       </div>
     )
   }
@@ -19,7 +19,7 @@ export default ({expense, tags, handleChange, isRejected}) => {
   return (
     <div className='ExpenseDetail-info'>
       <div className='ExpenseDetail-price'>
-        <Currency value={expense.amount} currency={expense.currency} />
+        <Currency value={expense.amount} currency={expense.currency} precision={2} />
       </div>
       {vatInput()}
       <div className='ExpenseDetail-category'>

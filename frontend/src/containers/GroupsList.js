@@ -58,9 +58,7 @@ export class GroupsList extends Component {
 
     if (userid) {
       fetchUserGroupsAndExpenses(userid)
-      .then(({expenses}) => {
-        return getUniqueValues(expenses, 'UserId').map(fetchUserIfNeeded);
-      });
+      .then(({expenses}) => getUniqueValues(expenses, 'UserId').map(fetchUserIfNeeded));
 
       fetchCards(userid, {
         service: 'paypal'
