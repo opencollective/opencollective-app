@@ -8,28 +8,32 @@ const PopOverMenu = ({showPopOverMenu, groupid, hasPopOverMenuOpen, showAddFunds
     'PopOverMenu--open': hasPopOverMenuOpen
   });
 
+
   return (
-    <div className={className}>
-      <div className='PopOverMenu-group'>
-      {showAddFunds ?
-        <div className='PopOverMenu-item js-addFundsLink'>
-          <Link to={`/groups/${groupid}/funds/`}>
-            Add funds
-          </Link>
-        </div>
-        : null
-      }
+      <div className={className}>
+        <div className='PopOverMenu-group'>
+          {showAddFunds ?
+            <div className='PopOverMenu-item js-addFundsLink'>
+              <Link to={`/groups/${groupid}/funds/`}>
+                Add funds
+              </Link>
+            </div>
+            : null
+          }
+
+      {/* #addExpenseFlow Commented this out for now, in case we need to bring it back
         <div className='PopOverMenu-item js-transactionNewLink'>
           <Link to={`/groups/${groupid}/transactions/new`}>
             Add expense
           </Link>
         </div>
       </div>
-
-      <div
-        className='PopOverMenu-cancel'
-        onClick={() => showPopOverMenu(false)}>
-        Cancel
+      */}
+        <div
+          className='PopOverMenu-cancel'
+          onClick={() => showPopOverMenu(false)}>
+          Cancel
+        </div>
       </div>
     </div>
   );
