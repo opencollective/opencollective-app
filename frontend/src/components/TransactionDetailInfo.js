@@ -3,7 +3,7 @@ import React from 'react';
 import Currency from './Currency';
 import SelectTag from './SelectTag';
 
-export default ({transaction, tags, handleChange, isDonation, isPublic, isRejected}) => {
+export default ({transaction, tags, handleChange, isDonation, isRejected}) => {
 
   var vatInput = function() {
     if (!transaction.vat) return;
@@ -25,7 +25,7 @@ export default ({transaction, tags, handleChange, isDonation, isPublic, isReject
       <div className='TransactionDetail-category'>
         Category
         <SelectTag
-          disabled={isDonation || isPublic || isRejected}
+          disabled={isDonation || isRejected}
           tags={tags}
           attributes={transaction}
           handleChange={handleChange}

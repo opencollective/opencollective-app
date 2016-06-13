@@ -1,13 +1,13 @@
 import React from 'react';
 import GroupLink from './GroupLink';
-import TransactionsList from './TransactionsList';
+import ExpenseList from './ExpenseList';
 
 export default (props) => {
   return (
     <div>
       <GroupLink {...props} />
-      <TransactionsList
-        transactions={props.transactions}
+      <ExpenseList
+        expenses={props.expenses}
         users={props.users} />
     </div>
   );

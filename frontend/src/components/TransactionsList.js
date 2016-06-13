@@ -2,7 +2,7 @@ import React from 'react';
 
 import Transaction from './Transaction';
 
-export default ({transactions=[], users, isPublic}) => {
+export default ({transactions=[], users}) => {
 
   return (
     <div>
@@ -10,7 +10,6 @@ export default ({transactions=[], users, isPublic}) => {
         return (
           <Transaction
             key={transaction.id}
-            isPublic={isPublic}
             {...transaction}
             user={users[transaction.UserId] || {}} />
         );

@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import classnames from 'classnames';
 
-import payTransaction from '../actions/transactions/pay';
 import updateTransaction from '../actions/transactions/update';
-import approveTransaction from '../actions/transactions/approve';
-import rejectTransaction from '../actions/transactions/reject';
 import deleteTransaction from '../actions/transactions/delete';
 import fetchTransaction from '../actions/transactions/fetch_by_id';
 import notify from '../actions/notification/notify';
@@ -19,21 +16,16 @@ import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import Content from './Content';
 
 import tags from '../ui/tags';
-import payoutMethods from '../ui/payout_methods';
 
 import TopBar from '../components/TopBar';
-import TransactionDetailComment from '../components/TransactionDetailComment';
+import EntryDetailComment from '../components/EntryDetailComment';
 import TransactionDetailInfo from '../components/TransactionDetailInfo';
-import TransactionDetailTitle from '../components/TransactionDetailTitle';
+import EntryDetailTitle from '../components/EntryDetailTitle';
 import ReceiptPreview from '../components/ReceiptPreview';
 import ProfilePhoto from '../components/ProfilePhoto';
 
 import Notification from '../components/Notification';
 import AsyncButton from '../components/AsyncButton';
-import ApproveButton from '../components/ApproveButton';
-import RejectButton from '../components/RejectButton';
-import Select from '../components/Select';
-import TransactionStatus from '../components/TransactionStatus';
 
 import isHost from '../lib/is_host';
 
@@ -46,17 +38,8 @@ class TransactionDetail extends Component {
 
       group,
       transaction,
-      isPublic,
       isLoading,
-      showEditButton,
-      isManual,
       showDeleteButton,
-      showApprovalButtons,
-
-      approveInProgress,
-      rejectInProgress,
-      updateInProgress,
-      payInProgress,
 
       updateTransaction
     } = this.props;
@@ -70,15 +53,12 @@ class TransactionDetail extends Component {
       <div className={className}>
         <TopBar
           title={group.name}
-          backLink={`${isPublic ? '/public' : ''}/groups/${groupid}/transactions/`}
-          rightLink={showEditButton && {
-            label: 'Edit',
-            url: `/groups/${groupid}/transactions/${transactionid}/edit`
-          }} />
+          backLink={`/groups/${groupid}/transactions/`}
+         />
         <Content isLoading={isLoading}>
           <Notification {...this.props} />
 
-          <TransactionDetailTitle {...transaction} />
+          <EntryDetailTitle text={transaction.description} />
 
           <div className='padded'>
 
@@ -103,12 +83,8 @@ class TransactionDetail extends Component {
               handleChange={tag => updateTransaction(groupid, transactionid, {tags: [tag]})} />
 
             {transaction.comment && (
-              <TransactionDetailComment {...this.props} />
+              <EntryDetailComment entry={transaction} commenter={commenter} />
             )}
-
-            <div className='TransactionDetail-status'>
-              <TransactionStatus {...transaction} />
-            </div>
 
             {showDeleteButton && (
               <div className='u-mt1'>
@@ -121,30 +97,6 @@ class TransactionDetail extends Component {
 
             )}
 
-            {showApprovalButtons && (
-              <div>
-                <div className='TransactionDetail-payoutMethod'>
-                  <div className='u-bold u-py1'>Payout method</div>
-                  <Select
-                    disabled={!!transaction.reimbursedAt}
-                    options={payoutMethods}
-                    value={transaction.payoutMethod}
-                    handleChange={payoutMethod => updateTransaction(groupid, transactionid, {payoutMethod})} />
-                </div>
-                <div className='u-mt2'>
-                  <ApproveButton
-                    disabled={updateInProgress}
-                    isManual={isManual}
-                    approved={transaction.approved}
-                    approveTransaction={approve.bind(this)}
-                    inProgress={approveInProgress || payInProgress} />
-                  <RejectButton
-                    disabled={updateInProgress}
-                    rejectTransaction={reject.bind(this)}
-                    inProgress={rejectInProgress} />
-                </div>
-              </div>
-            )}
           </div>
         </Content>
       </div>
@@ -181,31 +133,6 @@ class TransactionDetail extends Component {
   }
 }
 
-export function approve() {
-  const {
-    group,
-    transaction,
-    approveTransaction,
-    payTransaction,
-    notify
-  } = this.props;
-
-  approveTransaction(group.id, transaction.id)
-  .then(() => payTransaction(group.id, transaction.id))
-  .then(() => notify('success', 'Successfully approved transaction'))
-  .then(() => this.nextPage())
-  .catch(({message}) => notify('error', message));
-};
-
-export function reject() {
-  const { group, transaction, rejectTransaction, notify } = this.props;
-
-  rejectTransaction(group.id, transaction.id)
-  .then(() => notify('success', 'Successfully rejected transaction'))
-  .then(() => this.nextPage())
-  .catch(({message}) => notify('error', message));
-};
-
 export function deleteExpense() {
   const {
     notify,
@@ -222,14 +149,11 @@ export function deleteExpense() {
 
 export default connect(mapStateToProps, {
   fetchTransaction,
-  approveTransaction,
-  rejectTransaction,
   fetchUserGroups,
   fetchGroup,
   appendTransactionForm,
   pushState,
   fetchUserIfNeeded,
-  payTransaction,
   notify,
   resetNotifications,
   deleteTransaction,
@@ -278,7 +202,6 @@ export function mapStateToProps({
     isDonation,
     isExpense,
     isManual,
-    showEditButton: !transaction.approvedAt && isExpense,
 
     isReimbursed,
     isRejected,

@@ -4,7 +4,7 @@ import { pushState } from 'redux-router';
 import values from 'lodash/object/values';
 import any from 'lodash/collection/any';
 
-import fetchUserGroupsAndTransactions from '../actions/users/fetch_groups_and_transactions';
+import fetchUserGroupsAndExpenses from '../actions/users/fetch_groups_and_expenses';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 import getPreapprovalKeyForUser from '../actions/users/get_preapproval_key';
 import confirmPreapprovalKey from '../actions/users/confirm_preapproval_key';
@@ -22,7 +22,7 @@ import ProfileReminder from '../components/ProfileReminder';
 import StripeReminder from '../components/StripeReminder';
 import Notification from '../components/Notification';
 
-import nestTransactionsInGroups from '../lib/nest_transactions_in_groups';
+import { nestExpensesInGroups } from '../lib/nest_items_in_groups';
 import getUniqueValues from '../lib/get_unique_values';
 import isHost from '../lib/is_host';
 
@@ -46,7 +46,7 @@ export class GroupsList extends Component {
 
   componentDidMount() {
     const {
-      fetchUserGroupsAndTransactions,
+      fetchUserGroupsAndExpenses,
       userid,
       fetchUserIfNeeded,
       confirmPreapprovalKey,
@@ -57,13 +57,9 @@ export class GroupsList extends Component {
     } = this.props;
 
     if (userid) {
-      fetchUserGroupsAndTransactions(userid, {
-        params: {
-          pending: true
-        }
-      })
-      .then(({transactions}) => {
-        return getUniqueValues(transactions, 'UserId').map(fetchUserIfNeeded);
+      fetchUserGroupsAndExpenses(userid)
+      .then(({expenses}) => {
+        return getUniqueValues(expenses, 'UserId').map(fetchUserIfNeeded);
       });
 
       fetchCards(userid, {
@@ -113,7 +109,7 @@ export function reminder({
 }
 
 export default connect(mapStateToProps, {
-  fetchUserGroupsAndTransactions,
+  fetchUserGroupsAndExpenses,
   fetchUserIfNeeded,
   getPreapprovalKeyForUser,
   confirmPreapprovalKey,
@@ -129,7 +125,7 @@ export function mapStateToProps({users, session, router, notification}) {
   // Logged in user
   const userid = session.user.id;
   const currentUser = users[userid] || {};
-  const { groups, transactions } = currentUser;
+  const { groups, expenses } = currentUser;
   const query = router.location.query;
   const userCards = values(currentUser.cards);
   const hasConfirmedCards = any(userCards, (c) => !!c.confirmedAt);
@@ -137,10 +133,10 @@ export function mapStateToProps({users, session, router, notification}) {
   const hasFinishedStripeAuth = query.stripeStatus === 'success';
 
   return {
-    groups: nestTransactionsInGroups(groups, transactions),
+    groups: nestExpensesInGroups(groups, expenses),
     userid,
     users,
-    transactions,
+    expenses,
     notification,
     inProgress: users.inProgress,
     query,

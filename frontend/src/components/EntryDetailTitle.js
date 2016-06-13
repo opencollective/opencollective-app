@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default ({description}) => {
+export default ({text}) => {
   return (
     <div className='Well'>
       <div className='Well-primary'>
-        {description}
+        {text}
       </div>
     </div>
   );

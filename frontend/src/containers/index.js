@@ -4,6 +4,7 @@ import GroupTransactions from './GroupTransactions';
 import AddFund from './AddFund';
 import TransactionNew from './TransactionNew';
 import TransactionDetail from './TransactionDetail';
+import ExpenseDetail from './ExpenseDetail';
 import Login from './Login';
 import Profile from './Profile';
 import GroupSettings from './GroupSettings';
@@ -18,6 +19,7 @@ export {
   AddFund,
   TransactionNew,
   TransactionDetail,
+  ExpenseDetail,
   Login,
   Profile,
   GroupSettings,
