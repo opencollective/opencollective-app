@@ -8,6 +8,7 @@ import * as constants from '../../constants/expenses';
 export default (groupid, expense) => {
   const url = `groups/${groupid}/expenses/`;
 
+  expense.amount = expense.amount*100;
   return dispatch => {
     dispatch(request(groupid, expense));
     return postJSON(url, {expense})

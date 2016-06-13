@@ -15,7 +15,7 @@ describe('expenses create actions', () => {
   it('creates CREATE_EXPENSE_SUCCESS if it is successful', (done) => {
     const groupid = 1;
     const expense = { amount: 999 };
-    const response = _.extend(expense, { id: 2 });
+    const response = _.extend({amount: 99900}, { id: 2 });
     const expenses = {
       [response.id]: response
     };

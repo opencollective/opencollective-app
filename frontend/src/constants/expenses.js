@@ -2,6 +2,7 @@ export const PENDING = 'PENDING';
 export const APPROVED = 'APPROVED';
 export const REJECTED = 'REJECTED';
 export const PAID = 'PAID';
+export const MANUAL = 'manual';
 
 export const EXPENSES_REQUEST = 'EXPENSES_REQUEST';
 export const EXPENSES_SUCCESS = 'EXPENSES_SUCCESS';

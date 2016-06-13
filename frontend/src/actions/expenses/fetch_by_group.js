@@ -11,7 +11,7 @@ export default (groupid, options={}) => {
     dispatch(request(groupid));
     return get(`groups/${groupid}/expenses`, {
       schema: Schemas.EXPENSE_ARRAY,
-      params: options || {}
+      params: options
     })
     .then(json => dispatch(success(groupid, json)))
     .catch(error => dispatch(failure(error)));

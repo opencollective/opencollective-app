@@ -33,9 +33,6 @@ export default function users(state={
       });
 
     case constants.USER_GROUP_AND_EXPENSES_SUCCESS:
-      // divide all currency values by 100
-      Object.keys(expenses).map((value) =>
-          expenses[value] = Object.assign({}, expenses[value], {amount: expenses[value].amount /= 100}));
       return merge({}, state, { [userid]: { expenses } });
 
     case constants.FETCH_USER_SUCCESS:
