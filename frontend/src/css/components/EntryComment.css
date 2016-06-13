@@ -1,32 +1,32 @@
-.TransactionComment {
+.EntryComment {
   clear: both;
   overflow: hidden;
   border-top: 1px solid var(--gray);
   padding: var(--spacing);
 }
 
-.TransactionComment .ProfilePhoto {
+.EntryComment .ProfilePhoto {
   float: left;
 }
 
-.TransactionComment-content {
+.EntryComment-content {
   padding-left: 6rem;
 }
 
-.TransactionComment-fullName,
-.TransactionComment-date {
+.EntryComment-fullName,
+.EntryComment-date {
 }
 
-.TransactionComment-fullName {
+.EntryComment-fullName {
   color: var(--light-blue);
   font-weight: bold;
 }
 
-.TransactionComment-date {
+.EntryComment-date {
   font-size: 12px;
 }
 
-.TransactionComment-comment {
+.EntryComment-comment {
   margin-top: 0.5rem;
   font-style: italic;
 }
