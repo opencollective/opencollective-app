@@ -6,6 +6,7 @@ import { Schema, arrayOf } from 'normalizr';
 
 const GroupSchema = new Schema('groups');
 const TransactionSchema = new Schema('transactions');
+const ExpenseSchema = new Schema('expenses');
 const UserSchema = new Schema('users');
 const CardSchema = new Schema('cards');
 
@@ -18,6 +19,8 @@ export default {
   GROUP_ARRAY: arrayOf(GroupSchema),
   TRANSACTION: TransactionSchema,
   TRANSACTION_ARRAY: arrayOf(TransactionSchema),
+  EXPENSE: ExpenseSchema,
+  EXPENSE_ARRAY: arrayOf(ExpenseSchema),
   USER: UserSchema,
   USER_ARRAY: arrayOf(UserSchema),
   CARD: CardSchema,
