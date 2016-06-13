@@ -175,7 +175,7 @@ class ExpenseDetail extends Component {
     fetchGroup(groupid);
 
     fetchExpense(groupid, expenseid)
-    .then(() => {
+    .tap(() => {
       if (this.props.expense.UserId) { // for the comment section
         fetchUserIfNeeded(this.props.expense.UserId);
       }
