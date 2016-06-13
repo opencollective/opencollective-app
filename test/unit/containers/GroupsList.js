@@ -26,12 +26,12 @@ chai.use(spies);
 describe('GroupsList container', () => {
 
   it('fetches user, transactions and cards on mount', () => {
-    const fetchUserGroupsAndTransactions = chai.spy(noop);
+    const fetchUserGroupsAndExpenses = chai.spy(noop);
     const fetchCards = chai.spy(noop);
 
     createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions,
+      fetchUserGroupsAndExpenses,
       fetchCards,
       fetchUser: noop,
       groups: [],
@@ -40,7 +40,7 @@ describe('GroupsList container', () => {
       notification: {}
     });
 
-    expect(fetchUserGroupsAndTransactions).to.have.been.called();
+    expect(fetchUserGroupsAndExpenses).to.have.been.called();
   });
 
   it('confirms the card if it has the preapproval key', () => {
@@ -57,7 +57,7 @@ describe('GroupsList container', () => {
 
     createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: noop,
+      fetchUserGroupsAndExpenses: noop,
       fetchCards: noop,
       confirmPreapprovalKey,
       fetchUser: noop,
@@ -78,7 +78,7 @@ describe('GroupsList container', () => {
     };
     const element = createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: noop,
+      fetchUserGroupsAndExpenses: noop,
       fetchCards: noop,
       confirmPreapprovalKey: noop,
       getPreapprovalKeyForUser: noop,
@@ -101,7 +101,7 @@ describe('GroupsList container', () => {
     };
     const element = createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: noop,
+      fetchUserGroupsAndExpenses: noop,
       fetchCards: noop,
       confirmPreapprovalKey: noop,
       fetchUser: noop,
@@ -119,7 +119,7 @@ describe('GroupsList container', () => {
   it('shows the stripe reminder if showStripeReminder is true', () => {
     const element = createElement({
       userid: 1,
-      fetchUserGroupsAndTransactions: noop,
+      fetchUserGroupsAndExpenses: noop,
       fetchCards: noop,
       confirmPreapprovalKey: noop,
       getPreapprovalKeyForUser: noop,

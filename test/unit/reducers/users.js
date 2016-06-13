@@ -32,11 +32,6 @@ describe('users reducer', () => {
       1: {amount: 10, category: 'other'},
       3: {amount: 200, category: 'food'}
     };
-    // finalExpenses divides all expenses by 100 to display
-    const finalExpenses = {
-      1: {amount: 0.1, category: 'other'},
-      3: {amount: 2, category: 'food'}
-    }
     const userid = 1;
     const state = reducer(undefined, {
       type: constants.USER_GROUP_AND_EXPENSES_SUCCESS,
@@ -45,7 +40,7 @@ describe('users reducer', () => {
     });
 
     expect(state).toEqual({
-      [userid]: {expenses: finalExpenses},
+      [userid]: {expenses},
       updateInProgress: false,
       cards: []
     });
