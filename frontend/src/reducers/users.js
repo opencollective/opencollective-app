@@ -11,7 +11,7 @@ export default function users(state={
 }, action={}) {
   const {
     groups,
-    transactions,
+    expenses,
     userid,
     groupid,
     type,
@@ -32,10 +32,11 @@ export default function users(state={
         [userid]: { cards }
       });
 
-    case constants.USER_TRANSACTIONS_SUCCESS:
-      return merge({}, state, {
-        [userid]: { transactions }
-      });
+    case constants.USER_GROUP_AND_EXPENSES_SUCCESS:
+      // divide all currency values by 100
+      Object.keys(expenses).map((value) =>
+          expenses[value] = Object.assign({}, expenses[value], {amount: expenses[value].amount /= 100}));
+      return merge({}, state, { [userid]: { expenses } });
 
     case constants.FETCH_USER_SUCCESS:
       return merge({}, state, users);
