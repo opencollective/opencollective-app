@@ -27,27 +27,6 @@ export default function transactions(state=defaults, action={}) {
       const error = action.error;
       return merge({}, state, { error });
 
-    case constants.APPROVE_TRANSACTION_REQUEST:
-      return merge({}, state, { approveInProgress: true });
-
-    case constants.APPROVE_TRANSACTION_SUCCESS:
-    case constants.APPROVE_TRANSACTION_FAILURE:
-      return merge({}, state, { approveInProgress: false });
-
-    case constants.REJECT_TRANSACTION_REQUEST:
-      return merge({}, state, { rejectInProgress: true });
-
-    case constants.REJECT_TRANSACTION_SUCCESS:
-    case constants.REJECT_TRANSACTION_FAILURE:
-      return merge({}, state, { rejectInProgress: false });
-
-    case constants.PAY_TRANSACTION_REQUEST:
-      return merge({}, state, { payInProgress: true });
-
-    case constants.PAY_TRANSACTION_SUCCESS:
-    case constants.PAY_TRANSACTION_FAILURE:
-      return merge({}, state, { payInProgress: false });
-
     case constants.UPDATE_TRANSACTION_REQUEST:
       return merge({}, state, { updateInProgress: true });
 

@@ -24,11 +24,14 @@ class Footer extends Component {
 
     return (
       <div className='Footer'>
-        <div
-          className='Footer-addButton'
-          onClick={() => showPopOverMenu(true)} >
-          <Icon type='add' />
-        </div>
+        {isHost ?
+          <div
+            className='Footer-addButton'
+            onClick={() => showPopOverMenu(true)} >
+            <Icon type='add' />
+          </div>
+          : null
+        }
         <div className='Footer-popOverMenu'>
             <PopOverMenu
               groupid={groupid}

@@ -1,3 +1,4 @@
+import expenses from './expenses';
 import form from './form';
 import groups from './groups';
 import images from './images';
@@ -8,6 +9,7 @@ import session from './session';
 import { routerStateReducer as router } from 'redux-router';
 
 export {
+  expenses,
   form,
   groups,
   images,

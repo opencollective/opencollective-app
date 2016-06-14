@@ -1,0 +1,19 @@
+.ExpenseStatus span {
+  vertical-align: top;
+}
+
+.ExpenseStatus .Icon {
+  margin-right: calc(var(--spacing)/4);
+}
+
+.ExpenseStatus .Icon--approved {
+  color: var(--green);
+}
+
+.ExpenseStatus .Icon--rejected {
+  color: var(--red);
+}
+
+.ExpenseStatus .Icon--pending {
+  color: var(--orange);
+}

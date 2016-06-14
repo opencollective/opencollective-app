@@ -27,19 +27,20 @@ describe('users reducer', () => {
     });
   });
 
-  it('should add the transactions to the user', () => {
-    const transactions = {
-      1: {amount: 10}
+  it('should add the expenses to the user', () => {
+    const expenses = {
+      1: {amount: 10, category: 'other'},
+      3: {amount: 200, category: 'food'}
     };
     const userid = 1;
     const state = reducer(undefined, {
-      type: constants.USER_TRANSACTIONS_SUCCESS,
-      transactions,
+      type: constants.USER_GROUP_AND_EXPENSES_SUCCESS,
+      expenses,
       userid
     });
 
     expect(state).toEqual({
-      [userid]: {transactions},
+      [userid]: {expenses},
       updateInProgress: false,
       cards: []
     });

@@ -1,6 +1,6 @@
 import keys from 'lodash/object/keys';
 import merge from 'lodash/object/merge';
-import transactions from '../transactions/fetch_by_group';
+import expenses from '../expenses/fetch_by_group';
 import fetchGroups from './fetch_groups';
 import * as constants from '../../constants/users';
 
@@ -17,7 +17,7 @@ export default (userid, options={}) => {
     return dispatch(fetchGroups(userid))
     .then(({groups}) => {
       const ids = keys(groups);
-      return Promise.all(ids.map(id => dispatch(transactions(id, options))));
+      return Promise.all(ids.map(id => dispatch(expenses(id, options))));
     })
     .then((json) => {
       const merged = merge.apply(null, json) || {};
@@ -30,22 +30,22 @@ export default (userid, options={}) => {
 function request(userid) {
 
   return {
-    type: constants.USER_TRANSACTIONS_REQUEST,
+    type: constants.USER_GROUP_AND_EXPENSES_REQUEST,
     userid
   };
 }
 
-function success(userid, {transactions}) {
+function success(userid, {expenses}) {
   return {
-    type: constants.USER_TRANSACTIONS_SUCCESS,
+    type: constants.USER_GROUP_AND_EXPENSES_SUCCESS,
     userid,
-    transactions,
+    expenses,
   };
 }
 
 function failure(error) {
   return {
-    type: constants.USER_TRANSACTIONS_FAILURE,
+    type: constants.USER_GROUP_AND_EXPENSES_FAILURE,
     error,
   };
 }

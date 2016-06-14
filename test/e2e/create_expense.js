@@ -1,6 +1,10 @@
-const resetDb = require('../lib/reset_db.js');
+// const resetDb = require('../lib/reset_db.js');
+
 
 module.exports = {
+/* #AddExpenseFlow
+   // Commented out since we are disabling that flow right now
+
   '@tags': ['create_expense'],
   beforeEach: (client) => {
     resetDb(client)
@@ -56,4 +60,5 @@ module.exports = {
       .assert.containsText('.Notification', '"Description" is not allowed to be empty')
       .end();
   }
+  */
 };

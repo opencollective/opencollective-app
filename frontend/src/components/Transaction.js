@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import moment from 'moment';
 
 import Currency from './Currency';
-import TransactionStatus from './TransactionStatus';
 import ProfilePhoto from './ProfilePhoto';
 
 class Transaction extends Component {
@@ -15,16 +14,13 @@ class Transaction extends Component {
       id,
       GroupId,
       createdAt,
-      user,
-      isDonation,
-      isPublic
+      user
     } = this.props;
 
-    const prefix = isPublic ? '/public' : '';
 
     return (
       <div className='Transaction'>
-        <Link to={`${prefix}/groups/${GroupId}/transactions/${id}`}>
+        <Link to={`groups/${GroupId}/transactions/${id}`}>
           <ProfilePhoto url={user && user.avatar} />
           <div className='Transaction-info'>
             <div className='Transaction-created'>
@@ -33,9 +29,6 @@ class Transaction extends Component {
             <div className='Transaction-description'>{description}</div>
             <div className='Transaction-status'>
               <div className='Transaction-amount'><Currency value={amount} currency={currency} precision={2} /></div>
-              <div className='Transaction-approved'>
-                {!isDonation && <TransactionStatus {...this.props} />}
-              </div>
             </div>
           </div>
         </Link>
