@@ -11,8 +11,11 @@ describe('users reducer', () => {
 
   it('should add the groups to the user', () => {
     const groups = {
-      1: {name: 'New York'}
+      1: {name: 'New York', balance: 9090}
     };
+    const finalGroup = {
+      1: {name: 'New York', balance: 90.90}
+    }
     const userid = 1;
     const state = reducer(undefined, {
       type: constants.USER_GROUPS_SUCCESS,
@@ -21,7 +24,7 @@ describe('users reducer', () => {
     });
 
     expect(state).toEqual({
-      [userid]: {groups},
+      [userid]: {groups: finalGroup},
       updateInProgress: false,
       cards: []
     });

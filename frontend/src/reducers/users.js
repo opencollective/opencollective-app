@@ -23,6 +23,8 @@ export default function users(state={
 
   switch (type) {
     case constants.USER_GROUPS_SUCCESS:
+    Object.keys(groups).map(value =>
+      groups[value] = Object.assign({}, groups[value], {balance: groups[value].balance/= 100}))
       return merge({}, state, {
         [userid]: { groups }
       });
