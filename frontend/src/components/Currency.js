@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import formatCurrency from '../lib/format_currency';
 import classNames from 'classnames';
 
-const Currency = ({value = 0, currency = 'USD', precision=0, compact=true, colorify=true}) => {
+const Currency = ({value = 0, currency = 'USD', precision=0, compact=true, colorify=true, inCents=true}) => {
 
   const className = classNames({
     'Currency': true,
@@ -11,7 +11,9 @@ const Currency = ({value = 0, currency = 'USD', precision=0, compact=true, color
   });
 
   precision = parseInt(precision, 10);
-
+  if (inCents) {
+  	value /= 100;
+  }
   return <span className={className}>{formatCurrency(value, currency, {precision, compact})}</span>;
 };
 
