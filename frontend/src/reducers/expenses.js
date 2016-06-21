@@ -20,11 +20,7 @@ export default function expenses(state=defaults, action={}) {
     case constants.EXPENSE_SUCCESS:
     case constants.CREATE_EXPENSE_SUCCESS:
     case constants.UPDATE_EXPENSE_SUCCESS:
-      var expenses = action.expenses;
-      // divide all currency values by 100
-      Object.keys(expenses).map((value) =>
-          expenses[value] = Object.assign({}, expenses[value], {amount: expenses[value].amount /= 100}));
-      return merge({}, state, expenses);
+      return merge({}, state, action.expenses);
 
     case constants.CREATE_EXPENSE_FAILURE:
     case constants.UPDATE_EXPENSE_FAILURE:

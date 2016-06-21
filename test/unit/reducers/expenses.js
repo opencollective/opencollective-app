@@ -39,17 +39,12 @@ describe('expenses reducer', () => {
       1: {amount: 150, category: 'other'},
       3: {amount: 20, category: 'food'}
     };
-
-    const finalExpenses = {
-      1: {amount: 1.5, category: 'other'},
-      3: {amount: .2, category: 'food'}
-    };
     const state = reducer({}, {
       type: constants.CREATE_EXPENSE_SUCCESS,
       expenses
     });
 
-    expect(state).toEqual(finalExpenses);
+    expect(state).toEqual(expenses);
   });
 
   describe('approve', () => {
