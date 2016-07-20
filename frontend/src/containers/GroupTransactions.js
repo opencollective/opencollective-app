@@ -99,7 +99,7 @@ class GroupTransactions extends Component {
 }
 
 export function exportTransactions(transactions, users) {
-  var text = "createdAt,description,amount,currency,vat,tags,status,link,userName,userEmail\n";
+  let text = "createdAt,description,amount,currency,vat,tags,status,link,userName,userEmail\n";
   transactions.forEach(transaction => {
     const user = users[transaction.UserId];
     text += `${transaction.createdAt},${transaction.description},${transaction.amount},`

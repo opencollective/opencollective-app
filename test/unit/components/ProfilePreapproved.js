@@ -9,7 +9,7 @@ import spies from 'chai-spies';
 
 import ProfilePreapproved from '../../../frontend/src/components/ProfilePreapproved';
 
-var Wrapper = React.createClass({
+let Wrapper = React.createClass({
     render() {
       return (<div>{this.props.children}</div>);
     }

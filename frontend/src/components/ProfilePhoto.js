@@ -2,10 +2,11 @@ import React, { PropTypes } from 'react';
 
 const ProfilePhoto = ({url, spinner, hasBorder=false}) => {
 
+  let backgroundImage;
   if (url) {
-    var backgroundImage = url;
+    backgroundImage = url;
   } else {
-    var backgroundImage = '/static/images/default_avatar.svg';
+    backgroundImage = '/static/images/default_avatar.svg';
   }
 
   const border = hasBorder ? {

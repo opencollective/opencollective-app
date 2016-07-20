@@ -3,8 +3,8 @@ const DIST_DIR = 'frontend/dist';
 const ICONS_SRC_DIR = `${SRC_DIR}/assets/images/icons`;
 const ICONS_DIST_DIR = `${DIST_DIR}/images/icons`;
 
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
+const gulp = require('gulp');
+const $ = require('gulp-load-plugins')();
 
 gulp.task('build', ['copy-assets', 'resize-icons', 'build:css']);
 gulp.task('build:dev', ['copy-assets', 'build:css']);

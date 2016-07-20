@@ -15,7 +15,7 @@ export default (
   options.compact = (typeof options.compact === 'boolean') ? options.compact : true;
 
   let lang = 'en-US';
-  switch(currency) {
+  switch (currency) {
     case 'EUR': lang = 'fr-FR';
           break;
     case 'SEK': lang = 'sv-SE';
@@ -29,7 +29,7 @@ export default (
   // remove the negative sign from the value
   const number = Numbro(Math.abs(value));
   let formatted = (options.precision === 0) ? number.format('$0,0') : number.format('$0,0.00');
-  if(!options.compact) {
+  if (!options.compact) {
     formatted = `${currency} ${formatted}`;
   }
   return formatted;
