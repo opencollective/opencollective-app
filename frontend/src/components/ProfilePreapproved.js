@@ -23,7 +23,7 @@ const ProfilePreapproved = ({
     <div
       className='ProfilePreapproved-reapprove'
       onClick={getPreapprovalKey.bind(this, userid)}>
-      Reapprove for <Currency value={2000} precision={2} /> now
+      Reapprove for <Currency value={2000} precision={2} inCents={false}/> now
     </div>
     <div className='ProfilePreapproved-info'>
       For security reasons, you can only reimburse expenses for up to <Currency value={200000} precision={0}/>. Then you will have to reauthenticate your Paypal account again.<br />
