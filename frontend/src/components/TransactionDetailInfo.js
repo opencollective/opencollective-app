@@ -5,7 +5,7 @@ import SelectTag from './SelectTag';
 
 export default ({transaction, tags, handleChange, isDonation, isRejected}) => {
 
-  var vatInput = function() {
+  const vatInput = function() {
     if (!transaction.vat) return;
 
     return (

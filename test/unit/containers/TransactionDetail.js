@@ -17,7 +17,7 @@ const { expect } = chai;
 chai.use(spies);
 
 describe('TransactionDetail container', () => {
-  var pageState = _.merge({}, defaultState, {
+  const pageState = _.merge({}, defaultState, {
     router: {
       params: {
         transactionid: 1,

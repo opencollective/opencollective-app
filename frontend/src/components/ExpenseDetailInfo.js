@@ -5,7 +5,7 @@ import SelectTag from './SelectTag';
 
 export default ({expense, tags, handleChange, isRejected}) => {
 
-  var vatInput = function() {
+  const vatInput = function() {
     if (!expense.vat) return;
 
     return (

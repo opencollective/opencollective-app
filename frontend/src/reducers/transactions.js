@@ -20,7 +20,7 @@ export default function transactions(state=defaults, action={}) {
     case constants.TRANSACTION_SUCCESS:
     case constants.CREATE_TRANSACTION_SUCCESS:
     case constants.UPDATE_TRANSACTION_SUCCESS:
-      var transactions = action.transactions;
+      const transactions = action.transactions;
       // multiply all transations values by 100
       // to be removed #postmigration
       Object.keys(transactions).map((value) =>
