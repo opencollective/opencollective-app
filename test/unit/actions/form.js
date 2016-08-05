@@ -1,6 +1,6 @@
 import expect from 'expect';
-import resetTransactionForm from '../../../frontend/src/actions/form/reset_transaction';
-import appendTransactionForm from '../../../frontend/src/actions/form/append_transaction';
+import resetTransactionForm from '../../../frontend/src/actions/form/reset_expense';
+import appendTransactionForm from '../../../frontend/src/actions/form/append_expense';
 import setEditMode from '../../../frontend/src/actions/form/set_edit_mode_profile';
 import * as constants from '../../../frontend/src/constants/form';
 
@@ -8,7 +8,7 @@ describe('form actions', () => {
 
   it('should create an action to reset the transaction form', () => {
     expect(resetTransactionForm()).toEqual({
-      type: constants.RESET_TRANSACTION_FORM,
+      type: constants.RESET_EXPENSE_FORM,
     });
   });
 
@@ -16,7 +16,7 @@ describe('form actions', () => {
     const attributes = { amount: 0 };
 
     expect(appendTransactionForm(attributes)).toEqual({
-      type: constants.APPEND_TRANSACTION_FORM,
+      type: constants.APPEND_EXPENSE_FORM,
       attributes
     });
   });

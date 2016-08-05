@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
 import fetchGroup from '../actions/groups/fetch_by_id';
-import createTransaction from '../actions/transactions/create';
-import resetTransactionForm from '../actions/form/reset_transaction';
-import appendTransactionForm from '../actions/form/append_transaction';
-import validateTransaction from '../actions/form/validate_transaction';
+import createExpense from '../actions/expenses/create';
+import resetExpenseForm from '../actions/form/reset_expense';
+import appendExpenseForm from '../actions/form/append_expense';
+import validateExpense from '../actions/form/validate_expense';
 import uploadImage from '../actions/images/upload';
 import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
@@ -16,20 +16,20 @@ import vats from '../ui/vat';
 
 import Content from './Content';
 
-import TransactionForm from '../components/TransactionForm';
+import ExpenseForm from '../components/ExpenseForm';
 import TopBar from '../components/TopBar';
 
-export class TransactionNew extends Component {
+export class ExpenseNew extends Component {
   render() {
     return (
       <div>
         <TopBar
           title='Submit Expense'
-          backLink={`/groups/${this.props.groupid}/transactions/`} />
+          backLink={`/groups/${this.props.groupid}/expenses/`} />
         <Content>
-          <TransactionForm
+          <ExpenseForm
             {...this.props}
-            handleSubmit={createExpense.bind(this)} />
+            handleSubmit={createExpenseFn.bind(this)} />
         </Content>
       </div>
     );
@@ -40,53 +40,56 @@ export class TransactionNew extends Component {
   }
 };
 
-export function createExpense() {
+export function createExpenseFn() {
   const {
     notify,
     groupid,
     pushState,
-    createTransaction,
+    createExpense,
     group,
-    validateTransaction,
-    transaction
+    validateExpense,
+    expense
   } = this.props;
-  const attributes = transaction.attributes;
+  const attributes = {
+    ...expense.attributes,
+    amount: Math.round(100 * expense.attributes.amountText)
+  };
+  delete attributes.amountText;
 
-  return validateTransaction(attributes)
+  return validateExpense(attributes)
   .then(() => {
-    const newTransaction = {
+    const newExpense = {
       ...attributes,
-      amount: -attributes.amount,
       currency: group.currency
     };
 
-    return createTransaction(group.id, newTransaction);
+    return createExpense(group.id, newExpense);
   })
-  .then(() => pushState(null, `/groups/${groupid}/transactions`))
+  .then(() => pushState(null, `/groups/${groupid}/expenses`))
   .catch(error => notify('error', error.message));
 };
 
 export default connect(mapStateToProps, {
-  createTransaction,
+  createExpense,
   uploadImage,
-  resetTransactionForm,
-  appendTransactionForm,
-  validateTransaction,
+  resetExpenseForm,
+  appendExpenseForm,
+  validateExpense,
   pushState,
   notify,
   fetchGroup,
   resetNotifications
-})(TransactionNew);
+})(ExpenseNew);
 
 function mapStateToProps({router, form, notification, images, groups}) {
-  const transaction = form.transaction;
+  const expense = form.expense;
   const groupid = router.params.groupid;
 
   return {
     groupid,
     group: groups[groupid] || {},
     notification,
-    transaction,
+    expense,
     tags: tags(groupid),
     enableVAT: vats(groupid),
     isUploading: images.isUploading || false

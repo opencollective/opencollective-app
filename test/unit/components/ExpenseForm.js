@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai, { expect } from 'chai';
 import spies from 'chai-spies';
-import TransactionForm from '../../../frontend/src/components/TransactionForm';
+import ExpenseForm from '../../../frontend/src/components/ExpenseForm';
 
 const {
   findRenderedDOMComponentWithClass,
@@ -11,27 +11,27 @@ const {
 
 chai.use(spies);
 
-describe('TransactionForm component', () => {
+describe('ExpenseForm component', () => {
   const noop = () => {};
-  const resetTransactionForm = chai.spy(noop);
-  const appendTransactionForm = chai.spy(noop);
+  const resetExpenseForm = chai.spy(noop);
+  const appendExpenseForm = chai.spy(noop);
 
   beforeEach(() => {
     const props = {
-      transaction: { attributes: {}, error: {} },
+      expense: { attributes: {}, error: {} },
       group: { currency: 'USD' },
       tags: ['a', 'b'],
-      resetTransactionForm,
-      appendTransactionForm,
+      resetExpenseForm,
+      appendExpenseForm,
       resetNotifications: () => {},
       notification: {}
     };
 
-    const rendered = renderIntoDocument(<TransactionForm {...props} />);
+    const rendered = renderIntoDocument(<ExpenseForm {...props} />);
     findRenderedDOMComponentWithClass(rendered, 'js-form');
   });
 
   it('should reset the form on mount', () => {
-    expect(resetTransactionForm).to.have.been.called();
+    expect(resetExpenseForm).to.have.been.called();
   });
 });

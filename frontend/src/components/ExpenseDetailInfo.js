@@ -1,9 +1,8 @@
 import React from 'react';
 
 import Currency from './Currency';
-import SelectTag from './SelectTag';
 
-export default ({expense, tags, handleChange, isRejected}) => {
+export default ({expense}) => {
 
   const vatInput = function() {
     if (!expense.vat) return;
@@ -23,13 +22,7 @@ export default ({expense, tags, handleChange, isRejected}) => {
       </div>
       {vatInput()}
       <div className='ExpenseDetail-category'>
-        Category
-        <SelectTag
-          disabled={isRejected}
-          tags={tags}
-          attributes={expense}
-          handleChange={handleChange}
-        />
+        {expense.category}
       </div>
     </div>
   );

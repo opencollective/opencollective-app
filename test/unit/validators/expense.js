@@ -1,7 +1,7 @@
 import expect from 'expect';
-import validate from '../../../frontend/src/validators/transaction';
+import validate from '../../../frontend/src/validators/expense';
 
-describe('validator transaction', () => {
+describe('validator expense', () => {
   it('should reject the promise when the data is not valid', (done) => {
     validate({
       description: 1
@@ -13,32 +13,32 @@ describe('validator transaction', () => {
   });
 
   it('should resolve the promise when the data is valid', (done) => {
-    const transaction = {
-      link: 'http://google.com/photo.jpg',
-      description: 'Expense',
+    const expense = {
+      attachment: 'http://google.com/photo.jpg',
+      title: 'Expense',
       amount: 10,
       vat: 10.13,
-      createdAt: Date.now(),
-      tags: ['Computer']
+      incurredAt: Date.now(),
+      category: 'Computer'
     };
 
-    validate(transaction)
+    validate(expense)
     .then(value => {
-      expect(value).toEqual(transaction);
+      expect(value).toEqual(expense);
       done();
     })
     .catch(error => console.log('error', error));
   });
 
-  it('should not validate a createdAt date in the future', (done) => {
-    const transaction = {
+  it('should not validate an incurredAt date in the future', (done) => {
+    const expense = {
       description: 'Expense',
       amount: 10,
-      createdAt: '2120-10-10',
-      tags: ['Computer']
+      incurredAt: '2120-10-10',
+      category: 'Computer'
     };
 
-    validate(transaction)
+    validate(expense)
     .catch(error => {
       expect(error.name).toEqual('ValidationError');
       done();

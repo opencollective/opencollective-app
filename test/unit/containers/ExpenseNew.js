@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { createExpense, TransactionNew } from '../../../frontend/src/containers/TransactionNew';
+import { createExpenseFn, ExpenseNew } from '../../../frontend/src/containers/ExpenseNew';
 import noop from '../helpers/noop';
 
 const {expect} = chai;
@@ -12,49 +12,48 @@ const {
 } = TestUtils;
 
 const createElement = (props) => {
-  const rendered = renderIntoDocument(<TransactionNew {...props} />);
+  const rendered = renderIntoDocument(<ExpenseNew {...props} />);
   return findRenderedDOMComponentWithClass(rendered, 'TransactionForm');
 };
 
 chai.use(spies);
 
-describe('TransactionNew container', () => {
+describe('ExpenseNew container', () => {
 
   it('should reset form on mount', () => {
       const handler = chai.spy(noop);
-      const transaction = {
+      const expense = {
         attributes: {},
         error: {}
       };
 
       createElement({
-        transaction,
-        tags: [],
+        expense,
         resetNotifications: noop,
         notification: {},
         fetchGroup: noop,
         group: {id: 1, currency: 'USD' },
-        appendTransactionForm: handler,
-        resetTransactionForm: handler
+        appendExpenseForm: handler,
+        resetExpenseForm: handler
       });
       expect(handler).to.have.been.called();
   });
 
-  it('should create an expense an invert the sign', (done) => {
-    const amount = 10;
+  it('should create an expense in cents', (done) => {
+    const amountText = 10;
     const props = {
       group: {id: 1, currency: 'USD' },
-      transaction: {
-        attributes: {amount}
+      expense: {
+        attributes: {amountText}
       },
-      validateTransaction: noop,
-      createTransaction
+      validateExpense: noop,
+      createExpense
     };
 
-    createExpense.call({props}, {});
+    createExpenseFn.call({props}, {});
 
-    function createTransaction(groupid, transaction) {
-      expect(transaction.amount).to.be.equal(-amount);
+    function createExpense(groupid, expense) {
+      expect(expense.amount).to.be.equal(amountText*100);
       done();
       return Promise.resolve();
     }

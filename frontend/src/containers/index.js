@@ -2,13 +2,13 @@ import App from './App';
 import GroupsList from './GroupsList';
 import GroupTransactions from './GroupTransactions';
 import AddFund from './AddFund';
-import TransactionNew from './TransactionNew';
+import ExpenseNew from './ExpenseNew';
 import TransactionDetail from './TransactionDetail';
 import ExpenseDetail from './ExpenseDetail';
 import Login from './Login';
 import Profile from './Profile';
 import GroupSettings from './GroupSettings';
-import TransactionEdit from './TransactionEdit';
+import ExpenseEdit from './ExpenseEdit';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 
@@ -17,13 +17,13 @@ export {
   GroupsList,
   GroupTransactions,
   AddFund,
-  TransactionNew,
+  ExpenseNew,
   TransactionDetail,
   ExpenseDetail,
   Login,
   Profile,
   GroupSettings,
-  TransactionEdit,
+  ExpenseEdit,
   ForgotPassword,
   ResetPassword
 };
