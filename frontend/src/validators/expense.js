@@ -6,33 +6,28 @@ import validate from '../lib/validate';
 import payoutMethods from '../ui/payout_methods';
 
 /**
- * New transaction schema
+ * New expense schema
  */
 
 const schema = Joi.object().keys({
-  link: Joi.string().uri()
+  attachment: Joi.string().uri()
     .label('Photo')
     .allow(null),
-  description: Joi.string().required()
-    .label('Description'),
-  amount: Joi.number().precision(2).required()
+  title: Joi.string().required()
+    .label('Title'),
+  amount: Joi.number().integer().min(1).required()
     .label('Amount'),
   vat: Joi.number().precision(2).min(0).allow(null)
     .label('VAT'),
-  createdAt: Joi.date().max(dates().tomorrow).required()
+  incurredAt: Joi.date().max(dates().tomorrow).required()
     .raw() // doesn't convert date into Date object
-    .label('CreatedAt'),
-  approvedAt: Joi.date().max(dates().tomorrow)
-    .raw() // doesn't convert date into Date object
-    .label('Date')
-    .allow(null),
-  tags: Joi.array().items(Joi.string()).required()
+    .label('IncurredAt'),
+  category: Joi.string().required()
     .label('Category'),
-  approved: Joi.boolean(),
   payoutMethod: Joi.string().valid(pluck(payoutMethods, 'value'))
     .label('Payout method'),
-  comment: Joi.string()
-    .label('Comment')
+  notes: Joi.string()
+    .label('Notes')
     .allow(null),
 });
 

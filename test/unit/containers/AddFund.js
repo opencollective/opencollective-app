@@ -5,7 +5,7 @@ import spies from 'chai-spies';
 
 import noop from '../helpers/noop';
 
-import { AddFund, donate } from '../../../frontend/src/containers/AddFund';
+import { AddFund, addFund } from '../../../frontend/src/containers/AddFund';
 
 const { expect } = chai;
 const {
@@ -45,18 +45,18 @@ describe('AddFund container', () => {
     const description = 'Initial budget';
     const amount = 10;
 
-    const validateTransaction = (transaction) => {
-      expect(transaction.description).to.be.equal(description);
-      expect(transaction.amount).to.be.equal(amount);
-      expect(transaction.tags[0]).to.be.equal('Fund');
-      expect(transaction.approved).to.be.ok;
-      expect(transaction.approvedAt).to.be.ok;
+    const validateFund = (fund) => {
+      expect(fund.description).to.be.equal(description);
+      expect(fund.amount).to.be.equal(amount);
+      expect(fund.tags[0]).to.be.equal('Fund');
+      expect(fund.approved).to.be.ok;
+      expect(fund.approvedAt).to.be.ok;
       return Promise.resolve(done());
     }
 
-    donate.apply({
+    addFund.apply({
       props: {
-        validateTransaction,
+        validateFund,
         groupid: 1,
         form: { donation: {} },
         group: {},
@@ -75,9 +75,9 @@ describe('AddFund container', () => {
       done();
     }
 
-    donate.apply({
+    addFund.apply({
       props: {
-        validateTransaction: noop,
+        validateFund: noop,
         createTransaction: noop,
         pushState,
         groupid: 1,

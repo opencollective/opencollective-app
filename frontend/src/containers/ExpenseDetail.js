@@ -19,7 +19,7 @@ import notify from '../actions/notification/notify';
 import resetNotifications from '../actions/notification/reset';
 import fetchUserGroups from '../actions/users/fetch_groups';
 import fetchGroup from '../actions/groups/fetch_by_id';
-import appendTransactionForm from '../actions/form/append_transaction';
+import appendExpenseForm from '../actions/form/append_expense';
 import fetchUserIfNeeded from '../actions/users/fetch_by_id_cached';
 
 import Content from './Content';
@@ -240,7 +240,7 @@ export default connect(mapStateToProps, {
   rejectExpense,
   fetchUserGroups,
   fetchGroup,
-  appendTransactionForm,
+  appendExpenseForm,
   pushState,
   fetchUserIfNeeded,
   payExpense,

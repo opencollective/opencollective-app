@@ -8,7 +8,7 @@ import {
   Login,
   Profile,
   GroupSettings,
-  TransactionEdit,
+  ExpenseEdit,
   ForgotPassword,
   ResetPassword
 } from '../containers';
@@ -27,9 +27,9 @@ const routes = {
     { path: 'profile', component: requireAuthentication(Profile) },
     { path: 'groups/:groupid/settings', component:requireAuthentication(GroupSettings) },
     { path: 'groups/:groupid/expenses/:expenseid', component: requireAuthentication(ExpenseDetail) },
+    { path: 'groups/:groupid/expenses/:expenseid/edit', component: requireAuthentication(ExpenseEdit) },
     { path: 'groups/:groupid/transactions', component: requireAuthentication(GroupTransactions) },
     { path: 'groups/:groupid/transactions/:transactionid', component: requireAuthentication(TransactionDetail) },
-    { path: 'groups/:groupid/transactions/:transactionid/edit', component: requireAuthentication(TransactionEdit) },
     { path: 'groups/:groupid/funds', component: requireAuthentication(AddFund)},
 
     // Wildcard route

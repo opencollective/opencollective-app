@@ -14,7 +14,7 @@ import Input from '../components/Input';
 import SubmitButton from '../components/SubmitButton';
 import PaypalReminder from '../components/PaypalReminder';
 
-import validateTransaction from '../actions/form/validate_transaction';
+import validateFund from '../actions/form/validate_fund';
 import createTransaction from '../actions/transactions/create';
 import resetNotifications from '../actions/notification/reset';
 import fetchGroup from '../actions/groups/fetch_by_id';
@@ -70,7 +70,7 @@ export class AddFund extends Component {
       <div>
         <form onSubmit={event => {
           event.preventDefault();
-          donate.call(this);
+          addFund.call(this);
         }}>
           <label>Amount:</label>
           <Input
@@ -110,10 +110,10 @@ export class AddFund extends Component {
 
 }
 
-export function donate() {
+export function addFund() {
 
   const {
-    validateTransaction,
+    validateFund,
     createTransaction,
     groupid,
     notify,
@@ -129,7 +129,7 @@ export function donate() {
     createdAt: Date.now(),
   };
 
-  return validateTransaction(transaction)
+  return validateFund(transaction)
   .then(() => createTransaction(groupid, transaction))
   .then(() => pushState(null, `/groups/${groupid}/transactions`))
   .then(() => notify('success', 'Funds added'))
@@ -141,7 +141,7 @@ export default connect(mapStateToProps, {
   fetchGroup,
   fetchCards,
   createTransaction,
-  validateTransaction,
+  validateFund,
   getPreapprovalKeyForUser,
   notify,
   pushState,

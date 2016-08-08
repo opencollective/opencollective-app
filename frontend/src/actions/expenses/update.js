@@ -2,7 +2,7 @@ import { putJSON } from '../../lib/api';
 import * as constants from '../../constants/expenses';
 
 /**
- * Update a expense in a group
+ * Update an expense in a group
  */
 
 export default (groupid, expenseid, expense) => {

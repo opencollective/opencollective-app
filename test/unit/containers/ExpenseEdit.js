@@ -2,7 +2,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { update, TransactionEdit } from '../../../frontend/src/containers/TransactionEdit';
+import { update, ExpenseEdit } from '../../../frontend/src/containers/ExpenseEdit';
 
 const {expect} = chai;
 const {
@@ -13,53 +13,53 @@ const {
 import noop from '../helpers/noop';
 
 const createElement = (props) => {
-  const rendered = renderIntoDocument(<TransactionEdit {...props} />);
+  const rendered = renderIntoDocument(<ExpenseEdit {...props} />);
   return findRenderedDOMComponentWithClass(rendered, 'TransactionForm');
 };
 
 chai.use(spies);
 
-describe('TransactionEdit container', () => {
+describe('ExpenseEdit container', () => {
 
   it('should reset form on mount', () => {
-    const resetTransactionForm = chai.spy(noop);
+    const resetExpenseForm = chai.spy(noop);
 
-    const transaction = {
+    const expense = {
       attributes: {},
       error: {}
     };
 
     createElement({
-      initialTransaction: { amount: 10 },
-      transaction,
+      initialExpense: { amount: 10 },
+      expense,
       tags: [],
       resetNotifications: noop,
-      fetchTransaction: noop,
+      fetchExpense: noop,
       notification: {},
       fetchGroup: noop,
       group: {id: 1, currency: 'USD' },
-      appendTransactionForm: noop,
-      resetTransactionForm
+      appendExpenseForm: noop,
+      resetExpenseForm
     });
 
-    expect(resetTransactionForm).to.have.been.called();
+    expect(resetExpenseForm).to.have.been.called();
   });
 
-  it('should invert the amount sign on update', () => {
-    const amount = 10;
-    const validateTransaction = chai.spy((transaction) => {
-      expect(transaction.amount).to.be.equal(-amount);
+  it('should set the amount in cents on update', () => {
+    const amountText = 10;
+    const validateExpense = chai.spy(expense => {
+      expect(expense.amount).to.be.equal(amountText*100);
       return Promise.resolve();
     });
 
     const props = {
-      validateTransaction,
-      updateTransaction: noop,
+      validateExpense,
+      updateExpense: noop,
       notify: noop
     };
 
     update.call({ props }, {
-      attributes: { amount }
+      attributes: { amountText }
     });
 
   });
