@@ -4,6 +4,7 @@ import pluck from 'lodash/collection/pluck';
 import dates from '../lib/dates';
 import validate from '../lib/validate';
 import payoutMethods from '../ui/payout_methods';
+import {CURRENCIES} from '../constants/expenses';
 
 /**
  * New expense schema
@@ -17,6 +18,8 @@ const schema = Joi.object().keys({
     .label('Title'),
   amount: Joi.number().integer().min(1).required()
     .label('Amount'),
+  currency: Joi.string().required().valid(CURRENCIES)
+    .label('Currency'),
   vat: Joi.number().precision(2).min(0).allow(null)
     .label('VAT'),
   incurredAt: Joi.date().max(dates().tomorrow).required()

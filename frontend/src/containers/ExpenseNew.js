@@ -57,14 +57,7 @@ export function createExpenseFn() {
   delete attributes.amountText;
 
   return validateExpense(attributes)
-  .then(() => {
-    const newExpense = {
-      ...attributes,
-      currency: group.currency
-    };
-
-    return createExpense(group.id, newExpense);
-  })
+  .then(() => createExpense(group.id, attributes))
   .then(() => pushState(null, `/groups/${groupid}/expenses`))
   .catch(error => notify('error', error.message));
 };

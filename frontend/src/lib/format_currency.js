@@ -16,11 +16,16 @@ export default (
 
   let lang = 'en-US';
   switch (currency) {
+    case 'USD': lang = 'en-US';
+          break;
     case 'EUR': lang = 'fr-FR';
           break;
     case 'SEK': lang = 'sv-SE';
           break;
     case 'GBP': lang = 'en-GB';
+          break;
+    default:
+          options.compact = false;
           break;
   }
 
@@ -28,9 +33,12 @@ export default (
 
   // remove the negative sign from the value
   const number = Numbro(Math.abs(value));
-  let formatted = (options.precision === 0) ? number.format('$0,0') : number.format('$0,0.00');
-  if (!options.compact) {
-    formatted = `${currency} ${formatted}`;
+  const valueTemplate = (options.precision === 0) ? '0,0' : '0,0.00';
+  let formatted;
+  if (options.compact) {
+    formatted = number.format(`\$${valueTemplate}`);
+  } else {
+    formatted = `${number.format(valueTemplate)} ${currency}`;
   }
   return formatted;
 };

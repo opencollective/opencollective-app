@@ -77,6 +77,7 @@ export function update({attributes}) {
     'attachment',
     'title',
     'amount',
+    'currency',
     'vat',
     'incurredAt',
     'category',

@@ -13,6 +13,7 @@ import TextArea from './TextArea';
 import Notification from './Notification';
 import SubmitButton from './SubmitButton';
 import DatePicker from './DatePicker';
+import {CURRENCIES} from '../constants/expenses';
 
 class ExpenseForm extends Component {
 
@@ -26,6 +27,7 @@ class ExpenseForm extends Component {
 
     if (!enableVAT) return;
 
+    // TODO support non-group currency
     return (
       <div>
         <span className='inline'>VAT: </span>
@@ -42,7 +44,6 @@ class ExpenseForm extends Component {
     const {
       expense,
       tags,
-      group,
       appendExpenseForm,
       isUploading,
       enableVAT,
@@ -57,7 +58,7 @@ class ExpenseForm extends Component {
       'js-form': true, // for testing
     });
 
-    let amountPlaceholder = formatCurrency(0, group.currency);
+    let amountPlaceholder = 0;
     if (enableVAT) {
       amountPlaceholder += ' (including VAT)';
     }
@@ -89,6 +90,13 @@ class ExpenseForm extends Component {
               hasError={expense.error.amountText}
               value={expense.attributes.amountText}
               handleChange={amountText => appendExpenseForm({amountText})} />
+          </div>
+          <div>
+            <label className='inline'>Currency: </label>
+            <Select
+              value={attributes.currency}
+              options={CURRENCIES}
+              handleChange={currency => appendExpenseForm({currency})} />
           </div>
           {this.vatInput()}
           <div className='Input'>

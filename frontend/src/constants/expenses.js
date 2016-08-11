@@ -35,3 +35,14 @@ export const UPDATE_EXPENSE_FAILURE = 'UPDATE_EXPENSE_FAILURE';
 export const DELETE_EXPENSE_REQUEST = 'DELETE_EXPENSE_REQUEST';
 export const DELETE_EXPENSE_SUCCESS = 'DELETE_EXPENSE_SUCCESS';
 export const DELETE_EXPENSE_FAILURE = 'DELETE_EXPENSE_FAILURE';
+
+export const CURRENCIES = [
+  'AUD',
+  'EUR',
+  'GBP',
+  // 'INR', unsupported by PayPal
+  'MXN',
+  'SEK',
+  'USD',
+  'UYU'
+];
