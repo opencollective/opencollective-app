@@ -76,19 +76,21 @@ class ResetPassword extends Component {
       userToken,
       resetPassword,
       validate,
-      notify
+      notify,
+      replaceState
     } = this.props;
 
     event.preventDefault();
 
     this.setState({ inProgress: true });
 
-    validate({
+    return validate({
       password: this.state.password,
       passwordConfirmation: this.state.passwordConfirmation
     }, this.schema)
       .then(() => resetPassword(userToken, resetToken, this.state.password))
-      .then(() => notify('success', 'Password reset'))
+      .then(() => notify('success', 'Password reset. Redirecting to login page'))
+      .then(() => replaceState(null, `/login?notify=Password reset successfully. Please login with new password.`))
       .catch(({message}) => notify('error', message))
       .then(() => this.setState({ inProgress: false }));
   }

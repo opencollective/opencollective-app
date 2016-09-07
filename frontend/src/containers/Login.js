@@ -70,6 +70,17 @@ export class Login extends Component {
     );
   }
 
+  componentDidMount() {
+    const {
+      notifyMessage,
+      notify
+    } = this.props;
+
+    if (notifyMessage) {
+      notify('success', notifyMessage);
+    }
+  }
+
   handleSubmit(event) {
     const {
       replaceState,
@@ -103,6 +114,7 @@ function mapStateToProps({notification, router, form}) {
   return {
     notification,
     error: form.schema.error,
-    redirectRoute: router.location.query.next || '/'
+    redirectRoute: router.location.query.next || '/',
+    notifyMessage: router.location.query.notify || ''
   };
 }
