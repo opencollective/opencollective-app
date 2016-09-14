@@ -16,7 +16,6 @@ const schema = Joi.object().keys({
     .raw() // doesn't convert date into Date object
     .label('Date')
     .allow(null),
-  approved: Joi.boolean(),
   createdAt: Joi.date().max(dates().tomorrow).required()
     .raw() // doesn't convert date into Date object
     .label('CreatedAt'),

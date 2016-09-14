@@ -125,7 +125,6 @@ export function addFund() {
     description: this.state.description,
     tags: ['Fund'],
     approvedAt: Date.now(),
-    approved: true,
     createdAt: Date.now(),
   };
 
