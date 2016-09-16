@@ -23,7 +23,7 @@ class ProfileFormEdit extends Component {
           <ProfilePhotoUpload
           {...this.props}
           value={form.attributes.link || user.avatar}
-          onFinished={link => appendProfileForm({link})} />
+          onFinished={({url: link}) => appendProfileForm({link})} />
         </div>
         <label>Password reset</label>
         <Input
