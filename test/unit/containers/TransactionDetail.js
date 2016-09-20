@@ -75,20 +75,6 @@ describe('TransactionDetail container', () => {
     expect(props.showDeleteButton).to.be.true;
   });
 
-  it('shows the approval buttons if expense is not reimbursed, not rejected, user is host', () => {
-    const props = mapStateToProps(_.merge({}, pageState, {
-      transactions: {
-        1: {
-          isRejected: false,
-          isExpense: true,
-          isReimbursed: false
-        }
-      }
-    }));
-
-    expect(props.showApprovalButtons).to.be.true;
-  });
-
   it('deletes expense and redirects to the transaction page', (done) => {
     const deleteTransaction = chai.spy(() => Promise.resolve());
     const nextPage = chai.spy(() => {});

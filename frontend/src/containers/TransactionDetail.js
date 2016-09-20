@@ -179,7 +179,6 @@ export function mapStateToProps({
     isDonation,
     isManual,
     isRejected,
-    isReimbursed
   } = transaction;
 
   const userGroups = user.groups || {};
@@ -203,10 +202,8 @@ export function mapStateToProps({
     isExpense,
     isManual,
 
-    isReimbursed,
     isRejected,
     showDeleteButton: isExpense && isRejected && userIsHost,
-    showApprovalButtons: !isReimbursed && !isRejected && isHost && isExpense,
     approveInProgress: transactions.approveInProgress,
     payInProgress: transactions.payInProgress,
     rejectInProgress: transactions.rejectInProgress,
