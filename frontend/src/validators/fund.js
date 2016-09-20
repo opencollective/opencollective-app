@@ -11,11 +11,6 @@ const schema = Joi.object().keys({
     .label('Description'),
   amount: Joi.number().precision(2).required()
     .label('Amount'),
-  // TODO remove, shouldn't be necessary for funds
-  approvedAt: Joi.date().max(dates().tomorrow)
-    .raw() // doesn't convert date into Date object
-    .label('Date')
-    .allow(null),
   createdAt: Joi.date().max(dates().tomorrow).required()
     .raw() // doesn't convert date into Date object
     .label('CreatedAt'),
