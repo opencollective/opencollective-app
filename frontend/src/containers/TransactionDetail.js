@@ -177,7 +177,6 @@ export function mapStateToProps({
   const {
     isExpense,
     isDonation,
-    isManual,
     isRejected,
     isReimbursed
   } = transaction;
@@ -201,7 +200,6 @@ export function mapStateToProps({
     isLoading: !transaction.id,
     isDonation,
     isExpense,
-    isManual,
 
     isReimbursed,
     isRejected,
