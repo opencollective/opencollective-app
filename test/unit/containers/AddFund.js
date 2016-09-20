@@ -49,7 +49,6 @@ describe('AddFund container', () => {
       expect(fund.description).to.be.equal(description);
       expect(fund.amount).to.be.equal(amount);
       expect(fund.tags[0]).to.be.equal('Fund');
-      expect(fund.approvedAt).to.be.ok;
       return Promise.resolve(done());
     }
 
