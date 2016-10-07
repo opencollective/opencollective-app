@@ -1,6 +1,6 @@
 {
   "name": "opencollective-app",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "engines": {
     "node": "6.2.2",
     "npm": "3.9.5"
