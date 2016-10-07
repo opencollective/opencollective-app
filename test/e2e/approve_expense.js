@@ -60,7 +60,7 @@ module.exports = {
       // navigate to expense approval flow
       .url('http://localhost:3030/')
       .waitForElementVisible('.Expense', 1000)
-      .click('.Expense:first-child')
+      .click('.Expense:nth-child(2)')
       .waitForElementVisible('.Button--approve', 1000)
       .assert.containsText('.Button--approve', 'APPROVE')
       .click('.Button--approve')
