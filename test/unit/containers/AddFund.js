@@ -61,7 +61,7 @@ describe('AddFund container', () => {
         user: {},
       },
       state: {
-        amount,
+        amount: amount*100,
         description
       }
     }).then(done);
