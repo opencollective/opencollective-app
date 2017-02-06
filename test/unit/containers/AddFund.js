@@ -47,7 +47,7 @@ describe('AddFund container', () => {
 
     const validateFund = (fund) => {
       expect(fund.description).to.be.equal(description);
-      expect(fund.amount).to.be.equal(amount);
+      expect(fund.amount).to.be.equal(amount*100);
       expect(fund.tags[0]).to.be.equal('Fund');
       return Promise.resolve(done());
     }
@@ -61,7 +61,7 @@ describe('AddFund container', () => {
         user: {},
       },
       state: {
-        amount: amount*100,
+        amount,
         description
       }
     }).then(done);
