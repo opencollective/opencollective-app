@@ -11,7 +11,7 @@ describe('transactions reducer', () => {
 
   it('should add one transactions', () => {
     const transactions = {
-      2: {amount: 12}
+      2: {amount: 1200}
     };
     const finalTransactions = {
       2: {amount: 1200}
@@ -26,8 +26,8 @@ describe('transactions reducer', () => {
 
   it('should add multiple transactions', () => {
     const transactions = {
-      2: {amount: 12},
-      3: {amount: 15}
+      2: {amount: 1200},
+      3: {amount: 1500}
     };
     const finalTransactions = {
       2: {amount: 1200},
@@ -43,7 +43,7 @@ describe('transactions reducer', () => {
 
   it('should create a transaction', () => {
     const transactions = {
-      1: {amount: 15}
+      1: {amount: 1500}
     };
     const finalTransactions = {
       1: {amount: 1500}
