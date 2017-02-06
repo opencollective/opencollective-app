@@ -121,7 +121,7 @@ export function addFund() {
   } = this.props;
 
   const transaction = {
-    amount: this.state.amount,
+    amount: this.state.amount*100,
     description: this.state.description,
     tags: ['Fund'],
     createdAt: Date.now(),
