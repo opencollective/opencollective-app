@@ -41,7 +41,7 @@ describe('TransactionDetail container', () => {
       transactions: {
         1: {
           isRejected: false,
-          isExpense: true
+          type: 'EXPENSE'
         }
       }
     }));
@@ -54,7 +54,7 @@ describe('TransactionDetail container', () => {
       transactions: {
         1: {
           isRejected: true,
-          isExpense: false
+          type: 'DONATION'
         }
       }
     }));
@@ -67,7 +67,7 @@ describe('TransactionDetail container', () => {
       transactions: {
         1: {
           isRejected: true,
-          isExpense: true
+          type: 'EXPENSE'
         }
       }
     }));

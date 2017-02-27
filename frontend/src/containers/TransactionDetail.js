@@ -175,8 +175,6 @@ export function mapStateToProps({
   const group = groups[groupid] || {};
   const transaction = transactions[transactionid] || {};
   const {
-    isExpense,
-    isDonation,
     isRejected,
   } = transaction;
 
@@ -197,11 +195,9 @@ export function mapStateToProps({
 
     isHost: userIsHost,
     isLoading: !transaction.id,
-    isDonation,
-    isExpense,
 
     isRejected,
-    showDeleteButton: isExpense && isRejected && userIsHost,
+    showDeleteButton: transaction.type === 'EXPENSE' && isRejected && userIsHost,
     approveInProgress: transactions.approveInProgress,
     payInProgress: transactions.payInProgress,
     rejectInProgress: transactions.rejectInProgress,
