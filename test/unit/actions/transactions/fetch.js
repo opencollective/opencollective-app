@@ -3,7 +3,7 @@ import expect from 'expect';
 import mockStore from '../../helpers/mockStore';
 import env from '../../../../frontend/src/lib/env';
 import * as constants from '../../../../frontend/src/constants/transactions';
-import fetchById from '../../../../frontend/src/actions/transactions/fetch_by_id';
+import fetchById from '../../../../frontend/src/actions/transactions/fetch_by_uuid';
 import fetchByGroup from '../../../../frontend/src/actions/transactions/fetch_by_group';
 
 describe('transactions actions', () => {
