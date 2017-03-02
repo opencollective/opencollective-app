@@ -1,7 +1,7 @@
 .Transaction {
   padding: var(--spacing);
   border-bottom: 1px solid var(--gray);
-  cursor: pointer;
+  overflow: hidden;
 }
 
 .Transaction a {

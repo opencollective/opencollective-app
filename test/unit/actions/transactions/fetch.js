@@ -16,26 +16,27 @@ describe('transactions actions', () => {
 
     it('creates TRANSACTION_SUCCESS if it fetches successfully', (done) => {
       const transaction = {
-        id: 2,
+        id: 1,
+        uuid: '32a6b676-2b92-48f9-b6e9-b084a94238b0',
         amount: 999
       };
       const groupid = 1;
-      const transactionid = transaction.id;
+      const transactionuuid = transaction.uuid;
 
       nock(env.API_ROOT)
-        .get(`/groups/${groupid}/transactions/${transactionid}`)
+        .get(`/groups/${groupid}/transactions/${transactionuuid}`)
         .reply(200, transaction);
 
       const store = mockStore({});
 
-      store.dispatch(fetchById(groupid, transactionid))
+      store.dispatch(fetchById(groupid, transactionuuid))
         .then(() => {
           const [request, success] = store.getActions();
-          expect(request).toEqual({ type: constants.TRANSACTION_REQUEST, groupid, transactionid });
+          expect(request).toEqual({ type: constants.TRANSACTION_REQUEST, groupid, transactionuuid });
           expect(success).toEqual({
             type: constants.TRANSACTION_SUCCESS,
             groupid,
-            transactionid,
+            transactionuuid,
             transactions: { 2: transaction }
           });
           done();
@@ -46,23 +47,24 @@ describe('transactions actions', () => {
     it('creates TRANSACTION_FAILURE if it fails to fetch a transaction', (done) => {
       const transaction = {
         id: 2,
+        uuid: '32a6b676-2b92-48f9-b6e9-b084a94238b0',
         amount: 999
       };
       const groupid = 1;
-      const transactionid = transaction.id;
+      const transactionuuid = transaction.uuid;
 
       nock(env.API_ROOT)
-        .get(`/groups/${groupid}/transactions/${transactionid}`)
+        .get(`/groups/${groupid}/transactions/${transactionuuid}`)
         .replyWithError('');
 
       const store = mockStore({});
 
-      store.dispatch(fetchById(groupid, transactionid))
+      store.dispatch(fetchById(groupid, transactionuuid))
         .then(() => {
           const [request, failure] = store.getActions();
-          expect(request).toEqual({ type: constants.TRANSACTION_REQUEST, groupid, transactionid });
+          expect(request).toEqual({ type: constants.TRANSACTION_REQUEST, groupid, transactionuuid });
           expect(failure.type).toEqual(constants.TRANSACTION_FAILURE);
-          expect(failure.error.message).toContain('request to http://localhost:3030/api/groups/1/transactions/2 failed');
+          expect(failure.error.message).toContain(`request to http://localhost:3030/api/groups/1/transactions/${transactionuuid} failed`);
           done();
         })
         .catch(done)

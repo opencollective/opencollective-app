@@ -29,7 +29,7 @@ function request(groupid, transaction) {
 
 function success(groupid, transaction) {
   const transactions = {
-    [transaction.id]: transaction
+    [transaction.uuid]: transaction
   };
 
   return {
