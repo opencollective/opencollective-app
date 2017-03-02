@@ -37,7 +37,7 @@ describe('transactions actions', () => {
             type: constants.TRANSACTION_SUCCESS,
             groupid,
             transactionuuid,
-            transactions: { 2: transaction }
+            transactions: { 1: transaction }
           });
           done();
         })
