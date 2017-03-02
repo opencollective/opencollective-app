@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import moment from 'moment';
 
 import Currency from './Currency';
@@ -11,8 +10,6 @@ class Transaction extends Component {
       amount,
       currency,
       description,
-      uuid,
-      GroupId,
       createdAt,
       user
     } = this.props;
