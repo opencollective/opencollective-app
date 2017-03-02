@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import moment from 'moment';
 
 import Currency from './Currency';
@@ -11,8 +10,6 @@ class Transaction extends Component {
       amount,
       currency,
       description,
-      id,
-      GroupId,
       createdAt,
       user
     } = this.props;
@@ -20,18 +17,16 @@ class Transaction extends Component {
 
     return (
       <div className='Transaction'>
-        <Link to={`groups/${GroupId}/transactions/${id}`}>
-          <ProfilePhoto url={user && user.avatar} />
-          <div className='Transaction-info'>
-            <div className='Transaction-created'>
-              {createdAt ? moment(createdAt).fromNow() : ''}
-            </div>
-            <div className='Transaction-description'>{description}</div>
-            <div className='Transaction-status'>
-              <div className='Transaction-amount'><Currency value={amount} currency={currency} precision={2} /></div>
-            </div>
+        <ProfilePhoto url={user && user.avatar} />
+        <div className='Transaction-info'>
+          <div className='Transaction-created'>
+            {createdAt ? moment(createdAt).fromNow() : ''}
           </div>
-        </Link>
+          <div className='Transaction-description'>{description}</div>
+          <div className='Transaction-status'>
+            <div className='Transaction-amount'><Currency value={amount} currency={currency} precision={2} /></div>
+          </div>
+        </div>
       </div>
     );
   }
