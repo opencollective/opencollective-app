@@ -1,5 +1,7 @@
 # OpenCollective Mobile app
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/opencollective/opencollective-app.svg)](https://greenkeeper.io/)
+
 [![Circle CI](https://circleci.com/gh/OpenCollective/opencollective-app/tree/master.svg?style=shield)](https://circleci.com/gh/OpenCollective/opencollective-app/tree/master)
 [![Slack Status](https://slack.opencollective.com/badge.svg)](https://slack.opencollective.com)
 [![Gitter chat](https://badges.gitter.im/OpenCollective/OpenCollective.svg)](https://gitter.im/OpenCollective/OpenCollective)
